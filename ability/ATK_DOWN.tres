@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://6echuxyts2na"]
+
+[ext_resource type="Resource" uid="uid://bgggeylsyhhuo" path="res://effect/ATK_DOWN.tres" id="1_he45r"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_lg5fd"]
+
+[resource]
+script = ExtResource("1_lg5fd")
+category = 3
+ailment = 0
+buff = 0
+debuff = 1
+healing = 0
+steal = 0
+critical = 0
+additional = 0
+percentage = 0
+evolution = 0
+name = "ATK DOWN"
+range = 0
+trigger = 0
+effect = ExtResource("1_he45r")
+metadata/_custom_type_script = "uid://n6604vih5t55"

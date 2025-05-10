@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=7 format=3 uid="uid://64xbwl75lu31"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_0kxg8"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_b7dbj"]
+[ext_resource type="Resource" uid="uid://delt5jbdq7mva" path="res://action/ギガスプラッシュ.tres" id="2_jnfxy"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_bxqy2"]
+[ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://element/水属性.tres" id="4_6v4a8"]
+[ext_resource type="Texture2D" uid="uid://kkhkjhbbs1an" path="res://image/monster/プラッシュル.PNG" id="5_yh6gn"]
+
+[resource]
+script = ExtResource("3_bxqy2")
+id = 4
+name = "プラッシュル"
+form = 2
+image = ExtResource("5_yh6gn")
+element = Array[ExtResource("2_b7dbj")]([ExtResource("4_6v4a8")])
+cost = 50
+maxHP = 500
+maxMP = 70
+supplyMP = 15
+ATK = 120
+DEF = 120
+MAG = 120
+RES = 120
+SPD = 120
+skill1_name = Array[String]([])
+skill1_id = Array[int]([])
+skill2_name = Array[String]([])
+skill2_id = Array[int]([])
+actions = Array[ExtResource("1_0kxg8")]([ExtResource("2_jnfxy")])
+description = ""
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

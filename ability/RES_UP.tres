@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://c4isb35a6kx3r"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_1sb7w"]
+[ext_resource type="Resource" uid="uid://bqrmxcyt6tuar" path="res://effect/RES_UP.tres" id="1_o1bcg"]
+
+[resource]
+script = ExtResource("1_1sb7w")
+category = 2
+ailment = 0
+buff = 4
+debuff = 0
+healing = 0
+steal = 0
+critical = 0
+additional = 0
+percentage = 0
+evolution = 0
+name = "RES UP"
+range = 0
+trigger = 0
+effect = ExtResource("1_o1bcg")
+metadata/_custom_type_script = "uid://n6604vih5t55"

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://cc3164fffkl1j"]
+
+[ext_resource type="Resource" uid="uid://dkgyhvm3gjsw0" path="res://effect/RES_DOWN.tres" id="1_hci5s"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_jdniv"]
+
+[resource]
+script = ExtResource("1_jdniv")
+category = 3
+ailment = 0
+buff = 0
+debuff = 4
+healing = 0
+steal = 0
+critical = 0
+additional = 0
+percentage = 0
+evolution = 0
+name = "RES DOWN"
+range = 0
+trigger = 0
+effect = ExtResource("1_hci5s")
+metadata/_custom_type_script = "uid://n6604vih5t55"

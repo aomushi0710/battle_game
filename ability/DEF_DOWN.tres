@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://63hgwhbc6h7e"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_3dr28"]
+[ext_resource type="Resource" uid="uid://gd3jyy3ug6gb" path="res://effect/DEF_DOWN.tres" id="1_pqafs"]
+
+[resource]
+script = ExtResource("1_3dr28")
+category = 3
+ailment = 0
+buff = 0
+debuff = 2
+healing = 0
+steal = 0
+critical = 0
+additional = 0
+percentage = 0
+evolution = 0
+name = "DEF DOWN"
+range = 0
+trigger = 0
+effect = ExtResource("1_pqafs")
+metadata/_custom_type_script = "uid://n6604vih5t55"

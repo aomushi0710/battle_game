@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://bsgw243vxjjjb"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_coqy3"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_ybape"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_5vs8j"]
+[ext_resource type="Resource" uid="uid://dyfst4wxer3yx" path="res://element/火属性.tres" id="3_y6qof"]
+
+[resource]
+script = ExtResource("1_ybape")
+id = 21
+name = "メガフレイム"
+aka = ""
+element = Array[ExtResource("2_5vs8j")]([ExtResource("3_y6qof")])
+max_chance = 30
+power = 70
+mp = 15
+range = 1
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_coqy3")]([])
+ability_chance = Array[int]([30])
+ability_power = Array[int]([5])
+ability_range = Array[int]([0])
+description = "中級攻撃魔法。強力な
+炎を生み出して攻撃し、
+30%で火傷させる。
+(この特殊効果は未実装)"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

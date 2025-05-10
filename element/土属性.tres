@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://bsmtumwsut2ll"]
+
+[ext_resource type="Texture2D" uid="uid://bnsefdchufl61" path="res://image/element/土属性.PNG" id="1_hqljq"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="1_u3m0a"]
+
+[resource]
+script = ExtResource("1_u3m0a")
+id = 4
+name = "土属性"
+color = "chocolate"
+icon = ExtResource("1_hqljq")
+metadata/_custom_type_script = "uid://0hbknewd53sh"

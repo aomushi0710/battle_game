@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://bejdllvlia6sf"]
+
+[ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="1_0i2xq"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="1_hkjw8"]
+
+[resource]
+script = ExtResource("1_hkjw8")
+id = 10
+name = "バフ"
+color = "dark_red"
+icon = ExtResource("1_0i2xq")
+metadata/_custom_type_script = "uid://0hbknewd53sh"

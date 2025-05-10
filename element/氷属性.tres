@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://bv7ciiu33dpfq"]
+
+[ext_resource type="Texture2D" uid="uid://kidnbiu2ww0c" path="res://image/element/氷属性.PNG" id="1_sknie"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="1_xp6uh"]
+
+[resource]
+script = ExtResource("1_xp6uh")
+id = 6
+name = "氷属性"
+color = "aqua"
+icon = ExtResource("1_sknie")
+metadata/_custom_type_script = "uid://0hbknewd53sh"

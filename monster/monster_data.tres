@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=3 format=3 uid="uid://oc28h5s6hjo3"]
+
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="1_7ohf5"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_wlsvn"]
+
+[resource]
+script = ExtResource("1_7ohf5")
+id = 0
+name = "null"
+form = 0
+element = Array[int]([0])
+cost = 0
+HP = 0
+maxMP = 0
+supplyMP = 0
+ATK = 0
+DEF = 0
+MAG = 0
+RES = 0
+SPD = 0
+skill1_name = Array[String]([])
+skill1_id = Array[int]([])
+skill2_name = Array[String]([])
+skill2_id = Array[int]([])
+actions = Array[ExtResource("1_wlsvn")]([])
+description = ""

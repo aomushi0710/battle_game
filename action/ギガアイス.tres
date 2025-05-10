@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://dogy88uqwb6ri"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_6shat"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_qay1f"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_r72n2"]
+[ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://element/氷属性.tres" id="3_8mb3m"]
+
+[resource]
+script = ExtResource("1_qay1f")
+id = 34
+name = "ギガアイス"
+aka = ""
+element = Array[ExtResource("2_r72n2")]([ExtResource("3_8mb3m")])
+max_chance = 10
+power = 90
+mp = 20
+range = 1
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_6shat")]([])
+ability_chance = Array[int]([50])
+ability_power = Array[int]([5])
+ability_range = Array[int]([0])
+description = "上級攻撃魔法。南極の
+氷山を生み出して攻撃し、
+50%で霜焼状態にする。
+(この特殊効果は未実装)"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

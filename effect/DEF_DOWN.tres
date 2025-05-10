@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Effect" load_steps=3 format=3 uid="uid://gd3jyy3ug6gb"]
+
+[ext_resource type="Script" uid="uid://bfhndlr5f1snc" path="res://resource/effect.gd" id="1_kl8ap"]
+[ext_resource type="Texture2D" uid="uid://c6skftvqg4rh6" path="res://image/element/デバフ技.PNG" id="1_y8s4k"]
+
+[resource]
+script = ExtResource("1_kl8ap")
+category = 3
+ailment = 0
+buff = 0
+debuff = 2
+name = "DEF DOWN"
+icon = ExtResource("1_y8s4k")
+power = 1.5
+log = "の[color=light_blue]DEF[/color]が下がった！"
+metadata/_custom_type_script = "uid://bfhndlr5f1snc"

@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=7 format=3 uid="uid://bsymhimxyihyb"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_w7nov"]
+[ext_resource type="Resource" uid="uid://hxfacfccogbn" path="res://action/ギガストーン.tres" id="2_g8e0v"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_wta47"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_wi555"]
+[ext_resource type="Resource" uid="uid://bsmtumwsut2ll" path="res://element/土属性.tres" id="4_y5sni"]
+[ext_resource type="Texture2D" uid="uid://cd7kvc0heu381" path="res://image/monster/メテロック.PNG" id="5_ct7ik"]
+
+[resource]
+script = ExtResource("3_wi555")
+id = 6
+name = "メテロック"
+form = 2
+image = ExtResource("5_ct7ik")
+element = Array[ExtResource("2_wta47")]([ExtResource("4_y5sni")])
+cost = 50
+maxHP = 500
+maxMP = 70
+supplyMP = 15
+ATK = 120
+DEF = 120
+MAG = 120
+RES = 120
+SPD = 120
+skill1_name = Array[String]([])
+skill1_id = Array[int]([])
+skill2_name = Array[String]([])
+skill2_id = Array[int]([])
+actions = Array[ExtResource("1_w7nov")]([ExtResource("2_g8e0v")])
+description = ""
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

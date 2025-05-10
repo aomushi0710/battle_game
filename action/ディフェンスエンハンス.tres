@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://depvpxqwosvrq"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_5ns35"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_qyg87"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_p08hf"]
+[ext_resource type="Resource" uid="uid://c0pm5ess037ep" path="res://ability/DEF_UP.tres" id="2_x4cxx"]
+[ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://element/バフ.tres" id="3_x4cxx"]
+
+[resource]
+script = ExtResource("1_5ns35")
+id = 46
+name = "ディフェンスエンハンス"
+aka = "DEFエンハンス"
+element = Array[ExtResource("2_p08hf")]([ExtResource("3_x4cxx")])
+max_chance = 30
+power = 0
+mp = 20
+range = 3
+damage_type = 0
+touch = false
+ability = Array[ExtResource("1_qyg87")]([ExtResource("2_x4cxx")])
+ability_chance = Array[int]([100])
+ability_power = Array[int]([5])
+ability_range = Array[int]([0])
+description = "DEF強化魔法。
+味方1体のDEFを強化する。
+この効果は5ターンだけ
+持続する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

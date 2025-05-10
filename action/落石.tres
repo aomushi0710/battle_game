@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://xnyvwesn5hxx"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_d08s8"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_jvpa6"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_stcdh"]
+[ext_resource type="Resource" uid="uid://bsmtumwsut2ll" path="res://element/土属性.tres" id="3_ke72r"]
+
+[resource]
+script = ExtResource("1_jvpa6")
+id = 8
+name = "落石"
+aka = ""
+element = Array[ExtResource("2_stcdh")]([ExtResource("3_ke72r")])
+max_chance = 80
+power = 30
+mp = 0
+range = 1
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_d08s8")]([])
+ability_chance = Array[int]([])
+ability_power = Array[int]([])
+ability_range = Array[int]([])
+description = "敵単体に落石を起こして
+攻撃する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

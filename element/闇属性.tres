@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://du8c5g5eab01"]
+
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="1_7y43j"]
+[ext_resource type="Texture2D" uid="uid://821l3uelc2s1" path="res://image/element/闇属性.PNG" id="1_ho8k6"]
+
+[resource]
+script = ExtResource("1_7y43j")
+id = 8
+name = "闇属性"
+color = "purple"
+icon = ExtResource("1_ho8k6")
+metadata/_custom_type_script = "uid://0hbknewd53sh"

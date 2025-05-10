@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=11 format=3 uid="uid://bda87f5r5a85l"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_ur73e"]
+[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_e3kbf"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_god6j"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_27xy4"]
+[ext_resource type="Resource" uid="uid://b3bo5h7oxgsjd" path="res://action/あられ.tres" id="3_it3lj"]
+[ext_resource type="Resource" uid="uid://wrxn60f1ot7c" path="res://action/水しぶき.tres" id="4_5w51r"]
+[ext_resource type="Resource" uid="uid://bw76bff476i5x" path="res://action/アイス.tres" id="5_khvpt"]
+[ext_resource type="Resource" uid="uid://x3vx2v4kh17p" path="res://action/クリスタルシールド.tres" id="6_it3lj"]
+[ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://element/氷属性.tres" id="7_psdpr"]
+[ext_resource type="Texture2D" uid="uid://h5vjkgwfndu3" path="res://image/monster/スノ.PNG" id="8_jb152"]
+
+[resource]
+script = ExtResource("3_27xy4")
+id = 8
+name = "スノ"
+form = 0
+image = ExtResource("8_jb152")
+element = Array[ExtResource("2_god6j")]([ExtResource("7_psdpr")])
+cost = 0
+maxHP = 300
+maxMP = 30
+supplyMP = 6
+ATK = 80
+DEF = 80
+MAG = 80
+RES = 80
+SPD = 80
+skill1_name = Array[String]([])
+skill1_id = Array[int]([])
+skill2_name = Array[String]([])
+skill2_id = Array[int]([])
+actions = Array[ExtResource("1_ur73e")]([ExtResource("2_e3kbf"), ExtResource("3_it3lj"), ExtResource("4_5w51r"), ExtResource("5_khvpt"), ExtResource("6_it3lj")])
+description = ""
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

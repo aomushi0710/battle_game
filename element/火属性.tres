@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://dyfst4wxer3yx"]
+
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="1_j3bid"]
+[ext_resource type="Texture2D" uid="uid://hy7pihaa78di" path="res://image/element/火属性.PNG" id="1_oiac7"]
+
+[resource]
+script = ExtResource("1_j3bid")
+id = 1
+name = "火属性"
+color = "red"
+icon = ExtResource("1_oiac7")
+metadata/_custom_type_script = "uid://0hbknewd53sh"

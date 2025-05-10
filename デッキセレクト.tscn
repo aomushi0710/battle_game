@@ -1,0 +1,294 @@
+[gd_scene load_steps=15 format=3 uid="uid://d4g4bh4y0vc2f"]
+
+[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_cpkem"]
+[ext_resource type="Script" uid="uid://dlykw61jg8rb7" path="res://Control.gd" id="1_dgsv0"]
+[ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://1st.PNG" id="2_34w54"]
+[ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://2nd.PNG" id="3_qs0ub"]
+[ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://3rd.PNG" id="4_qklf7"]
+[ext_resource type="Script" uid="uid://tw743jfyh7c1" path="res://cpu_strategy.gd" id="5_c4lle"]
+[ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help.gd" id="5_jtnis"]
+[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_0twro"]
+
+[sub_resource type="Theme" id="Theme_3nbs8"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_g1t6r"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_u0qxs"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_n8cd7"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_valx8"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_vs303"]
+default_font_size = 35
+
+[node name="デッキセレクト" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_cpkem")
+
+[node name="デッキ1" type="Control" parent="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_dgsv0")
+
+[node name="name" type="LineEdit" parent="Control/デッキ1"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 8.0
+offset_right = 484.0
+offset_bottom = 50.0
+placeholder_text = "デッキ名を入力"
+max_length = 20
+
+[node name="first" type="TextureButton" parent="Control/デッキ1"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 50.0
+offset_right = 356.0
+offset_bottom = 306.0
+scale = Vector2(0.5, 0.5)
+tooltip_text = "1枠目のモンスターをセッティング"
+button_mask = 3
+texture_normal = ExtResource("2_34w54")
+texture_hover = ExtResource("2_34w54")
+
+[node name="詳細" type="RichTextLabel" parent="Control/デッキ1/first"]
+visible = false
+layout_mode = 0
+offset_top = 250.0
+offset_right = 250.0
+offset_bottom = 1250.0
+scale = Vector2(2, 2)
+bbcode_enabled = true
+
+[node name="second" type="TextureButton" parent="Control/デッキ1"]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 50.0
+offset_right = 484.0
+offset_bottom = 306.0
+scale = Vector2(0.5, 0.5)
+tooltip_text = "2枠目のモンスターをセッティング"
+texture_normal = ExtResource("3_qs0ub")
+texture_hover = ExtResource("3_qs0ub")
+
+[node name="third" type="TextureButton" parent="Control/デッキ1"]
+layout_mode = 0
+offset_left = 356.0
+offset_top = 50.0
+offset_right = 612.0
+offset_bottom = 306.0
+scale = Vector2(0.5, 0.5)
+tooltip_text = "3枠目のモンスターをセッティング"
+texture_normal = ExtResource("4_qklf7")
+texture_hover = ExtResource("4_qklf7")
+
+[node name="save" type="Button" parent="Control/デッキ1"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 178.0
+offset_right = 292.0
+offset_bottom = 220.0
+text = "✏️セーブ"
+
+[node name="load" type="Button" parent="Control/デッキ1"]
+layout_mode = 0
+offset_left = 292.0
+offset_top = 178.0
+offset_right = 484.0
+offset_bottom = 220.0
+text = "📁ロード"
+
+[node name="reset" type="Button" parent="Control/デッキ1"]
+modulate = Color(1, 0, 0, 1)
+offset_left = 292.0
+offset_top = 220.0
+offset_right = 484.0
+offset_bottom = 268.0
+tooltip_text = "デッキに登録されたデータを全てリセットします"
+text = "🗑️リセット"
+
+[node name="おまかせ" type="Button" parent="Control/デッキ1"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 220.0
+offset_right = 292.0
+offset_bottom = 268.0
+tooltip_text = "完全にランダムにモンスターと技が選択されます"
+theme = ExtResource("1_cpkem")
+text = "🔄️おまかせ"
+
+[node name="cpu_strategy" type="OptionButton" parent="Control"]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 500.0
+offset_right = 872.0
+offset_bottom = 548.0
+theme = SubResource("Theme_3nbs8")
+selected = 0
+item_count = 3
+popup/item_0/text = "ランダム"
+popup/item_0/id = 0
+popup/item_1/text = "効率的"
+popup/item_1/id = 1
+popup/item_2/text = "進化優先"
+popup/item_2/id = 2
+script = ExtResource("5_c4lle")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/cpu_strategy"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -69.0
+offset_right = 166.0
+offset_bottom = 3.0
+theme = ExtResource("1_cpkem")
+text = " 
+ CPUの挙動"
+
+[node name="エラーメッセージ" type="AcceptDialog" parent="Control"]
+title = "⚠️ERROR⚠️"
+initial_position = 2
+size = Vector2i(721, 102)
+theme = ExtResource("7_0twro")
+
+[node name="確認メッセージ" type="ConfirmationDialog" parent="Control"]
+auto_translate_mode = 1
+title = "⚠️デッキデータリセット⚠️"
+initial_position = 2
+theme = ExtResource("7_0twro")
+
+[node name="buttle" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 500.0
+offset_right = 648.0
+offset_bottom = 548.0
+theme = SubResource("Theme_g1t6r")
+text = "バトル！"
+
+[node name="戻る" type="Button" parent="Control"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 50.0
+offset_top = 600.0
+offset_right = 163.0
+offset_bottom = 648.0
+theme = SubResource("Theme_u0qxs")
+text = "←戻る"
+
+[node name="help" type="Button" parent="Control"]
+process_mode = 3
+layout_mode = 0
+offset_left = 1100.0
+offset_top = 10.0
+offset_right = 1148.0
+offset_bottom = 58.0
+theme = SubResource("Theme_n8cd7")
+toggle_mode = true
+text = "?"
+script = ExtResource("5_jtnis")
+
+[node name="ColorRect" type="ColorRect" parent="Control/help"]
+visible = false
+layout_mode = 0
+offset_left = -1050.0
+offset_bottom = 650.0
+color = Color(0, 0.494118, 0.494118, 1)
+
+[node name="help_label" type="RichTextLabel" parent="Control/help/ColorRect"]
+layout_mode = 2
+offset_right = 1050.0
+offset_bottom = 650.0
+theme = SubResource("Theme_valx8")
+bbcode_enabled = true
+text = "・　　　　　　 [color=yellow]キャラセレクトボタン[/color]
+
+　3つのボタンをそれぞれ押してキャラ選択画面に移動し、
+　対戦するモンスターを選んでください！
+　ただし、3体の枠を全て埋める必要があります！
+
+・　　　　　　　　　　　　　　[color=yellow]おまかせデッキセッティングボタン[/color]
+　セッティングが面倒なので、
+　おまかせでデッキを組めるボタンを実装しました！(βver1.1.0)
+
+　ただしおまかせでデッキを組むと、進化ができなかったり弱い技に偏ったり
+　することが多いので、慣れてきたら手動でのセッティングをおすすめします
+
+・　　　　　[color=yellow]バトル開始ボタン[/color]
+　デッキが組めたらこのボタンを押してバトルを開始！
+　現在、相手のデッキは「おまかせデッキセッティング」と同様に、
+　完全にランダムに選出されます。"
+scroll_active = false
+
+[node name="first" type="TextureButton" parent="Control/help/ColorRect"]
+layout_mode = 0
+offset_left = 30.0
+offset_right = 286.0
+offset_bottom = 256.0
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("2_34w54")
+texture_hover = ExtResource("2_34w54")
+
+[node name="second" type="TextureButton" parent="Control/help/ColorRect"]
+layout_mode = 0
+offset_left = 94.0
+offset_right = 350.0
+offset_bottom = 256.0
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("3_qs0ub")
+texture_hover = ExtResource("3_qs0ub")
+
+[node name="third" type="TextureButton" parent="Control/help/ColorRect"]
+layout_mode = 0
+offset_left = 158.0
+offset_right = 414.0
+offset_bottom = 256.0
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("4_qklf7")
+texture_hover = ExtResource("4_qklf7")
+
+[node name="help_おまかせ" type="Button" parent="Control/help/ColorRect"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 190.0
+offset_right = 453.0
+offset_bottom = 238.0
+theme = SubResource("Theme_vs303")
+text = "おまかせでデッキを組む！"
+
+[node name="help_buttle" type="Button" parent="Control/help/ColorRect"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 430.0
+offset_right = 173.0
+offset_bottom = 478.0
+theme = SubResource("Theme_g1t6r")
+text = "バトル！"
+
+[connection signal="tree_entered" from="." to="Control/デッキ1" method="_on_デッキセレクト_tree_entered"]
+[connection signal="button_up" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_button_up"]
+[connection signal="focus_entered" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_focus_entered"]
+[connection signal="button_up" from="Control/デッキ1/second" to="Control/デッキ1" method="_on_second_button_up"]
+[connection signal="button_up" from="Control/デッキ1/third" to="Control/デッキ1" method="_on_third_button_up"]
+[connection signal="button_up" from="Control/デッキ1/save" to="Control/デッキ1" method="_on_save_button_up"]
+[connection signal="button_up" from="Control/デッキ1/load" to="Control/デッキ1" method="_on_load_button_up"]
+[connection signal="button_up" from="Control/デッキ1/reset" to="Control/デッキ1" method="_on_reset_button_up"]
+[connection signal="button_up" from="Control/デッキ1/おまかせ" to="Control/デッキ1" method="_on_button_button_up"]
+[connection signal="item_selected" from="Control/cpu_strategy" to="Control/デッキ1" method="_on_cpu_strategy_item_selected"]
+[connection signal="confirmed" from="Control/確認メッセージ" to="Control/デッキ1" method="_on_確認メッセージ_confirmed"]
+[connection signal="button_up" from="Control/buttle" to="Control/デッキ1" method="_on_test_button_up"]
+[connection signal="button_up" from="Control/戻る" to="Control/デッキ1" method="_on_戻る_button_up"]
+[connection signal="toggled" from="Control/help" to="Control/help" method="_on_toggled"]
+[connection signal="button_up" from="Control/help/ColorRect/help_buttle" to="Control/デッキ1" method="_on_test_button_up"]

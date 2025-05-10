@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbamrvgqbrjoq"]
+
+[sub_resource type="Theme" id="Theme_is7df"]
+default_font_size = 20
+
+[node name="ability" type="ColorRect"]
+offset_left = 5.0
+offset_top = 150.0
+offset_right = 245.0
+offset_bottom = 225.0
+color = Color(0, 0, 0, 0.501961)
+
+[node name="ability_text2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -5.0
+offset_right = 245.0
+offset_bottom = 75.0
+theme = SubResource("Theme_is7df")
+bbcode_enabled = true
+text = "[center]特殊能力が表示されます!
+[hint=特殊効果を発生させる対象が表示されます]対象:[color=yellow]――――[/color][/hint] [hint=特殊効果の発生確率]確率:[color=green]---%[/color][/hint]
+[/center]"

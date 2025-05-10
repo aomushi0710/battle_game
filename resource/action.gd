@@ -1,0 +1,56 @@
+class_name Action
+extends Resource
+
+
+@export_category("技")
+
+## 技のid
+@export var id: int
+
+## 技の名前
+@export var name: String
+
+## 名前が長い技を表示する際の略称[br]未記入でも可
+@export var aka: String
+
+## 技の属性 Element型のリソース[br]複数登録可能
+@export var element: Array[Element]
+
+## 技の最大出現確率
+@export_range(1,100,1,"suffix:%") var max_chance: int
+
+## 技の基本的な威力 0なら直接的なダメージは発生しない
+@export var power: int
+
+## 技の発動に必要なmp
+@export var mp: int
+
+## 技の対象範囲
+@warning_ignore("shadowed_global_identifier")
+@export_enum("なし","敵単体","敵全体","味方単体","味方全体","自分","敵散開") var range: int
+
+## 技の参照するステータスの分類
+@export_enum("なし","物理","魔法") var damage_type: int
+
+## 技の接触判定[br]true:接触 false:非接触
+@export var touch: bool
+
+
+@export_category("特殊効果")
+
+## 技の特殊効果 Ability型のリソース[br]複数登録可能
+@export var ability: Array[Ability]
+
+## 特殊効果の発生確率
+@export_range(0,100,1,"suffix:%") var ability_chance: Array[int]
+
+## 特殊効果の強さ[br]バフデバフ継続ターン数、効果量、倍率、パーセンテージなど
+@export var ability_power: Array[int]
+
+@export_enum("連動","敵単体","敵全体","味方単体","味方全体","自分","なし") \
+var ability_range: Array[int]
+
+
+## 技の説明[br]1行につき全角12文字記述可能
+@export_category("説明文")
+@export_multiline var description: String

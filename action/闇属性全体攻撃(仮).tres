@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://cabxa5lq0tqlx"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_bpoy2"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_miqyx"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_magna"]
+[ext_resource type="Resource" uid="uid://du8c5g5eab01" path="res://element/闇属性.tres" id="3_uh0cg"]
+
+[resource]
+script = ExtResource("1_bpoy2")
+id = 44
+name = "闇属性全体攻撃(仮)"
+aka = ""
+element = Array[ExtResource("2_magna")]([ExtResource("3_uh0cg")])
+max_chance = 10
+power = 50
+mp = 30
+range = 2
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_miqyx")]([])
+ability_chance = Array[int]([])
+ability_power = Array[int]([])
+description = "全体攻撃魔法。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

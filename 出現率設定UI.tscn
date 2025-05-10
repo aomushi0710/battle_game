@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://ip7sj5n1yuxv"]
+
+[ext_resource type="Script" uid="uid://cibcmjug4masm" path="res://出現率設定.gd" id="1_g1nnx"]
+
+[node name="text" type="RichTextLabel"]
+offset_right = 40.0
+offset_bottom = 40.0
+text = "test"
+script = ExtResource("1_g1nnx")
+
+[node name="slider" type="HSlider" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 16.0

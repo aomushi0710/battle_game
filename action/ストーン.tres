@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://dydn714wywgpq"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_1eu13"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_qiaud"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_vub7a"]
+[ext_resource type="Resource" uid="uid://bsmtumwsut2ll" path="res://element/土属性.tres" id="3_3xbxb"]
+
+[resource]
+script = ExtResource("1_1eu13")
+id = 16
+name = "ストーン"
+aka = ""
+element = Array[ExtResource("2_vub7a")]([ExtResource("3_3xbxb")])
+max_chance = 50
+power = 50
+mp = 10
+range = 1
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_qiaud")]([])
+ability_chance = Array[int]([10])
+ability_power = Array[int]([5])
+ability_range = Array[int]([0])
+description = "下級攻撃魔法。
+岩を生み出して攻撃し、
+10%で泥々状態にする。
+(この特殊効果は未実装)"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

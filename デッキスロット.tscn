@@ -1,0 +1,87 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4jraitbtpldh"]
+
+[ext_resource type="Script" uid="uid://bp2ggvr5hlmwt" path="res://デッキスロット.gd" id="1_16m6o"]
+[ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://1st.PNG" id="1_ponrr"]
+[ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://2nd.PNG" id="2_16m6o"]
+[ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://3rd.PNG" id="3_dkjvr"]
+[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="4_yn7uq"]
+
+[node name="deck1" type="ColorRect"]
+custom_minimum_size = Vector2(1102, 178)
+color = Color(0.3, 0.3, 0.3, 1)
+script = ExtResource("1_16m6o")
+
+[node name="deck_slot_name" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 275.0
+offset_bottom = 65.0
+bbcode_enabled = true
+text = "[u][b]デッキスロット１[/b][/u]"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 82.0
+offset_right = 325.0
+offset_bottom = 153.0
+text = "デッキの名前
+上限20文字(全角)"
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 357.0
+offset_top = 25.0
+offset_right = 1133.0
+offset_bottom = 281.0
+scale = Vector2(0.5, 0.5)
+
+[node name="first" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("1_ponrr")
+
+[node name="second" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_16m6o")
+
+[node name="third" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_dkjvr")
+
+[node name="version" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 747.0
+offset_top = 129.0
+offset_right = 905.0
+offset_bottom = 153.0
+theme = ExtResource("4_yn7uq")
+bbcode_enabled = true
+text = "⚠️[i]ver 3.1.x(β)[/i]"
+
+[node name="save" type="Button" parent="."]
+layout_mode = 0
+offset_left = 938.0
+offset_top = 25.0
+offset_right = 1077.0
+offset_bottom = 67.0
+text = "✏️セーブ"
+
+[node name="load" type="Button" parent="."]
+layout_mode = 0
+offset_left = 938.0
+offset_top = 25.0
+offset_right = 1077.0
+offset_bottom = 67.0
+text = "📁ロード"
+
+[node name="reset" type="Button" parent="."]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 908.0
+offset_top = 112.0
+offset_right = 1077.0
+offset_bottom = 154.0
+text = "🗑️リセット"

@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=10 format=3 uid="uid://bgvfyfkrnriky"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_grnmg"]
+[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_krghb"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_s6uvj"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_dvukf"]
+[ext_resource type="Resource" uid="uid://c1le41ddrlk3w" path="res://action/静電気.tres" id="3_pwoxo"]
+[ext_resource type="Resource" uid="uid://261705w1prvy" path="res://action/光線.tres" id="4_krghb"]
+[ext_resource type="Resource" uid="uid://0xo5oj552l24" path="res://action/サンダー.tres" id="5_7qb4c"]
+[ext_resource type="Resource" uid="uid://3bjg4wfbnyh6" path="res://element/雷属性.tres" id="7_1tl1a"]
+[ext_resource type="Texture2D" uid="uid://demxi7jb44kox" path="res://image/monster/ボル.PNG" id="8_71w80"]
+
+[resource]
+script = ExtResource("3_dvukf")
+id = 5
+name = "ボル"
+form = 0
+image = ExtResource("8_71w80")
+element = Array[ExtResource("2_s6uvj")]([ExtResource("7_1tl1a")])
+cost = 0
+maxHP = 300
+maxMP = 30
+supplyMP = 6
+ATK = 80
+DEF = 80
+MAG = 80
+RES = 80
+SPD = 80
+skill1_name = Array[String]([])
+skill1_id = Array[int]([])
+skill2_name = Array[String]([])
+skill2_id = Array[int]([])
+actions = Array[ExtResource("1_grnmg")]([ExtResource("2_krghb"), ExtResource("3_pwoxo"), ExtResource("4_krghb"), ExtResource("5_7qb4c")])
+description = ""
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

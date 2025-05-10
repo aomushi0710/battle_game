@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://didcsw0ku7aos"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_lbtrq"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_ljjcx"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_i3wla"]
+[ext_resource type="Resource" uid="uid://du8c5g5eab01" path="res://element/闇属性.tres" id="3_le5ya"]
+
+[resource]
+script = ExtResource("1_lbtrq")
+id = 36
+name = "ギガダークネス"
+aka = ""
+element = Array[ExtResource("2_i3wla")]([ExtResource("3_le5ya")])
+max_chance = 10
+power = 90
+mp = 20
+range = 1
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_ljjcx")]([])
+ability_chance = Array[int]([50])
+ability_power = Array[int]([5])
+ability_range = Array[int]([0])
+description = "上級攻撃魔法。深淵の
+闇に葬って攻撃し、
+50%で呪う。
+(この特殊効果は未実装)"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

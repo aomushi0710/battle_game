@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Effect" load_steps=3 format=3 uid="uid://bodbrvybuvacc"]
+
+[ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="1_2k5d0"]
+[ext_resource type="Script" uid="uid://bfhndlr5f1snc" path="res://resource/effect.gd" id="1_qx6ac"]
+
+[resource]
+script = ExtResource("1_qx6ac")
+category = 2
+ailment = 0
+buff = 1
+debuff = 0
+name = "ATK UP"
+icon = ExtResource("1_2k5d0")
+power = 1.5
+log = "の[color=red]ATK[/color]が上がった！"
+metadata/_custom_type_script = "uid://bfhndlr5f1snc"

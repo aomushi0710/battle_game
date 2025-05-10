@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=13 format=3 uid="uid://dbfbwbft2ic66"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_gmdy6"]
+[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_iw7v5"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="2_vrikr"]
+[ext_resource type="Resource" uid="uid://bw3o7ijy2ovf8" path="res://action/ひっかく.tres" id="3_fi0p3"]
+[ext_resource type="Resource" uid="uid://bd3i42l4ygpkm" path="res://action/火の玉.tres" id="4_m62fw"]
+[ext_resource type="Resource" uid="uid://ulhc0khdjd2k" path="res://action/暗闇.tres" id="5_xacad"]
+[ext_resource type="Resource" uid="uid://daphc0yp3iv34" path="res://action/アタックエンハンス.tres" id="6_3dbhx"]
+[ext_resource type="Resource" uid="uid://r6qjkc4wye84" path="res://action/マジックエンハンス.tres" id="7_pl3b7"]
+[ext_resource type="Resource" uid="uid://1n04af2tg4k8" path="res://action/霊魂吸収.tres" id="8_15nmo"]
+[ext_resource type="Texture2D" uid="uid://cgmplljwi0qwt" path="res://image/monster/ゴースト.PNG" id="9_7fhdn"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="9_m62fw"]
+[ext_resource type="Resource" uid="uid://cie7fwul7ew3q" path="res://element/無属性.tres" id="10_xacad"]
+
+[resource]
+script = ExtResource("2_vrikr")
+id = 2
+name = "ゴースト"
+form = 0
+image = ExtResource("9_7fhdn")
+element = Array[ExtResource("9_m62fw")]([ExtResource("10_xacad")])
+cost = 0
+maxHP = 280
+maxMP = 40
+supplyMP = 8
+ATK = 100
+DEF = 80
+MAG = 100
+RES = 80
+SPD = 100
+skill1_name = Array[String]([])
+skill1_id = Array[int]([])
+skill2_name = Array[String]([])
+skill2_id = Array[int]([])
+actions = Array[ExtResource("1_gmdy6")]([ExtResource("2_iw7v5"), ExtResource("3_fi0p3"), ExtResource("4_m62fw"), ExtResource("5_xacad"), ExtResource("6_3dbhx"), ExtResource("7_pl3b7"), ExtResource("8_15nmo")])
+description = "少し攻撃・素早さ偏重なステータスを持つ。"
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

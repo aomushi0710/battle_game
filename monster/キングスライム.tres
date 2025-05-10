@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://bgeqlnmynyhlg"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_yucnt"]
+[ext_resource type="Resource" uid="uid://clrydqti81bbk" path="res://action/ギガシャイニング.tres" id="2_xk50h"]
+[ext_resource type="Texture2D" uid="uid://ck25esgi5kfjg" path="res://image/monster/キングスライム.PNG" id="3_f2iaj"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_mle5m"]
+[ext_resource type="Resource" uid="uid://cie7fwul7ew3q" path="res://element/無属性.tres" id="4_nsuit"]
+[ext_resource type="Resource" uid="uid://djq54l3oqsuo1" path="res://element/光属性.tres" id="5_arpli"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="10_v7wje"]
+
+[resource]
+script = ExtResource("10_v7wje")
+id = 1
+name = "キングスライム"
+form = 2
+image = ExtResource("3_f2iaj")
+element = Array[ExtResource("3_mle5m")]([ExtResource("4_nsuit"), ExtResource("5_arpli")])
+cost = 40
+maxHP = 450
+maxMP = 60
+supplyMP = 12
+ATK = 100
+DEF = 130
+MAG = 100
+RES = 110
+SPD = 120
+skill1_name = Array[String]([])
+skill1_id = Array[int]([])
+skill2_name = Array[String]([])
+skill2_id = Array[int]([])
+actions = Array[ExtResource("1_yucnt")]([ExtResource("2_xk50h")])
+description = "1段階進化したキング系モンスター。相変わらずDEFに少し偏った能力値を持つ。"
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

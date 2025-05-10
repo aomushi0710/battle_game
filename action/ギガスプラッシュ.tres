@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://delt5jbdq7mva"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_1drug"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_hrb6d"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_g8rgo"]
+[ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://element/水属性.tres" id="3_76owy"]
+
+[resource]
+script = ExtResource("1_hrb6d")
+id = 30
+name = "ギガスプラッシュ"
+aka = ""
+element = Array[ExtResource("2_g8rgo")]([ExtResource("3_76owy")])
+max_chance = 10
+power = 90
+mp = 20
+range = 1
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_1drug")]([])
+ability_chance = Array[int]([50])
+ability_power = Array[int]([5])
+ability_range = Array[int]([0])
+description = "上級攻撃魔法。高圧の
+水を射出して攻撃し、
+50%で水没させる。
+(この特殊効果は未実装)"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

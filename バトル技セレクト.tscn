@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://beqj30dqa47wc"]
+
+[ext_resource type="Script" uid="uid://exp0jcqfy3ir" path="res://バトル技セレクト.gd" id="1_fluj4"]
+
+[sub_resource type="Theme" id="Theme_x41gy"]
+default_font_size = 30
+
+[node name="バトル技セレクト" type="Button"]
+offset_right = 100.0
+offset_bottom = 50.0
+theme = SubResource("Theme_x41gy")
+alignment = 0
+expand_icon = true
+script = ExtResource("1_fluj4")
