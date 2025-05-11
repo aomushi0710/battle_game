@@ -14,6 +14,7 @@ signal command
 
 func _on_player_1_randomize_set(): # 乱数幅設定
 	randomize()
+	action = Global.enemy_deck.action[index]
 	var sum_range = 0
 	for i in len(chance):
 		var range = chance[i]
