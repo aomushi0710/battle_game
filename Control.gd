@@ -8,6 +8,7 @@ var monster_data = Global.monster_data
 var act_name = ""
 var detail = ""
 
+
 # 押したボタンの場所のモンスターを選択
 func _on_first_button_up():
 	Global.now_picking = 0
@@ -50,6 +51,10 @@ func _on_デッキセレクト_tree_entered():
 			$first.texture_normal = first_texture
 			$second.texture_normal = second_texture
 			$third.texture_normal = third_texture
+	
+	$"../enemy/monster/first".texture_normal = Global.enemy_deck.monster[0].image
+	$"../enemy/monster/second".texture_normal = Global.enemy_deck.monster[1].image
+	$"../enemy/monster/third".texture_normal = Global.enemy_deck.monster[2].image
 	Global.now_picking = 3
 
 
@@ -61,7 +66,6 @@ func _on_test_button_up():
 			return
 	
 	Global.deck1.evolution_check(Global.deck1) # 自分のデッキに対してチェック
-	Global.deck_creator(Global.enemy_deck) # デッキ生成時にすでにチェックがされている
 	get_tree().change_scene_to_packed(Global.buttle_scene)
 
 

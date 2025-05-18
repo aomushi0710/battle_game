@@ -433,9 +433,6 @@ func target_text_log(x):
 	"相手の " + enemy_deck.monster[x].name + " に攻撃の狙いを定めた！\n"
 
 
-func _on_バトル終了_button_up():
-	pass # Replace with function body.
-
 func death_check():
 	if Global.e1_death == true and Global.e2_death == true and Global.e3_death == true:
 		$result_rect.show()

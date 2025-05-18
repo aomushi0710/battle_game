@@ -278,6 +278,42 @@ offset_bottom = 478.0
 theme = SubResource("Theme_g1t6r")
 text = "バトル！"
 
+[node name="enemy" type="Control" parent="Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="monster" type="HBoxContainer" parent="Control/enemy"]
+layout_mode = 0
+offset_left = 654.0
+offset_top = 50.0
+offset_right = 1422.0
+offset_bottom = 306.0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/separation = 0
+
+[node name="first" type="TextureButton" parent="Control/enemy/monster"]
+layout_mode = 2
+texture_normal = ExtResource("2_34w54")
+
+[node name="second" type="TextureButton" parent="Control/enemy/monster"]
+layout_mode = 2
+texture_normal = ExtResource("3_qs0ub")
+
+[node name="third" type="TextureButton" parent="Control/enemy/monster"]
+layout_mode = 2
+texture_normal = ExtResource("4_qklf7")
+
+[node name="deck" type="RichTextLabel" parent="Control/enemy"]
+layout_mode = 0
+offset_left = 643.0
+offset_top = 7.0
+offset_right = 1019.0
+offset_bottom = 49.0
+bbcode_enabled = true
+text = " 次の相手のデッキ"
+vertical_alignment = 1
+
 [connection signal="tree_entered" from="." to="Control/デッキ1" method="_on_デッキセレクト_tree_entered"]
 [connection signal="button_up" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_button_up"]
 [connection signal="focus_entered" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_focus_entered"]

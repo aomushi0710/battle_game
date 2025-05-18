@@ -1,9 +1,12 @@
 extends Node2D
 
+func _ready() -> void:
+	Global.deck_creator(Global.enemy_deck)
+
+
 func _on_button_pressed():
 	# 定義したシーンに切り替え
 	get_tree().change_scene_to_packed(Global.deck_scene)
-	
 
 
 func _on_debug_button_up():

@@ -1,15 +1,12 @@
-res://メインシーン.tscn
+res://buttle_buttons.gd
+res://新バトル.tscn
 res://theme/default_font_30.tres
 res://theme/default_font_20.tres
 res://キャラセレクト.gd
 res://buttle.gd
+res://clear_font.tres
 res://Button.gd
-res://e1_command.gd
-res://e2_command.gd
-res://e3_command.gd
-res://p2_command.gd
-res://p3_command.gd
-res://コマンド.gd
+res://メインシーン.tscn
 res://デッキセレクト.tscn
 res://デッキセーブデータ.tscn
 res://デッキスロット.tscn
@@ -20,3 +17,7 @@ res://バトル.tscn
 res://バトル技セレクト.tscn
 res://sound_effects.tscn
 res://debug.tscn
+res://バフデバフアイコン.tscn
+res://Control.gd
+res://メインシーン.gd
+res://バトル終了.gd

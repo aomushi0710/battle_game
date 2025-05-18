@@ -1,0 +1,154 @@
+[gd_scene load_steps=10 format=3 uid="uid://bhqk4iva02mmc"]
+
+[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_nfpvw"]
+[ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="2_tc6cq"]
+[ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="3_hwahx"]
+[ext_resource type="Texture2D" uid="uid://dxssu1v1art5l" path="res://bar_empty.PNG" id="4_ys3qb"]
+[ext_resource type="Texture2D" uid="uid://bnagnglpfolr3" path="res://bar_hp.PNG" id="5_jjjva"]
+[ext_resource type="Texture2D" uid="uid://c6esjhqxk7oyw" path="res://bar_mp.PNG" id="6_g5d16"]
+[ext_resource type="Texture2D" uid="uid://cqv7q4fa8fjrt" path="res://bar_spd.PNG" id="7_sraw4"]
+[ext_resource type="Theme" uid="uid://boebxhhsukoff" path="res://clear_font.tres" id="8_tc6cq"]
+[ext_resource type="Script" uid="uid://o4ioqobn45d0" path="res://buttle_buttons.gd" id="9_hwahx"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_nfpvw")
+
+[node name="player" type="TextureButton" parent="Control"]
+layout_mode = 0
+offset_left = 358.0
+offset_top = 192.0
+offset_right = 614.0
+offset_bottom = 448.0
+scale = Vector2(0.7, 0.7)
+texture_normal = ExtResource("2_tc6cq")
+
+[node name="バフデバフコンテナ" type="HBoxContainer" parent="Control/player"]
+layout_mode = 0
+offset_top = 256.0
+offset_right = 1280.0
+offset_bottom = 512.0
+scale = Vector2(0.2, 0.2)
+alignment = 2
+
+[node name="バフデバフアイコン" type="TextureButton" parent="Control/player/バフデバフコンテナ"]
+layout_mode = 2
+texture_normal = ExtResource("3_hwahx")
+
+[node name="ターン数テキスト" type="RichTextLabel" parent="Control/player/バフデバフコンテナ/バフデバフアイコン"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 130.0
+offset_right = 146.0
+offset_bottom = 170.0
+scale = Vector2(4, 4)
+theme = ExtResource("1_nfpvw")
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99 [/b][/i][/color][/right]"
+horizontal_alignment = 2
+
+[node name="HP" type="TextureProgressBar" parent="Control/player"]
+z_index = -1
+layout_mode = 0
+offset_top = 236.0
+offset_right = 256.0
+offset_bottom = 492.0
+scale = Vector2(1, 0.7)
+value = 50.0
+texture_under = ExtResource("4_ys3qb")
+texture_progress = ExtResource("5_jjjva")
+
+[node name="text" type="Label" parent="Control/player/HP"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 105.714
+offset_right = 633.0
+offset_bottom = 252.714
+scale = Vector2(0.25, 0.25)
+theme = ExtResource("8_tc6cq")
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 8
+text = " HP 555/999"
+
+[node name="MP" type="TextureProgressBar" parent="Control/player"]
+z_index = -1
+layout_mode = 0
+offset_top = 272.0
+offset_right = 256.0
+offset_bottom = 528.0
+scale = Vector2(1, 0.7)
+value = 50.0
+texture_under = ExtResource("4_ys3qb")
+texture_progress = ExtResource("6_g5d16")
+
+[node name="SPD" type="TextureProgressBar" parent="Control/player"]
+z_index = -1
+layout_mode = 0
+offset_top = 308.0
+offset_right = 256.0
+offset_bottom = 564.0
+scale = Vector2(1, 0.7)
+value = 50.0
+texture_under = ExtResource("4_ys3qb")
+texture_progress = ExtResource("7_sraw4")
+
+[node name="button" type="Control" parent="Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_hwahx")
+
+[node name="main" type="Control" parent="Control/button"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Action" type="Button" parent="Control/button/main"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 500.0
+offset_right = 445.0
+offset_bottom = 542.0
+text = "Action"
+
+[node name="Item" type="Button" parent="Control/button/main"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 550.0
+offset_right = 445.0
+offset_bottom = 592.0
+text = "Item"
+
+[node name="Status" type="Button" parent="Control/button/main"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 600.0
+offset_right = 445.0
+offset_bottom = 642.0
+text = "Status"
+
+[node name="action" type="VBoxContainer" parent="Control/button"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 500.0
+offset_right = 445.0
+offset_bottom = 643.0
+
+[node name="戻る" type="Button" parent="Control/button"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 25.0
+offset_top = 594.0
+offset_right = 123.0
+offset_bottom = 643.0
+disabled = true
+text = "⬅️戻る"
+
+[connection signal="button_up" from="Control/button/main/Action" to="Control/button" method="_on_action_button_up"]
+[connection signal="button_up" from="Control/button/main/Item" to="Control/button" method="_on_item_button_up"]
+[connection signal="button_up" from="Control/button/main/Status" to="Control/button" method="_on_status_button_up"]

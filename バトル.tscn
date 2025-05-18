@@ -762,6 +762,7 @@ offset_right = 1050.0
 offset_bottom = 326.0
 theme = SubResource("Theme_bl78q")
 script = ExtResource("16_o3k3h")
+metadata/_edit_use_anchors_ = true
 
 [node name="name" type="RichTextLabel" parent="enemies/enemy1/enemy1"]
 layout_mode = 0
