@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://c8i4aj04pf5jp"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_exehr"]
+
+[resource]
+script = ExtResource("1_exehr")
+category = 0
+ailment = 0
+buff = 0
+debuff = 0
+healing = 0
+steal = 0
+critical = 0
+additional = 0
+percentage = 0
+evolution = 0
+name = ""
+range = 0
+trigger = 0
+metadata/_custom_type_script = "uid://n6604vih5t55"

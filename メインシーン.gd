@@ -2,6 +2,7 @@ extends Node2D
 
 func _ready() -> void:
 	Global.deck_creator(Global.enemy_deck)
+	$version.text = "[i]%s [/i]" % Global.VERSION_TEXT
 
 
 func _on_button_pressed():

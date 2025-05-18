@@ -102,13 +102,14 @@ text = "debug"
 
 [node name="version" type="RichTextLabel" parent="."]
 z_index = -1
-offset_left = 1000.0
+offset_left = 973.0
 offset_top = 600.0
 offset_right = 1130.0
 offset_bottom = 630.0
 theme = ExtResource("4_lf3g1")
 bbcode_enabled = true
-text = "[i]β.ver.3.0.0[/i]"
+text = "[i]β.ver.3.0.0[/i] "
+horizontal_alignment = 2
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="toggled" from="help" to="help" method="_on_toggled"]
