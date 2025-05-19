@@ -170,6 +170,7 @@ offset_bottom = 598.0
 theme = SubResource("Theme_m0p40")
 text = "←戻る"
 
+[connection signal="tree_entered" from="." to="キャラセレクト" method="_on_node_2d_tree_entered"]
 [connection signal="button_up" from="キャラセレクト/戻る" to="キャラセレクト" method="_on_戻る_button_up"]
 [connection signal="toggled" from="キャラセレクト/help" to="キャラセレクト/help" method="_on_toggled"]
 [connection signal="button_up" from="キャラセレクト/help/ColorRect/monster_help" to="キャラセレクト/help" method="_on_monster_help_button_up"]

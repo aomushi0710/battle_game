@@ -16,10 +16,11 @@ func _on_node_2d_tree_entered():
 	sum_chance = 0
 	
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
-	if Global.deck1.monster[Global.now_picking].id == monster_id:
-		for i in len(Global.deck1.action[Global.now_picking]):
-			selected_action[Global.deck1.action[Global.now_picking][i]] = \
-			Global.deck1.chance[Global.now_picking][i] # selected_action生成
+	if Global.deck1.monster[Global.now_picking] != null:
+		if Global.deck1.monster[Global.now_picking].id == monster_id:
+			for i in len(Global.deck1.action[Global.now_picking]):
+				selected_action[Global.deck1.action[Global.now_picking][i]] = \
+				Global.deck1.chance[Global.now_picking][i] # selected_action生成
 	ui_update()
 
 

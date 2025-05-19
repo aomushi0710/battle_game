@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bhqk4iva02mmc"]
+[gd_scene load_steps=11 format=3 uid="uid://bhqk4iva02mmc"]
 
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_nfpvw"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="2_tc6cq"]
 [ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="3_hwahx"]
+[ext_resource type="Script" uid="uid://b0yxuo4ii0je" path="res://buttle_monster.gd" id="3_ys3qb"]
 [ext_resource type="Texture2D" uid="uid://dxssu1v1art5l" path="res://bar_empty.PNG" id="4_ys3qb"]
 [ext_resource type="Texture2D" uid="uid://bnagnglpfolr3" path="res://bar_hp.PNG" id="5_jjjva"]
 [ext_resource type="Texture2D" uid="uid://c6esjhqxk7oyw" path="res://bar_mp.PNG" id="6_g5d16"]
@@ -27,6 +28,7 @@ offset_right = 614.0
 offset_bottom = 448.0
 scale = Vector2(0.7, 0.7)
 texture_normal = ExtResource("2_tc6cq")
+script = ExtResource("3_ys3qb")
 
 [node name="バフデバフコンテナ" type="HBoxContainer" parent="Control/player"]
 layout_mode = 0
@@ -51,6 +53,14 @@ theme = ExtResource("1_nfpvw")
 bbcode_enabled = true
 text = "[right][color=yellow][i][b]99 [/b][/i][/color][/right]"
 horizontal_alignment = 2
+
+[node name="name" type="RichTextLabel" parent="Control/player"]
+offset_top = -40.0
+offset_right = 256.0
+bbcode_enabled = true
+text = "[img=35]res://image/element/無属性.PNG[/img] 名前"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HP" type="TextureProgressBar" parent="Control/player"]
 z_index = -1
@@ -96,6 +106,13 @@ scale = Vector2(1, 0.7)
 value = 50.0
 texture_under = ExtResource("4_ys3qb")
 texture_progress = ExtResource("7_sraw4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/player"]
+layout_mode = 0
+offset_top = -40.0
+offset_right = 256.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/player/HBoxContainer"]
 
 [node name="button" type="Control" parent="Control"]
 anchors_preset = 0

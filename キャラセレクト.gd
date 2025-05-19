@@ -6,8 +6,9 @@ const HCONTAINER_LIMIT: int = 7 # モンスターボタンを横に並べられ�
 func _on_戻る_button_up():
 	get_tree().change_scene_to_packed(Global.deck_scene)
 
-# モンスターの数だけボタンを生成する関数
-func _ready() -> void:
+
+func _on_node_2d_tree_entered() -> void:
+	# モンスターの数だけボタンを生成する関数
 	for i in range(1, len(monster_data)): # monster_data[i]:Dictionary[Monster]型
 		var button = TextureButton.new()
 		
@@ -27,6 +28,17 @@ func _ready() -> void:
 			if container.get_child_count() < HCONTAINER_LIMIT: # 横への表示数の限界でなければ
 				container.add_child(button) # 登録
 				break
+	
+	# 既に選ばれているモンスターを選べないように
+	for monster in Global.deck1.monster:
+		if monster != null:
+			if monster.id != Global.deck1.monster[Global.now_picking].id:
+				var id = monster.id
+				var j = (id - 1) / HCONTAINER_LIMIT # 行指定
+				var i = id - HCONTAINER_LIMIT * j - 1 # 列指定
+				$VBoxContainer.get_child(j).get_child(i).disabled = true
+				$VBoxContainer.get_child(j).get_child(i).modulate = Color(50, 50, 50)
+
 
 func status(i: int) -> void: # マウスを合わせたモンスターのステータスを表示
 	$status/default.text = ""

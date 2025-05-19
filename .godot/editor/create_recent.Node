@@ -1,7 +1,8 @@
+AnimatedSprite2D
+HBoxContainer
 RichTextLabel
 TextureButton
 Control
-HBoxContainer
 VBoxContainer
 Button
 Label

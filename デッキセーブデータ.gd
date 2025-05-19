@@ -29,6 +29,10 @@ func _on_戻る_button_up() -> void:
 
 
 func save_file(slot: int) -> void:
+	if Global.deck1.monster.size() < 3 or null in Global.deck1.monster:
+		$"エラーメッセージ".dialog_text = "デッキをセーブするには、全ての枠を埋めてください！"
+		$"エラーメッセージ".popup_centered()
+		return
 	# 技のlist of listを技のIDのlist of listに変換
 	var action_id: Array[Array] = [[],[],[]] # 技のIDに変換されたもの
 	for index in range(3): # 全てのモンスターに対して

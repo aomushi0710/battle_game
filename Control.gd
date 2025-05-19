@@ -48,9 +48,13 @@ func _on_デッキセレクト_tree_entered():
 				2:
 					$third.texture_normal = monster.image
 		else:
-			$first.texture_normal = first_texture
-			$second.texture_normal = second_texture
-			$third.texture_normal = third_texture
+			match i:
+				0:
+					$first.texture_normal = first_texture
+				1:
+					$second.texture_normal = second_texture
+				2:
+					$third.texture_normal = third_texture
 	
 	$"../enemy/monster/first".texture_normal = Global.enemy_deck.monster[0].image
 	$"../enemy/monster/second".texture_normal = Global.enemy_deck.monster[1].image

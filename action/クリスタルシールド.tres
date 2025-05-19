@@ -22,7 +22,8 @@ ability = Array[ExtResource("1_jg3i8")]([ExtResource("2_xtcl5")])
 ability_chance = Array[int]([100])
 ability_power = Array[int]([3])
 ability_range = Array[int]([0])
-description = "クリスタルシールドを
+description = "大気中の水蒸気を冷却、
+クリスタルシールドを
 展開し、結晶が敵の魔法の
 威力を軽減する。
 味方全体のRESを

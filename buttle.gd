@@ -37,18 +37,23 @@ func _ready():
 	$"../バトル終了".z_index = 11
 
 # 複数の属性を持つ場合にそれぞれに倍率計算を施す関数
-func attribute_setup(action: Action, monster: Monster) -> float:
+func attribute_setup(action: Action, monster: Monster, aiteno: String) -> float:
 	var magnification: float = 1.0 # 最終的な属性相性倍率
 	for act_element: Element in action.element:
 		for monster_element: Element in monster.element:
 			magnification *= attribute(act_element.id, monster_element.id)
 	
+	if aiteno == "": # 反転
+		aiteno = "相手の "
+	else:
+		aiteno = ""
+	
 	if magnification >= 2.0:
 		$"../log_window/log".text += \
-		"[color=red]相手の %s の弱点をついた！[/color]\n" % monster.name
+		"[color=red]%s%s の弱点をついた！[/color]\n" % [aiteno, monster.name]
 	elif magnification < 1.0:
 		$"../log_window/log".text += \
-		"[color=light_blue]相手の %s は耐性があるようだ...[/color]\n" % monster.name
+		"[color=light_blue]%s%s は耐性があるようだ...[/color]\n" % [aiteno, monster.name]
 	
 	return magnification
 
@@ -68,7 +73,7 @@ func attribute(o: int,d: int):
 
 # ダメージ計算機 攻撃する技、攻撃側及び守備側のモンスターとエフェクトを引数に、ダメージを返す
 func damage_calc(action: Action, offense_monster: Monster, defense_monster: Monster, 
-offense_effect: Array, defense_effect: Array) -> int:
+offense_effect: Array, defense_effect: Array, aiteno: String) -> int:
 	if action.power == 0: # powerが0なら不要なので中断
 		return 0
 	
@@ -103,7 +108,7 @@ offense_effect: Array, defense_effect: Array) -> int:
 					if effect.buff == type[i]:
 						status[i] /= effect.power
 	# 属性相性倍率計算
-	var magnification = attribute_setup(action, defense_monster)
+	var magnification = attribute_setup(action, defense_monster, aiteno)
 	# power * ((攻撃側ステータス / 守備側ステータス) ** ステータス乖離ボーナス(1.2) * 属性相性
 	var damage = action.power * ((status[0] / status[1]) ** 1.2) * magnification
 	
@@ -306,7 +311,8 @@ func _on_buttle_command(action: Action, monster: Monster, boolian: bool, index: 
 	
 	match action.range:
 		1: # 敵単体
-			var damage = damage_calc(action, monster, enemy, offense_effect, defense_effect)
+			var damage = damage_calc(action, monster, enemy, \
+			offense_effect, defense_effect, aiteno)
 			if boolian == true:
 				match target:
 					0:
@@ -332,21 +338,22 @@ func _on_buttle_command(action: Action, monster: Monster, boolian: bool, index: 
 		5: # 自分
 			pass
 		6: # 敵散開
-			var damage = damage_calc(action, monster, enemy, offense_effect, defense_effect)
+			var damage = damage_calc(action, monster, enemy, \
+			offense_effect, defense_effect, aiteno)
 			if boolian == true:
 				match target:
 					0:
 						enemy_damage1.emit(damage)
 						if death_list1[1] == false: # 生きていたら
 							damage = damage_calc(action, monster, defense_deck.monster[1], \
-							offense_effect, defense_deck.effect[1].keys()) / 2
+							offense_effect, defense_deck.effect[1].keys(), aiteno) / 2
 							enemy_damage2.emit(damage) # 半分のダメージを与える
 					1:
 						enemy_damage2.emit(damage)
 						for i in [0, 2]:
 							if death_list1[i] == false: # 生きていたら
 								damage = damage_calc(action, monster, defense_deck.monster[i], \
-								offense_effect, defense_deck.effect[i].keys()) / 2
+								offense_effect, defense_deck.effect[i].keys(), aiteno) / 2
 								
 								match i:
 									0:
@@ -357,7 +364,7 @@ func _on_buttle_command(action: Action, monster: Monster, boolian: bool, index: 
 						enemy_damage3.emit(damage)
 						if death_list1[1] == false: # 生きていたら
 							damage = damage_calc(action, monster, defense_deck.monster[1], \
-							offense_effect, defense_deck.effect[1].keys()) / 2
+							offense_effect, defense_deck.effect[1].keys(), aiteno) / 2
 							enemy_damage2.emit(damage) # 半分のダメージを与える
 			else:
 				match target:
@@ -365,14 +372,14 @@ func _on_buttle_command(action: Action, monster: Monster, boolian: bool, index: 
 						player_damage1.emit(damage)
 						if death_list1[1] == false: # 生きていたら
 							damage = damage_calc(action, monster, defense_deck.monster[1], \
-							offense_effect, defense_deck.effect[1].keys()) / 2
+							offense_effect, defense_deck.effect[1].keys(), aiteno) / 2
 							player_damage2.emit(damage) # 半分のダメージを与える
 					1:
 						player_damage2.emit(damage)
 						for i in [0, 2]:
 							if death_list1[i] == false: # 生きていたら
 								damage = damage_calc(action, monster, defense_deck.monster[i], \
-								offense_effect, defense_deck.effect[i].keys()) / 2
+								offense_effect, defense_deck.effect[i].keys(), aiteno) / 2
 								
 								match i:
 									0:
@@ -383,7 +390,7 @@ func _on_buttle_command(action: Action, monster: Monster, boolian: bool, index: 
 						player_damage3.emit(damage)
 						if death_list1[1] == false: # 生きていたら
 							damage = damage_calc(action, monster, defense_deck.monster[1], \
-							offense_effect, defense_deck.effect[1].keys()) / 2
+							offense_effect, defense_deck.effect[1].keys(), aiteno) / 2
 							player_damage2.emit(damage) # 半分のダメージを与える
 	
 	if action.power != 0:

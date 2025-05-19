@@ -10,6 +10,7 @@ var index = 1 # deckクラス内におけるモンスターの位置
 var monster_dict = Global.enemy_deck.monster_dict[index]
 var monster: Monster = Global.enemy_deck.monster[index]
 var effects = Global.enemy_deck.effect[index] # Dictionary{エフェクト名:ターン数}
+var spd = monster.SPD
 
 signal mp
 signal command
@@ -18,9 +19,11 @@ func _ready() -> void:
 	$".".max_value = float(Global.spd_gauge)
 
 func _process(delta): # ゲージが溜まるまで自動で増加、溜まると停止
+	if effects.keys() != Global.deck1.effect[index].keys(): # エフェクトが更新された時
+		reload() # spdを計算しなおす
 	if $".".value < Global.spd_gauge: # SPDの値ずつ毎秒増加していき、500まで到達するとコマンドリストを表示
-		$".".value += monster.SPD * Global.spd_correction * delta
-		call("text_update")
+		$".".value += spd * Global.spd_correction * delta
+		text_update()
 	elif $".".value >= Global.spd_gauge:
 		set_process(false)
 		for button in $"../e2_command".get_children():
@@ -45,3 +48,9 @@ func _on_コマンド_spd(): # ターン経過処理
 
 func reload() -> void:
 	monster = Global.enemy_deck.monster[index]
+	spd = monster.SPD
+	for effect: Effect in Global.enemy_deck.effect[index]:
+			if effect.buff == 5:
+				spd *= effect.power
+			if effect.debuff == 5:
+				spd /= effect.power
