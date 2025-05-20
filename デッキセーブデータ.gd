@@ -30,6 +30,7 @@ func _on_戻る_button_up() -> void:
 
 func save_file(slot: int) -> void:
 	if Global.deck1.monster.size() < 3 or null in Global.deck1.monster:
+		$"エラーメッセージ".title = "⚠️ERROR⚠️"
 		$"エラーメッセージ".dialog_text = "デッキをセーブするには、全ての枠を埋めてください！"
 		$"エラーメッセージ".popup_centered()
 		return
@@ -73,6 +74,7 @@ func load_file(slot: int) -> void:
 	var deck_data = load_game(slot)
 	
 	if deck_data == {}:
+		$エラーメッセージ.title = "⚠️ERROR⚠️"
 		$エラーメッセージ.dialog_text = "セーブデータが存在しません"
 		$エラーメッセージ.popup_centered()
 	# β版で正式版、正式版でβ版のデータをロードしようとした時
@@ -108,6 +110,9 @@ func load_file(slot: int) -> void:
 		deck.skill[i] = pos["skill"]
 	
 	deck.evolution_check(deck)
+	$"エラーメッセージ".title = "✅ロード完了✅"
+	$"エラーメッセージ".dialog_text = "デッキのロードが完了しました！"
+	$"エラーメッセージ".popup_centered()
 
 
 func reset_file(slot: int) -> void:

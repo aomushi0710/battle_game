@@ -112,8 +112,6 @@ layout_mode = 0
 offset_top = -40.0
 offset_right = 256.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/player/HBoxContainer"]
-
 [node name="button" type="Control" parent="Control"]
 anchors_preset = 0
 offset_right = 40.0

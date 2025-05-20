@@ -379,6 +379,11 @@ text = "未設定"
 layout_mode = 2
 editable = false
 
+[node name="SpinBox" type="SpinBox" parent="セレクト/出現率設定UI"]
+layout_mode = 0
+offset_right = 86.0
+offset_bottom = 42.0
+
 [node name="help" type="Button" parent="セレクト"]
 process_mode = 3
 layout_mode = 0
@@ -488,16 +493,14 @@ text = "←戻る"
 [connection signal="item_selected" from="セレクト/セレクトUI/スキル/スキルボタン" to="セレクト" method="_on_スキルボタン_item_selected"]
 [connection signal="draw" from="セレクト/セレクトUI/技" to="セレクト" method="_on_技_draw"]
 [connection signal="select" from="セレクト/セレクトUI/技" to="セレクト" method="_on_技_select"]
-[connection signal="select" from="セレクト/セレクトUI/技" to="セレクト/description_ui/element/element_text" method="_on_技_select"]
+[connection signal="select" from="セレクト/セレクトUI/技" to="セレクト/description_ui/element/element_text" method="selected"]
 [connection signal="sort_children" from="セレクト/セレクトUI/技" to="セレクト" method="_on_技_sort_children"]
 [connection signal="tree_entered" from="セレクト/セレクトUI/技" to="セレクト/セレクトUI/技" method="_on_tree_entered"]
 [connection signal="draw" from="セレクト/セレクトUI/中間進化技" to="セレクト" method="_on_中間進化技_draw"]
 [connection signal="select" from="セレクト/セレクトUI/中間進化技" to="セレクト" method="_on_技_select"]
-[connection signal="select" from="セレクト/セレクトUI/中間進化技" to="セレクト/description_ui/element/element_text" method="_on_技_select"]
 [connection signal="tree_entered" from="セレクト/セレクトUI/中間進化技" to="セレクト/セレクトUI/中間進化技" method="_on_tree_entered"]
 [connection signal="draw" from="セレクト/セレクトUI/進化技" to="セレクト" method="_on_進化技_draw"]
 [connection signal="select" from="セレクト/セレクトUI/進化技" to="セレクト" method="_on_技_select"]
-[connection signal="select" from="セレクト/セレクトUI/進化技" to="セレクト/description_ui/element/element_text" method="_on_技_select"]
 [connection signal="tree_entered" from="セレクト/セレクトUI/進化技" to="セレクト/セレクトUI/進化技" method="_on_tree_entered"]
 [connection signal="value_changed" from="セレクト/出現率設定UI/出現率設定UI/act_slider1" to="セレクト" method="_on_act_slider_1_value_changed"]
 [connection signal="value_changed" from="セレクト/出現率設定UI/出現率設定UI/act_slider2" to="セレクト" method="_on_act_slider_2_value_changed"]

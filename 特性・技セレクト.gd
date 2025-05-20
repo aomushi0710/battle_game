@@ -332,15 +332,6 @@ func _on_技_select(act: Action):
 		text.text = "[center]なし\n対象:[color=yellow]――――[/color] 確率:[color=green]---%[/color][/center]"
 		$description_ui.add_child(ability,-1)
 	
-	if len(act.element) == 1:
-		$description_ui/element/element_text.set_process(false)
-		$description_ui/element/element_text.self_modulate.a = 1.0
-		$description_ui/element/element_text.text = "[center][img=25]" + \
-		act.element[0].icon.resource_path + "[/img]" + act.element[0].name + "[/center]" 
-	else:
-		$description_ui/element/element_text.action = act
-		$description_ui/element/element_text.set_process(true)
-	
 	$description_ui/name/name_text.text = "[center][b][i]" + aka + "[/i][/b][/center]"
 	$description_ui/damage_type/damage_type_text.text = "[center][hint=" + dmg_type_tip + \
 	"]分類:" + dmg_type_text + "[/hint][/center]"
@@ -361,11 +352,14 @@ func ui_update(): # 先にsliderのvalueを取得しなければlabelのtextを�
 	
 	var slider = [] # sliderノードを格納
 	var label = [] # labelノードを格納
+	var spinbox = [] # spinboxノードを格納
 	for child in $出現率設定UI/出現率設定UI.get_children(): # 子ノードをforループ
 		if child is HSlider: # slider分類
 			slider.append(child)
 		elif child is RichTextLabel: # label分類
 			label.append(child)
+		elif child is SpinBox:
+			spinbox.append(child)
 			
 	for i: int in len(slider): # HSliderから、value取得  sliderとselected_action_nameのindexを同期させている
 		if len(selected_action) > i: # 現在選択中の技のみ
@@ -378,6 +372,16 @@ func ui_update(): # 先にsliderのvalueを取得しなければlabelのtextを�
 			slider[i].set_value_no_signal(0) # この関数を使うとvalue_changedに影響を与えずにvalueを変更できる
 			slider[i].tick_count = 0
 			slider[i].editable = false
+	
+	for i: int in len(spinbox):
+		if len(selected_action) > i:
+			var action: Action = selected_action.keys()[i]
+			spinbox[i].max_value = float(action.max_chance)
+			spinbox[i].value = float(selected_action[action])
+			spinbox[i].editable = true
+		else:
+			spinbox[i].set_value_no_signal(0)
+			spinbox[i].editable = false
 	
 	for i: int in len(label): # TODO 今後、複数属性を持つ場合にも対応する
 		if len(selected_action) > i:

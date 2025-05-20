@@ -72,3 +72,7 @@ res://特性・技セレクト.gd
 res://デッキセーブデータ.gd
 res://buttle_monster.gd
 res://Global.gd
+res://技セレクトボタン.gd
+res://中間進化技.gd
+res://技.gd
+res://進化技.gd
