@@ -7,7 +7,6 @@ var monster_data = Global.monster_data # モンスターの各種データ取得
 var action_data = Global.action_data # 技の各種データ取得
 var monster_id = Global.selected_monster
 var selected_action = {} # key:選ばれた技(Action) value:出現率(int)
-var value = 0 # ui_update内変数
 var check_provability = [] # 出現率0%弾き出し用
 
 func _on_node_2d_tree_entered():
@@ -358,14 +357,15 @@ func ui_update(): # 先にsliderのvalueを取得しなければlabelのtextを�
 			slider.append(child)
 		elif child is RichTextLabel: # label分類
 			label.append(child)
-		elif child is SpinBox:
+	for child in $"出現率設定UI".get_children():
+		if child is SpinBox:
 			spinbox.append(child)
 			
 	for i: int in len(slider): # HSliderから、value取得  sliderとselected_action_nameのindexを同期させている
 		if len(selected_action) > i: # 現在選択中の技のみ
 			var action: Action = selected_action.keys()[i]
 			slider[i].max_value = float(action.max_chance)
-			slider[i].value = float(selected_action[action])
+			slider[i].set_value_no_signal(selected_action[action])
 			slider[i].tick_count = action.max_chance / 10 + 1 # スライダー目盛り生成
 			slider[i].editable = true
 		else: # 未選択のものは初期化＋非表示
@@ -377,7 +377,7 @@ func ui_update(): # 先にsliderのvalueを取得しなければlabelのtextを�
 		if len(selected_action) > i:
 			var action: Action = selected_action.keys()[i]
 			spinbox[i].max_value = float(action.max_chance)
-			spinbox[i].value = float(selected_action[action])
+			spinbox[i].set_value_no_signal(selected_action[action])
 			spinbox[i].editable = true
 		else:
 			spinbox[i].set_value_no_signal(0)
@@ -386,33 +386,43 @@ func ui_update(): # 先にsliderのvalueを取得しなければlabelのtextを�
 	for i: int in len(label): # TODO 今後、複数属性を持つ場合にも対応する
 		if len(selected_action) > i:
 			var action: Action = selected_action.keys()[i]
-			label[i].text = " [img=20]%s[/img] " % action.element[0].icon.resource_path + \
-			action.name + " : [color=red]%3d%%[/color]" % selected_action[action]
+			label[i].text = " [img=20]%s[/img] %s" % \
+			[action.element[0].icon.resource_path, action.name]
 		else:
 			label[i].text = " 未設定"
 	
+	var color_list: Array[String]
 	for i in selected_action.values(): # 出現率の合計値を取得
 		sum_chance += i
+	if sum_chance == 100:
+		color_list = ["green", "white"]
+	else:
+		color_list = ["red", "yellow"]
+	$status/chance.text = "[b]現在の出現率[/b]\n\n" + \
+	"合計 : [color=%s]%3d%%[/color]\n余り : [color=%s]%3d%%[/color]" % \
+	[color_list[0], sum_chance, color_list[1], 100 - sum_chance]
 	now_select_action = 0
 
 func _on_act_slider_1_value_changed(value):
-	selected_action[selected_action.keys()[0]] = value
-	ui_update()
+	value_change(0, value)
 
 func _on_act_slider_2_value_changed(value):
-	selected_action[selected_action.keys()[1]] = value
-	ui_update()
+	value_change(1, value)
 
 func _on_act_slider_3_value_changed(value):
-	selected_action[selected_action.keys()[2]] = value
-	ui_update()
+	value_change(2, value)
 
 func _on_act_slider_4_value_changed(value):
-	selected_action[selected_action.keys()[3]] = value
+	value_change(3, value)
+
+func value_change(i: int, value: int) -> void:
+	selected_action[selected_action.keys()[i]] = value
 	ui_update()
 
 
 func status_text(monster: Monster) -> void:
+	for label in $status/VBoxContainer.get_children():
+		label.queue_free()
 	$status/monster.texture = monster.image
 	match monster.form:
 		0:
@@ -421,7 +431,8 @@ func status_text(monster: Monster) -> void:
 			$status/title.text = "[center][color=yellow]中間進化後のステータス[/color][/center]"
 		2:
 			$status/title.text = "[center][color=red]進化後のステータス[/color][/center]"
-	$status/status.text = Global.status_text(monster,34)
+	for label in Global.all_status(monster):
+		$status/VBoxContainer.add_child(label)
 
 func reset():
 	for act_ui in $出現率設定UI/出現率設定UI.get_children():

@@ -49,8 +49,10 @@ offset_left = 100.0
 offset_top = 8.0
 offset_right = 484.0
 offset_bottom = 50.0
-placeholder_text = "デッキ名を入力"
+placeholder_text = "デッキ名(最大20文字)"
 max_length = 20
+clear_button_enabled = true
+caret_blink = true
 
 [node name="first" type="TextureButton" parent="Control/デッキ1"]
 layout_mode = 0
@@ -203,6 +205,7 @@ script = ExtResource("5_jtnis")
 
 [node name="ColorRect" type="ColorRect" parent="Control/help"]
 visible = false
+z_index = 1
 layout_mode = 0
 offset_left = -1050.0
 offset_bottom = 650.0
@@ -314,6 +317,12 @@ bbcode_enabled = true
 text = " 次の相手のデッキ"
 vertical_alignment = 1
 
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "新"
+
 [connection signal="tree_entered" from="." to="Control/デッキ1" method="_on_デッキセレクト_tree_entered"]
 [connection signal="button_up" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_button_up"]
 [connection signal="focus_entered" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_focus_entered"]
@@ -328,4 +337,4 @@ vertical_alignment = 1
 [connection signal="button_up" from="Control/buttle" to="Control/デッキ1" method="_on_test_button_up"]
 [connection signal="button_up" from="Control/戻る" to="Control/デッキ1" method="_on_戻る_button_up"]
 [connection signal="toggled" from="Control/help" to="Control/help" method="_on_toggled"]
-[connection signal="button_up" from="Control/help/ColorRect/help_buttle" to="Control/デッキ1" method="_on_test_button_up"]
+[connection signal="button_up" from="Control/Button" to="Control/デッキ1" method="_on_new_button_up"]

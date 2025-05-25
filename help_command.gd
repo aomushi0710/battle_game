@@ -27,7 +27,6 @@ func _on_help_spd_help_command():
 		else:
 			instance.text = actions[i].name
 		instance.action = actions[i]
-		instance.element_icon.connect(func():element_icon(instance, actions[i].element))
 		instance.button_up.connect(func():select_command(i))
 		add_child(instance)
 

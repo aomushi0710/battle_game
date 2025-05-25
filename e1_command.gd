@@ -41,7 +41,6 @@ func _on_p_1_spd_command(): # 一旦、actionsにappendし、後でまとめて�
 		else:
 			instance.text = actions[i].name
 		instance.action = actions[i]
-		instance.element_icon.connect(func():element_icon(instance, actions[i].element))
 		# 以下、NPC専用プログラム
 		instance.disabled = true # 常に使用不可
 		add_child(instance)

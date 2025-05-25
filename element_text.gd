@@ -1,16 +1,17 @@
 extends RichTextLabel
 
-var action: Action
+var action
 var i: int = 0
 var tween: Tween
 
-func selected(act: Action) -> void:
+func selected(act) -> void:
 	if action == act: # 前と同じ技を選んだなら何もしない
 		return
 	
 	if tween and tween.is_running(): # tweenがすでに動作しているなら停止
 		tween.kill()
 	action = act
+	i = 0 # 初期化
 	self.text = "[center][img=25]" + action.element[i].icon.resource_path + \
 	"[/img]" + action.element[i].name + "[/center]" # 初期値
 	self.modulate.a = 1 # 可視化
@@ -20,7 +21,6 @@ func selected(act: Action) -> void:
 
 
 func blink() -> void: # 点滅関数
-	i = 0 # 初期化
 	tween = create_tween()
 	tween.set_loops() # 以下をループ
 	tween.tween_property(self, "modulate:a", 0, 1)

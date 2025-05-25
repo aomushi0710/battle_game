@@ -115,3 +115,7 @@ func _on_確認メッセージ_confirmed() -> void:
 	Global.deck_name = ""
 	Global.deck1 = Deck.new()
 	_on_デッキセレクト_tree_entered()
+
+
+func _on_new_button_up() -> void:
+	get_tree().change_scene_to_packed(Global.new_buttle_scene)

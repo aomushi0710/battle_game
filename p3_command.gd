@@ -41,7 +41,6 @@ func _on_p_1_spd_command(): # 一旦、actionsにappendし、後でまとめて�
 		else:
 			instance.text = actions[i].name
 		instance.action = actions[i]
-		instance.element_icon.connect(func():element_icon(instance, actions[i].element))
 		instance.button_up.connect(func():select_command(i))
 		add_child(instance)
 

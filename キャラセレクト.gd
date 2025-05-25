@@ -1,6 +1,9 @@
 extends Control
 
+@onready var statcontainer = get_node("status/ScrollContainer/VBoxContainer")
+
 var monster_data = Global.monster_data
+var now_monster_id: int # status関数、同じモンスターかどうかの検出用
 const HCONTAINER_LIMIT: int = 7 # モンスターボタンを横に並べられる限界の個数
 
 func _on_戻る_button_up():
@@ -41,7 +44,11 @@ func _on_node_2d_tree_entered() -> void:
 
 
 func status(i: int) -> void: # マウスを合わせたモンスターのステータスを表示
-	$status/default.text = ""
+	if now_monster_id == i: # 同じモンスターを選んだなら無視
+		return
+	now_monster_id = i
+	for label in statcontainer.get_children(): # 初期化
+		label.queue_free()
 	var monster = monster_data[i] # dictionary
 	var default = monster[0]
 	var middle_evolution = null
@@ -55,12 +62,23 @@ func status(i: int) -> void: # マウスを合わせたモンスターのステ�
 	for form: Monster in [default, middle_evolution, evolution]:
 		if form == null: # その形態が存在しなかった場合、次のループへ
 			continue
-		if form.form == 1:
-			$status/default.text += "[center][color=yellow]中間進化後\n[u]ステータス[/u][/color][/center]\n"
-		elif form.form == 2:
-			$status/default.text += "[center][color=red]進化後\n[u]ステータス[/u][/color][/center]\n"
 		
-		$status/default.text += Global.status_text(form,20)
+		var evolution_text := RichTextLabel.new() # 進化形態のみ追加テキスト
+		evolution_text.bbcode_enabled = true
+		evolution_text.fit_content = true
+		evolution_text.horizontal_alignment = 1
+		
+		if form.form == 1:
+			evolution_text.text = "[center][u]　　　　　　　　 [/u][/center]\n\
+			[center][color=yellow]中間進化後\n[u]ステータス[/u][/color][/center]\n\n"
+		elif form.form == 2:
+			evolution_text.text = "[center][u]　　　　　　　　 [/u][/center]\n\
+			[center][color=red]進化後\n[u]ステータス[/u][/color][/center]\n\n"
+		
+		statcontainer.add_child(evolution_text)
+		for label: RichTextLabel in Global.all_status(form):
+			statcontainer.add_child(label)
+
 
 func button_up(i: int) -> void: # ボタンが押されたらそのIDのモンスターのセレクトページへ
 	Global.selected_monster = i

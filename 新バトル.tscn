@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhqk4iva02mmc"]
+[gd_scene load_steps=13 format=3 uid="uid://bhqk4iva02mmc"]
 
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_nfpvw"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="2_tc6cq"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://cqv7q4fa8fjrt" path="res://bar_spd.PNG" id="7_sraw4"]
 [ext_resource type="Theme" uid="uid://boebxhhsukoff" path="res://clear_font.tres" id="8_tc6cq"]
 [ext_resource type="Script" uid="uid://o4ioqobn45d0" path="res://buttle_buttons.gd" id="9_hwahx"]
+[ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="10_jjjva"]
+[ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="11_g5d16"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -53,14 +55,6 @@ theme = ExtResource("1_nfpvw")
 bbcode_enabled = true
 text = "[right][color=yellow][i][b]99 [/b][/i][/color][/right]"
 horizontal_alignment = 2
-
-[node name="name" type="RichTextLabel" parent="Control/player"]
-offset_top = -40.0
-offset_right = 256.0
-bbcode_enabled = true
-text = "[img=35]res://image/element/無属性.PNG[/img] 名前"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="HP" type="TextureProgressBar" parent="Control/player"]
 z_index = -1
@@ -107,10 +101,29 @@ value = 50.0
 texture_under = ExtResource("4_ys3qb")
 texture_progress = ExtResource("7_sraw4")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/player"]
-layout_mode = 0
+[node name="name" type="HBoxContainer" parent="Control/player"]
+clip_contents = true
+layout_mode = 1
+offset_left = -22.0
 offset_top = -40.0
-offset_right = 256.0
+offset_right = 278.0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="element" type="TextureRect" parent="Control/player/name"]
+layout_mode = 2
+texture = ExtResource("10_jjjva")
+expand_mode = 2
+script = ExtResource("11_g5d16")
+
+[node name="name" type="RichTextLabel" parent="Control/player/name"]
+clip_contents = false
+layout_mode = 2
+bbcode_enabled = true
+text = "name"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="button" type="Control" parent="Control"]
 anchors_preset = 0
@@ -148,6 +161,7 @@ offset_bottom = 642.0
 text = "Status"
 
 [node name="action" type="VBoxContainer" parent="Control/button"]
+visible = false
 layout_mode = 0
 offset_left = 150.0
 offset_top = 500.0
@@ -164,6 +178,7 @@ offset_bottom = 643.0
 disabled = true
 text = "⬅️戻る"
 
+[connection signal="button_up" from="Control/player" to="Control/player" method="_on_button_up"]
 [connection signal="button_up" from="Control/button/main/Action" to="Control/button" method="_on_action_button_up"]
 [connection signal="button_up" from="Control/button/main/Item" to="Control/button" method="_on_item_button_up"]
 [connection signal="button_up" from="Control/button/main/Status" to="Control/button" method="_on_status_button_up"]

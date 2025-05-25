@@ -132,6 +132,8 @@ func _on_buttle_command(action: Action, monster: Monster, boolian: bool, index: 
 	[Global.e1_death, Global.e2_death, Global.e3_death]]
 	var death_list1: Array
 	var death_list2: Array
+	var target: int
+	var support_target: int
 	var offense_deck: Deck
 	var defense_deck: Deck
 	var offense_effect: Array # 攻撃側エフェクト
@@ -152,8 +154,12 @@ func _on_buttle_command(action: Action, monster: Monster, boolian: bool, index: 
 		aiteno = "相手の "
 	
 	# 対象となる敵または味方を取得
-	var target = target_set(Global.target, death_list1)
-	var support_target = target_set(Global.support_target, death_list2)
+	if boolian == true:
+		target = target_set(Global.target, death_list1)
+		support_target = target_set(Global.support_target, death_list2)
+	else:
+		target = target_set(randi() % 3, death_list1)
+		support_target = target_set(randi() % 3, death_list2)
 	
 	offense_effect = offense_deck.effect[index].keys()
 	defense_effect = defense_deck.effect[target].keys()

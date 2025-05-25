@@ -46,6 +46,7 @@ var select_scene = load("res://特性・技セレクト.tscn")
 var buttle_scene = load("res://バトル.tscn")
 var debug_scene = load("res://debug.tscn")
 var deck_save_scene = load("res://デッキセーブデータ.tscn")
+var new_buttle_scene = load("res://新バトル.tscn")
 
 @onready var picked_monster = [0,0,0] #モンスター
 @onready var deck1 = Deck.new()
@@ -73,23 +74,36 @@ const debuff_list = ["ATK_down","DEF_down","MAG_down","RES_down"]
 @onready var e3_death = false
 
  # モンスターのステータス表示を生成する関数 icon_size:bbcodeのimgタグに用いるアイコンのサイズ
-func status_text(monster: Monster, icon_size: int) -> String:
-	var element_text = ""
-	for element: Element in monster.element:
-		element_text += "[img=%d]" % icon_size + element.icon.resource_path + "[/img]" + \
-		" [color=" + element.color + "]" + element.name + "[/color]\n"
-	
+func status_text(monster: Monster) -> String:
 	var text = (
-		"[center][b][i]" + monster.name + "[/i][/b][/center]\n\n" + 
-		element_text + "\n[color=coral]HP :%3d" %
-		monster.maxHP + "[/color] [color=green]SPD:%3d" % monster.SPD + 
+		"[color=coral]HP :%3d" % monster.maxHP + 
+		"[/color] [color=green]SPD:%3d" % monster.SPD + 
 		"[/color]\n[color=aqua]MP :%3d" % monster.supplyMP + "  /  %3d" % 
-		monster.maxMP + "\n (supply / max)[/color]\n[color=red]ATK:%3d" % 
+		monster.maxMP + "\n(supply  / max)[/color]\n[color=red]ATK:%3d" % 
 		monster.ATK + "[/color] [color=light_blue]DEF:%3d" % 
 		monster.DEF + "[/color]\n[color=dodger_blue]MAG:%3d" % 
 		monster.MAG + "[/color] [color=violet]RES:%3d" % 
-		monster.RES + "[/color]\n\n")
+		monster.RES + "[/color]")
 	return text
+
+
+func all_status(monster: Monster) -> Array[RichTextLabel]:
+	var name_label := RichTextLabel.new()
+	var element_label := RichTextLabel.new()
+	var status_label := RichTextLabel.new()
+	
+	for label: RichTextLabel in [name_label, element_label, status_label]: # 初期設定
+		label.bbcode_enabled = true
+		label.fit_content = true
+		label.horizontal_alignment = 1
+	
+	name_label.text = "[b][i]%s[/i][/b]" % monster.name
+	element_label.set_script(load("res://element_text.gd"))
+	element_label.selected(monster)
+	status_label.text = "\n" + status_text(monster)
+	
+	return [name_label, element_label, status_label]
+
 
 func deck_creator(deck: Deck) -> void:
 	var monster_id_list: Array[int] = [0] # 選ばれたモンスターのIDを登録と0だけ
