@@ -1,174 +1,80 @@
-[gd_scene load_steps=13 format=3 uid="uid://bhqk4iva02mmc"]
+[gd_scene load_steps=8 format=3 uid="uid://bhqk4iva02mmc"]
 
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_nfpvw"]
+[ext_resource type="Script" uid="uid://buahejbbay077" path="res://new_battle.gd" id="2_arwha"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="2_tc6cq"]
-[ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="3_hwahx"]
-[ext_resource type="Script" uid="uid://b0yxuo4ii0je" path="res://buttle_monster.gd" id="3_ys3qb"]
-[ext_resource type="Texture2D" uid="uid://dxssu1v1art5l" path="res://bar_empty.PNG" id="4_ys3qb"]
-[ext_resource type="Texture2D" uid="uid://bnagnglpfolr3" path="res://bar_hp.PNG" id="5_jjjva"]
-[ext_resource type="Texture2D" uid="uid://c6esjhqxk7oyw" path="res://bar_mp.PNG" id="6_g5d16"]
-[ext_resource type="Texture2D" uid="uid://cqv7q4fa8fjrt" path="res://bar_spd.PNG" id="7_sraw4"]
-[ext_resource type="Theme" uid="uid://boebxhhsukoff" path="res://clear_font.tres" id="8_tc6cq"]
-[ext_resource type="Script" uid="uid://o4ioqobn45d0" path="res://buttle_buttons.gd" id="9_hwahx"]
-[ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="10_jjjva"]
-[ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="11_g5d16"]
+[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_nfpvw"]
+[ext_resource type="Script" uid="uid://o4ioqobn45d0" path="res://battle_buttons.gd" id="9_hwahx"]
+[ext_resource type="Theme" uid="uid://b1eadb2a673y2" path="res://theme/battle_tabcontainer.tres" id="13_sraw4"]
+[ext_resource type="Script" uid="uid://bmvfns1s1615p" path="res://dialogtab.gd" id="14_3ru5v"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Control" type="Control" parent="."]
+[node name="battle" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_nfpvw")
+script = ExtResource("2_arwha")
 
-[node name="player" type="TextureButton" parent="Control"]
-layout_mode = 0
-offset_left = 358.0
-offset_top = 192.0
-offset_right = 614.0
-offset_bottom = 448.0
-scale = Vector2(0.7, 0.7)
-texture_normal = ExtResource("2_tc6cq")
-script = ExtResource("3_ys3qb")
-
-[node name="バフデバフコンテナ" type="HBoxContainer" parent="Control/player"]
-layout_mode = 0
-offset_top = 256.0
-offset_right = 1280.0
-offset_bottom = 512.0
-scale = Vector2(0.2, 0.2)
-alignment = 2
-
-[node name="バフデバフアイコン" type="TextureButton" parent="Control/player/バフデバフコンテナ"]
+[node name="player_deck" type="Control" parent="battle"]
 layout_mode = 2
-texture_normal = ExtResource("3_hwahx")
+anchors_preset = 0
+offset_right = 400.0
+offset_bottom = 200.0
 
-[node name="ターン数テキスト" type="RichTextLabel" parent="Control/player/バフデバフコンテナ/バフデバフアイコン"]
+[node name="player_deck" type="HBoxContainer" parent="battle/player_deck"]
 layout_mode = 0
-offset_left = 96.0
-offset_top = 130.0
-offset_right = 146.0
-offset_bottom = 170.0
-scale = Vector2(4, 4)
-theme = ExtResource("1_nfpvw")
-bbcode_enabled = true
-text = "[right][color=yellow][i][b]99 [/b][/i][/color][/right]"
-horizontal_alignment = 2
+offset_right = 1000.0
+offset_bottom = 500.0
+scale = Vector2(0.4, 0.4)
 
-[node name="HP" type="TextureProgressBar" parent="Control/player"]
-z_index = -1
+[node name="enemy_deck" type="Control" parent="battle"]
+layout_direction = 3
+anchors_preset = 0
+offset_left = -1112.0
+offset_right = -712.0
+offset_bottom = 200.0
+
+[node name="enemy_deck" type="HBoxContainer" parent="battle/enemy_deck"]
+layout_direction = 3
 layout_mode = 0
-offset_top = 236.0
-offset_right = 256.0
-offset_bottom = 492.0
-scale = Vector2(1, 0.7)
-value = 50.0
-texture_under = ExtResource("4_ys3qb")
-texture_progress = ExtResource("5_jjjva")
+offset_left = -600.0
+offset_right = 400.0
+offset_bottom = 500.0
+scale = Vector2(0.4, 0.4)
 
-[node name="text" type="Label" parent="Control/player/HP"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 105.714
-offset_right = 633.0
-offset_bottom = 252.714
-scale = Vector2(0.25, 0.25)
-theme = ExtResource("8_tc6cq")
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 8
-text = " HP 555/999"
-
-[node name="MP" type="TextureProgressBar" parent="Control/player"]
-z_index = -1
-layout_mode = 0
-offset_top = 272.0
-offset_right = 256.0
-offset_bottom = 528.0
-scale = Vector2(1, 0.7)
-value = 50.0
-texture_under = ExtResource("4_ys3qb")
-texture_progress = ExtResource("6_g5d16")
-
-[node name="SPD" type="TextureProgressBar" parent="Control/player"]
-z_index = -1
-layout_mode = 0
-offset_top = 308.0
-offset_right = 256.0
-offset_bottom = 564.0
-scale = Vector2(1, 0.7)
-value = 50.0
-texture_under = ExtResource("4_ys3qb")
-texture_progress = ExtResource("7_sraw4")
-
-[node name="name" type="HBoxContainer" parent="Control/player"]
-clip_contents = true
-layout_mode = 1
-offset_left = -22.0
-offset_top = -40.0
-offset_right = 278.0
-theme_override_constants/separation = 10
-alignment = 1
-
-[node name="element" type="TextureRect" parent="Control/player/name"]
-layout_mode = 2
-texture = ExtResource("10_jjjva")
-expand_mode = 2
-script = ExtResource("11_g5d16")
-
-[node name="name" type="RichTextLabel" parent="Control/player/name"]
-clip_contents = false
-layout_mode = 2
-bbcode_enabled = true
-text = "name"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-
-[node name="button" type="Control" parent="Control"]
+[node name="button" type="Control" parent="battle"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_hwahx")
 
-[node name="main" type="Control" parent="Control/button"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Action" type="Button" parent="Control/button/main"]
+[node name="change" type="TextureButton" parent="battle/button"]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 500.0
-offset_right = 445.0
-offset_bottom = 542.0
-text = "Action"
+offset_left = 87.0
+offset_top = 243.0
+offset_right = 343.0
+offset_bottom = 499.0
+scale = Vector2(0.4, 0.4)
+texture_normal = ExtResource("2_tc6cq")
 
-[node name="Item" type="Button" parent="Control/button/main"]
+[node name="change_text" type="RichTextLabel" parent="battle/button/change"]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 550.0
-offset_right = 445.0
-offset_bottom = 592.0
-text = "Item"
+offset_left = -7.0
+offset_top = -130.5
+offset_right = 173.0
+offset_bottom = -43.5
+scale = Vector2(1.5, 1.5)
+theme = ExtResource("1_nfpvw")
+bbcode_enabled = true
+text = "次に行動する
+モンスター"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Status" type="Button" parent="Control/button/main"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 600.0
-offset_right = 445.0
-offset_bottom = 642.0
-text = "Status"
-
-[node name="action" type="VBoxContainer" parent="Control/button"]
-visible = false
-layout_mode = 0
-offset_left = 150.0
-offset_top = 500.0
-offset_right = 445.0
-offset_bottom = 643.0
-
-[node name="戻る" type="Button" parent="Control/button"]
+[node name="戻る" type="Button" parent="battle/button"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 0
 offset_left = 25.0
@@ -178,7 +84,99 @@ offset_bottom = 643.0
 disabled = true
 text = "⬅️戻る"
 
-[connection signal="button_up" from="Control/player" to="Control/player" method="_on_button_up"]
-[connection signal="button_up" from="Control/button/main/Action" to="Control/button" method="_on_action_button_up"]
-[connection signal="button_up" from="Control/button/main/Item" to="Control/button" method="_on_item_button_up"]
-[connection signal="button_up" from="Control/button/main/Status" to="Control/button" method="_on_status_button_up"]
+[node name="main" type="Control" parent="battle/button"]
+anchors_preset = 0
+offset_left = 132.0
+offset_top = 523.0
+offset_right = 132.0
+offset_bottom = 523.0
+
+[node name="Action" type="Button" parent="battle/button/main"]
+layout_mode = 2
+offset_right = 120.0
+offset_bottom = 120.0
+text = "Action"
+
+[node name="Item" type="Button" parent="battle/button/main"]
+layout_mode = 2
+offset_left = 125.0
+offset_right = 245.0
+offset_bottom = 120.0
+text = "Item"
+
+[node name="Status" type="Button" parent="battle/button/main"]
+layout_mode = 2
+offset_left = 250.0
+offset_right = 370.0
+offset_bottom = 120.0
+text = "Status"
+
+[node name="action" type="VBoxContainer" parent="battle/button"]
+visible = false
+layout_mode = 0
+offset_left = 150.0
+offset_top = 500.0
+offset_right = 445.0
+offset_bottom = 643.0
+
+[node name="dialogtab" type="TabContainer" parent="battle/button"]
+layout_mode = 0
+offset_left = 542.0
+offset_top = 481.0
+offset_right = 1138.0
+offset_bottom = 643.0
+theme = ExtResource("13_sraw4")
+theme_override_constants/outline_size = 10
+theme_override_constants/side_margin = 0
+current_tab = 0
+script = ExtResource("14_3ru5v")
+
+[node name="メイン" type="RichTextLabel" parent="battle/button/dialogtab"]
+layout_mode = 2
+bbcode_enabled = true
+text = "This is test message with animation!
+[color=red][b]BBcode is available.[/b][/color]
+"
+metadata/_tab_index = 0
+
+[node name="ステータス" type="RichTextLabel" parent="battle/button/dialogtab"]
+visible = false
+layout_mode = 2
+theme_override_constants/line_separation = 5
+bbcode_enabled = true
+text = "[color=coral]HP :999[/color] [color=green]SPD:999[/color]
+[color=aqua]MP :999 / 999 (supply / max)[/color]
+[color=red]ATK:999[/color] [color=light_blue]DEF:999[/color] [color=dodger_blue]MAG:999[/color] [color=violet]RES:999[/color]"
+metadata/_tab_index = 1
+
+[node name="バトルログ" type="RichTextLabel" parent="battle/button/dialogtab"]
+visible = false
+layout_mode = 2
+theme_override_constants/outline_size = 0
+bbcode_enabled = true
+metadata/_tab_index = 2
+
+[node name="escape" type="Button" parent="battle/button"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 0
+offset_left = 527.0
+offset_right = 625.0
+offset_bottom = 42.0
+text = "逃げる"
+
+[node name="確認メッセージ" type="ConfirmationDialog" parent="battle"]
+auto_translate_mode = 1
+title = "⚠️セーブデータ削除⚠️"
+initial_position = 2
+theme = ExtResource("7_nfpvw")
+
+[connection signal="tree_entered" from="battle" to="battle" method="_on_tree_entered"]
+[connection signal="tree_entered" from="battle/button" to="battle/button" method="_on_tree_entered"]
+[connection signal="button_up" from="battle/button/change" to="battle" method="_on_change_button_up"]
+[connection signal="button_up" from="battle/button/戻る" to="battle/button" method="_on_戻る_button_up"]
+[connection signal="button_up" from="battle/button/main/Action" to="battle/button" method="_on_action_button_up"]
+[connection signal="button_up" from="battle/button/main/Item" to="battle/button" method="_on_item_button_up"]
+[connection signal="button_up" from="battle/button/main/Status" to="battle/button" method="_on_status_button_up"]
+[connection signal="tab_changed" from="battle/button/dialogtab" to="battle/button/dialogtab" method="_on_tab_changed"]
+[connection signal="button_up" from="battle/button/escape" to="battle/button" method="_on_escape_button_up"]
+[connection signal="confirmed" from="battle/確認メッセージ" to="battle/button" method="_on_確認メッセージ_confirmed"]

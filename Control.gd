@@ -70,7 +70,7 @@ func _on_test_button_up():
 			return
 	
 	Global.deck1.evolution_check(Global.deck1) # 自分のデッキに対してチェック
-	get_tree().change_scene_to_packed(Global.buttle_scene)
+	get_tree().change_scene_to_packed(Global.battle_scene)
 
 
 func _on_button_button_up(): # 選択可能なモンスター、技からランダムにチームを編成します。
@@ -118,4 +118,11 @@ func _on_確認メッセージ_confirmed() -> void:
 
 
 func _on_new_button_up() -> void:
-	get_tree().change_scene_to_packed(Global.new_buttle_scene)
+	for i in range(3):
+		if Global.deck1.monster[i] == null:
+			$"../エラーメッセージ".dialog_text = "デッキ内には3体のモンスターを登録してください！"
+			$"../エラーメッセージ".popup_centered()
+			return
+	
+	Global.deck1.evolution_check(Global.deck1) # 自分のデッキに対してチェック
+	get_tree().change_scene_to_packed(Global.new_battle_scene)

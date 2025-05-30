@@ -43,10 +43,10 @@ var main_scene = load("res://メインシーン.tscn")
 var deck_scene = load("res://デッキセレクト.tscn")
 var chara_scene = load("res://キャラ選択.tscn")
 var select_scene = load("res://特性・技セレクト.tscn")
-var buttle_scene = load("res://バトル.tscn")
+var battle_scene = load("res://バトル.tscn")
 var debug_scene = load("res://debug.tscn")
 var deck_save_scene = load("res://デッキセーブデータ.tscn")
-var new_buttle_scene = load("res://新バトル.tscn")
+var new_battle_scene = load("res://新バトル.tscn")
 
 @onready var picked_monster = [0,0,0] #モンスター
 @onready var deck1 = Deck.new()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=71 format=3 uid="uid://cshv2kldt6i4x"]
 
-[ext_resource type="Script" uid="uid://dlxb0doriep3s" path="res://buttle.gd" id="1_csbr0"]
+[ext_resource type="Script" uid="uid://dlxb0doriep3s" path="res://battle.gd" id="1_csbr0"]
 [ext_resource type="Script" uid="uid://bknodr4qnbo7b" path="res://enemy1.gd" id="2_8rv16"]
 [ext_resource type="Script" uid="uid://ccphdi2w0i5vn" path="res://p1_mp.gd" id="3_aqsgc"]
 [ext_resource type="Script" uid="uid://c3xie01uapfmn" path="res://player1.gd" id="3_pfbs1"]
@@ -54,7 +54,7 @@
 [ext_resource type="Script" uid="uid://ov4chyssus35" path="res://e3_icon.gd" id="45_dks4y"]
 [ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://sound_effects.tscn" id="53_si0x8"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="54_0dvy3"]
-[ext_resource type="Script" uid="uid://rm3yvfdhi3tl" path="res://buttle_debug.gd" id="54_v3nnf"]
+[ext_resource type="Script" uid="uid://rm3yvfdhi3tl" path="res://battle_debug.gd" id="54_v3nnf"]
 
 [sub_resource type="Theme" id="Theme_kymv4"]
 default_font_size = 150

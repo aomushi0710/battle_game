@@ -172,7 +172,7 @@ title = "⚠️デッキデータリセット⚠️"
 initial_position = 2
 theme = ExtResource("7_0twro")
 
-[node name="buttle" type="Button" parent="Control"]
+[node name="battle" type="Button" parent="Control"]
 layout_mode = 0
 offset_left = 500.0
 offset_top = 500.0
@@ -272,7 +272,7 @@ offset_bottom = 238.0
 theme = SubResource("Theme_vs303")
 text = "おまかせでデッキを組む！"
 
-[node name="help_buttle" type="Button" parent="Control/help/ColorRect"]
+[node name="help_battle" type="Button" parent="Control/help/ColorRect"]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 430.0
@@ -334,7 +334,7 @@ text = "新"
 [connection signal="button_up" from="Control/デッキ1/おまかせ" to="Control/デッキ1" method="_on_button_button_up"]
 [connection signal="item_selected" from="Control/cpu_strategy" to="Control/デッキ1" method="_on_cpu_strategy_item_selected"]
 [connection signal="confirmed" from="Control/確認メッセージ" to="Control/デッキ1" method="_on_確認メッセージ_confirmed"]
-[connection signal="button_up" from="Control/buttle" to="Control/デッキ1" method="_on_test_button_up"]
+[connection signal="button_up" from="Control/battle" to="Control/デッキ1" method="_on_test_button_up"]
 [connection signal="button_up" from="Control/戻る" to="Control/デッキ1" method="_on_戻る_button_up"]
 [connection signal="toggled" from="Control/help" to="Control/help" method="_on_toggled"]
 [connection signal="button_up" from="Control/Button" to="Control/デッキ1" method="_on_new_button_up"]
