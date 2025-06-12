@@ -4,13 +4,10 @@
 [ext_resource type="Script" uid="uid://bknodr4qnbo7b" path="res://enemy1.gd" id="2_8rv16"]
 [ext_resource type="Script" uid="uid://ccphdi2w0i5vn" path="res://p1_mp.gd" id="3_aqsgc"]
 [ext_resource type="Script" uid="uid://c3xie01uapfmn" path="res://player1.gd" id="3_pfbs1"]
-[ext_resource type="Texture2D" uid="uid://bnagnglpfolr3" path="res://bar_hp.PNG" id="4_n5lsc"]
-[ext_resource type="Texture2D" uid="uid://dxssu1v1art5l" path="res://bar_empty.PNG" id="4_w33vs"]
+[ext_resource type="Texture2D" uid="uid://dxssu1v1art5l" path="res://image/bar_empty.PNG" id="4_w33vs"]
 [ext_resource type="Script" uid="uid://ct488mu4dkvk7" path="res://p1_hp.gd" id="5_85fus"]
 [ext_resource type="Script" uid="uid://cd2idyg2axqvf" path="res://コマンド.gd" id="5_08288"]
-[ext_resource type="Texture2D" uid="uid://c6esjhqxk7oyw" path="res://bar_mp.PNG" id="5_gx1ih"]
 [ext_resource type="Script" uid="uid://ch7qgexcxnsig" path="res://p1_psd.gd" id="5_n4uku"]
-[ext_resource type="Texture2D" uid="uid://cqv7q4fa8fjrt" path="res://bar_spd.PNG" id="5_r2kcj"]
 [ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="11_h1ltc"]
 [ext_resource type="Script" uid="uid://lq08jxtpe3d1" path="res://player2.gd" id="11_km0k0"]
 [ext_resource type="Script" uid="uid://dfs7lqjkif4ls" path="res://p1_icon.gd" id="12_fcs5k"]
@@ -59,8 +56,17 @@
 [sub_resource type="Theme" id="Theme_kymv4"]
 default_font_size = 150
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_501o3"]
+load_path = "res://.godot/imported/bar_hp.PNG-344f3d66a97e8560cfce7a35897260ea.ctex"
+
 [sub_resource type="Theme" id="Theme_6erj1"]
 default_font_size = 50
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3fhy4"]
+load_path = "res://.godot/imported/bar_mp.PNG-f10b55dbe3e202559340cb0574d6fe70.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v3nnf"]
+load_path = "res://.godot/imported/bar_spd.PNG-d0629bc3d8a90728d2ef0118b0251a7d.ctex"
 
 [sub_resource type="Theme" id="Theme_bl78q"]
 default_font_size = 30
@@ -167,7 +173,7 @@ offset_top = -30.0
 offset_right = 756.0
 offset_bottom = 226.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("4_n5lsc")
+texture_progress = SubResource("CompressedTexture2D_501o3")
 script = ExtResource("5_85fus")
 
 [node name="hp_text" type="RichTextLabel" parent="buttle/player1/player1/p1_hp"]
@@ -190,7 +196,7 @@ offset_top = 30.0
 offset_right = 756.0
 offset_bottom = 286.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_gx1ih")
+texture_progress = SubResource("CompressedTexture2D_3fhy4")
 script = ExtResource("3_aqsgc")
 
 [node name="mp_text" type="RichTextLabel" parent="buttle/player1/player1/p1_mp"]
@@ -215,7 +221,7 @@ offset_right = 756.0
 offset_bottom = 346.0
 max_value = 10000.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_r2kcj")
+texture_progress = SubResource("CompressedTexture2D_v3nnf")
 script = ExtResource("5_n4uku")
 
 [node name="spd_text" type="RichTextLabel" parent="buttle/player1/player1/p1_spd"]
@@ -338,7 +344,7 @@ offset_top = -30.0
 offset_right = 756.0
 offset_bottom = 226.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("4_n5lsc")
+texture_progress = SubResource("CompressedTexture2D_501o3")
 script = ExtResource("12_mthpc")
 
 [node name="hp_text" type="RichTextLabel" parent="buttle/player2/player2/p2_hp"]
@@ -361,7 +367,7 @@ offset_top = 30.0
 offset_right = 756.0
 offset_bottom = 286.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_gx1ih")
+texture_progress = SubResource("CompressedTexture2D_3fhy4")
 script = ExtResource("13_jc8tr")
 
 [node name="mp_text" type="RichTextLabel" parent="buttle/player2/player2/p2_mp"]
@@ -386,7 +392,7 @@ offset_right = 756.0
 offset_bottom = 346.0
 max_value = 10000.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_r2kcj")
+texture_progress = SubResource("CompressedTexture2D_v3nnf")
 script = ExtResource("14_kkjhg")
 
 [node name="spd_text" type="RichTextLabel" parent="buttle/player2/player2/p2_spd"]
@@ -510,7 +516,7 @@ offset_top = -30.0
 offset_right = 756.0
 offset_bottom = 226.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("4_n5lsc")
+texture_progress = SubResource("CompressedTexture2D_501o3")
 script = ExtResource("17_dxwyy")
 
 [node name="hp_text" type="RichTextLabel" parent="buttle/player3/player3/p3_hp"]
@@ -533,7 +539,7 @@ offset_top = 30.0
 offset_right = 756.0
 offset_bottom = 286.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_gx1ih")
+texture_progress = SubResource("CompressedTexture2D_3fhy4")
 script = ExtResource("17_dvsc4")
 
 [node name="mp_text" type="RichTextLabel" parent="buttle/player3/player3/p3_mp"]
@@ -558,7 +564,7 @@ offset_right = 756.0
 offset_bottom = 346.0
 max_value = 10000.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_r2kcj")
+texture_progress = SubResource("CompressedTexture2D_v3nnf")
 script = ExtResource("18_aoce8")
 
 [node name="spd_text" type="RichTextLabel" parent="buttle/player3/player3/p3_spd"]
@@ -689,7 +695,7 @@ offset_top = -30.0
 offset_right = 756.0
 offset_bottom = 226.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("4_n5lsc")
+texture_progress = SubResource("CompressedTexture2D_501o3")
 script = ExtResource("13_vv1nc")
 
 [node name="hp_text" type="RichTextLabel" parent="enemies/enemy1/enemy1/e1_hp"]
@@ -712,7 +718,7 @@ offset_top = 30.0
 offset_right = 756.0
 offset_bottom = 286.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_gx1ih")
+texture_progress = SubResource("CompressedTexture2D_3fhy4")
 script = ExtResource("14_nn4ay")
 
 [node name="mp_text" type="RichTextLabel" parent="enemies/enemy1/enemy1/e1_mp"]
@@ -737,7 +743,7 @@ offset_right = 756.0
 offset_bottom = 346.0
 max_value = 10000.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_r2kcj")
+texture_progress = SubResource("CompressedTexture2D_v3nnf")
 script = ExtResource("15_1vpvo")
 
 [node name="spd_text" type="RichTextLabel" parent="enemies/enemy1/enemy1/e1_spd"]
@@ -862,7 +868,7 @@ offset_top = -30.0
 offset_right = 756.0
 offset_bottom = 226.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("4_n5lsc")
+texture_progress = SubResource("CompressedTexture2D_501o3")
 script = ExtResource("28_u4vay")
 
 [node name="hp_text" type="RichTextLabel" parent="enemies/enemy2/enemy2/e2_hp"]
@@ -885,7 +891,7 @@ offset_top = 30.0
 offset_right = 756.0
 offset_bottom = 286.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_gx1ih")
+texture_progress = SubResource("CompressedTexture2D_3fhy4")
 script = ExtResource("29_xccyd")
 
 [node name="mp_text" type="RichTextLabel" parent="enemies/enemy2/enemy2/e2_mp"]
@@ -910,7 +916,7 @@ offset_right = 756.0
 offset_bottom = 346.0
 max_value = 10000.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_r2kcj")
+texture_progress = SubResource("CompressedTexture2D_v3nnf")
 script = ExtResource("30_ipyrj")
 
 [node name="spd_text" type="RichTextLabel" parent="enemies/enemy2/enemy2/e2_spd"]
@@ -1034,7 +1040,7 @@ offset_top = -30.0
 offset_right = 756.0
 offset_bottom = 226.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("4_n5lsc")
+texture_progress = SubResource("CompressedTexture2D_501o3")
 script = ExtResource("33_4in4d")
 
 [node name="hp_text" type="RichTextLabel" parent="enemies/enemy3/enemy3/e3_hp"]
@@ -1057,7 +1063,7 @@ offset_top = 30.0
 offset_right = 756.0
 offset_bottom = 286.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_gx1ih")
+texture_progress = SubResource("CompressedTexture2D_3fhy4")
 script = ExtResource("34_g0xjy")
 
 [node name="mp_text" type="RichTextLabel" parent="enemies/enemy3/enemy3/e3_mp"]
@@ -1082,7 +1088,7 @@ offset_right = 756.0
 offset_bottom = 346.0
 max_value = 10000.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_r2kcj")
+texture_progress = SubResource("CompressedTexture2D_v3nnf")
 script = ExtResource("35_fdfku")
 
 [node name="spd_text" type="RichTextLabel" parent="enemies/enemy3/enemy3/e3_spd"]
@@ -1330,7 +1336,7 @@ offset_bottom = 226.0
 max_value = 999.0
 value = 500.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("4_n5lsc")
+texture_progress = SubResource("CompressedTexture2D_501o3")
 
 [node name="hp_text" type="RichTextLabel" parent="help2/ColorRect/help_player/player1/help_hp"]
 layout_mode = 0
@@ -1352,7 +1358,7 @@ offset_bottom = 286.0
 max_value = 999.0
 value = 200.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_gx1ih")
+texture_progress = SubResource("CompressedTexture2D_3fhy4")
 script = ExtResource("41_2omnf")
 
 [node name="mp_text" type="RichTextLabel" parent="help2/ColorRect/help_player/player1/help_mp"]
@@ -1374,7 +1380,7 @@ offset_right = 756.0
 offset_bottom = 346.0
 max_value = 1000.0
 texture_under = ExtResource("4_w33vs")
-texture_progress = ExtResource("5_r2kcj")
+texture_progress = SubResource("CompressedTexture2D_v3nnf")
 script = ExtResource("42_iyfdj")
 
 [node name="spd_text" type="RichTextLabel" parent="help2/ColorRect/help_player/player1/help_spd"]
