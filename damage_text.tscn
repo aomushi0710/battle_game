@@ -1,15 +1,18 @@
 [gd_scene load_steps=2 format=3 uid="uid://dubd3covrtmr8"]
 
 [sub_resource type="Theme" id="Theme_dareh"]
-default_font_size = 50
+default_font_size = 40
 
 [node name="damage_text" type="RichTextLabel"]
-offset_right = 120.0
-offset_bottom = 60.0
+offset_right = 100.0
+offset_bottom = 50.0
+pivot_offset = Vector2(50, 25)
 theme = SubResource("Theme_dareh")
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 10
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 10
 bbcode_enabled = true
-text = " [b][i]999[/i][/b]"
+text = "[b][i]999[/i][/b]"
+horizontal_alignment = 1
+vertical_alignment = 1

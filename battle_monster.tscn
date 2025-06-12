@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cojqfvmn2ehmv"]
+[gd_scene load_steps=14 format=3 uid="uid://cojqfvmn2ehmv"]
 
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://null.PNG" id="1_5qrwy"]
 [ext_resource type="Script" uid="uid://b0yxuo4ii0je" path="res://battle_monster.gd" id="2_v6f8v"]
@@ -10,22 +10,25 @@
 [ext_resource type="Texture2D" uid="uid://c6esjhqxk7oyw" path="res://bar_mp.PNG" id="8_s2xj6"]
 [ext_resource type="Texture2D" uid="uid://cqv7q4fa8fjrt" path="res://bar_spd.PNG" id="9_gpbdc"]
 [ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="10_1ipuw"]
+[ext_resource type="Script" uid="uid://d3uepow15nrsq" path="res://spd_gauge.gd" id="10_v6f8v"]
 [ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="11_wq4fc"]
+[ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://sound_effects.tscn" id="13_c57w8"]
 
 [node name="player" type="TextureButton"]
 offset_right = 256.0
 offset_bottom = 256.0
-scale = Vector2(0.7, 0.7)
+scale = Vector2(0.6, 0.6)
 texture_normal = ExtResource("1_5qrwy")
 script = ExtResource("2_v6f8v")
 
 [node name="バフデバフコンテナ" type="HBoxContainer" parent="."]
+layout_direction = 3
 layout_mode = 0
+offset_left = -1024.0
 offset_top = 256.0
-offset_right = 1280.0
+offset_right = 256.0
 offset_bottom = 512.0
 scale = Vector2(0.2, 0.2)
-alignment = 2
 
 [node name="バフデバフアイコン" type="TextureButton" parent="バフデバフコンテナ"]
 layout_mode = 2
@@ -88,9 +91,11 @@ scale = Vector2(1, 0.7)
 value = 50.0
 texture_under = ExtResource("5_x63jt")
 texture_progress = ExtResource("9_gpbdc")
+script = ExtResource("10_v6f8v")
 
 [node name="name" type="HBoxContainer" parent="."]
 clip_contents = true
+layout_direction = 2
 layout_mode = 1
 offset_left = -22.0
 offset_top = -40.0
@@ -114,4 +119,4 @@ scroll_active = false
 autowrap_mode = 0
 vertical_alignment = 1
 
-[connection signal="button_up" from="." to="." method="_on_button_up"]
+[node name="SoundEffects" parent="." instance=ExtResource("13_c57w8")]

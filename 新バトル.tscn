@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhqk4iva02mmc"]
+[gd_scene load_steps=11 format=3 uid="uid://bhqk4iva02mmc"]
 
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_nfpvw"]
 [ext_resource type="Script" uid="uid://buahejbbay077" path="res://new_battle.gd" id="2_arwha"]
@@ -8,9 +8,20 @@
 [ext_resource type="Theme" uid="uid://b1eadb2a673y2" path="res://theme/battle_tabcontainer.tres" id="13_sraw4"]
 [ext_resource type="Script" uid="uid://bmvfns1s1615p" path="res://dialogtab.gd" id="14_3ru5v"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfpvw"]
+bg_color = Color(1, 0.501961, 0, 1)
+
+[sub_resource type="Theme" id="Theme_tc6cq"]
+Button/styles/normal = SubResource("StyleBoxFlat_nfpvw")
+
+[sub_resource type="Theme" id="Theme_nfpvw"]
+default_font_size = 25
+
 [node name="Node2D" type="Node2D"]
+process_mode = 1
 
 [node name="battle" type="Control" parent="."]
+process_mode = 1
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -21,10 +32,12 @@ script = ExtResource("2_arwha")
 [node name="player_deck" type="Control" parent="battle"]
 layout_mode = 2
 anchors_preset = 0
-offset_right = 400.0
-offset_bottom = 200.0
+offset_left = -400.0
+offset_top = 20.0
+offset_bottom = 220.0
 
 [node name="player_deck" type="HBoxContainer" parent="battle/player_deck"]
+process_mode = 3
 layout_mode = 0
 offset_right = 1000.0
 offset_bottom = 500.0
@@ -33,9 +46,10 @@ scale = Vector2(0.4, 0.4)
 [node name="enemy_deck" type="Control" parent="battle"]
 layout_direction = 3
 anchors_preset = 0
-offset_left = -1112.0
-offset_right = -712.0
-offset_bottom = 200.0
+offset_left = -1512.0
+offset_top = 20.0
+offset_right = -1112.0
+offset_bottom = 220.0
 
 [node name="enemy_deck" type="HBoxContainer" parent="battle/enemy_deck"]
 layout_direction = 3
@@ -46,12 +60,14 @@ offset_bottom = 500.0
 scale = Vector2(0.4, 0.4)
 
 [node name="button" type="Control" parent="battle"]
+process_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_hwahx")
 
 [node name="change" type="TextureButton" parent="battle/button"]
+process_mode = 3
 layout_mode = 0
 offset_left = 87.0
 offset_top = 243.0
@@ -95,6 +111,7 @@ offset_bottom = 523.0
 layout_mode = 2
 offset_right = 120.0
 offset_bottom = 120.0
+theme = SubResource("Theme_tc6cq")
 text = "Action"
 
 [node name="Item" type="Button" parent="battle/button/main"]
@@ -114,12 +131,47 @@ text = "Status"
 [node name="action" type="VBoxContainer" parent="battle/button"]
 visible = false
 layout_mode = 0
-offset_left = 150.0
-offset_top = 500.0
-offset_right = 445.0
+offset_left = 132.0
+offset_top = 487.0
+offset_right = 502.0
 offset_bottom = 643.0
+theme = SubResource("Theme_nfpvw")
+
+[node name="target" type="Control" parent="battle/button"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 132.0
+offset_top = 648.0
+offset_right = 132.0
+offset_bottom = 648.0
+
+[node name="target1" type="TextureButton" parent="battle/button/target"]
+layout_mode = 2
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.469, 0.469)
+disabled = true
+
+[node name="target2" type="TextureButton" parent="battle/button/target"]
+layout_mode = 2
+offset_left = 125.0
+offset_right = 245.0
+offset_bottom = 120.0
+scale = Vector2(0.469, 0.469)
+disabled = true
+
+[node name="target3" type="TextureButton" parent="battle/button/target"]
+layout_mode = 2
+offset_left = 250.0
+offset_right = 370.0
+offset_bottom = 120.0
+scale = Vector2(0.469, 0.469)
+disabled = true
 
 [node name="dialogtab" type="TabContainer" parent="battle/button"]
+process_mode = 3
+z_index = 1
 layout_mode = 0
 offset_left = 542.0
 offset_top = 481.0
@@ -132,15 +184,18 @@ current_tab = 0
 script = ExtResource("14_3ru5v")
 
 [node name="メイン" type="RichTextLabel" parent="battle/button/dialogtab"]
+z_index = 1
 layout_mode = 2
 bbcode_enabled = true
 text = "This is test message with animation!
 [color=red][b]BBcode is available.[/b][/color]
+表示可能な最大文字数（全角）：１９文字
 "
 metadata/_tab_index = 0
 
 [node name="ステータス" type="RichTextLabel" parent="battle/button/dialogtab"]
 visible = false
+z_index = 1
 layout_mode = 2
 theme_override_constants/line_separation = 5
 bbcode_enabled = true
@@ -151,10 +206,27 @@ metadata/_tab_index = 1
 
 [node name="バトルログ" type="RichTextLabel" parent="battle/button/dialogtab"]
 visible = false
+z_index = 1
 layout_mode = 2
 theme_override_constants/outline_size = 0
 bbcode_enabled = true
 metadata/_tab_index = 2
+
+[node name="next_sign" type="RichTextLabel" parent="battle/button"]
+z_index = 1
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1115.0
+offset_top = 616.0
+offset_right = 1104.0
+offset_bottom = 610.0
+scale = Vector2(0.8, 0.8)
+bbcode_enabled = true
+text = "▼"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="escape" type="Button" parent="battle/button"]
 modulate = Color(1, 1, 0, 1)
@@ -177,6 +249,11 @@ theme = ExtResource("7_nfpvw")
 [connection signal="button_up" from="battle/button/main/Action" to="battle/button" method="_on_action_button_up"]
 [connection signal="button_up" from="battle/button/main/Item" to="battle/button" method="_on_item_button_up"]
 [connection signal="button_up" from="battle/button/main/Status" to="battle/button" method="_on_status_button_up"]
+[connection signal="button_up" from="battle/button/target/target1" to="battle/button" method="_on_target_1_button_up"]
+[connection signal="button_up" from="battle/button/target/target2" to="battle/button" method="_on_target_2_button_up"]
+[connection signal="button_up" from="battle/button/target/target3" to="battle/button" method="_on_target_3_button_up"]
 [connection signal="tab_changed" from="battle/button/dialogtab" to="battle/button/dialogtab" method="_on_tab_changed"]
+[connection signal="gui_input" from="battle/button/dialogtab/メイン" to="battle/button/dialogtab" method="label_gui_input"]
+[connection signal="gui_input" from="battle/button/next_sign" to="battle/button/dialogtab" method="label_gui_input"]
 [connection signal="button_up" from="battle/button/escape" to="battle/button" method="_on_escape_button_up"]
 [connection signal="confirmed" from="battle/確認メッセージ" to="battle/button" method="_on_確認メッセージ_confirmed"]

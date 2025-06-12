@@ -32,15 +32,24 @@ func _on_node_2d_tree_entered() -> void:
 				container.add_child(button) # 登録
 				break
 	
-	# 既に選ばれているモンスターを選べないように
-	for monster in Global.deck1.monster:
-		if monster != null:
-			if monster.id != Global.deck1.monster[Global.now_picking].id:
-				var id = monster.id
+	for mon in Global.deck1.monster: # 3体のモンスターを順番に処理
+		if mon != null:
+			# モンスターが居ない位置のキャラセレクトをしている時
+			# デッキに居るモンスターを選択不可に
+			if Global.deck1.monster[Global.now_picking] == null:
+				var id = mon.id
 				var j = (id - 1) / HCONTAINER_LIMIT # 行指定
 				var i = id - HCONTAINER_LIMIT * j - 1 # 列指定
 				$VBoxContainer.get_child(j).get_child(i).disabled = true
 				$VBoxContainer.get_child(j).get_child(i).modulate = Color(50, 50, 50)
+			else: # すでにモンスターが居る位置のキャラセレクトをしている時
+				# その位置以外のデッキに居るモンスターを選択不可に
+				if mon.id != Global.deck1.monster[Global.now_picking].id:
+					var id = mon.id
+					var j = (id - 1) / HCONTAINER_LIMIT # 行指定
+					var i = id - HCONTAINER_LIMIT * j - 1 # 列指定
+					$VBoxContainer.get_child(j).get_child(i).disabled = true
+					$VBoxContainer.get_child(j).get_child(i).modulate = Color(50, 50, 50)
 
 
 func status(i: int) -> void: # マウスを合わせたモンスターのステータスを表示

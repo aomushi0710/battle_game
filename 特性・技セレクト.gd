@@ -348,6 +348,7 @@ func _on_技_select(act: Action):
 
 func ui_update(): # 先にsliderのvalueを取得しなければlabelのtextを更新できないためforループを2つ使用せざるを得ない
 	sum_chance = 0 # 初期化処理
+	print(selected_action)
 	
 	var slider = [] # sliderノードを格納
 	var label = [] # labelノードを格納
@@ -404,15 +405,19 @@ func ui_update(): # 先にsliderのvalueを取得しなければlabelのtextを�
 	now_select_action = 0
 
 func _on_act_slider_1_value_changed(value):
+	print("slider1 changed:", value)
 	value_change(0, value)
 
 func _on_act_slider_2_value_changed(value):
+	print("slider2 changed:", value)
 	value_change(1, value)
 
 func _on_act_slider_3_value_changed(value):
+	print("slider3 changed:", value)
 	value_change(2, value)
 
 func _on_act_slider_4_value_changed(value):
+	print("slider4 changed:", value)
 	value_change(3, value)
 
 func value_change(i: int, value: int) -> void:

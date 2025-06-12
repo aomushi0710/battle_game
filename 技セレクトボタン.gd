@@ -6,6 +6,7 @@ var i: int = 0
 
 func _ready() -> void:
 	texture.texture = action.element[i].icon
+	self.text = action.name
 	
 	if len(action.element) == 1: # 属性が1つだけ
 		texture.queue_free()

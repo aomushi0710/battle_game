@@ -1,6 +1,7 @@
 extends Node2D
 
 func _ready() -> void:
+	randomize()
 	Global.deck_creator(Global.enemy_deck)
 	$version.text = "[i]%s [/i]" % Global.VERSION_TEXT
 

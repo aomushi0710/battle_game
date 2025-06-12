@@ -1,10 +1,10 @@
+RichTextLabel
+Button
+TextureButton
 Control
 TextureRect
 AcceptDialog
-Button
 HBoxContainer
-RichTextLabel
-TextureButton
 TabContainer
 TextEdit
 ColorRect

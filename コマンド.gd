@@ -14,7 +14,6 @@ signal command
 
 func _on_player_1_randomize_set(): # 乱数幅設定
 	randomize()
-	action = Global.deck1.action[index]
 	var sum_range = 0
 	for i in len(chance):
 		var range = chance[i]
@@ -22,6 +21,7 @@ func _on_player_1_randomize_set(): # 乱数幅設定
 			range -= 1
 		sum_range += range # ex.1:10% 2:20% 3:30% 4:40%なら、[9,29,59.99]となり、
 		act_range.append(sum_range) # 乱数0~9の範囲で1が、10~29で2、30~59で3、60~99で4
+	
 
 func _on_p_1_spd_command(): # 一旦、actionsにappendし、後でまとめてボタンインスタンスを
 	for i_ in (4 - len(actions)): # 生成することでindexの位置のズレをなくす。

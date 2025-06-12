@@ -1,46 +1,383 @@
 extends Control
 
 const monster_scene = preload("res://battle_monster.tscn")
-var next_index: int = 0 # 次にチェンジするモンスターのindex
-var player_monster: Monster
-var enemy_monster: Monster
+const action_button = preload("res://技セレクトボタン.tscn")
+@onready var dialog = $button/dialogtab
+var tween: Tween
+var player_next_index: int = 0 # 次にチェンジするモンスターのindex
+var enemy_next_index: int = 0
+var player_deck: Array[BattleMonster]
+var enemy_deck: Array[BattleMonster]
+var player_monster: BattleMonster
+var enemy_monster: BattleMonster
+## 死亡時に交代するモンスターが選ばれるまで待つawait用シグナル
+signal changed
 
-# 味方と敵のデッキを準備　TODO　敵側の処理が未実装 deck を判別する条件文で作る
+# 味方と敵のデッキを準備
 func _on_tree_entered() -> void:
+	for button: Button in $button/main.get_children():
+			button.disabled = true
+	
 	for deck in [Global.deck1, Global.enemy_deck]:
-		for i in len(deck.monster):
-			var monster = monster_scene.instantiate()
+		for i: int in len(deck.monster):
+			var monster: BattleMonster = monster_scene.instantiate()
+			monster.index = i
 			monster.setup(deck.monster_dict[i], deck.monster[i], deck.action[i], 
 			deck.middle_evolution[i], deck.evolution[i], deck.chance[i])
 			match deck:
 				Global.deck1:
+					monster.player = true
 					monster.name = "player%d" % (i + 1)
 					if i == 0:
+						player_monster = monster
+						monster.position = Vector2(-153.6, 192)
 						self.add_child(monster)
-						monster.position = Vector2(396.8, 192)
-						# ここから均等に真ん中から距離を置く
+						await get_tree().process_frame # 1フレーム待つ
+						monster.get_node("SPD").set_process(true)
+						monster.get_node("HP/text").show()
 					else:
 						$player_deck/player_deck.add_child(monster)
+						await get_tree().process_frame # 1フレーム待つ
+						monster.get_node("SPD").set_process(false)
+						monster.get_node("HP/text").hide()
+					player_deck.append(monster)
+					monster.button_up.connect(func():monster_button_up(monster.index))
 				Global.enemy_deck:
+					monster.player = false
 					monster.name = "enemy%d" % (i + 1)
 					if i == 0:
+						enemy_monster = monster
+						monster.position = Vector2(1126.4, 192)
 						self.add_child(monster)
-						monster.position = Vector2(576, 192)
-						# ここから均等に真ん中から距離を置く
+						await get_tree().process_frame # 1フレーム待つ
+						monster.get_node("SPD").set_process(true)
+						monster.get_node("HP/text").show()
 					else:
 						$enemy_deck/enemy_deck.add_child(monster)
+						await get_tree().process_frame # 1フレーム待つ
+						monster.get_node("SPD").set_process(false)
+						monster.get_node("HP/text").hide()
+					enemy_deck.append(monster)
+			monster.show()
+			# シグナル接続
+			# モンスター行動可能通知シグナル
+			monster.monster_ready.connect(func():monster_ready(monster.player))
+			monster.dead.connect(func():death(monster))
+			
 	
-	next_index = 2
+	player_next_index = 2
 	_on_change_button_up()
+	# シーン遷移アニメーション
+	tween = get_tree().create_tween() # 味方フィールド出現アニメーション
+	tween.tween_property($player1, "position:x", 296.8, 0.5)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween = get_tree().create_tween() # 相手フィールド出現アニメーション
+	tween.tween_property($enemy1, "position:x", 676, 0.5)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	
-	player_monster = Global.deck1.monster[0] # 先発モンスター
-	enemy_monster = Global.enemy_deck.monster[0]
+	tween = get_tree().create_tween() # 味方ベンチ出現アニメーション
+	tween.tween_property($player_deck, "position:x", 0, 0.5)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween = get_tree().create_tween() # 相手ベンチ出現アニメーション
+	tween.tween_property($enemy_deck, "position:x", 752, 0.5)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 
+# spdgaugeが溜まり行動可能になった時
+func monster_ready(player: bool) -> void:
+	# spdゲージ停止
+	player_monster.get_node("SPD").set_process(false)
+	enemy_monster.get_node("SPD").set_process(false)
+	if player_monster.get_node("SPD").value == enemy_monster.get_node("SPD").value:
+		enemy_monster.get_node("SPD").value -= 10
+	if player == true: # プレイヤーが行動可能になった時
+		$button.monster = player_monster # 現在フィールドにいるモンスターを渡す
+		player_monster.mp_setter(player_monster.monster.supplyMP, false) # mp回復
+		
+		for button in $button/action.get_children(): # 全てのボタンを一旦削除
+			button.queue_free()
+		# 抽選された技をactionコンテナに追加
+		for i in len(player_monster.picked_action):
+			var instance = action_button.instantiate()
+			instance.action = player_monster.picked_action[i]
+			instance.text = player_monster.picked_action[i].name
+			instance.button_up.connect(func():select_command(i))
+			$button/action.add_child(instance)
+		
+		# 全てのボタン有効化
+		for button: Button in $button/main.get_children():
+			button.disabled = false
+		# dialog更新
+		dialog.text_setter(0, false, [
+		"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
+		[player_monster.monster.name, player_monster.monster.name, player_monster.monster.supplyMP]])
+	else:
+		enemy_monster.mp_setter(enemy_monster.monster.supplyMP, false)
+		
+		enemy_next_index = random_index(false) # 相手側の次に行動するモンスターをランダムにチェンジ
+		
+		dialog.text_setter(0, false, [
+		"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
+		[enemy_monster.monster.name, enemy_monster.monster.name, enemy_monster.monster.supplyMP]])
+		
+		await get_tree().create_timer(3).timeout # 考えるフリ
+		
+		var button_index = randi() % 4 # 味方モンスターと同じ変数名を使用
+		var action: Action = enemy_monster.picked_action[button_index]
+		var action_index: int
+		match action.range:
+			1, 6: # 敵単体・敵散開
+				action_index = random_index(false)
+			3: # 味方単体
+				action_index = random_index(true)
+			5: # 自分
+				action_index = enemy_monster.index
+			_:
+				action_index = -1
+		command_selected(false, enemy_monster, action, action_index)
+		enemy_monster.picked_action.remove_at(button_index)
 
+## 死亡時処理
+func death(monster: BattleMonster) -> void:
+	get_tree().paused = true
+	monster.get_node("SPD").set_process(false) # 死んだモンスターを停止
+	# フィールドにいる味方モンスターがやられた時
+	if monster.player == true and monster == player_monster:
+		dialog.text_setter(0, false, [
+		"[color=red]%s はやられてしまった！[/color]\n" % monster.monster.name + 
+		"次にフィールドに出すモンスターを\n選んでください。"
+		])
+		await changed
+		player_monster.bench_set()
+		player_monster = player_deck[player_next_index]
+		player_monster.field_set()
+		player_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
+	# フィールドにいる敵モンスターを倒した時、ランダムに次を選ぶ
+	elif monster.player == false and monster == enemy_monster:
+		await dialog.text_setter(0, true, [
+		"[color=red]%s を倒した！[/color]\n" % monster.monster.name + 
+		"相手は次にフィールドに出すモンスターを\n選んでいる..."
+		])
+		await get_tree().create_timer(1).timeout # 考えるフリ
+		enemy_next_index = random_index(false)
+		enemy_monster.bench_set()
+		enemy_monster = enemy_deck[enemy_next_index]
+		enemy_monster.field_set()
+		enemy_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
+	else:
+		if monster.player == true:
+			await dialog.text_setter(0, true, [
+			"[color=red]%s はやられてしまった！[/color]\n" % monster.monster.name])
+		else:
+			await dialog.text_setter(0, true, [
+			"[color=red]%s を倒した！[/color]\n" % monster.monster.name])
+	get_tree().paused = false
+
+## 死亡フラグを考慮してindexをランダムに指定する関数[br]true:味方index false:敵index
+func random_index(player: bool) -> int:
+	var death_list: Array[bool] = [
+		Global.p1_death, Global.p2_death, Global.p3_death, 
+		Global.e1_death, Global.e2_death, Global.e3_death]
+	var index: int
+	if player == true:
+		while  true:
+			index = randi() % 3
+			if death_list[index] == false: # 生きていれば終了
+				break
+	else:
+		while  true:
+			index = randi() % 3
+			if death_list[index + 3] == false:
+				break
+	
+	return index
+
+## ターン終了後にフィールドに立つモンスターのindexと画像を設定します
 func _on_change_button_up() -> void:
-	match next_index:
-		0, 1:
-			next_index += 1
+	if ( # 全員死んでるなら無視
+		player_deck[0].death == true and 
+		player_deck[1].death == true and 
+		player_deck[2].death == true):
+		return
+	
+	while true: # 生きているモンスターになるまで自動で繰り返す
+		match player_next_index:
+			0, 1:
+				player_next_index += 1
+			2:
+				player_next_index = 0
+		if player_deck[player_next_index].death == false:
+			break
+	$button/change.texture_normal = Global.deck1.monster[player_next_index].image
+	if player_monster.index != player_next_index:
+		changed.emit()
+
+## モンスターのボタンを押して、ターン終了後にフィールドに立つモンスターのindexと画像を設定します
+func monster_button_up(i: int) -> void:
+	if player_deck[i].death == false: # 生きてたら
+		player_next_index = i
+		if player_monster.index != player_next_index:
+			$button/change.texture_normal = Global.deck1.monster[player_next_index].image
+			changed.emit()
+
+## buttonスクリプト接続用関数
+func select_command(i: int) -> void:
+	$button._on_action_button_selected(i)
+
+## 技発動関数[br]player:trueなら味方の行動、falseなら相手の行動
+func command_selected(player: bool, monster: BattleMonster, action: Action, index: int)\
+ -> void:
+	var dialog_text: Array[String] # ダイアログに表示するテキストを収納する
+	# 何らかの理由で発動できない技の場合に中断する処理
+	# 第1形態から最終形態にスキップするのを防止
+	if len(monster.monster_dict) == 3 \
+	and monster.monster.form == 0 and action.id == 10002:
+		await dialog.text_setter(0, true, [
+		"[color=yellow]%s はまだ最終形態には進化できない！[/color]\n先に第2形態に進化してください！" % 
+		monster.monster.name])
+	# mpが足りない場合
+	elif monster.monster.MP < action.mp:
+		await dialog.text_setter(0, true, [
+		"%s の %s！\n[color=yellow]しかし、[color=aqua]MP[/color]が足りない！[/color]" % 
+		[monster.monster.name, action.name]])
+	else:
+		var target_list: Array[BattleMonster] = target_setting(player, action, index)
+		
+		if action.mp != 0: # mp消費処理
+			dialog_text = monster.mp_setter(-action.mp, true)
+		dialog_text.append("%s の %s！" % [monster.monster.name, action.name])
+		await dialog.text_setter(0, true, dialog_text)
+		
+		if action.id == 10001 or action.id == 10002:
+			dialog_text = monster.evolution(action.id)
+			await dialog.text_setter(0, true, dialog_text)
+		
+		for i in len(action.ability): # 全ての特殊能力について順番に処理
+			var ability = action.ability[i]
+		
+		for target: BattleMonster in target_list:
+			if action.power != 0:
+				var damage: int = damage_calc(action, monster, target)
+				dialog_text = [] # 初期化
+				var text: Array[String] = target.hp_setter(-damage, true)
+				for t in text: # Array[String]から要素を抜き出す
+					dialog_text.append(t)
+		await dialog.text_setter(0, true, dialog_text)
+	
+	monster.get_node("SPD").value = 0
+	
+	if player == true and player_monster != player_deck[player_next_index]:
+		player_monster.bench_set() # フィールドのモンスターをベンチに
+		player_monster = player_deck[player_next_index]
+		player_monster.field_set() # 次に指定されたモンスターをフィールドに
+	elif player == false and enemy_monster != enemy_deck[enemy_next_index]:
+		enemy_monster.bench_set()
+		enemy_monster = enemy_deck[enemy_next_index]
+		enemy_monster.field_set()
+	
+	if player_monster.death == false:
+		player_monster.get_node("SPD").set_process(true)
+	if enemy_monster.death == false:
+		enemy_monster.get_node("SPD").set_process(true)
+	
+	dialog.text_setter(0, false, 
+	["This is test message with animation!\n" + 
+	"[color=red][b]BBcode is available.[/b][/color]\n" + 
+	"表示可能な最大文字数（全角）：１９文字",
+	"page2",
+	"page3"]) # 元のメッセージに戻す
+
+## 技の発動先targetを設定する関数
+func target_setting(player: bool, action: Action, index: int) -> Array[BattleMonster]:
+	var target_list: Array[BattleMonster] # 技の発動対象
+	if player == true:
+		match action.range:
+			1, 6: # 敵単体 or 敵散開
+				target_list.append(enemy_deck[index])
+			3, 5: # 味方単体 or 自分
+				target_list.append(player_deck[index])
+			2: # 敵全体
+				for mon in enemy_deck:
+					target_list.append(mon)
+			4: # 味方全体
+				for mon in player_deck:
+					target_list.append(mon)
+	else:
+		match action.range:
+			1, 6: # 敵単体 or 敵散開
+				target_list.append(player_deck[index])
+			3, 5: # 味方単体 or 自分
+				target_list.append(enemy_deck[index])
+			2: # 敵全体
+				for mon in player_deck:
+					target_list.append(mon)
+			4: # 味方全体
+				for mon in enemy_deck:
+					target_list.append(mon)
+	return target_list
+
+## 属性倍率計算機(1属性)
+func attribute(o: int,d: int):
+	if ( # 0:無 1:火 2:水 3:雷 4:土 5:風 6:氷 7:光 8:闇
+			(o == 2 and d == 1) or (o == 3 and d == 2) or (o == 4 and d == 3) or 
+			(o == 5 and d == 4) or (o == 6 and d == 5) or (o == 1 and d == 6) or 
+			(o == 7 and d == 8) or (o == 8 and d == 7)):
+		return 2.0 # 弱点を突いたときダメージ2倍
+	elif o == d and o != 0:
+		return 0.5 # 同じ属性の技を受けた時ダメージ0.5倍
+	elif o == 0 and d != 0:
+		return 0.8 # 無属性でない敵に無属性の技で攻撃する際の軽減倍率0.8倍
+	else:
+		return 1.0 # その他等倍
+
+## 属性倍率計算機(反復)
+func attribute_setup(action: Action, monster: Monster) -> float:
+	var magnification: float = 1.0 # 最終的な属性相性倍率
+	for act_element: Element in action.element:
+		for monster_element: Element in monster.element:
+			magnification *= attribute(act_element.id, monster_element.id)
+	return magnification
+
+## ダメージ計算機
+func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)\
+ -> int:
+	if action.power == 0: # powerが0なら不要なので中断
+		return 0
+	
+	var status: Array[float] = [0, 0] # ステータス値
+	var type: Array[int] = [0, 0] # 0:なし 1:ATK 2:DEF 3:MAG 4:RES
+	match action.damage_type: # 必要なステータス参照
+		0:
+			pass
+		1:
+			status[0] = float(offense.monster.ATK)
+			status[1] = float(defense.monster.DEF)
+			type[0] = 0
+			type[1] = 1
 		2:
-			next_index = 0
-	$button/change.texture_normal = Global.deck1.monster[next_index].image
+			status[0] = float(offense.monster.MAG)
+			status[1] = float(defense.monster.RES)
+			type[0] = 2
+			type[1] = 3
+		_:
+			print("ERROR:damage_typeが検知できません")
+	
+	# エフェクトをステータスに対応させる処理
+	var effects_list = [offense.effect_dict.keys(), defense.effect_dict.keys()]
+	for i in range(2): # i=0:攻撃側ステータスについて i=1:守備側ステータスについて
+		for effect: Effect in effects_list[i]:
+			match effect.category:
+				2: # バフ
+					if effect.buff == type[i]:
+						status[i] *= effect.power
+				3: # デバフ
+					if effect.buff == type[i]:
+						status[i] /= effect.power
+	
+	var magnification: float = attribute_setup(action, defense.monster)
+	# power * ((攻撃側ステータス / 守備側ステータス) ** ステータス乖離ボーナス(1.2) * 属性相性
+	var damage = action.power * ((status[0] / status[1]) ** 1.2) * magnification
+	# モンスターと技の属性一致倍率を乗算
+	if action.element.any(func(a): offense.monster.element.any(func(m): return a.id == m.id)):
+		damage *= 1.5
+	
+	return int(damage)

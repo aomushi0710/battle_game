@@ -73,7 +73,7 @@ const debuff_list = ["ATK_down","DEF_down","MAG_down","RES_down"]
 @onready var e2_death = false
 @onready var e3_death = false
 
- # モンスターのステータス表示を生成する関数 icon_size:bbcodeのimgタグに用いるアイコンのサイズ
+## モンスターのステータス表示を生成する関数 icon_size:bbcodeのimgタグに用いるアイコンのサイズ
 func status_text(monster: Monster) -> String:
 	var text = (
 		"[color=coral]HP :%3d" % monster.maxHP + 
@@ -104,7 +104,7 @@ func all_status(monster: Monster) -> Array[RichTextLabel]:
 	
 	return [name_label, element_label, status_label]
 
-
+## ランダムデッキ生成機
 func deck_creator(deck: Deck) -> void:
 	var monster_id_list: Array[int] = [0] # 選ばれたモンスターのIDを登録と0だけ
 	var monster_id: int = 0
