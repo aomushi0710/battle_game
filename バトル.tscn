@@ -57,16 +57,13 @@
 default_font_size = 150
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_501o3"]
-load_path = "res://.godot/imported/bar_hp.PNG-344f3d66a97e8560cfce7a35897260ea.ctex"
 
 [sub_resource type="Theme" id="Theme_6erj1"]
 default_font_size = 50
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3fhy4"]
-load_path = "res://.godot/imported/bar_mp.PNG-f10b55dbe3e202559340cb0574d6fe70.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v3nnf"]
-load_path = "res://.godot/imported/bar_spd.PNG-d0629bc3d8a90728d2ef0118b0251a7d.ctex"
 
 [sub_resource type="Theme" id="Theme_bl78q"]
 default_font_size = 30

@@ -19,8 +19,8 @@ func _ready() -> void:
 	"表示可能な最大文字数（全角）：１９文字",
 	"page2",
 	"page3"] # test
-	tab_list[1].append(get_child(1).text)
-	tab_list[2].append(get_child(2).text)
+	tab_list[1] = ["Status ボタンから味方と相手の\nステータスを確認できます！"]
+	tab_list[2] = [""]
 	current_tab = 0
 	_on_tab_changed(current_tab) # 初期値タブのテキストをアニメーション
 
@@ -29,22 +29,22 @@ func _ready() -> void:
 func text_setter(tab: int, wait: bool, text: Array) -> void:
 	next_sign = wait
 	tab_list[tab] = text
-	_on_tab_changed(0)
+	_on_tab_changed(tab)
 	if wait == true:
 		await paging # 最後のページがメッセージ送りされてからこの関数の処理を終える
 	# これによって、この関数をawaitで待ちながら呼んだ元の関数を再開させることができる
 
 ## タブが切り替えられた時、ページ数を0にリセットしてtext_animationを呼ぶ関数
 func _on_tab_changed(tab: int) -> void:
+	current_tab = tab
 	current_page = 0
 	text_animation(tab, 0)
 
 ## _inputもしくはlabel_gui_inputから、次のページを指定してtext_animationを呼ぶ関数
 func text_change_next() -> void:
-	var label: RichTextLabel = get_child(current_tab) # タブのラベル取得
 	if tween and tween.is_running(): # tweenがすでに動作しているならアニメーションスキップ
 		tween.kill()
-		label.visible_characters = len(label.text) # 全表示
+		get_child(current_tab).visible_characters = len(get_child(current_tab).text) # 全表示
 	else:
 		if len(tab_list[current_tab]) - 1 > current_page: # まだ次のページが存在する場合
 			current_page += 1

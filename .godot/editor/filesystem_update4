@@ -4,9 +4,9 @@ res://theme/default_font_20.tres
 res://キャラセレクト.gd
 res://clear_font.tres
 res://theme/battle_tabcontainer.tres
-res://Button.gd
 res://dialogtab.gd
-res://new_battle.gd
+res://Button.gd
+res://battle_buttons.gd
 res://メインシーン.tscn
 res://デッキセレクト.tscn
 res://デッキセーブデータ.tscn
@@ -18,4 +18,3 @@ res://battle_monster.tscn
 res://damage_text.tscn
 res://debug.tscn
 res://バフデバフアイコン.tscn
-res://battle_monster.gd

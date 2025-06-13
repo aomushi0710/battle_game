@@ -1,7 +1,9 @@
 extends Control
 
 const action_button = preload("res://技セレクトボタン.tscn")
-var now_showing: int # 0:main 1:action 2:item 3:status 4:target
+const MONSTER_NAME_LIMIT: int = 9 ## statusに表示する上での、モンスターの名前の上限文字数
+var now_showing: int ## 現在表示中のボタンメニュー[br]0:main 1:action 2:item 3:status 4:target 5:monsters
+var now_player: bool ## true:現在playerの情報を表示 false:現在enemyの情報を表示
 var monster: BattleMonster
 var selected_action_button: Button
 var button_index: int
@@ -12,11 +14,6 @@ var tween: Tween
 func _on_tree_entered() -> void: # 初期値
 	now_showing = 0
 	$change.texture_normal = Global.deck1.monster[0].image
-
-## メインのactionが押された時
-func _on_action_button_up() -> void:
-	await hide_main_button()
-	show_action_button()
 
 ## 技の対象を選ぶ必要がある時に表示されるボタンを生成する関数
 func _on_action_button_selected(i: int) -> void:
@@ -51,15 +48,21 @@ func _on_action_button_selected(i: int) -> void:
 		_:
 			target_button_up(-1) # 引数-1:index指定なし
 
+## メインのactionが押された時
+func _on_action_button_up() -> void:
+	await hide_main_button()
+	show_action_button()
 
+## メインのitemが押された時
 func _on_item_button_up() -> void:
 	now_showing = 2
 	hide_main_button()
+	$dialogtab.text_setter(0, false, ["未実装"])
 
-
+## メインのstatusが押された時
 func _on_status_button_up() -> void:
-	now_showing = 3
-	hide_main_button()
+	await hide_main_button()
+	show_player_or_enemy_button()
 
 ## メインボタン出現アニメーション
 func show_main_button() -> void:
@@ -113,21 +116,19 @@ func show_target_button() -> void:
 	var death_list: Array[bool] = \
 	[Global.e1_death, Global.e2_death, Global.e3_death, \
 	Global.p1_death, Global.p2_death, Global.p3_death] # for文用真理値配列
-	var target_list: Array[TextureButton] = \
-	[$target/target1, $target/target2, $target/target3] # for文用ノード配列
 	match selected_action.range: # 攻撃対象ごとに生成する画像が違う
 		1, 6: # 敵単体・敵散開
 			for i in range(3):
 				if death_list[i] == true:
-					target_list[i].texture_normal = load("res://お墓.PNG")
+					$target.get_child(i).texture_normal = load("res://お墓.PNG")
 				else:
-					target_list[i].texture_normal = Global.enemy_deck.monster[i].image
+					$target.get_child(i).texture_normal = Global.enemy_deck.monster[i].image
 		3: # 味方単体
 			for i in range(3):
 				if death_list[i + 3] == true:
-					target_list[i].texture_normal = load("res://お墓.PNG")
+					$target.get_child(i).texture_normal = load("res://お墓.PNG")
 				else:
-					target_list[i].texture_normal = Global.deck1.monster[i].image
+					$target.get_child(i).texture_normal = Global.deck1.monster[i].image
 	$target.show()
 	tween = get_tree().create_tween()
 	tween.tween_property($target, "position:y", 523, 0.5)\
@@ -147,18 +148,90 @@ func hide_target_button() -> void:
 			child.disabled = true
 		elif child is Button:
 			child.queue_free()
-	# ボタン出現アニメーション　ツリーのポーズを無視
+	# ボタン消滅アニメーション　ツリーのポーズを無視
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property($target, "position:y", 648, 0.5)\
+	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
+	$target.hide()
+
+## 味方か相手を選択させるボタン出現アニメーション
+func show_player_or_enemy_button() -> void:
+	now_showing = 3
+	for i in range(2):
+		var button = Button.new()
+		button.size = Vector2(120, 120)
+		button.disabled = true
+		if i == 0:
+			button.name = "player"
+			button.text = "Player\nStatus"
+			button.position = Vector2(132, 648)
+			button.button_up.connect(func(): # ラムダ関数で次のボタン遷移処理
+				await hide_player_or_enemy_button()
+				show_monsters_button(true))
+		else:
+			button.name = "enemy"
+			button.text = "Enemy\nStatus"
+			button.position = Vector2(255, 648)
+			button.button_up.connect(func():
+				await hide_player_or_enemy_button()
+				show_monsters_button(false))
+		add_child(button)
+	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property($player, "position:y", 523, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween.parallel().tween_property($enemy, "position:y", 523, 0.5)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	$player.disabled = false
+	$enemy.disabled = false
+
+## 味方か相手を選択させるボタン消滅アニメーション
+func hide_player_or_enemy_button() -> void:
+	$player.disabled = true
+	$enemy.disabled = true
+	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property($player, "position:y", 648, 0.5)\
+	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+	tween.parallel().tween_property($enemy, "position:y", 648, 0.5)\
+	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
+	$player.queue_free()
+	$enemy.queue_free()
+
+## デッキモンスター一覧ボタン出現アニメーション
+func show_monsters_button(player: bool) -> void:
+	now_showing = 5
+	now_player = player
+	var deck: Deck
+	if player == true:
+		deck = Global.deck1
+	else:
+		deck = Global.enemy_deck
+	for i in range(3):
+		$target.get_child(i).texture_normal = deck.monster[i].image
+	$target.show()
+	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property($target, "position:y", 523, 0.5)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
+	for child: TextureButton in $target.get_children():
+		child.disabled = false
+
+## デッキモンスター一覧ボタン消滅アニメーション
+func hide_monsters_button() -> void:
+	for child: TextureButton in $target.get_children():
+		child.disabled = true
+	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property($target, "position:y", 648, 0.5)\
+	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	$target.hide()
 
 ## 戻るボタンが押された場合の、各種状態での挙動
 func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdisacleで阻止
+	$"戻る".disabled = true
 	match now_showing:
 		1: # action消滅アニメーション
-			$"戻る".disabled = true
 			# TODO 現在は仮の文章　後々、デフォルトのものを挿入できるようにする
 			$dialogtab.tab_list[0] = ["This is test message with animation!\n" + 
 			"[color=red][b]BBcode is available.[/b][/color]"]
@@ -167,13 +240,16 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
 				button.disabled = false
-		2, 3:
-			$"戻る".disabled = true
+		2:
+			show_main_button()
+			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
+				button.disabled = false
+		3: # 戻る 味方か相手選択 -> メイン
+			await hide_player_or_enemy_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
 				button.disabled = false
 		4: # 戻る ターゲット選択 -> 技選択
-			$"戻る".disabled = true
 			if tween and tween.is_running(): # ボタン点滅アニメーション停止
 				tween.kill()
 			for child in get_children():
@@ -184,6 +260,9 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 					child.queue_free()
 			await hide_target_button()
 			show_action_button()
+		5: # 戻る モンスター一覧 -> 味方か相手選択
+			await hide_monsters_button()
+			show_player_or_enemy_button()
 
 
 func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げられないバトル用の処理なども作る
@@ -223,13 +302,22 @@ func _on_確認メッセージ_confirmed() -> void: # バトル終了初期化�
 
 
 func _on_target_1_button_up() -> void:
-	target_button_up(0)
+	if now_showing == 4: # 技の対象を選んだ時の動作
+		target_button_up(0)
+	elif now_showing == 5:
+		status_dialog(0)
 
 func _on_target_2_button_up() -> void:
-	target_button_up(1)
+	if now_showing == 4:
+		target_button_up(1)
+	elif now_showing == 5:
+		status_dialog(1)
 
 func _on_target_3_button_up() -> void:
-	target_button_up(2)
+	if now_showing == 4:
+		target_button_up(2)
+	elif now_showing == 5:
+		status_dialog(2)
 
 ## 発動する技とそのターゲットが確定した時、各種情報をまとめて引数を渡す関数
 func target_button_up(i: int) -> void:
@@ -248,3 +336,28 @@ func target_button_up(i: int) -> void:
 	$action.remove_child(selected_action_button) # 選ばれた技ボタンを最後に消す
 	selected_action_button.queue_free()
 	monster.picked_action.remove_at(button_index) # モンスターの技一覧から消す
+
+## モンスターのステータスをダイアログにセットして表示する関数
+func status_dialog(i: int) -> void:
+	var monster: Monster
+	if now_player == true:
+		monster = Global.deck1.monster[i]
+	else:
+		monster = Global.enemy_deck.monster[i]
+	
+	var monster_name: String = monster.name
+	if len(monster_name) > MONSTER_NAME_LIMIT: # 10文字より多ければ
+		monster_name = monster_name.substr(0, MONSTER_NAME_LIMIT) # 無理やり10文字にする
+	else:
+		for j in MONSTER_NAME_LIMIT - len(monster_name): # 空白を増やして10文字に
+			monster_name += "　" # 空白は全角である
+	
+	$dialogtab.text_setter(1, false, [
+	"   %s[color=coral]HP :%3d[/color]   [color=green]SPD:%3d[/color]\n" % 
+	[monster_name, monster.maxHP, monster.SPD] + 
+	"   [color=aqua]MP :%3d / %3d[/color] " % 
+	[monster.supplyMP, monster.maxMP] + 
+	"    [color=red]ATK:%3d[/color]   [color=light_blue]DEF:%3d[/color]\n" % 
+	[monster.ATK, monster.DEF] + "   [color=aqua](supply / max)[/color]" + 
+	"    [color=dodger_blue]MAG:%3d[/color]   [color=violet]RES:%3d[/color]" % 
+	[monster.MAG, monster.RES]])
