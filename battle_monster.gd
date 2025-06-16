@@ -13,18 +13,15 @@ var evolution_list: Array # 設定された進化技を格納する配列
 var chance_list: Array # 技の出現確率を格納する配列
 var effect_dict = {} # エフェクトの状態を格納する辞書　INFO 初期値はなし(空)
 var death: bool = false
-
+var text_setter_callback: Callable # dialogのtext_setter
 var chance_range: Array[int] # 抽選に用いる範囲
 var picked_action: Array[Action] # 抽選され選ばれた技の配列
 
-## モンスターが行動可能になった時発行されます
-signal monster_ready
-## モンスターが死亡時発行されます
-signal dead
+signal monster_ready ## モンスターが行動可能になった時発行されます
+
 
 func _ready() -> void:
 	hide()
-
 
 # バトル開始時セットアップ
 func setup(dict: Dictionary, mon: Monster, act_list: Array, 
@@ -80,6 +77,68 @@ mid_evol_list: Array, evol_list: Array, chan_list: Array) -> void:
 			range -= 1
 		sum_range += range # ex.1:10% 2:20% 3:30% 4:40%なら、[9,29,59.99]となり、
 		chance_range.append(sum_range) # 乱数0~9の範囲で1が、10~29で2、30~59で3、60~99で4
+
+## 死亡処理
+func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
+	get_tree().paused = true
+	texture_normal = load("res://お墓.PNG")
+	var parent: Node = get_parent()
+	while parent.name != "battle":
+		parent = parent.get_parent()
+	$SPD.set_process(false) # 死んだモンスターを停止
+	# フィールドにいる味方モンスターがやられた時
+	if player == true and self == player_monster:
+		text_setter_callback.call(0, false, [
+		"[color=red]%s はやられてしまった！[/color]\n" % monster.name + 
+		"次にフィールドに出すモンスターを\n選んでください。"
+		])
+		await parent.changed
+		bench_set() # 死んだモンスターをベンチにセット
+		parent.player_monster = parent.player_deck[parent.player_next_index] # 次のモンスターを設定
+		parent.player_monster.field_set() # 次のモンスターをフィールドにセット
+		parent.player_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
+	# フィールドにいる敵モンスターを倒した時、ランダムに次を選ぶ
+	elif player == false and self == enemy_monster:
+		await text_setter_callback.call(0, true, [
+		"[color=red]%s を倒した！[/color]\n" % monster.name + 
+		"相手は次にフィールドに出すモンスターを\n選んでいる..."
+		])
+		await get_tree().create_timer(1).timeout # 考えるフリ
+		parent.enemy_next_index = parent.random_index(false)
+		bench_set()
+		parent.enemy_monster = parent.enemy_deck[parent.enemy_next_index]
+		parent.enemy_monster.field_set()
+		parent.enemy_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
+	else:
+		if player == true:
+			await text_setter_callback.call(0, true, [
+			"[color=red]%s はやられてしまった！[/color]\n" % monster.name])
+		else:
+			await text_setter_callback.call(0, true, [
+			"[color=red]%s を倒した！[/color]\n" % monster.name])
+	$SPD.set_process(false)
+	$SPD.value = 0
+	# フラグ立て
+	death = true
+	if player == true:
+		match index:
+			0:
+				Global.p1_death = true
+			1:
+				Global.p2_death = true
+			2:
+				Global.p3_death = true
+	else:
+		match index:
+			0:
+				Global.e1_death = true
+			1:
+				Global.e2_death = true
+			2:
+				Global.e3_death = true
+	effect_dict = {} # エフェクト全消し
+	
+	get_tree().paused = false
 
 ## 進化技を引数にして、そのIDにあった進化処理を施す
 func evolution(id: int) -> Array[String]:
@@ -147,7 +206,7 @@ func field_set() -> void:
 	else:
 		position = Vector2(676, 192)
 
-
+## SPDゲージが溜まり行動可能になった時の処理
 func spd_max() -> void:
 	# picked_action 生成
 	while len(picked_action) < 4: # 4枠全て技で埋まるまで繰り返す
@@ -202,7 +261,7 @@ func hp_setter(n: int, text: bool) -> Array[String]:
 	tween.tween_property($HP, "value", monster.HP, 0.5)
 	tween.parallel().tween_method(hp_text_update, hp_text, monster.HP, 0.5)
 	
-	var return_text: Array[String]
+	var return_text: Array[String] # textを表示する処理
 	if text == true:
 		if n > 0: # hpが回復した時、緑色でアニメーション再生
 			return_text = [
@@ -211,32 +270,6 @@ func hp_setter(n: int, text: bool) -> Array[String]:
 		else:
 			return_text = [
 			"%s は[color=orange]%d[/color]ダメージを受けた！" % [monster.name, -original_n]]
-	
-	if monster.HP <= 0:
-		$SPD.set_process(false)
-		$SPD.value = 0
-		# フラグ立て
-		death = true
-		if player == true:
-			match index:
-				0:
-					Global.p1_death = true
-				1:
-					Global.p2_death = true
-				2:
-					Global.p3_death = true
-		else:
-			match index:
-				0:
-					Global.e1_death = true
-				1:
-					Global.e2_death = true
-				2:
-					Global.e3_death = true
-		texture_normal = load("res://お墓.PNG")
-		effect_dict = {} # エフェクト全消し
-		dead.emit()
-		
 	return return_text
 
 ## hp_setterからhp_textの変化アニメーション用 

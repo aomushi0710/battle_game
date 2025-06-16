@@ -1,4 +1,4 @@
-res://新バトル.tscn
+res://メインシーン.tscn
 res://theme/default_font_30.tres
 res://theme/default_font_20.tres
 res://キャラセレクト.gd
@@ -6,15 +6,17 @@ res://clear_font.tres
 res://theme/battle_tabcontainer.tres
 res://dialogtab.gd
 res://Button.gd
-res://battle_buttons.gd
-res://メインシーン.tscn
 res://デッキセレクト.tscn
 res://デッキセーブデータ.tscn
 res://キャラ選択.tscn
 res://特性・技セレクト.tscn
 res://技セレクトボタン.tscn
 res://バトル.tscn
+res://新バトル.tscn
 res://battle_monster.tscn
 res://damage_text.tscn
 res://debug.tscn
 res://バフデバフアイコン.tscn
+res://battle_monster.gd
+res://new_battle.gd
+res://battle_buttons.gd

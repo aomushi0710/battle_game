@@ -322,10 +322,13 @@ func _on_target_3_button_up() -> void:
 ## 発動する技とそのターゲットが確定した時、各種情報をまとめて引数を渡す関数
 func target_button_up(i: int) -> void:
 	$"戻る".disabled = true
+	for child in $target.get_children():
+		child.disabled = true
 	tween = get_tree().create_tween() # 選ばれた技ボタン消滅アニメーション
 	tween.tween_property($selected, "modulate:a", 0, 0.5)
 	await tween.finished
-	$selected.queue_free()
+	if $selected:
+		$selected.queue_free()
 	
 	get_parent().command_selected(true, monster, selected_action, i)
 	
@@ -334,7 +337,8 @@ func target_button_up(i: int) -> void:
 	show_main_button() # 最初の表示に戻す ボタンは利用不可のまま
 	
 	$action.remove_child(selected_action_button) # 選ばれた技ボタンを最後に消す
-	selected_action_button.queue_free()
+	if selected_action_button:
+		selected_action_button.queue_free()
 	monster.picked_action.remove_at(button_index) # モンスターの技一覧から消す
 
 ## モンスターのステータスをダイアログにセットして表示する関数

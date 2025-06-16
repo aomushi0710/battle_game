@@ -27,6 +27,8 @@ func _ready() -> void:
 ## ダイアログボックスに表示するテキストのsetter[br]tab:タブのindex text:配列の要素1つで1ページ分[br]
 ## wait true:awaitでメッセージ送りを待つ false:待たない
 func text_setter(tab: int, wait: bool, text: Array) -> void:
+	if text == []: # array要素の型不明の時
+		text = [""] # string型に修正
 	next_sign = wait
 	tab_list[tab] = text
 	_on_tab_changed(tab)

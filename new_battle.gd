@@ -24,6 +24,7 @@ func _on_tree_entered() -> void:
 			monster.index = i
 			monster.setup(deck.monster_dict[i], deck.monster[i], deck.action[i], 
 			deck.middle_evolution[i], deck.evolution[i], deck.chance[i])
+			monster.text_setter_callback = Callable(dialog, "text_setter")
 			match deck:
 				Global.deck1:
 					monster.player = true
@@ -62,8 +63,6 @@ func _on_tree_entered() -> void:
 			# シグナル接続
 			# モンスター行動可能通知シグナル
 			monster.monster_ready.connect(func():monster_ready(monster.player))
-			monster.dead.connect(func():death(monster))
-			
 	
 	player_next_index = 2
 	_on_change_button_up()
@@ -135,42 +134,6 @@ func monster_ready(player: bool) -> void:
 				action_index = -1
 		command_selected(false, enemy_monster, action, action_index)
 		enemy_monster.picked_action.remove_at(button_index)
-
-## 死亡時処理
-func death(monster: BattleMonster) -> void:
-	get_tree().paused = true
-	monster.get_node("SPD").set_process(false) # 死んだモンスターを停止
-	# フィールドにいる味方モンスターがやられた時
-	if monster.player == true and monster == player_monster:
-		dialog.text_setter(0, false, [
-		"[color=red]%s はやられてしまった！[/color]\n" % monster.monster.name + 
-		"次にフィールドに出すモンスターを\n選んでください。"
-		])
-		await changed
-		player_monster.bench_set()
-		player_monster = player_deck[player_next_index]
-		player_monster.field_set()
-		player_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
-	# フィールドにいる敵モンスターを倒した時、ランダムに次を選ぶ
-	elif monster.player == false and monster == enemy_monster:
-		await dialog.text_setter(0, true, [
-		"[color=red]%s を倒した！[/color]\n" % monster.monster.name + 
-		"相手は次にフィールドに出すモンスターを\n選んでいる..."
-		])
-		await get_tree().create_timer(1).timeout # 考えるフリ
-		enemy_next_index = random_index(false)
-		enemy_monster.bench_set()
-		enemy_monster = enemy_deck[enemy_next_index]
-		enemy_monster.field_set()
-		enemy_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
-	else:
-		if monster.player == true:
-			await dialog.text_setter(0, true, [
-			"[color=red]%s はやられてしまった！[/color]\n" % monster.monster.name])
-		else:
-			await dialog.text_setter(0, true, [
-			"[color=red]%s を倒した！[/color]\n" % monster.monster.name])
-	get_tree().paused = false
 
 ## 死亡フラグを考慮してindexをランダムに指定する関数[br]true:味方index false:敵index
 func random_index(player: bool) -> int:
@@ -254,14 +217,18 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 		for i in len(action.ability): # 全ての特殊能力について順番に処理
 			var ability = action.ability[i]
 		
-		for target: BattleMonster in target_list:
+		for target: BattleMonster in target_list: # 対象にダメージをあたえる
 			if action.power != 0:
 				var damage: int = damage_calc(action, monster, target)
 				dialog_text = [] # 初期化
-				var text: Array[String] = target.hp_setter(-damage, true)
-				for t in text: # Array[String]から要素を抜き出す
+				var text: Array[String] = await target.hp_setter(-damage, true)
+				for t:String in text: # Array[String]から要素を抜き出す
 					dialog_text.append(t)
 		await dialog.text_setter(0, true, dialog_text)
+		
+		for target: BattleMonster in target_list:
+			if target.monster.HP <= 0: # 死亡時処理
+				await target.dead(player_monster, enemy_monster)
 	
 	monster.get_node("SPD").value = 0
 	
