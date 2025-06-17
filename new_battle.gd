@@ -18,6 +18,11 @@ func _on_tree_entered() -> void:
 	for button: Button in $button/main.get_children():
 			button.disabled = true
 	
+	$"../result_rect".hide()
+	$"../result_rect/win".hide()
+	$"../result_rect/lose".hide()
+	
+	await get_tree().process_frame # 1フレーム待つ
 	for deck in [Global.deck1, Global.enemy_deck]:
 		for i: int in len(deck.monster):
 			var monster: BattleMonster = monster_scene.instantiate()
@@ -125,9 +130,9 @@ func monster_ready(player: bool) -> void:
 		var action_index: int
 		match action.range:
 			1, 6: # 敵単体・敵散開
-				action_index = random_index(false)
-			3: # 味方単体
 				action_index = random_index(true)
+			3: # 味方単体
+				action_index = random_index(false)
 			5: # 自分
 				action_index = enemy_monster.index
 			_:
@@ -230,6 +235,13 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 			if target.monster.HP <= 0: # 死亡時処理
 				await target.dead(player_monster, enemy_monster)
 	
+	# 相手全滅
+	if Global.e1_death == true and Global.e2_death == true and Global.e3_death == true:
+		return
+	# 味方全滅
+	elif Global.p1_death == true and Global.p2_death == true and Global.p3_death == true:
+		return
+	
 	monster.get_node("SPD").value = 0
 	
 	if player == true and player_monster != player_deck[player_next_index]:
@@ -252,6 +264,20 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 	"表示可能な最大文字数（全角）：１９文字",
 	"page2",
 	"page3"]) # 元のメッセージに戻す
+
+## バトル終了処理 win true:勝利 false:敗北
+func battle_finish(win: bool) -> void:
+	$button.now_showing = -1
+	$"../result_rect".show()
+	if win == true:
+		$"../result_rect/win".show()
+		dialog.text_setter(0, false, [
+		"[color=red]勝利！[/color]\n\n左下の戻るボタンを押してバトルを終了"])
+		
+	else:
+		$"../result_rect/lose".show()
+		dialog.text_setter(0, false, [
+		"[color=dodger_blue]敗北...[/color]\n\n左下の戻るボタンを押してバトルを終了 "])
 
 ## 技の発動先targetを設定する関数
 func target_setting(player: bool, action: Action, index: int) -> Array[BattleMonster]:

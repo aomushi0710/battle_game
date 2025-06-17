@@ -114,7 +114,6 @@ offset_bottom = 40.0
 script = ExtResource("1_csbr0")
 
 [node name="result_rect" type="ColorRect" parent="buttle"]
-visible = false
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0

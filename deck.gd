@@ -1,7 +1,6 @@
 extends Object
 
 class_name Deck
-
 var monster_dict = [null ,null ,null] # monsterの全ての形態が辞書として登録される
 var monster = [null, null, null] # monsterの現在の状態が全て入る
 var action: Array[Array] = [[],[],[]]

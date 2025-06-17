@@ -12,6 +12,7 @@ var tween: Tween
 
 
 func _on_tree_entered() -> void: # 初期値
+	$"戻る".disabled = true
 	now_showing = 0
 	$change.texture_normal = Global.deck1.monster[0].image
 
@@ -231,6 +232,8 @@ func hide_monsters_button() -> void:
 func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdisacleで阻止
 	$"戻る".disabled = true
 	match now_showing:
+		-1: # バトル終了後、デッキセレクトに戻る
+			_on_確認メッセージ_confirmed() # 初期化処理を呼ぶ
 		1: # action消滅アニメーション
 			# TODO 現在は仮の文章　後々、デフォルトのものを挿入できるようにする
 			$dialogtab.tab_list[0] = ["This is test message with animation!\n" + 

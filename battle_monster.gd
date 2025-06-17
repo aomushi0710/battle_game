@@ -81,43 +81,6 @@ mid_evol_list: Array, evol_list: Array, chan_list: Array) -> void:
 ## 死亡処理
 func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	get_tree().paused = true
-	texture_normal = load("res://お墓.PNG")
-	var parent: Node = get_parent()
-	while parent.name != "battle":
-		parent = parent.get_parent()
-	$SPD.set_process(false) # 死んだモンスターを停止
-	# フィールドにいる味方モンスターがやられた時
-	if player == true and self == player_monster:
-		text_setter_callback.call(0, false, [
-		"[color=red]%s はやられてしまった！[/color]\n" % monster.name + 
-		"次にフィールドに出すモンスターを\n選んでください。"
-		])
-		await parent.changed
-		bench_set() # 死んだモンスターをベンチにセット
-		parent.player_monster = parent.player_deck[parent.player_next_index] # 次のモンスターを設定
-		parent.player_monster.field_set() # 次のモンスターをフィールドにセット
-		parent.player_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
-	# フィールドにいる敵モンスターを倒した時、ランダムに次を選ぶ
-	elif player == false and self == enemy_monster:
-		await text_setter_callback.call(0, true, [
-		"[color=red]%s を倒した！[/color]\n" % monster.name + 
-		"相手は次にフィールドに出すモンスターを\n選んでいる..."
-		])
-		await get_tree().create_timer(1).timeout # 考えるフリ
-		parent.enemy_next_index = parent.random_index(false)
-		bench_set()
-		parent.enemy_monster = parent.enemy_deck[parent.enemy_next_index]
-		parent.enemy_monster.field_set()
-		parent.enemy_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
-	else:
-		if player == true:
-			await text_setter_callback.call(0, true, [
-			"[color=red]%s はやられてしまった！[/color]\n" % monster.name])
-		else:
-			await text_setter_callback.call(0, true, [
-			"[color=red]%s を倒した！[/color]\n" % monster.name])
-	$SPD.set_process(false)
-	$SPD.value = 0
 	# フラグ立て
 	death = true
 	if player == true:
@@ -137,7 +100,58 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 			2:
 				Global.e3_death = true
 	effect_dict = {} # エフェクト全消し
+	# お墓アニメーション
+	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(self, "self_modulate:a", 0, 0.3)
+	tween.tween_callback(func(): texture_normal = load("res://お墓.PNG"))
+	tween.tween_property(self, "self_modulate:a", 1, 0.3)
+	await tween.finished
 	
+	var parent: Node = get_parent()
+	while parent.name != "battle":
+		parent = parent.get_parent()
+	$SPD.set_process(false) # 死んだモンスターを停止
+	$SPD.value = 0
+	# 相手全滅
+	if Global.e1_death == true and Global.e2_death == true and Global.e3_death == true:
+		parent.battle_finish(true)
+		parent.get_node("button").get_node("戻る").disabled = false
+		get_tree().paused = false
+		return
+	# 味方全滅
+	elif Global.p1_death == true and Global.p2_death == true and Global.p3_death == true:
+		parent.battle_finish(false)
+		parent.get_node("button").get_node("戻る").disabled = false
+		get_tree().paused = false
+		return
+	# フィールドにいる味方モンスターがやられた時
+	if player == true and self == player_monster:
+		text_setter_callback.call(0, false, [
+		"[color=red]%s はやられてしまった！[/color]\n" % monster.name + 
+		"次にフィールドに出すモンスターを\n選んでください。"])
+		await parent.changed
+		bench_set() # 死んだモンスターをベンチにセット
+		parent.player_monster = parent.player_deck[parent.player_next_index] # 次のモンスターを設定
+		parent.player_monster.field_set() # 次のモンスターをフィールドにセット
+		parent.player_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
+	# フィールドにいる敵モンスターを倒した時、ランダムに次を選ぶ
+	elif player == false and self == enemy_monster:
+		await text_setter_callback.call(0, true, [
+		"[color=red]%s を倒した！[/color]\n" % monster.name + 
+		"相手は次にフィールドに出すモンスターを\n選んでいる..."])
+		await get_tree().create_timer(1).timeout # 考えるフリ
+		parent.enemy_next_index = parent.random_index(false)
+		bench_set()
+		parent.enemy_monster = parent.enemy_deck[parent.enemy_next_index]
+		parent.enemy_monster.field_set()
+		parent.enemy_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
+	else:
+		if player == true:
+			await text_setter_callback.call(0, true, [
+			"[color=red]%s はやられてしまった！[/color]\n" % monster.name])
+		else:
+			await text_setter_callback.call(0, true, [
+			"[color=red]%s を倒した！[/color]\n" % monster.name])
 	get_tree().paused = false
 
 ## 進化技を引数にして、そのIDにあった進化処理を施す
