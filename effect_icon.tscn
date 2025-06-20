@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://4xqdwf0b1t14"]
+
+[ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="1_yfs5u"]
+
+[sub_resource type="Theme" id="Theme_p8ish"]
+default_font_size = 110
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8ish"]
+content_margin_right = 17.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="effect_icon" type="TextureButton"]
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("1_yfs5u")
+
+[node name="turn_text" type="RichTextLabel" parent="."]
+layout_mode = 2
+offset_top = 151.0
+offset_right = 256.0
+offset_bottom = 256.0
+mouse_filter = 2
+theme = SubResource("Theme_p8ish")
+theme_override_colors/default_color = Color(1, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_p8ish")
+bbcode_enabled = true
+text = "[i][b]9[/b][/i]"
+scroll_active = false
+horizontal_alignment = 2

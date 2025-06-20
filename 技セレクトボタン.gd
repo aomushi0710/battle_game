@@ -3,8 +3,19 @@ extends Button
 @onready var texture = $TextureRect
 var action: Action
 var i: int = 0
+var texture_mode: Mode ## 表示される時の形態
+enum Mode { ## フォントサイズによるアイコンのズレを補正するモード切り替え
+	SELECT, ## 技セレクト時
+	BATTLE  ## バトル時
+}
 
 func _ready() -> void:
+	if texture_mode == Mode.SELECT:
+		texture.position = Vector2(2.5, 2.5)
+		texture.scale = Vector2(0.1, 0.1)
+	elif texture_mode == Mode.BATTLE:
+		texture.position = Vector2(4, 4)
+		texture.scale = Vector2(0.105, 0.105)
 	texture.texture = action.element[i].icon
 	self.text = action.name
 	

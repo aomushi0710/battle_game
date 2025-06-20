@@ -13,4 +13,5 @@ name = "ATK DOWN"
 icon = ExtResource("1_lbo2b")
 power = 1.5
 log = "の[color=red]ATK[/color]が下がった！"
+description = "ATK を 2/3倍 に低下させます。"
 metadata/_custom_type_script = "uid://bfhndlr5f1snc"

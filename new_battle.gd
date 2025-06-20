@@ -46,6 +46,7 @@ func _on_tree_entered() -> void:
 						await get_tree().process_frame # 1フレーム待つ
 						monster.get_node("SPD").set_process(false)
 						monster.get_node("HP/text").hide()
+						monster.get_node("SPD").hide()
 					player_deck.append(monster)
 					monster.button_up.connect(func():monster_button_up(monster.index))
 				Global.enemy_deck:
@@ -63,6 +64,7 @@ func _on_tree_entered() -> void:
 						await get_tree().process_frame # 1フレーム待つ
 						monster.get_node("SPD").set_process(false)
 						monster.get_node("HP/text").hide()
+						monster.get_node("SPD").hide()
 					enemy_deck.append(monster)
 			monster.show()
 			# シグナル接続
@@ -83,7 +85,7 @@ func _on_tree_entered() -> void:
 	tween.tween_property($player_deck, "position:x", 0, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween = get_tree().create_tween() # 相手ベンチ出現アニメーション
-	tween.tween_property($enemy_deck, "position:x", 752, 0.5)\
+	tween.tween_property($enemy_deck, "position:x", 702, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 
 # spdgaugeが溜まり行動可能になった時
@@ -102,6 +104,7 @@ func monster_ready(player: bool) -> void:
 		# 抽選された技をactionコンテナに追加
 		for i in len(player_monster.picked_action):
 			var instance = action_button.instantiate()
+			instance.texture_mode = preload("res://技セレクトボタン.gd").Mode.BATTLE
 			instance.action = player_monster.picked_action[i]
 			instance.text = player_monster.picked_action[i].name
 			instance.button_up.connect(func():select_command(i))
@@ -113,17 +116,16 @@ func monster_ready(player: bool) -> void:
 		# dialog更新
 		dialog.text_setter(0, false, [
 		"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
-		[player_monster.monster.name, player_monster.monster.name, player_monster.monster.supplyMP]])
+		[player_monster.monster.name, player_monster.monster.name, player_monster.monster.supplyMP] + 
+		"\n[color=yellow]%s は指示を待っている...[/color]" % player_monster.monster.name])
 	else:
 		enemy_monster.mp_setter(enemy_monster.monster.supplyMP, false)
 		
 		enemy_next_index = random_index(false) # 相手側の次に行動するモンスターをランダムにチェンジ
 		
-		dialog.text_setter(0, false, [
+		await dialog.text_setter(0, true, [
 		"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
 		[enemy_monster.monster.name, enemy_monster.monster.name, enemy_monster.monster.supplyMP]])
-		
-		await get_tree().create_timer(3).timeout # 考えるフリ
 		
 		var button_index = randi() % 4 # 味方モンスターと同じ変数名を使用
 		var action: Action = enemy_monster.picked_action[button_index]
@@ -220,16 +222,41 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 			await dialog.text_setter(0, true, dialog_text)
 		
 		for i in len(action.ability): # 全ての特殊能力について順番に処理
+			if randi() % 100 + 1 > action.ability_chance[i]: # 確率範囲外ならその効果の処理スキップ
+				continue
 			var ability = action.ability[i]
+			var ability_target_list: Array[BattleMonster] = \
+			ability_target_setting(player, action, index, i, monster)
+			
+			for target in ability_target_list: # 全ての対象について順番に処理
+				match ability.category:
+					1: # 状態異常 TODO 未実装
+						pass
+					2, 3: # バフ or デバフ
+						if ability.effect in target.effect_dict: # 既に発動中ならターン延長
+							target.effect_dict[ability.effect] += action.ability_power[i]
+						else:
+							target.effect_dict[ability.effect] = action.ability_power[i]
+						target.effect_icon()
+						await dialog.text_setter(0, true, [
+						"%s %s" % [target.monster.name, ability.effect.log]])
+						# もし自分に与えるエフェクトだった場合、発動時にも1ターン減るので付け足す
+						if monster == target:
+							target.effect_dict[ability.effect] += 1
+						match ability.category:
+							2: # バフ効果音
+								$"../SoundEffects/buff".play()
+							3: # デバフ効果音
+								$"../SoundEffects/debuff".play()
 		
-		for target: BattleMonster in target_list: # 対象にダメージをあたえる
-			if action.power != 0:
+		if action.power != 0:
+			for target: BattleMonster in target_list: # 対象にダメージをあたえる
 				var damage: int = damage_calc(action, monster, target)
 				dialog_text = [] # 初期化
-				var text: Array[String] = await target.hp_setter(-damage, true)
+				var text: Array[String] = target.hp_setter(-damage, true)
 				for t:String in text: # Array[String]から要素を抜き出す
 					dialog_text.append(t)
-		await dialog.text_setter(0, true, dialog_text)
+			await dialog.text_setter(0, true, dialog_text)
 		
 		for target: BattleMonster in target_list:
 			if target.monster.HP <= 0: # 死亡時処理
@@ -243,6 +270,11 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 		return
 	
 	monster.get_node("SPD").value = 0
+	for effect in monster.effect_dict: # エフェクトを1ターン縮める
+		monster.effect_dict[effect] -= 1
+		if monster.effect_dict[effect] == 0:
+			monster.effect_dict.erase(effect)
+	monster.effect_icon()
 	
 	if player == true and player_monster != player_deck[player_next_index]:
 		player_monster.bench_set() # フィールドのモンスターをベンチに
@@ -308,6 +340,42 @@ func target_setting(player: bool, action: Action, index: int) -> Array[BattleMon
 					target_list.append(mon)
 	return target_list
 
+## 特殊効果の発動先targetを設定する関数[br]i:繰り返し回数 monster:対象が自分の時用
+func ability_target_setting(player: bool, action: Action, index: int, i: int, \
+monster: BattleMonster) -> Array[BattleMonster]:
+	var target_list: Array[BattleMonster] # 特殊効果の発動対象
+	if action.ability_range[i] == 0:
+		target_list = target_setting(player, action, index) # actionのものと同期
+	elif player == true:
+		match action.ability_range[i]:
+			1: # 敵単体
+				target_list.append(enemy_deck[index])
+			2: # 敵全体
+				for mon in enemy_deck:
+					target_list.append(mon)
+			3: # 味方単体
+				target_list.append(player_deck[index])
+			4: # 味方全体
+				for mon in player_deck:
+					target_list.append(mon)
+			5: # 自分
+				target_list.append(monster)
+	else:
+		match action.ability_range[i]:
+			1: # 敵単体
+				target_list.append(player_deck[index])
+			2: # 敵全体
+				for mon in player_deck:
+					target_list.append(mon)
+			3: # 味方単体
+				target_list.append(enemy_deck[index])
+			4: # 味方全体
+				for mon in enemy_deck:
+					target_list.append(mon)
+			5: # 自分
+				target_list.append(monster)
+	return target_list
+
 ## 属性倍率計算機(1属性)
 func attribute(o: int,d: int):
 	if ( # 0:無 1:火 2:水 3:雷 4:土 5:風 6:氷 7:光 8:闇
@@ -344,13 +412,13 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 		1:
 			status[0] = float(offense.monster.ATK)
 			status[1] = float(defense.monster.DEF)
-			type[0] = 0
-			type[1] = 1
+			type[0] = 1
+			type[1] = 2
 		2:
 			status[0] = float(offense.monster.MAG)
 			status[1] = float(defense.monster.RES)
-			type[0] = 2
-			type[1] = 3
+			type[0] = 3
+			type[1] = 4
 		_:
 			print("ERROR:damage_typeが検知できません")
 	

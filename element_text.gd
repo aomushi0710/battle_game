@@ -3,17 +3,19 @@ extends RichTextLabel
 var action
 var i: int = 0
 var tween: Tween
+var font_size: int
 
-func selected(act) -> void:
+func selected(act, f_size: int) -> void:
 	if action == act: # 前と同じ技を選んだなら何もしない
 		return
 	
 	if tween and tween.is_running(): # tweenがすでに動作しているなら停止
 		tween.kill()
 	action = act
+	font_size = f_size
 	i = 0 # 初期化
-	self.text = "[center][img=25]" + action.element[i].icon.resource_path + \
-	"[/img]" + action.element[i].name + "[/center]" # 初期値
+	self.text = "[center][img=%d]%s[/img]%s[/center]" % \
+	[font_size, action.element[i].icon.resource_path, action.element[i].name] # 初期値
 	self.modulate.a = 1 # 可視化
 	
 	if len(action.element) > 1: # 複数属性を持つなら点滅
@@ -32,5 +34,5 @@ func change() -> void: # 要素更新関数
 	i += 1
 	if i >= len(action.element): # 無効なindexを取らないように初期化
 		i = 0
-	self.text = "[center][img=25]" + action.element[i].icon.resource_path + \
-	"[/img]" + action.element[i].name + "[/center]"
+	self.text = "[center][img=%d]%s[/img]%s[/center]" % \
+	[font_size, action.element[i].icon.resource_path, action.element[i].name] # 初期値

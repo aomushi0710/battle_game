@@ -85,7 +85,7 @@ func status(i: int) -> void: # マウスを合わせたモンスターのステ�
 			[center][color=red]進化後\n[u]ステータス[/u][/color][/center]\n\n"
 		
 		statcontainer.add_child(evolution_text)
-		for label: RichTextLabel in Global.all_status(form):
+		for label: RichTextLabel in Global.all_status(form, 25):
 			statcontainer.add_child(label)
 
 

@@ -13,4 +13,5 @@ name = "MAG UP"
 icon = ExtResource("1_mqgny")
 power = 1.5
 log = "の[color=dodger_blue]MAG[/color]が上がった！"
+description = "MAG を 1.5倍 に上昇させます。"
 metadata/_custom_type_script = "uid://bfhndlr5f1snc"

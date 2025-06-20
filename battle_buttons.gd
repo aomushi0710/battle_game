@@ -24,6 +24,7 @@ func _on_action_button_selected(i: int) -> void:
 	var instance = action_button.instantiate()
 	selected_action = selected_action_button.action # 選ばれた技を登録
 	instance.name = "selected"
+	instance.texture_mode = preload("res://技セレクトボタン.gd").Mode.BATTLE
 	instance.action = selected_action
 	instance.position = Vector2(132, 485 + 40 * i)
 	instance.size = selected_action_button.size
@@ -185,9 +186,11 @@ func show_player_or_enemy_button() -> void:
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	$player.disabled = false
 	$enemy.disabled = false
+	$"戻る".disabled = false
 
 ## 味方か相手を選択させるボタン消滅アニメーション
 func hide_player_or_enemy_button() -> void:
+	$"戻る".disabled = true
 	$player.disabled = true
 	$enemy.disabled = true
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
@@ -217,9 +220,11 @@ func show_monsters_button(player: bool) -> void:
 	await tween.finished
 	for child: TextureButton in $target.get_children():
 		child.disabled = false
+	$"戻る".disabled = false
 
 ## デッキモンスター一覧ボタン消滅アニメーション
 func hide_monsters_button() -> void:
+	$"戻る".disabled = true
 	for child: TextureButton in $target.get_children():
 		child.disabled = true
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)

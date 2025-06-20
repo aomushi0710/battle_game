@@ -87,7 +87,7 @@ func status_text(monster: Monster) -> String:
 	return text
 
 
-func all_status(monster: Monster) -> Array[RichTextLabel]:
+func all_status(monster: Monster, font_size: int) -> Array[RichTextLabel]:
 	var name_label := RichTextLabel.new()
 	var element_label := RichTextLabel.new()
 	var status_label := RichTextLabel.new()
@@ -99,7 +99,7 @@ func all_status(monster: Monster) -> Array[RichTextLabel]:
 	
 	name_label.text = "[b][i]%s[/i][/b]" % monster.name
 	element_label.set_script(load("res://element_text.gd"))
-	element_label.selected(monster)
+	element_label.selected(monster, font_size)
 	status_label.text = "\n" + status_text(monster)
 	
 	return [name_label, element_label, status_label]

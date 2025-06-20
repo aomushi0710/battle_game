@@ -2,8 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://null.PNG" id="1_5qrwy"]
 [ext_resource type="Script" uid="uid://b0yxuo4ii0je" path="res://battle_monster.gd" id="2_v6f8v"]
-[ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="3_c57w8"]
-[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="4_xaxbf"]
+[ext_resource type="Script" uid="uid://6wnixgc5hnoo" path="res://blink.gd" id="3_v6f8v"]
 [ext_resource type="Texture2D" uid="uid://dxssu1v1art5l" path="res://image/bar_empty.PNG" id="5_x63jt"]
 [ext_resource type="Texture2D" uid="uid://dilwkye4osueb" path="res://image/bar_hp.PNG" id="6_c57w8"]
 [ext_resource type="Theme" uid="uid://boebxhhsukoff" path="res://clear_font.tres" id="7_wgasc"]
@@ -12,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="10_1ipuw"]
 [ext_resource type="Script" uid="uid://d3uepow15nrsq" path="res://spd_gauge.gd" id="10_v6f8v"]
 [ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="11_wq4fc"]
+[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="12_c57w8"]
 [ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://sound_effects.tscn" id="13_c57w8"]
 
 [node name="player" type="TextureButton"]
@@ -21,7 +21,7 @@ scale = Vector2(0.6, 0.6)
 texture_normal = ExtResource("1_5qrwy")
 script = ExtResource("2_v6f8v")
 
-[node name="バフデバフコンテナ" type="HBoxContainer" parent="."]
+[node name="effect" type="HBoxContainer" parent="."]
 layout_direction = 3
 layout_mode = 0
 offset_left = -1024.0
@@ -29,22 +29,9 @@ offset_top = 256.0
 offset_right = 256.0
 offset_bottom = 512.0
 scale = Vector2(0.2, 0.2)
-
-[node name="バフデバフアイコン" type="TextureButton" parent="バフデバフコンテナ"]
-layout_mode = 2
-texture_normal = ExtResource("3_c57w8")
-
-[node name="ターン数テキスト" type="RichTextLabel" parent="バフデバフコンテナ/バフデバフアイコン"]
-layout_mode = 0
-offset_left = 96.0
-offset_top = 130.0
-offset_right = 146.0
-offset_bottom = 170.0
-scale = Vector2(4, 4)
-theme = ExtResource("4_xaxbf")
-bbcode_enabled = true
-text = "[right][color=yellow][i][b]99 [/b][/i][/color][/right]"
-horizontal_alignment = 2
+mouse_filter = 0
+theme_override_constants/separation = 15
+script = ExtResource("3_v6f8v")
 
 [node name="HP" type="TextureProgressBar" parent="."]
 z_index = -1
@@ -53,6 +40,7 @@ offset_top = 236.0
 offset_right = 256.0
 offset_bottom = 492.0
 scale = Vector2(1, 0.7)
+mouse_filter = 2
 value = 50.0
 texture_under = ExtResource("5_x63jt")
 texture_progress = ExtResource("6_c57w8")
@@ -78,6 +66,7 @@ offset_top = 272.0
 offset_right = 256.0
 offset_bottom = 528.0
 scale = Vector2(1, 0.7)
+mouse_filter = 2
 value = 4.0
 texture_under = ExtResource("5_x63jt")
 texture_progress = ExtResource("8_xaxbf")
@@ -90,6 +79,7 @@ offset_top = 308.0
 offset_right = 256.0
 offset_bottom = 564.0
 scale = Vector2(1, 0.7)
+mouse_filter = 2
 value = 4.0
 texture_under = ExtResource("5_x63jt")
 texture_progress = ExtResource("9_x63jt")
@@ -121,5 +111,12 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 vertical_alignment = 1
+
+[node name="effect_detail" type="AcceptDialog" parent="."]
+title = "ATK UP"
+size = Vector2i(154, 154)
+unresizable = true
+theme = ExtResource("12_c57w8")
+dialog_autowrap = true
 
 [node name="SoundEffects" parent="." instance=ExtResource("13_c57w8")]

@@ -15,6 +15,7 @@ func _on_tree_entered() -> void:
 
 func _on_set_button(action: Action) -> void:
 	var instance = button.instantiate()
+	instance.texture_mode = 0
 	instance.action = action
 	instance.button_up.connect(func():_on_button_toggled(action))
 	add_child(instance)

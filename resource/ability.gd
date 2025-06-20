@@ -26,6 +26,9 @@ var ailment: int
 @warning_ignore("shadowed_global_identifier")
 @export_enum("連動","敵単体","敵全体","味方単体","味方全体","自分") var range: int
 
+## 特殊効果の発動タイミング
+@export_enum("最初") var timing: int
+
 ## 特殊効果の発動条件
 @export_enum("なし") var trigger: int
 

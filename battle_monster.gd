@@ -2,6 +2,7 @@ class_name BattleMonster
 extends TextureButton
 
 const DAMAGE_TEXT = preload("res://damage_text.tscn")
+const EFFECT_ICON = preload("res://effect_icon.tscn")
 var tween: Tween
 var player: bool # true:味方 false:敵
 var index: int
@@ -205,6 +206,7 @@ func evolution(id: int) -> Array[String]:
 ## ベンチにモンスターをセットする時の処理[br]spdゲージは溜まらない
 func bench_set() -> void:
 	$HP/text.hide()
+	$SPD.hide()
 	if player == true:
 		reparent(get_parent().get_node("player_deck/player_deck"))
 	else:
@@ -213,6 +215,7 @@ func bench_set() -> void:
 ## フィールドにモンスターをセットする時の処理[br]1f待機後にspdゲージが溜まり始める
 func field_set() -> void:
 	$HP/text.show()
+	$SPD.show()
 	reparent(get_parent().get_parent().get_parent())
 	scale = Vector2(0.6, 0.6)
 	if player == true:
@@ -230,6 +233,38 @@ func spd_max() -> void:
 				picked_action.append(action_list[i])
 				break # 対応する技があったら終了
 	monster_ready.emit()
+
+## エフェクトアイコンの作成
+func effect_icon() -> void:
+	# 辞書のkeyのEffectクラスの名前のみで再構成された配列
+	var valid_names := effect_dict.keys().map(func(e): return e.name)
+	# 辞書内に存在していないものはコンテナから消す
+	for child in $effect.get_children():
+		if not valid_names.has(child.name):
+			child.queue_free()
+	# 辞書に何かあれば
+	if effect_dict.is_empty() == false:
+		for effect: Effect in effect_dict:
+			var icon = $effect.get_node_or_null(effect.name)
+			if icon == null: # 追加された時だけ一度処理
+				icon = EFFECT_ICON.instantiate()
+				icon.name = effect.name
+				if effect.icon: # iconが正常に読み込めたら
+					icon.texture_normal = effect.icon
+				icon.button_up.connect(func(): effect_detail(effect))
+				$effect.add_child(icon)
+			icon.get_child(0).text = "[i][b]%d[/b][/i]" % effect_dict[effect]
+			if $effect.tween == null or $effect.tween and $effect.tween.is_running() == false:
+				$effect.blink() # エフェクトがあるが点滅してない時
+	elif $effect.tween and $effect.tween.is_running() == true:
+		$effect.tween.kill() # エフェクトがないが点滅してる時
+
+
+func effect_detail(effect: Effect):
+	$effect_detail.position = position
+	$effect_detail.title = effect.name
+	$effect_detail.dialog_text = effect.description
+	$effect_detail.popup()
 
 ## MP変動処理関数(setter)[br]n:数値 text true:ダイアログ表示 false:ダイアログ非表示
 func mp_setter(n: int, text: bool) -> Array[String]:

@@ -23,3 +23,6 @@ var ailment: int
 
 ## バトル中に使用すると表示されるログ
 @export_multiline var log: String
+
+## エフェクト効果の説明文
+@export_multiline var description: String

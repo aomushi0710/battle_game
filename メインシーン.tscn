@@ -111,6 +111,9 @@ bbcode_enabled = true
 text = "[i]β.ver.3.0.0[/i] "
 horizontal_alignment = 2
 
+[node name="Popup" type="Popup" parent="."]
+visible = true
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="toggled" from="help" to="help" method="_on_toggled"]
 [connection signal="button_up" from="debug" to="." method="_on_debug_button_up"]

@@ -436,7 +436,7 @@ func status_text(monster: Monster) -> void:
 			$status/title.text = "[center][color=yellow]中間進化後のステータス[/color][/center]"
 		2:
 			$status/title.text = "[center][color=red]進化後のステータス[/color][/center]"
-	for label in Global.all_status(monster):
+	for label in Global.all_status(monster, 35):
 		$status/VBoxContainer.add_child(label)
 
 func reset():

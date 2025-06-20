@@ -13,4 +13,5 @@ name = "SPD DOWN"
 icon = ExtResource("1_tvfj5")
 power = 1.2
 log = "の[color=green]SPD[/color]が下がった！"
+description = "SPD を 5/6倍 に低下させます。"
 metadata/_custom_type_script = "uid://bfhndlr5f1snc"
