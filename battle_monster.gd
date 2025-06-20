@@ -219,9 +219,9 @@ func field_set() -> void:
 	reparent(get_parent().get_parent().get_parent())
 	scale = Vector2(0.6, 0.6)
 	if player == true:
-		position = Vector2(296.8, 192)
+		position = Vector2(296.8, 210)
 	else:
-		position = Vector2(676, 192)
+		position = Vector2(676, 210)
 
 ## SPDゲージが溜まり行動可能になった時の処理
 func spd_max() -> void:

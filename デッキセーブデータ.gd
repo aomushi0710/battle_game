@@ -4,8 +4,6 @@ var monster_data = Global.monster_data
 var action_data = Global.action_data
 var deck: Deck = Global.deck1
 
-signal slot_number
-
 func _on_tree_entered() -> void: # デッキスロットインスタンス生成
 	for i in range(1, 4):
 		var deck_slot = preload("res://デッキスロット.tscn").instantiate()
@@ -80,17 +78,30 @@ func load_file(slot: int) -> void:
 	# β版で正式版、正式版でβ版のデータをロードしようとした時
 	elif deck_data["beta"] != Global.VERSION_BETA:
 		if Global.VERSION_BETA == true: # β版
+			$エラーメッセージ.title = "⚠️ERROR⚠️"
 			$エラーメッセージ.dialog_text = "βバージョンで保存されたデータではないためロードできません。"
 			$エラーメッセージ.popup_centered()
 		else: # 正式リリース版
+			$エラーメッセージ.title = "⚠️ERROR⚠️"
 			$エラーメッセージ.dialog_text = "βバージョンで保存されたデータはロードできません"
 			$エラーメッセージ.popup_centered()
 		return
 	elif deck_data["version"] > Global.VERSION: # 現在のバージョン以降のデータの場合
+		$エラーメッセージ.title = "⚠️ERROR⚠️"
 		$エラーメッセージ.dialog_text = "現在のバージョン ver \
 		%.1f 以降に作成されたデータのため、\nロードできません。" % Global.VERSION
 		$エラーメッセージ.popup_centered()
 		return
+	elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.0: # ver3.0~
+		$"エラーメッセージ".title = "過去バージョンのデッキ"
+		$エラーメッセージ.dialog_text = "過去のバージョンで保存されたデータをロードしました。\n" + \
+		"ロードされたデータを再度セーブするとデータのバージョンも更新されます。\n\n" + \
+		"⚠️一度更新したバージョンは元に戻せません⚠️"
+		$エラーメッセージ.popup_centered()
+	else:
+		$"エラーメッセージ".title = "✅ロード完了✅"
+		$"エラーメッセージ".dialog_text = "デッキのロードが完了しました！"
+		$"エラーメッセージ".popup_centered()
 	# TODO 過去のバージョンのデータだった場合、互換性があるかチェックし、
 	# データのバージョンを更新する処理を実装する必要あり。
 	
@@ -110,9 +121,6 @@ func load_file(slot: int) -> void:
 		deck.skill[i] = pos["skill"]
 	
 	deck.evolution_check(deck)
-	$"エラーメッセージ".title = "✅ロード完了✅"
-	$"エラーメッセージ".dialog_text = "デッキのロードが完了しました！"
-	$"エラーメッセージ".popup_centered()
 
 
 func reset_file(slot: int) -> void:

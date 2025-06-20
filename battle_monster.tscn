@@ -121,3 +121,11 @@ theme = ExtResource("12_c57w8")
 dialog_autowrap = true
 
 [node name="SoundEffects" parent="." instance=ExtResource("13_c57w8")]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -2
+layout_mode = 0
+offset_top = -40.0
+offset_right = 256.0
+offset_bottom = 427.0
+color = Color(0, 0, 0, 0.25098)

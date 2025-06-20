@@ -36,7 +36,7 @@ func _on_tree_entered() -> void:
 					monster.name = "player%d" % (i + 1)
 					if i == 0:
 						player_monster = monster
-						monster.position = Vector2(-153.6, 192)
+						monster.position = Vector2(-153.6, 210)
 						self.add_child(monster)
 						await get_tree().process_frame # 1フレーム待つ
 						monster.get_node("SPD").set_process(true)
@@ -54,7 +54,7 @@ func _on_tree_entered() -> void:
 					monster.name = "enemy%d" % (i + 1)
 					if i == 0:
 						enemy_monster = monster
-						monster.position = Vector2(1126.4, 192)
+						monster.position = Vector2(1126.4, 210)
 						self.add_child(monster)
 						await get_tree().process_frame # 1フレーム待つ
 						monster.get_node("SPD").set_process(true)
@@ -248,6 +248,18 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 								$"../SoundEffects/buff".play()
 							3: # デバフ効果音
 								$"../SoundEffects/debuff".play()
+					4: # 回復
+						var heal: int # 回復量
+						match ability.healing:
+							1: # ステータス参照HP回復
+								match action.damage_type:
+									2: # 魔法 
+										heal = monster.monster.MAG * \
+										(float(action.ability_power[i]) / 100)
+							2: # 定数HP回復
+								heal = action.ability_power[i]
+						dialog_text = target.hp_setter(heal, true)
+						await dialog.text_setter(0, true, dialog_text)
 		
 		if action.power != 0:
 			for target: BattleMonster in target_list: # 対象にダメージをあたえる
