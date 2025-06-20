@@ -75,6 +75,7 @@ offset_top = 299.0
 offset_right = 343.0
 offset_bottom = 555.0
 scale = Vector2(0.4, 0.4)
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("2_tc6cq")
 
 [node name="change_text" type="RichTextLabel" parent="battle/button/change"]

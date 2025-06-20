@@ -18,6 +18,7 @@
 offset_right = 256.0
 offset_bottom = 256.0
 scale = Vector2(0.6, 0.6)
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_5qrwy")
 script = ExtResource("2_v6f8v")
 
