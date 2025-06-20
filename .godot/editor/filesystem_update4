@@ -69,3 +69,5 @@ res://技.gd
 res://技セレクトボタン.gd
 res://中間進化技.gd
 res://進化技.gd
+res://デッキスロット.tscn
+res://help_type.gd

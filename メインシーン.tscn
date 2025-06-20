@@ -22,6 +22,7 @@ offset_left = 100.0
 offset_top = 100.0
 offset_right = 203.0
 offset_bottom = 131.0
+mouse_default_cursor_shape = 2
 theme = SubResource("Theme_4elko")
 text = "コンピューター戦"
 
@@ -50,6 +51,7 @@ offset_left = 1100.0
 offset_top = 10.0
 offset_right = 1148.0
 offset_bottom = 58.0
+mouse_default_cursor_shape = 2
 theme = SubResource("Theme_c728d")
 toggle_mode = true
 text = "?"
@@ -108,7 +110,7 @@ offset_right = 1130.0
 offset_bottom = 630.0
 theme = ExtResource("4_lf3g1")
 bbcode_enabled = true
-text = "[i]β.ver.3.0.0[/i] "
+text = "[i]β.ver.X.X.X[/i] "
 horizontal_alignment = 2
 
 [node name="Popup" type="Popup" parent="."]

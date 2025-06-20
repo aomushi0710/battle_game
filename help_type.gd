@@ -9,14 +9,14 @@ func _on_toggled(toggled_on):
 		get_tree().paused = false
 
 func _on_monster_help_button_up(): # モンスターについてのヘルプメニューを開く
-	$ColorRect/help_player.hide()
+	#$ColorRect/help_player.hide()
 	$ColorRect/help_label.hide()
 	$ColorRect/monster_help.hide()
 	$ColorRect/monster_help_menu.show()
 
 func _on_help_back_button_up(): # 上記メニューを閉じる
 	$ColorRect/monster_help_menu.hide()
-	$ColorRect/help_player.show()
+	#$ColorRect/help_player.show()
 	$ColorRect/help_label.show()
 	$ColorRect/monster_help.show()
 

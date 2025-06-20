@@ -251,10 +251,11 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 		
 		if action.power != 0:
 			for target: BattleMonster in target_list: # 対象にダメージをあたえる
-				var damage: int = damage_calc(action, monster, target)
+				var damage_array = damage_calc(action, monster, target)
 				dialog_text = [] # 初期化
-				var text: Array[String] = target.hp_setter(-damage, true)
-				for t:String in text: # Array[String]から要素を抜き出す
+				var text: Array[String] = target.hp_setter(-damage_array[0], true)
+				for t: String in text: # Array[String]から要素を抜き出す
+					t += "\n%s" % damage_array[1]
 					dialog_text.append(t)
 			await dialog.text_setter(0, true, dialog_text)
 		
@@ -398,11 +399,11 @@ func attribute_setup(action: Action, monster: Monster) -> float:
 			magnification *= attribute(act_element.id, monster_element.id)
 	return magnification
 
-## ダメージ計算機
+## ダメージ計算機[br]戻り値array[ダメージ(int), 属性相性テキスト(string)]
 func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)\
- -> int:
+ -> Array:
 	if action.power == 0: # powerが0なら不要なので中断
-		return 0
+		return [0, ""]
 	
 	var status: Array[float] = [0, 0] # ステータス値
 	var type: Array[int] = [0, 0] # 0:なし 1:ATK 2:DEF 3:MAG 4:RES
@@ -435,10 +436,15 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 						status[i] /= effect.power
 	
 	var magnification: float = attribute_setup(action, defense.monster)
+	var magnification_text: String = ""
+	if magnification < 1.0:
+		magnification_text = "[color=light_blue]耐性があるようだ...[/color]"
+	elif magnification > 1.0:
+		magnification_text = "[color=red]弱点をついた！[/color]"
 	# power * ((攻撃側ステータス / 守備側ステータス) ** ステータス乖離ボーナス(1.2) * 属性相性
 	var damage = action.power * ((status[0] / status[1]) ** 1.2) * magnification
 	# モンスターと技の属性一致倍率を乗算
 	if action.element.any(func(a): offense.monster.element.any(func(m): return a.id == m.id)):
 		damage *= 1.5
 	
-	return int(damage)
+	return [int(damage), magnification_text]

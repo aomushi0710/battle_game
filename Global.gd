@@ -157,33 +157,33 @@ func deck_creator(deck: Deck) -> void:
 
 @onready var help_message = {"type":
 "・属性相性によってダメージが増減し、以下の6すくみになっています。
-　[img=40]res://火属性.PNG[/img][color=red]火属性[/color]は[img=40]res://氷属性.PNG[/img]\
-[color=aqua]氷属性[/color]に強く、[img=40]res://氷属性.PNG[/img][color=aqua]氷属性[/color]は\
-[img=40]res://風属性.PNG[/img][color=green]風属性[/color]に強く、
-　[img=40]res://風属性.PNG[/img][color=green]風属性[/color]は[img=40]res://土属性.PNG[/img]\
-[color=chocolate]土属性[/color]に強く、[img=40]res://土属性.PNG[/img][color=chocolate]土属性[/color]\
-は[img=40]res://雷属性.PNG[/img][color=yellow]雷属性[/color]に強く、
-　[img=40]res://雷属性.PNG[/img][color=yellow]雷属性[/color]は[img=40]res://水属性.PNG[/img]\
-[color=dodger_blue]水属性[/color]に強く、[img=40]res://水属性.PNG[/img]\
-[color=dodger_blue]水属性[/color]は[img=40]res://火属性.PNG[/img][color=red]火属性[/color]に強い
+　[img=40]res://image/element/火属性.PNG[/img][color=red]火属性[/color]は[img=40]res://image/element/氷属性.PNG[/img]\
+[color=aqua]氷属性[/color]に強く、[img=40]res://image/element/氷属性.PNG[/img][color=aqua]氷属性[/color]は\
+[img=40]res://image/element/風属性.PNG[/img][color=green]風属性[/color]に強く、
+　[img=40]res://image/element/風属性.PNG[/img][color=green]風属性[/color]は[img=40]res://image/element/土属性.PNG[/img]\
+[color=chocolate]土属性[/color]に強く、[img=40]res://image/element/土属性.PNG[/img][color=chocolate]土属性[/color]\
+は[img=40]res://image/element/雷属性.PNG[/img][color=yellow]雷属性[/color]に強く、
+　[img=40]res://image/element/雷属性.PNG[/img][color=yellow]雷属性[/color]は[img=40]res://image/element/水属性.PNG[/img]\
+[color=dodger_blue]水属性[/color]に強く、[img=40]res://image/element/水属性.PNG[/img]\
+[color=dodger_blue]水属性[/color]は[img=40]res://image/element/火属性.PNG[/img][color=red]火属性[/color]に強い
 
-・この6すくみに加え、[img=40]res://光属性.PNG[/img][color=light_yellow]光属性[/color]と\
-[img=40]res://闇属性.PNG[/img][color=purple]闇属性[/color]は
+・この6すくみに加え、[img=40]res://image/element/光属性.PNG[/img][color=light_yellow]光属性[/color]と\
+[img=40]res://image/element/闇属性.PNG[/img][color=purple]闇属性[/color]は
 　互いに弱点をつくことができます。
 
 ・弱点をつくと[color=red]2倍[/color]のダメージを与えられますが、相手の属性と同じ属性で
 　攻撃してしまうとダメージは[color=light_blue]0.5倍[/color]になってしまいます。
 
-・[img=40]res://無属性.PNG[/img]無属性は汎用的な属性ではありますが、[img=40]res://無属性.PNG[/img]\
+・[img=40]res://image/element/無属性.PNG[/img]無属性は汎用的な属性ではありますが、[img=40]res://image/element/無属性.PNG[/img]\
 無属性以外の敵に
 　与えるダメージは[color=light_blue]0.8倍[/color]になってしまいます。
 
 ・タイプ相性表
-　[img=40]res://火属性.PNG[/img]←[img=40]res://水属性.PNG[/img]←[img=40]res://雷属性.PNG[/img]\
-　[img=40]res://光属性.PNG[/img]
-  ↓　　　  ↑　 ↕　>> [img=40]res://無属性.PNG[/img]
-　[img=40]res://氷属性.PNG[/img]→[img=40]res://風属性.PNG[/img]→[img=40]res://土属性.PNG[/img]\
-　[img=40]res://闇属性.PNG[/img]
+　[img=40]res://image/element/火属性.PNG[/img]←[img=40]res://image/element/水属性.PNG[/img]←[img=40]res://image/element/雷属性.PNG[/img]\
+　[img=40]res://image/element/光属性.PNG[/img]
+  ↓　　　  ↑　 ↕　>> [img=40]res://image/element/無属性.PNG[/img]
+　[img=40]res://image/element/氷属性.PNG[/img]→[img=40]res://image/element/風属性.PNG[/img]→[img=40]res://image/element/土属性.PNG[/img]\
+　[img=40]res://image/element/闇属性.PNG[/img]
 
 
 ㅤ","status":"　[i]モンスターには大きく8つに分けられるステータスを持っています！[/i]\n
@@ -203,8 +203,9 @@ func deck_creator(deck: Deck) -> void:
 ・[b][color=blue]MAG[/color][/b]:魔法攻撃で敵に与えるダメージに影響するステータスです。\n
 ・[b][color=purple]RES[/color][/b]:相手の魔法攻撃から受けるダメージに影響するステータスです。\n
 
-　[b][i]ダメージ計算式[/b][/i]
+　[b][i]ダメージ計算式[/i][/b]
 技の基礎威力 + (攻撃側のATKかMAG / 防御側のDEFかRES) ** 1.2 (小数点以下切り捨て)
+
 
 
 "

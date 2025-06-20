@@ -37,6 +37,7 @@ offset_left = 50.0
 offset_top = 600.0
 offset_right = 163.0
 offset_bottom = 648.0
+mouse_default_cursor_shape = 2
 theme = SubResource("Theme_m0p40")
 text = "←戻る"
 
@@ -114,11 +115,11 @@ offset_right = 1050.0
 offset_bottom = 650.0
 theme = SubResource("Theme_aoflo")
 bbcode_enabled = true
-text = "・上のモンスター一覧から好きなモンスターを選んでください！
-　（現在、左3体のモンスターしか選択できません...）
+text = "
+・上のモンスター一覧から好きなモンスターを選んでください！
 
-・右にはステータスが表示されていますが、ゲームバランスは考慮されていな
-　いため適当です"
+・右にはステータスが表示されていますが、ゲームバランスは
+　考慮されていないため適当です"
 
 [node name="monster_help" type="Button" parent="キャラセレクト/help/ColorRect"]
 layout_mode = 0

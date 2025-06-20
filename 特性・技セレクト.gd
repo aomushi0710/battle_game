@@ -24,7 +24,7 @@ func _on_node_2d_tree_entered():
 
 
 func _on_戻る_button_up():
-	call("reset")
+	reset()
 	get_tree().change_scene_to_packed(Global.chara_scene)
 
 func _on_決定_button_up():

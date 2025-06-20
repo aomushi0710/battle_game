@@ -19,7 +19,7 @@ func _on_node_2d_tree_entered() -> void:
 		button.texture_normal = monster_data[i][0].image
 		if 2 in monster_data[i]: # 進化可能モンスターならホバーの画像を変える
 			button.texture_hover = monster_data[i][2].image
-		
+		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		button.mouse_entered.connect(func():status(monster_data[i][0].id))
 		button.button_up.connect(func():button_up(monster_data[i][0].id))
 		

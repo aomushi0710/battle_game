@@ -67,6 +67,7 @@ offset_left = 938.0
 offset_top = 25.0
 offset_right = 1077.0
 offset_bottom = 67.0
+mouse_default_cursor_shape = 2
 text = "✏️セーブ"
 
 [node name="load" type="Button" parent="."]
@@ -75,6 +76,7 @@ offset_left = 938.0
 offset_top = 25.0
 offset_right = 1077.0
 offset_bottom = 67.0
+mouse_default_cursor_shape = 2
 text = "📁ロード"
 
 [node name="reset" type="Button" parent="."]
@@ -84,4 +86,5 @@ offset_left = 908.0
 offset_top = 112.0
 offset_right = 1077.0
 offset_bottom = 154.0
+mouse_default_cursor_shape = 2
 text = "🗑️リセット"

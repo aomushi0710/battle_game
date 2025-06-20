@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d4g4bh4y0vc2f"]
+[gd_scene load_steps=16 format=3 uid="uid://d4g4bh4y0vc2f"]
 
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_cpkem"]
 [ext_resource type="Script" uid="uid://dlykw61jg8rb7" path="res://Control.gd" id="1_dgsv0"]
@@ -25,6 +25,9 @@ default_font_size = 35
 default_font_size = 30
 
 [sub_resource type="Theme" id="Theme_vs303"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_0twro"]
 default_font_size = 35
 
 [node name="デッキセレクト" type="Node2D"]
@@ -62,6 +65,7 @@ offset_right = 356.0
 offset_bottom = 306.0
 scale = Vector2(0.5, 0.5)
 tooltip_text = "1枠目のモンスターをセッティング"
+mouse_default_cursor_shape = 2
 button_mask = 3
 texture_normal = ExtResource("2_34w54")
 texture_hover = ExtResource("2_34w54")
@@ -83,6 +87,7 @@ offset_right = 484.0
 offset_bottom = 306.0
 scale = Vector2(0.5, 0.5)
 tooltip_text = "2枠目のモンスターをセッティング"
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_qs0ub")
 texture_hover = ExtResource("3_qs0ub")
 
@@ -94,6 +99,7 @@ offset_right = 612.0
 offset_bottom = 306.0
 scale = Vector2(0.5, 0.5)
 tooltip_text = "3枠目のモンスターをセッティング"
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("4_qklf7")
 texture_hover = ExtResource("4_qklf7")
 
@@ -103,6 +109,7 @@ offset_left = 100.0
 offset_top = 178.0
 offset_right = 292.0
 offset_bottom = 220.0
+mouse_default_cursor_shape = 2
 text = "✏️セーブ"
 
 [node name="load" type="Button" parent="Control/デッキ1"]
@@ -111,6 +118,7 @@ offset_left = 292.0
 offset_top = 178.0
 offset_right = 484.0
 offset_bottom = 220.0
+mouse_default_cursor_shape = 2
 text = "📁ロード"
 
 [node name="reset" type="Button" parent="Control/デッキ1"]
@@ -121,6 +129,7 @@ offset_top = 220.0
 offset_right = 484.0
 offset_bottom = 268.0
 tooltip_text = "デッキに登録されたデータを全てリセットします"
+mouse_default_cursor_shape = 2
 text = "🗑️リセット"
 
 [node name="おまかせ" type="Button" parent="Control/デッキ1"]
@@ -130,10 +139,12 @@ offset_top = 220.0
 offset_right = 292.0
 offset_bottom = 268.0
 tooltip_text = "完全にランダムにモンスターと技が選択されます"
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_cpkem")
 text = "🔄️おまかせ"
 
 [node name="cpu_strategy" type="OptionButton" parent="Control"]
+visible = false
 layout_mode = 0
 offset_left = 700.0
 offset_top = 500.0
@@ -173,6 +184,7 @@ initial_position = 2
 theme = ExtResource("7_0twro")
 
 [node name="battle" type="Button" parent="Control"]
+visible = false
 layout_mode = 0
 offset_left = 500.0
 offset_top = 500.0
@@ -188,11 +200,13 @@ offset_left = 50.0
 offset_top = 600.0
 offset_right = 163.0
 offset_bottom = 648.0
+mouse_default_cursor_shape = 2
 theme = SubResource("Theme_u0qxs")
 text = "←戻る"
 
 [node name="help" type="Button" parent="Control"]
 process_mode = 3
+visible = false
 layout_mode = 0
 offset_left = 1100.0
 offset_top = 10.0
@@ -204,7 +218,6 @@ text = "?"
 script = ExtResource("5_jtnis")
 
 [node name="ColorRect" type="ColorRect" parent="Control/help"]
-visible = false
 z_index = 1
 layout_mode = 0
 offset_left = -1050.0
@@ -317,11 +330,15 @@ bbcode_enabled = true
 text = " 次の相手のデッキ"
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Control"]
+[node name="new_battle" type="Button" parent="Control"]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-text = "新"
+offset_left = 500.0
+offset_top = 500.0
+offset_right = 648.0
+offset_bottom = 548.0
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_0twro")
+text = "バトル！"
 
 [connection signal="tree_entered" from="." to="Control/デッキ1" method="_on_デッキセレクト_tree_entered"]
 [connection signal="button_up" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_button_up"]
@@ -337,4 +354,4 @@ text = "新"
 [connection signal="button_up" from="Control/battle" to="Control/デッキ1" method="_on_test_button_up"]
 [connection signal="button_up" from="Control/戻る" to="Control/デッキ1" method="_on_戻る_button_up"]
 [connection signal="toggled" from="Control/help" to="Control/help" method="_on_toggled"]
-[connection signal="button_up" from="Control/Button" to="Control/デッキ1" method="_on_new_button_up"]
+[connection signal="button_up" from="Control/new_battle" to="Control/デッキ1" method="_on_new_button_up"]

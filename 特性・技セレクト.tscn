@@ -119,6 +119,7 @@ offset_left = 10.0
 offset_top = 600.0
 offset_right = 78.0
 offset_bottom = 631.0
+mouse_default_cursor_shape = 2
 theme = SubResource("Theme_kmb61")
 text = "←戻る"
 
@@ -129,6 +130,7 @@ offset_left = 1090.0
 offset_top = 600.0
 offset_right = 1143.0
 offset_bottom = 631.0
+mouse_default_cursor_shape = 2
 theme = SubResource("Theme_ouyqd")
 text = "決定"
 
@@ -348,6 +350,7 @@ text = "未設定"
 
 [node name="act_slider1" type="HSlider" parent="セレクト/出現率設定UI/出現率設定UI"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 editable = false
 
 [node name="act_name2" type="RichTextLabel" parent="セレクト/出現率設定UI/出現率設定UI"]
@@ -358,6 +361,7 @@ text = "未設定"
 
 [node name="act_slider2" type="HSlider" parent="セレクト/出現率設定UI/出現率設定UI"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 editable = false
 
 [node name="act_name3" type="RichTextLabel" parent="セレクト/出現率設定UI/出現率設定UI"]
@@ -368,6 +372,7 @@ text = "未設定"
 
 [node name="act_slider3" type="HSlider" parent="セレクト/出現率設定UI/出現率設定UI"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 editable = false
 
 [node name="act_name4" type="RichTextLabel" parent="セレクト/出現率設定UI/出現率設定UI"]
@@ -378,6 +383,7 @@ text = "未設定"
 
 [node name="act_slider4" type="HSlider" parent="セレクト/出現率設定UI/出現率設定UI"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 editable = false
 
 [node name="SpinBox" type="SpinBox" parent="セレクト/出現率設定UI"]
@@ -385,6 +391,7 @@ layout_mode = 0
 offset_left = 427.0
 offset_right = 500.0
 offset_bottom = 31.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("8_dnxyf")
 theme_override_colors/up_icon_modulate = Color(1, 0, 0, 1)
 theme_override_colors/down_icon_modulate = Color(0, 1, 1, 1)
@@ -468,11 +475,13 @@ offset_right = 1050.0
 offset_bottom = 650.0
 theme = SubResource("Theme_88gvl")
 bbcode_enabled = true
-text = "①好きな技を選んでボタンを押してください
+text = "
+①好きな技を選んでボタンを押してください
 
 ②技の[color=yellow]出現率[/color]を好きな値に設定してください（上限はあります）
 
-③合計が100%になったら、スキルタブからスキルを選択してください（スキルは未実装のため現在機能しません...）
+③合計が100%になったら、スキルタブからスキルを選択してください
+　（スキルは未実装のため現在機能しません...）
 
 ④決定ボタンを押して確定！
 
