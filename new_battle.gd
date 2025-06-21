@@ -50,7 +50,7 @@ func _on_tree_entered() -> void:
 	tween.parallel().tween_property($button/dialogtab, "modulate:a", 1, 0.5)
 	tween.parallel().tween_property($button/change, "modulate:a", 1, 0.5)
 	tween.parallel().tween_property($button/main, "position:y", 523, 0.5)\
-	.set_ease(Tween.EASE_IN)
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	
 	$button/escape.disabled = false

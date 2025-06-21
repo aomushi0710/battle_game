@@ -128,4 +128,5 @@ layout_mode = 0
 offset_top = -40.0
 offset_right = 256.0
 offset_bottom = 427.0
+mouse_filter = 2
 color = Color(0, 0, 0, 0.25098)
