@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://buahejbbay077" path="res://new_battle.gd" id="2_arwha"]
 [ext_resource type="Texture2D" uid="uid://c23i0i02b401a" path="res://image/stage/青空.PNG" id="2_g5d16"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="2_tc6cq"]
-[ext_resource type="Texture2D" uid="uid://cvndad8n2cehs" path="res://image/stage/草原.PNG" id="3_sraw4"]
+[ext_resource type="Texture2D" uid="uid://bhmvyc1xf2rgk" path="res://image/stage/草原.PNG" id="3_sraw4"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_nfpvw"]
 [ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://sound_effects.tscn" id="8_tc6cq"]
 [ext_resource type="Script" uid="uid://o4ioqobn45d0" path="res://battle_buttons.gd" id="9_hwahx"]
