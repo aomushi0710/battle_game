@@ -340,6 +340,12 @@ mouse_default_cursor_shape = 2
 theme = SubResource("Theme_0twro")
 text = "バトル！"
 
+[node name="fade" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
 [connection signal="tree_entered" from="." to="Control/デッキ1" method="_on_デッキセレクト_tree_entered"]
 [connection signal="button_up" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_button_up"]
 [connection signal="focus_entered" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_focus_entered"]

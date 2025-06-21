@@ -1,7 +1,7 @@
 extends Node2D
 
 # バージョン管理 定数
-const VERSION_TEXT: String = "ver 4.0.0(β)" # バージョン
+const VERSION_TEXT: String = "ver 4.0.1(β)" # バージョン
 const VERSION: float = 4.0 # 比較可能バージョン セーブデータ整合性チェック用
 const VERSION_BETA: bool = true # true:ベータ版 false:正式リリース版
 

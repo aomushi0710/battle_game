@@ -1,0 +1,1642 @@
+[gd_scene load_steps=67 format=3 uid="uid://cshv2kldt6i4x"]
+
+[ext_resource type="Script" path="res://buttle.gd" id="1_csbr0"]
+[ext_resource type="Script" path="res://enemy1.gd" id="2_8rv16"]
+[ext_resource type="Script" path="res://p1_mp.gd" id="3_aqsgc"]
+[ext_resource type="Script" path="res://player1.gd" id="3_pfbs1"]
+[ext_resource type="Texture2D" uid="uid://bnagnglpfolr3" path="res://bar_hp.PNG" id="4_n5lsc"]
+[ext_resource type="Texture2D" uid="uid://dxssu1v1art5l" path="res://bar_empty.PNG" id="4_w33vs"]
+[ext_resource type="Script" path="res://p1_hp.gd" id="5_85fus"]
+[ext_resource type="Script" path="res://コマンド.gd" id="5_08288"]
+[ext_resource type="Texture2D" uid="uid://c6esjhqxk7oyw" path="res://bar_mp.PNG" id="5_gx1ih"]
+[ext_resource type="Script" path="res://p1_psd.gd" id="5_n4uku"]
+[ext_resource type="Texture2D" uid="uid://cqv7q4fa8fjrt" path="res://bar_spd.PNG" id="5_r2kcj"]
+[ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://バフ技.PNG" id="11_h1ltc"]
+[ext_resource type="Script" path="res://player2.gd" id="11_km0k0"]
+[ext_resource type="Script" path="res://p1_icon.gd" id="12_fcs5k"]
+[ext_resource type="Script" path="res://p2_hp.gd" id="12_mthpc"]
+[ext_resource type="Script" path="res://点滅アイコン.gd" id="13_i2c6c"]
+[ext_resource type="Script" path="res://p2_mp.gd" id="13_jc8tr"]
+[ext_resource type="Texture2D" uid="uid://c6skftvqg4rh6" path="res://デバフ技.PNG" id="13_jieqg"]
+[ext_resource type="Script" path="res://enemies.gd" id="13_tt7wl"]
+[ext_resource type="Script" path="res://e1_hp.gd" id="13_vv1nc"]
+[ext_resource type="Script" path="res://p2_spd.gd" id="14_kkjhg"]
+[ext_resource type="Script" path="res://e1_mp.gd" id="14_nn4ay"]
+[ext_resource type="Script" path="res://p2_command.gd" id="15_0e0st"]
+[ext_resource type="Script" path="res://e1_spd.gd" id="15_1vpvo"]
+[ext_resource type="Script" path="res://player3.gd" id="16_5hgo5"]
+[ext_resource type="Script" path="res://e1_command.gd" id="16_o3k3h"]
+[ext_resource type="Script" path="res://p3_mp.gd" id="17_dvsc4"]
+[ext_resource type="Script" path="res://p3_hp.gd" id="17_dxwyy"]
+[ext_resource type="Script" path="res://p3_spd.gd" id="18_aoce8"]
+[ext_resource type="Script" path="res://p3_command.gd" id="19_o05ww"]
+[ext_resource type="Script" path="res://p2_icon.gd" id="20_ue1s4"]
+[ext_resource type="Script" path="res://p3_icon.gd" id="26_nb4ha"]
+[ext_resource type="Script" path="res://enemy2.gd" id="27_spbmn"]
+[ext_resource type="Script" path="res://e2_hp.gd" id="28_u4vay"]
+[ext_resource type="Script" path="res://e2_mp.gd" id="29_xccyd"]
+[ext_resource type="Script" path="res://e2_spd.gd" id="30_ipyrj"]
+[ext_resource type="Script" path="res://e2_command.gd" id="31_x728l"]
+[ext_resource type="Script" path="res://enemy3.gd" id="32_wpmrf"]
+[ext_resource type="Script" path="res://e3_hp.gd" id="33_4in4d"]
+[ext_resource type="Script" path="res://e1_icon.gd" id="33_m6vli"]
+[ext_resource type="Script" path="res://e3_mp.gd" id="34_g0xjy"]
+[ext_resource type="Script" path="res://e3_spd.gd" id="35_fdfku"]
+[ext_resource type="Script" path="res://e3_command.gd" id="36_4fl3j"]
+[ext_resource type="Script" path="res://help.gd" id="37_jkkvg"]
+[ext_resource type="Script" path="res://バトル終了.gd" id="38_s2cyo"]
+[ext_resource type="Script" path="res://e2_icon.gd" id="39_acya7"]
+[ext_resource type="Script" path="res://help_type.gd" id="39_c4ddy"]
+[ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://スライム.PNG" id="40_qw033"]
+[ext_resource type="Script" path="res://help_mp.gd" id="41_2omnf"]
+[ext_resource type="Script" path="res://help_spd.gd" id="42_iyfdj"]
+[ext_resource type="Script" path="res://help_command.gd" id="43_45x6n"]
+[ext_resource type="Script" path="res://e3_icon.gd" id="45_dks4y"]
+[ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://sound_effects.tscn" id="53_si0x8"]
+
+[sub_resource type="Theme" id="Theme_kymv4"]
+default_font_size = 150
+
+[sub_resource type="Theme" id="Theme_6erj1"]
+default_font_size = 50
+
+[sub_resource type="Theme" id="Theme_bl78q"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_cnc8l"]
+default_font_size = 50
+
+[sub_resource type="Theme" id="Theme_j8pk4"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_2cjvk"]
+default_font_size = 20
+
+[sub_resource type="Theme" id="Theme_b43x0"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_7dvoh"]
+default_font_size = 70
+
+[sub_resource type="Theme" id="Theme_nkyw0"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_kj5i1"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_usbvf"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_xw6wk"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_isa5b"]
+default_font_size = 30
+
+[node name="Node2D" type="Node2D"]
+
+[node name="buttle" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_csbr0")
+
+[node name="result_rect" type="ColorRect" parent="buttle"]
+visible = false
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.501961)
+
+[node name="win" type="RichTextLabel" parent="buttle/result_rect"]
+visible = false
+layout_mode = 0
+offset_left = 200.0
+offset_top = 100.0
+offset_right = 1000.0
+offset_bottom = 300.0
+theme = SubResource("Theme_kymv4")
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=red][b]You Win![/b][/color]"
+
+[node name="lose" type="RichTextLabel" parent="buttle/result_rect"]
+visible = false
+layout_mode = 0
+offset_left = 150.0
+offset_top = 100.0
+offset_right = 1150.0
+offset_bottom = 300.0
+theme = SubResource("Theme_kymv4")
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=blue][b]You Lose...[/b][/color]"
+
+[node name="player1" type="ColorRect" parent="buttle"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 575.0
+offset_bottom = 178.0
+color = Color(0, 0, 0, 0.494118)
+
+[node name="player1" type="TextureButton" parent="buttle/player1"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("3_pfbs1")
+
+[node name="p1_hp" type="TextureProgressBar" parent="buttle/player1/player1"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = -30.0
+offset_right = 756.0
+offset_bottom = 226.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("4_n5lsc")
+script = ExtResource("5_85fus")
+
+[node name="hp_text" type="RichTextLabel" parent="buttle/player1/player1/p1_hp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=red][b]HP[/b] 999/999[/color]"
+
+[node name="p1_mp" type="TextureProgressBar" parent="buttle/player1/player1"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 30.0
+offset_right = 756.0
+offset_bottom = 286.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_gx1ih")
+script = ExtResource("3_aqsgc")
+
+[node name="mp_text" type="RichTextLabel" parent="buttle/player1/player1/p1_mp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=aqua][b]MP[/b] 999/999[/color]"
+
+[node name="p1_spd" type="TextureProgressBar" parent="buttle/player1/player1"]
+process_mode = 1
+layout_mode = 0
+offset_left = 500.0
+offset_top = 90.0
+offset_right = 756.0
+offset_bottom = 346.0
+max_value = 10000.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_r2kcj")
+script = ExtResource("5_n4uku")
+
+[node name="spd_text" type="RichTextLabel" parent="buttle/player1/player1/p1_spd"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=green][b]SPD[/b]     0%[/color]"
+
+[node name="p1_command" type="VBoxContainer" parent="buttle/player1/player1"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 750.0
+offset_top = 70.0
+offset_right = 1050.0
+offset_bottom = 326.0
+theme = SubResource("Theme_bl78q")
+script = ExtResource("5_08288")
+
+[node name="name" type="RichTextLabel" parent="buttle/player1/player1"]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 10.0
+offset_right = 1060.0
+offset_bottom = 80.0
+theme = SubResource("Theme_cnc8l")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "text"
+scroll_active = false
+
+[node name="p1_icon" type="Control" parent="buttle/player1"]
+anchors_preset = 0
+offset_left = 415.0
+offset_right = 525.0
+offset_bottom = 40.0
+script = ExtResource("12_fcs5k")
+
+[node name="バフアイコン" type="TextureButton" parent="buttle/player1/p1_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 3.0
+offset_right = 296.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("11_h1ltc")
+script = ExtResource("13_i2c6c")
+
+[node name="buff_turn" type="RichTextLabel" parent="buttle/player1/p1_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = 18.0
+offset_right = 100.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="デバフアイコン" type="TextureButton" parent="buttle/player1/p1_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 75.0
+offset_top = 3.0
+offset_right = 331.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("13_jieqg")
+script = ExtResource("13_i2c6c")
+
+[node name="debuff_turn" type="RichTextLabel" parent="buttle/player1/p1_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 75.0
+offset_top = 18.0
+offset_right = 135.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="player2" type="ColorRect" parent="buttle"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 200.0
+offset_right = 575.0
+offset_bottom = 328.0
+color = Color(0, 0, 0, 0.494118)
+
+[node name="player2" type="TextureButton" parent="buttle/player2"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("11_km0k0")
+
+[node name="p2_hp" type="TextureProgressBar" parent="buttle/player2/player2"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = -30.0
+offset_right = 756.0
+offset_bottom = 226.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("4_n5lsc")
+script = ExtResource("12_mthpc")
+
+[node name="hp_text" type="RichTextLabel" parent="buttle/player2/player2/p2_hp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=red][b]HP[/b] 999/999[/color]"
+
+[node name="p2_mp" type="TextureProgressBar" parent="buttle/player2/player2"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 30.0
+offset_right = 756.0
+offset_bottom = 286.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_gx1ih")
+script = ExtResource("13_jc8tr")
+
+[node name="mp_text" type="RichTextLabel" parent="buttle/player2/player2/p2_mp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=aqua][b]MP[/b] 999/999[/color]"
+
+[node name="p2_spd" type="TextureProgressBar" parent="buttle/player2/player2"]
+process_mode = 1
+layout_mode = 0
+offset_left = 500.0
+offset_top = 90.0
+offset_right = 756.0
+offset_bottom = 346.0
+max_value = 10000.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_r2kcj")
+script = ExtResource("14_kkjhg")
+
+[node name="spd_text" type="RichTextLabel" parent="buttle/player2/player2/p2_spd"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=green][b]SPD[/b]     0%[/color]"
+
+[node name="p2_command" type="VBoxContainer" parent="buttle/player2/player2"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 750.0
+offset_top = 70.0
+offset_right = 1050.0
+offset_bottom = 326.0
+theme = SubResource("Theme_bl78q")
+script = ExtResource("15_0e0st")
+
+[node name="name" type="RichTextLabel" parent="buttle/player2/player2"]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 10.0
+offset_right = 1060.0
+offset_bottom = 80.0
+theme = SubResource("Theme_cnc8l")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "text"
+scroll_active = false
+
+[node name="p2_icon" type="Control" parent="buttle/player2"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 415.0
+offset_right = 525.0
+offset_bottom = 40.0
+script = ExtResource("20_ue1s4")
+
+[node name="バフアイコン" type="TextureButton" parent="buttle/player2/p2_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 3.0
+offset_right = 296.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("11_h1ltc")
+script = ExtResource("13_i2c6c")
+
+[node name="buff_turn" type="RichTextLabel" parent="buttle/player2/p2_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = 18.0
+offset_right = 100.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="デバフアイコン" type="TextureButton" parent="buttle/player2/p2_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 75.0
+offset_top = 3.0
+offset_right = 331.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("13_jieqg")
+script = ExtResource("13_i2c6c")
+
+[node name="debuff_turn" type="RichTextLabel" parent="buttle/player2/p2_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 75.0
+offset_top = 18.0
+offset_right = 135.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="player3" type="ColorRect" parent="buttle"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 350.0
+offset_right = 575.0
+offset_bottom = 478.0
+color = Color(0, 0, 0, 0.494118)
+
+[node name="player3" type="TextureButton" parent="buttle/player3"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("16_5hgo5")
+
+[node name="p3_hp" type="TextureProgressBar" parent="buttle/player3/player3"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = -30.0
+offset_right = 756.0
+offset_bottom = 226.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("4_n5lsc")
+script = ExtResource("17_dxwyy")
+
+[node name="hp_text" type="RichTextLabel" parent="buttle/player3/player3/p3_hp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=red][b]HP[/b] 999/999[/color]"
+
+[node name="p3_mp" type="TextureProgressBar" parent="buttle/player3/player3"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 30.0
+offset_right = 756.0
+offset_bottom = 286.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_gx1ih")
+script = ExtResource("17_dvsc4")
+
+[node name="mp_text" type="RichTextLabel" parent="buttle/player3/player3/p3_mp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=aqua][b]MP[/b] 999/999[/color]"
+
+[node name="p3_spd" type="TextureProgressBar" parent="buttle/player3/player3"]
+process_mode = 1
+layout_mode = 0
+offset_left = 500.0
+offset_top = 90.0
+offset_right = 756.0
+offset_bottom = 346.0
+max_value = 10000.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_r2kcj")
+script = ExtResource("18_aoce8")
+
+[node name="spd_text" type="RichTextLabel" parent="buttle/player3/player3/p3_spd"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=green][b]SPD[/b]     0%[/color]"
+
+[node name="p3_command" type="VBoxContainer" parent="buttle/player3/player3"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 750.0
+offset_top = 70.0
+offset_right = 1050.0
+offset_bottom = 326.0
+theme = SubResource("Theme_bl78q")
+script = ExtResource("19_o05ww")
+
+[node name="name" type="RichTextLabel" parent="buttle/player3/player3"]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 10.0
+offset_right = 1060.0
+offset_bottom = 80.0
+theme = SubResource("Theme_cnc8l")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "text"
+scroll_active = false
+
+[node name="p3_icon" type="Control" parent="buttle/player3"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 415.0
+offset_right = 525.0
+offset_bottom = 40.0
+script = ExtResource("26_nb4ha")
+
+[node name="バフアイコン" type="TextureButton" parent="buttle/player3/p3_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 3.0
+offset_right = 296.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("11_h1ltc")
+script = ExtResource("13_i2c6c")
+
+[node name="buff_turn" type="RichTextLabel" parent="buttle/player3/p3_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = 18.0
+offset_right = 100.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="デバフアイコン" type="TextureButton" parent="buttle/player3/p3_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 75.0
+offset_top = 3.0
+offset_right = 331.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("13_jieqg")
+script = ExtResource("13_i2c6c")
+
+[node name="debuff_turn" type="RichTextLabel" parent="buttle/player3/p3_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 75.0
+offset_top = 18.0
+offset_right = 135.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="enemies" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("13_tt7wl")
+
+[node name="enemy1" type="ColorRect" parent="enemies"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 50.0
+offset_right = 1125.0
+offset_bottom = 178.0
+color = Color(0, 0, 0, 0.494118)
+
+[node name="enemy1" type="TextureButton" parent="enemies/enemy1"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("2_8rv16")
+
+[node name="e1_hp" type="TextureProgressBar" parent="enemies/enemy1/enemy1"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = -30.0
+offset_right = 756.0
+offset_bottom = 226.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("4_n5lsc")
+script = ExtResource("13_vv1nc")
+
+[node name="hp_text" type="RichTextLabel" parent="enemies/enemy1/enemy1/e1_hp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=red][b]HP[/b] 999/999[/color]"
+
+[node name="e1_mp" type="TextureProgressBar" parent="enemies/enemy1/enemy1"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 30.0
+offset_right = 756.0
+offset_bottom = 286.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_gx1ih")
+script = ExtResource("14_nn4ay")
+
+[node name="mp_text" type="RichTextLabel" parent="enemies/enemy1/enemy1/e1_mp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=aqua][b]MP[/b] 999/999[/color]"
+
+[node name="e1_spd" type="TextureProgressBar" parent="enemies/enemy1/enemy1"]
+process_mode = 1
+layout_mode = 0
+offset_left = 500.0
+offset_top = 90.0
+offset_right = 756.0
+offset_bottom = 346.0
+max_value = 10000.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_r2kcj")
+script = ExtResource("15_1vpvo")
+
+[node name="spd_text" type="RichTextLabel" parent="enemies/enemy1/enemy1/e1_spd"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=green][b]SPD[/b]     0%[/color]"
+
+[node name="e1_command" type="VBoxContainer" parent="enemies/enemy1/enemy1"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 750.0
+offset_top = 70.0
+offset_right = 1050.0
+offset_bottom = 326.0
+theme = SubResource("Theme_bl78q")
+script = ExtResource("16_o3k3h")
+
+[node name="name" type="RichTextLabel" parent="enemies/enemy1/enemy1"]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 10.0
+offset_right = 1060.0
+offset_bottom = 80.0
+theme = SubResource("Theme_cnc8l")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "text"
+scroll_active = false
+
+[node name="e1_icon" type="Control" parent="enemies/enemy1"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 415.0
+offset_right = 525.0
+offset_bottom = 40.0
+script = ExtResource("33_m6vli")
+
+[node name="バフアイコン" type="TextureButton" parent="enemies/enemy1/e1_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 3.0
+offset_right = 296.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("11_h1ltc")
+script = ExtResource("13_i2c6c")
+
+[node name="buff_turn" type="RichTextLabel" parent="enemies/enemy1/e1_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = 18.0
+offset_right = 100.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="デバフアイコン" type="TextureButton" parent="enemies/enemy1/e1_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 75.0
+offset_top = 3.0
+offset_right = 331.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("13_jieqg")
+script = ExtResource("13_i2c6c")
+
+[node name="debuff_turn" type="RichTextLabel" parent="enemies/enemy1/e1_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 75.0
+offset_top = 18.0
+offset_right = 135.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="enemy2" type="ColorRect" parent="enemies"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 200.0
+offset_right = 1125.0
+offset_bottom = 328.0
+color = Color(0, 0, 0, 0.494118)
+
+[node name="enemy2" type="TextureButton" parent="enemies/enemy2"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("27_spbmn")
+
+[node name="e2_hp" type="TextureProgressBar" parent="enemies/enemy2/enemy2"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = -30.0
+offset_right = 756.0
+offset_bottom = 226.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("4_n5lsc")
+script = ExtResource("28_u4vay")
+
+[node name="hp_text" type="RichTextLabel" parent="enemies/enemy2/enemy2/e2_hp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=red][b]HP[/b] 999/999[/color]"
+
+[node name="e2_mp" type="TextureProgressBar" parent="enemies/enemy2/enemy2"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 30.0
+offset_right = 756.0
+offset_bottom = 286.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_gx1ih")
+script = ExtResource("29_xccyd")
+
+[node name="mp_text" type="RichTextLabel" parent="enemies/enemy2/enemy2/e2_mp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=aqua][b]MP[/b] 999/999[/color]"
+
+[node name="e2_spd" type="TextureProgressBar" parent="enemies/enemy2/enemy2"]
+process_mode = 1
+layout_mode = 0
+offset_left = 500.0
+offset_top = 90.0
+offset_right = 756.0
+offset_bottom = 346.0
+max_value = 10000.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_r2kcj")
+script = ExtResource("30_ipyrj")
+
+[node name="spd_text" type="RichTextLabel" parent="enemies/enemy2/enemy2/e2_spd"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=green][b]SPD[/b]     0%[/color]"
+
+[node name="e2_command" type="VBoxContainer" parent="enemies/enemy2/enemy2"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 750.0
+offset_top = 70.0
+offset_right = 1050.0
+offset_bottom = 326.0
+theme = SubResource("Theme_bl78q")
+script = ExtResource("31_x728l")
+
+[node name="name" type="RichTextLabel" parent="enemies/enemy2/enemy2"]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 10.0
+offset_right = 1060.0
+offset_bottom = 80.0
+theme = SubResource("Theme_cnc8l")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "text"
+scroll_active = false
+
+[node name="e2_icon" type="Control" parent="enemies/enemy2"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 415.0
+offset_right = 525.0
+offset_bottom = 40.0
+script = ExtResource("39_acya7")
+
+[node name="バフアイコン" type="TextureButton" parent="enemies/enemy2/e2_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 3.0
+offset_right = 40.0
+offset_bottom = 3.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("11_h1ltc")
+script = ExtResource("13_i2c6c")
+
+[node name="buff_turn" type="RichTextLabel" parent="enemies/enemy2/e2_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = 18.0
+offset_right = 100.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="デバフアイコン" type="TextureButton" parent="enemies/enemy2/e2_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 75.0
+offset_top = 3.0
+offset_right = 331.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("13_jieqg")
+script = ExtResource("13_i2c6c")
+
+[node name="debuff_turn" type="RichTextLabel" parent="enemies/enemy2/e2_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 75.0
+offset_top = 18.0
+offset_right = 135.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="enemy3" type="ColorRect" parent="enemies"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 350.0
+offset_right = 1125.0
+offset_bottom = 478.0
+color = Color(0, 0, 0, 0.494118)
+
+[node name="enemy3" type="TextureButton" parent="enemies/enemy3"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("32_wpmrf")
+
+[node name="e3_hp" type="TextureProgressBar" parent="enemies/enemy3/enemy3"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = -30.0
+offset_right = 756.0
+offset_bottom = 226.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("4_n5lsc")
+script = ExtResource("33_4in4d")
+
+[node name="hp_text" type="RichTextLabel" parent="enemies/enemy3/enemy3/e3_hp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=red][b]HP[/b] 999/999[/color]"
+
+[node name="e3_mp" type="TextureProgressBar" parent="enemies/enemy3/enemy3"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 30.0
+offset_right = 756.0
+offset_bottom = 286.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_gx1ih")
+script = ExtResource("34_g0xjy")
+
+[node name="mp_text" type="RichTextLabel" parent="enemies/enemy3/enemy3/e3_mp"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=aqua][b]MP[/b] 999/999[/color]"
+
+[node name="e3_spd" type="TextureProgressBar" parent="enemies/enemy3/enemy3"]
+process_mode = 1
+layout_mode = 0
+offset_left = 500.0
+offset_top = 90.0
+offset_right = 756.0
+offset_bottom = 346.0
+max_value = 10000.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_r2kcj")
+script = ExtResource("35_fdfku")
+
+[node name="spd_text" type="RichTextLabel" parent="enemies/enemy3/enemy3/e3_spd"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 100.0
+offset_right = 35.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = " [color=green][b]SPD[/b]     0%[/color]"
+
+[node name="e3_command" type="VBoxContainer" parent="enemies/enemy3/enemy3"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 750.0
+offset_top = 70.0
+offset_right = 1050.0
+offset_bottom = 326.0
+theme = SubResource("Theme_bl78q")
+script = ExtResource("36_4fl3j")
+
+[node name="name" type="RichTextLabel" parent="enemies/enemy3/enemy3"]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 10.0
+offset_right = 1060.0
+offset_bottom = 80.0
+theme = SubResource("Theme_cnc8l")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "text"
+scroll_active = false
+
+[node name="e3_icon" type="Control" parent="enemies/enemy3"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 415.0
+offset_right = 525.0
+offset_bottom = 40.0
+script = ExtResource("45_dks4y")
+
+[node name="バフアイコン" type="TextureButton" parent="enemies/enemy3/e3_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 3.0
+offset_right = 296.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("11_h1ltc")
+script = ExtResource("13_i2c6c")
+
+[node name="buff_turn" type="RichTextLabel" parent="enemies/enemy3/e3_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = 18.0
+offset_right = 100.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="デバフアイコン" type="TextureButton" parent="enemies/enemy3/e3_icon"]
+self_modulate = Color(0.235294, 0.235294, 0.235294, 1)
+layout_mode = 0
+offset_left = 75.0
+offset_top = 3.0
+offset_right = 331.0
+offset_bottom = 259.0
+scale = Vector2(0.12, 0.12)
+texture_normal = ExtResource("13_jieqg")
+script = ExtResource("13_i2c6c")
+
+[node name="debuff_turn" type="RichTextLabel" parent="enemies/enemy3/e3_icon"]
+visible = false
+clip_contents = false
+layout_mode = 0
+offset_left = 75.0
+offset_top = 18.0
+offset_right = 135.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_j8pk4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 10
+bbcode_enabled = true
+text = "[right][color=yellow][i][b]99[/b][/i][/color][/right]"
+
+[node name="log_window" type="ColorRect" parent="."]
+offset_left = 62.5
+offset_top = 500.0
+offset_right = 1112.5
+offset_bottom = 630.0
+color = Color(0, 0, 0, 0.494118)
+
+[node name="log" type="RichTextLabel" parent="log_window"]
+layout_mode = 0
+offset_left = 25.0
+offset_right = 1025.0
+offset_bottom = 130.0
+theme = SubResource("Theme_2cjvk")
+bbcode_enabled = true
+scroll_following = true
+
+[node name="help" type="Button" parent="."]
+process_mode = 3
+offset_left = 1100.0
+offset_top = 10.0
+offset_right = 1148.0
+offset_bottom = 58.0
+theme = SubResource("Theme_b43x0")
+toggle_mode = true
+text = "?"
+script = ExtResource("37_jkkvg")
+
+[node name="ColorRect" type="ColorRect" parent="help"]
+visible = false
+layout_mode = 0
+offset_left = -2300.0
+offset_top = 100.0
+offset_right = 100.0
+offset_bottom = 1400.0
+color = Color(0, 0, 0, 0.501961)
+
+[node name="help_label" type="RichTextLabel" parent="help"]
+visible = false
+layout_mode = 0
+offset_left = -2280.0
+offset_top = 130.0
+offset_right = 78.0
+offset_bottom = 1394.0
+theme = SubResource("Theme_7dvoh")
+bbcode_enabled = true
+text = "↑バトルを終了　↓[color=green]SPDゲージ[/color]が溜まると行動可能になります！([color=aqua]MP[/color]も回復)
+
+　　　　　　　　　　　　↑　　　　　　　↑
+好きな技のボタンを押して敵を攻撃！
+　　　　　　　　敵アイコンをクリックでその敵を狙って攻撃できます！
+
+左側が自分のデッキ、右側が自動生成された相手のデッキです。
+敵は自動でこちらに攻撃をしかけてくるため、やられる前にこちらも敵を攻撃しましょう！
+
+製作途中のため、なんと[color=red]HP0でも戦い続けられます！[/color]
+終了するときはexeを落としてください...
+
+
+
+　　↑バトルログが流れます！読むとバトルの流れを掴めるかも..."
+
+[node name="バトル終了" type="Button" parent="."]
+process_mode = 3
+offset_right = 218.0
+offset_bottom = 48.0
+theme = SubResource("Theme_nkyw0")
+text = "バトル終了！"
+script = ExtResource("38_s2cyo")
+
+[node name="help2" type="Button" parent="."]
+process_mode = 3
+offset_left = 1100.0
+offset_top = 10.0
+offset_right = 1148.0
+offset_bottom = 58.0
+theme = SubResource("Theme_kj5i1")
+toggle_mode = true
+text = "?"
+script = ExtResource("39_c4ddy")
+
+[node name="type" type="RichTextLabel" parent="help2"]
+visible = false
+layout_mode = 0
+offset_left = -250.0
+offset_top = 100.0
+offset_right = 118.0
+offset_bottom = 1400.0
+bbcode_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="help2"]
+visible = false
+layout_mode = 0
+offset_left = -1050.0
+offset_bottom = 650.0
+color = Color(0, 0.494118, 0.494118, 1)
+
+[node name="help_label" type="RichTextLabel" parent="help2/ColorRect"]
+layout_mode = 2
+offset_right = 1050.0
+offset_bottom = 650.0
+theme = SubResource("Theme_usbvf")
+bbcode_enabled = true
+text = "　　↓モンスターのアイコン:タップすることでターゲットに指定できます
+
+
+　　　　　　　　　　　　　　　　　　　 ←コマンドリスト:
+　　　　　　　　　　　　　　　　　　　　 ランダムに選ばれた技が
+　　　　　　　　　　　　　　　　　　　　 表示されます
+　　　　　　　　　　↑
+[color=green]SPD[/color]ゲージが溜まるとコマンドリストに技が表示され、
+モンスターが行動可能になります。
+また、このタイミングで[color=aqua]supplyMP[/color]の値だけ[color=aqua]MP[/color]が回復します。
+
+・"
+
+[node name="monster_help" type="Button" parent="help2/ColorRect"]
+layout_mode = 0
+offset_left = 650.0
+offset_top = 550.0
+offset_right = 973.0
+offset_bottom = 598.0
+text = "モンスターのヘルプ"
+
+[node name="help_player" type="ColorRect" parent="help2/ColorRect"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 575.0
+offset_bottom = 178.0
+color = Color(0, 0, 0, 0.494118)
+
+[node name="player1" type="TextureButton" parent="help2/ColorRect/help_player"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("40_qw033")
+
+[node name="help_hp" type="TextureProgressBar" parent="help2/ColorRect/help_player/player1"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = -30.0
+offset_right = 756.0
+offset_bottom = 226.0
+max_value = 999.0
+value = 500.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("4_n5lsc")
+
+[node name="hp_text" type="RichTextLabel" parent="help2/ColorRect/help_player/player1/help_hp"]
+layout_mode = 0
+offset_left = -240.0
+offset_top = 100.0
+offset_right = 20.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+bbcode_enabled = true
+text = "[color=red][b]HP[/b] 500/999[/color]"
+
+[node name="help_mp" type="TextureProgressBar" parent="help2/ColorRect/help_player/player1"]
+process_mode = 2
+layout_mode = 0
+offset_left = 500.0
+offset_top = 30.0
+offset_right = 756.0
+offset_bottom = 286.0
+max_value = 999.0
+value = 200.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_gx1ih")
+script = ExtResource("41_2omnf")
+
+[node name="mp_text" type="RichTextLabel" parent="help2/ColorRect/help_player/player1/help_mp"]
+layout_mode = 0
+offset_left = -240.0
+offset_top = 100.0
+offset_right = 20.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+bbcode_enabled = true
+text = "[color=aqua][b]MP[/b] 200/999[/color]"
+
+[node name="help_spd" type="TextureProgressBar" parent="help2/ColorRect/help_player/player1"]
+process_mode = 2
+layout_mode = 0
+offset_left = 500.0
+offset_top = 90.0
+offset_right = 756.0
+offset_bottom = 346.0
+max_value = 1000.0
+texture_under = ExtResource("4_w33vs")
+texture_progress = ExtResource("5_r2kcj")
+script = ExtResource("42_iyfdj")
+
+[node name="spd_text" type="RichTextLabel" parent="help2/ColorRect/help_player/player1/help_spd"]
+layout_mode = 0
+offset_left = -240.0
+offset_top = 100.0
+offset_right = 20.0
+offset_bottom = 160.0
+theme = SubResource("Theme_6erj1")
+bbcode_enabled = true
+text = "[color=green][b]SPD[/b]     0%[/color]"
+
+[node name="help_command" type="VBoxContainer" parent="help2/ColorRect/help_player/player1"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_left = 750.0
+offset_top = 70.0
+offset_right = 1050.0
+offset_bottom = 326.0
+theme = SubResource("Theme_bl78q")
+script = ExtResource("43_45x6n")
+
+[node name="name" type="RichTextLabel" parent="help2/ColorRect/help_player/player1"]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 10.0
+offset_right = 1690.0
+offset_bottom = 80.0
+theme = SubResource("Theme_cnc8l")
+bbcode_enabled = true
+text = "[img=50]res://無属性.PNG[/img] [b][i]スライム[/i][/b]　←モンスターの属性アイコンとモンスターの名前"
+scroll_active = false
+
+[node name="monster_help_menu" type="Control" parent="help2/ColorRect"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="type" type="Button" parent="help2/ColorRect/monster_help_menu"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 233.0
+offset_bottom = 98.0
+text = "タイプ相性"
+
+[node name="status" type="Button" parent="help2/ColorRect/monster_help_menu"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 150.0
+offset_right = 233.0
+offset_bottom = 198.0
+text = "ステータス"
+
+[node name="help_back" type="Button" parent="help2/ColorRect/monster_help_menu"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 50.0
+offset_top = 550.0
+offset_right = 163.0
+offset_bottom = 598.0
+theme = SubResource("Theme_xw6wk")
+text = "←戻る"
+
+[node name="monster_help_page" type="Control" parent="help2/ColorRect"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="monster_help_label" type="RichTextLabel" parent="help2/ColorRect/monster_help_page"]
+layout_mode = 0
+offset_right = 1050.0
+offset_bottom = 650.0
+theme = SubResource("Theme_isa5b")
+bbcode_enabled = true
+
+[node name="help_back_monster" type="Button" parent="help2/ColorRect/monster_help_page"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 50.0
+offset_top = 550.0
+offset_right = 163.0
+offset_bottom = 598.0
+theme = SubResource("Theme_xw6wk")
+text = "←戻る"
+
+[node name="SoundEffects" parent="." instance=ExtResource("53_si0x8")]
+
+[connection signal="damage1" from="buttle" to="enemies/enemy1/enemy1/e1_hp" method="_on_buttle_damage_1"]
+[connection signal="damage2" from="buttle" to="enemies/enemy2/enemy2/e2_hp" method="_on_buttle_damage_1"]
+[connection signal="damage3" from="buttle" to="enemies/enemy3/enemy3/e3_hp" method="_on_buttle_damage_3"]
+[connection signal="enemy_effect1" from="buttle" to="enemies/enemy1/e1_icon" method="_on_buttle_enemy_effect_1"]
+[connection signal="enemy_effect2" from="buttle" to="enemies/enemy2/e2_icon" method="_on_buttle_enemy_effect_2"]
+[connection signal="enemy_effect3" from="buttle" to="enemies/enemy3/e3_icon" method="_on_buttle_enemy_effect_3"]
+[connection signal="evolution1" from="buttle" to="buttle/player1/player1" method="_on_buttle_evolution_1"]
+[connection signal="evolution1" from="buttle" to="buttle/player1/player1/p1_hp" method="_on_buttle_evolution_1"]
+[connection signal="evolution1" from="buttle" to="buttle/player1/player1/p1_mp" method="_on_buttle_evolution_1"]
+[connection signal="evolution1" from="buttle" to="buttle/player1/player1/p1_spd" method="_on_buttle_evolution_1"]
+[connection signal="evolution1" from="buttle" to="buttle/player1/player1/p1_command" method="_on_buttle_evolution_1"]
+[connection signal="evolution2" from="buttle" to="buttle/player2/player2" method="_on_buttle_evolution_2"]
+[connection signal="evolution2" from="buttle" to="buttle/player2/player2/p2_hp" method="_on_buttle_evolution_2"]
+[connection signal="evolution2" from="buttle" to="buttle/player2/player2/p2_mp" method="_on_buttle_evolution_2"]
+[connection signal="evolution2" from="buttle" to="buttle/player2/player2/p2_spd" method="_on_buttle_evolution_2"]
+[connection signal="evolution2" from="buttle" to="buttle/player2/player2/p2_command" method="_on_buttle_evolution_2"]
+[connection signal="evolution3" from="buttle" to="buttle/player3/player3" method="_on_buttle_evolution_3"]
+[connection signal="evolution3" from="buttle" to="buttle/player3/player3/p3_hp" method="_on_buttle_evolution_3"]
+[connection signal="evolution3" from="buttle" to="buttle/player3/player3/p3_mp" method="_on_buttle_evolution_3"]
+[connection signal="evolution3" from="buttle" to="buttle/player3/player3/p3_spd" method="_on_buttle_evolution_3"]
+[connection signal="evolution3" from="buttle" to="buttle/player3/player3/p3_command" method="_on_buttle_evolution_3"]
+[connection signal="evolution_middle1" from="buttle" to="buttle/player1/player1" method="_on_buttle_evolution_middle_1"]
+[connection signal="evolution_middle1" from="buttle" to="buttle/player1/player1/p1_hp" method="_on_buttle_evolution_middle_1"]
+[connection signal="evolution_middle1" from="buttle" to="buttle/player1/player1/p1_mp" method="_on_buttle_evolution_middle_1"]
+[connection signal="evolution_middle1" from="buttle" to="buttle/player1/player1/p1_spd" method="_on_buttle_evolution_middle_1"]
+[connection signal="evolution_middle1" from="buttle" to="buttle/player1/player1/p1_command" method="_on_buttle_evolution_middle_1"]
+[connection signal="evolution_middle2" from="buttle" to="buttle/player2/player2" method="_on_buttle_evolution_middle_2"]
+[connection signal="evolution_middle2" from="buttle" to="buttle/player2/player2/p2_hp" method="_on_buttle_evolution_middle_2"]
+[connection signal="evolution_middle2" from="buttle" to="buttle/player2/player2/p2_mp" method="_on_buttle_evolution_middle_2"]
+[connection signal="evolution_middle2" from="buttle" to="buttle/player2/player2/p2_spd" method="_on_buttle_evolution_middle_2"]
+[connection signal="evolution_middle2" from="buttle" to="buttle/player2/player2/p2_command" method="_on_buttle_evolution_middle_2"]
+[connection signal="evolution_middle3" from="buttle" to="buttle/player3/player3" method="_on_buttle_evolution_middle_3"]
+[connection signal="evolution_middle3" from="buttle" to="buttle/player3/player3/p3_hp" method="_on_buttle_evolution_middle_3"]
+[connection signal="evolution_middle3" from="buttle" to="buttle/player3/player3/p3_mp" method="_on_buttle_evolution_middle_3"]
+[connection signal="evolution_middle3" from="buttle" to="buttle/player3/player3/p3_spd" method="_on_buttle_evolution_middle_3"]
+[connection signal="evolution_middle3" from="buttle" to="buttle/player3/player3/p3_command" method="_on_buttle_evolution_middle_3"]
+[connection signal="healing1" from="buttle" to="buttle/player1/player1/p1_hp" method="_on_buttle_healing_1"]
+[connection signal="healing2" from="buttle" to="buttle/player2/player2/p2_hp" method="_on_buttle_healing_1"]
+[connection signal="healing3" from="buttle" to="buttle/player3/player3/p3_hp" method="_on_buttle_healing_1"]
+[connection signal="mp1" from="buttle" to="buttle/player1/player1/p1_mp" method="_on_buttle_mp_1"]
+[connection signal="mp2" from="buttle" to="buttle/player2/player2/p2_mp" method="_on_buttle_mp_2"]
+[connection signal="mp3" from="buttle" to="buttle/player3/player3/p3_mp" method="_on_buttle_mp_3"]
+[connection signal="player_effect1" from="buttle" to="buttle/player1/p1_icon" method="_on_buttle_player_effect_1"]
+[connection signal="player_effect2" from="buttle" to="buttle/player2/p2_icon" method="_on_buttle_player_effect_2"]
+[connection signal="player_effect3" from="buttle" to="buttle/player3/p3_icon" method="_on_buttle_player_effect_3"]
+[connection signal="button_up" from="buttle/player1/player1" to="buttle" method="_on_player_1_button_up"]
+[connection signal="randomize_set" from="buttle/player1/player1" to="buttle/player1/player1/p1_command" method="_on_player_1_randomize_set"]
+[connection signal="death" from="buttle/player1/player1/p1_hp" to="buttle" method="_on_p_1_hp_death"]
+[connection signal="death" from="buttle/player1/player1/p1_hp" to="buttle/player1/player1/p1_command" method="_on_p_1_hp_death"]
+[connection signal="death" from="buttle/player1/player1/p1_hp" to="buttle/player1/p1_icon" method="_on_p_1_hp_death"]
+[connection signal="tree_entered" from="buttle/player1/player1/p1_hp" to="buttle/player1/player1/p1_hp" method="_on_tree_entered"]
+[connection signal="damage_effect" from="buttle/player1/player1/p1_mp" to="buttle/player1/player1/p1_hp" method="damage_effect"]
+[connection signal="tree_entered" from="buttle/player1/player1/p1_mp" to="buttle/player1/player1/p1_mp" method="_on_tree_entered"]
+[connection signal="command" from="buttle/player1/player1/p1_spd" to="buttle/player1/player1/p1_command" method="_on_p_1_spd_command"]
+[connection signal="mp" from="buttle/player1/player1/p1_spd" to="buttle/player1/player1/p1_mp" method="_on_p_1_spd_mp"]
+[connection signal="command" from="buttle/player1/player1/p1_command" to="buttle" method="_on_buttle_command"]
+[connection signal="mp_update" from="buttle/player1/player1/p1_command" to="buttle/player1/player1/p1_mp" method="text_update"]
+[connection signal="spd" from="buttle/player1/player1/p1_command" to="buttle/player1/player1/p1_spd" method="_on_コマンド_spd"]
+[connection signal="button_up" from="buttle/player2/player2" to="buttle" method="_on_player_2_button_up"]
+[connection signal="randomize_set" from="buttle/player2/player2" to="buttle/player2/player2/p2_command" method="_on_player_2_randomize_set"]
+[connection signal="death" from="buttle/player2/player2/p2_hp" to="buttle" method="_on_p_2_hp_death"]
+[connection signal="death" from="buttle/player2/player2/p2_hp" to="buttle/player2/player2/p2_command" method="_on_p_2_hp_death"]
+[connection signal="death" from="buttle/player2/player2/p2_hp" to="buttle/player2/p2_icon" method="_on_p_2_hp_death"]
+[connection signal="tree_entered" from="buttle/player2/player2/p2_hp" to="buttle/player2/player2/p2_hp" method="_on_tree_entered"]
+[connection signal="damage_effect" from="buttle/player2/player2/p2_mp" to="buttle/player2/player2/p2_hp" method="damage_effect"]
+[connection signal="tree_entered" from="buttle/player2/player2/p2_mp" to="buttle/player2/player2/p2_mp" method="_on_tree_entered"]
+[connection signal="command" from="buttle/player2/player2/p2_spd" to="buttle/player2/player2/p2_command" method="_on_p_2_spd_command"]
+[connection signal="mp" from="buttle/player2/player2/p2_spd" to="buttle/player2/player2/p2_mp" method="_on_p_2_spd_mp"]
+[connection signal="command" from="buttle/player2/player2/p2_command" to="buttle" method="_on_buttle_command"]
+[connection signal="mp_update" from="buttle/player2/player2/p2_command" to="buttle/player2/player2/p2_mp" method="text_update"]
+[connection signal="spd" from="buttle/player2/player2/p2_command" to="buttle/player2/player2/p2_spd" method="_on_p_2_command_spd"]
+[connection signal="button_up" from="buttle/player3/player3" to="buttle" method="_on_player_3_button_up"]
+[connection signal="randomize_set" from="buttle/player3/player3" to="buttle/player3/player3/p3_command" method="_on_player_3_randomize_set"]
+[connection signal="death" from="buttle/player3/player3/p3_hp" to="buttle" method="_on_p_3_hp_death"]
+[connection signal="death" from="buttle/player3/player3/p3_hp" to="buttle/player3/player3/p3_command" method="_on_p_3_hp_death"]
+[connection signal="death" from="buttle/player3/player3/p3_hp" to="buttle/player3/p3_icon" method="_on_p_3_hp_death"]
+[connection signal="tree_entered" from="buttle/player3/player3/p3_hp" to="buttle/player3/player3/p3_hp" method="_on_tree_entered"]
+[connection signal="damage_effect" from="buttle/player3/player3/p3_mp" to="buttle/player3/player3/p3_hp" method="damage_effect"]
+[connection signal="tree_entered" from="buttle/player3/player3/p3_mp" to="buttle/player3/player3/p3_mp" method="_on_tree_entered"]
+[connection signal="command" from="buttle/player3/player3/p3_spd" to="buttle/player3/player3/p3_command" method="_on_p_3_spd_command"]
+[connection signal="mp" from="buttle/player3/player3/p3_spd" to="buttle/player3/player3/p3_mp" method="_on_p_3_spd_mp"]
+[connection signal="command" from="buttle/player3/player3/p3_command" to="buttle" method="_on_buttle_command"]
+[connection signal="mp_update" from="buttle/player3/player3/p3_command" to="buttle/player3/player3/p3_mp" method="text_update"]
+[connection signal="spd" from="buttle/player3/player3/p3_command" to="buttle/player3/player3/p3_spd" method="_on_p_3_command_spd"]
+[connection signal="damage1" from="enemies" to="buttle/player1/player1/p1_hp" method="_on_enemies_damage_1"]
+[connection signal="damage2" from="enemies" to="buttle/player2/player2/p2_hp" method="_on_enemies_damage_1"]
+[connection signal="damage3" from="enemies" to="buttle/player3/player3/p3_hp" method="_on_enemies_damage_1"]
+[connection signal="enemy_effect1" from="enemies" to="enemies/enemy1/e1_icon" method="_on_buttle_enemy_effect_1"]
+[connection signal="enemy_effect2" from="enemies" to="enemies/enemy2/e2_icon" method="_on_buttle_enemy_effect_2"]
+[connection signal="enemy_effect3" from="enemies" to="enemies/enemy3/e3_icon" method="_on_buttle_enemy_effect_3"]
+[connection signal="evolution1" from="enemies" to="enemies/enemy1/enemy1" method="_on_enemies_evolution_1"]
+[connection signal="evolution1" from="enemies" to="enemies/enemy1/enemy1/e1_hp" method="_on_enemies_evolution_1"]
+[connection signal="evolution1" from="enemies" to="enemies/enemy1/enemy1/e1_mp" method="_on_enemies_evolution_1"]
+[connection signal="evolution1" from="enemies" to="enemies/enemy1/enemy1/e1_spd" method="_on_enemies_evolution_1"]
+[connection signal="evolution1" from="enemies" to="enemies/enemy1/enemy1/e1_command" method="_on_enemies_evolution_1"]
+[connection signal="evolution2" from="enemies" to="enemies/enemy2/enemy2" method="_on_enemies_evolution_2"]
+[connection signal="evolution2" from="enemies" to="enemies/enemy2/enemy2/e2_hp" method="_on_enemies_evolution_2"]
+[connection signal="evolution2" from="enemies" to="enemies/enemy2/enemy2/e2_mp" method="_on_enemies_evolution_2"]
+[connection signal="evolution2" from="enemies" to="enemies/enemy2/enemy2/e2_spd" method="_on_enemies_evolution_2"]
+[connection signal="evolution2" from="enemies" to="enemies/enemy2/enemy2/e2_command" method="_on_enemies_evolution_2"]
+[connection signal="evolution3" from="enemies" to="enemies/enemy3/enemy3" method="_on_enemies_evolution_3"]
+[connection signal="evolution3" from="enemies" to="enemies/enemy3/enemy3/e3_hp" method="_on_enemies_evolution_3"]
+[connection signal="evolution3" from="enemies" to="enemies/enemy3/enemy3/e3_mp" method="_on_enemies_evolution_3"]
+[connection signal="evolution3" from="enemies" to="enemies/enemy3/enemy3/e3_spd" method="_on_enemies_evolution_3"]
+[connection signal="evolution3" from="enemies" to="enemies/enemy3/enemy3/e3_command" method="_on_enemies_evolution_3"]
+[connection signal="evolution_middle1" from="enemies" to="enemies/enemy1/enemy1" method="_on_enemies_evolution_middle_1"]
+[connection signal="evolution_middle1" from="enemies" to="enemies/enemy1/enemy1/e1_hp" method="_on_enemies_evolution_middle_1"]
+[connection signal="evolution_middle1" from="enemies" to="enemies/enemy1/enemy1/e1_mp" method="_on_enemies_evolution_middle_1"]
+[connection signal="evolution_middle1" from="enemies" to="enemies/enemy1/enemy1/e1_spd" method="_on_enemies_evolution_middle_1"]
+[connection signal="evolution_middle1" from="enemies" to="enemies/enemy1/enemy1/e1_command" method="_on_enemies_evolution_middle_1"]
+[connection signal="evolution_middle2" from="enemies" to="enemies/enemy2/enemy2" method="_on_enemies_evolution_middle_2"]
+[connection signal="evolution_middle2" from="enemies" to="enemies/enemy2/enemy2/e2_hp" method="_on_enemies_evolution_middle_2"]
+[connection signal="evolution_middle2" from="enemies" to="enemies/enemy2/enemy2/e2_mp" method="_on_enemies_evolution_middle_2"]
+[connection signal="evolution_middle2" from="enemies" to="enemies/enemy2/enemy2/e2_spd" method="_on_enemies_evolution_middle_2"]
+[connection signal="evolution_middle2" from="enemies" to="enemies/enemy2/enemy2/e2_command" method="_on_enemies_evolution_middle_2"]
+[connection signal="evolution_middle3" from="enemies" to="enemies/enemy3/enemy3" method="_on_enemies_evolution_middle_3"]
+[connection signal="evolution_middle3" from="enemies" to="enemies/enemy3/enemy3/e3_hp" method="_on_enemies_evolution_middle_3"]
+[connection signal="evolution_middle3" from="enemies" to="enemies/enemy3/enemy3/e3_mp" method="_on_enemies_evolution_middle_3"]
+[connection signal="evolution_middle3" from="enemies" to="enemies/enemy3/enemy3/e3_spd" method="_on_enemies_evolution_middle_3"]
+[connection signal="evolution_middle3" from="enemies" to="enemies/enemy3/enemy3/e3_command" method="_on_enemies_evolution_middle_3"]
+[connection signal="healing1" from="enemies" to="enemies/enemy1/enemy1/e1_hp" method="_on_enemies_healing_1"]
+[connection signal="healing2" from="enemies" to="enemies/enemy2/enemy2/e2_hp" method="_on_enemies_healing_2"]
+[connection signal="healing3" from="enemies" to="enemies/enemy3/enemy3/e3_hp" method="_on_enemies_healing_3"]
+[connection signal="mp1" from="enemies" to="enemies/enemy1/enemy1/e1_mp" method="_on_enemies_mp_1"]
+[connection signal="mp2" from="enemies" to="enemies/enemy2/enemy2/e2_mp" method="_on_enemies_mp_2"]
+[connection signal="mp3" from="enemies" to="enemies/enemy3/enemy3/e3_mp" method="_on_enemies_mp_3"]
+[connection signal="player_effect1" from="enemies" to="buttle/player1/p1_icon" method="_on_buttle_player_effect_1"]
+[connection signal="player_effect2" from="enemies" to="buttle/player2/p2_icon" method="_on_buttle_player_effect_2"]
+[connection signal="player_effect3" from="enemies" to="buttle/player3/p3_icon" method="_on_buttle_player_effect_3"]
+[connection signal="tree_entered" from="enemies" to="enemies" method="_on_tree_entered"]
+[connection signal="button_up" from="enemies/enemy1/enemy1" to="buttle" method="_on_enemy_1_button_up"]
+[connection signal="randomize_set" from="enemies/enemy1/enemy1" to="enemies/enemy1/enemy1/e1_command" method="_on_player_1_randomize_set"]
+[connection signal="tree_entered" from="enemies/enemy1/enemy1" to="enemies/enemy1/enemy1" method="_on_tree_entered"]
+[connection signal="death" from="enemies/enemy1/enemy1/e1_hp" to="enemies" method="_on_e_1_hp_death"]
+[connection signal="death" from="enemies/enemy1/enemy1/e1_hp" to="enemies/enemy1/e1_icon" method="_on_e_1_hp_death"]
+[connection signal="tree_entered" from="enemies/enemy1/enemy1/e1_hp" to="enemies/enemy1/enemy1/e1_hp" method="_on_tree_entered"]
+[connection signal="damage_effect" from="enemies/enemy1/enemy1/e1_mp" to="enemies/enemy1/enemy1/e1_hp" method="damage_effect"]
+[connection signal="tree_entered" from="enemies/enemy1/enemy1/e1_mp" to="enemies/enemy1/enemy1/e1_mp" method="_on_tree_entered"]
+[connection signal="command" from="enemies/enemy1/enemy1/e1_spd" to="enemies/enemy1/enemy1/e1_command" method="_on_p_1_spd_command"]
+[connection signal="mp" from="enemies/enemy1/enemy1/e1_spd" to="enemies/enemy1/enemy1/e1_mp" method="_on_p_1_spd_mp"]
+[connection signal="tree_entered" from="enemies/enemy1/enemy1/e1_spd" to="enemies/enemy1/enemy1/e1_spd" method="_on_tree_entered"]
+[connection signal="command" from="enemies/enemy1/enemy1/e1_command" to="enemies" method="_on_e_command_command"]
+[connection signal="mp_update" from="enemies/enemy1/enemy1/e1_command" to="enemies/enemy1/enemy1/e1_mp" method="text_update"]
+[connection signal="spd" from="enemies/enemy1/enemy1/e1_command" to="enemies/enemy1/enemy1/e1_spd" method="_on_コマンド_spd"]
+[connection signal="button_up" from="enemies/enemy2/enemy2" to="buttle" method="_on_enemy_2_button_up"]
+[connection signal="randomize_set" from="enemies/enemy2/enemy2" to="enemies/enemy2/enemy2/e2_command" method="_on_enemy_2_randomize_set"]
+[connection signal="tree_entered" from="enemies/enemy2/enemy2" to="enemies/enemy2/enemy2" method="_on_tree_entered"]
+[connection signal="death" from="enemies/enemy2/enemy2/e2_hp" to="enemies" method="_on_e_2_hp_death"]
+[connection signal="death" from="enemies/enemy2/enemy2/e2_hp" to="enemies/enemy2/e2_icon" method="_on_e_2_hp_death"]
+[connection signal="tree_entered" from="enemies/enemy2/enemy2/e2_hp" to="enemies/enemy2/enemy2/e2_hp" method="_on_tree_entered"]
+[connection signal="damage_effect" from="enemies/enemy2/enemy2/e2_mp" to="enemies/enemy2/enemy2/e2_hp" method="damage_effect"]
+[connection signal="tree_entered" from="enemies/enemy2/enemy2/e2_mp" to="enemies/enemy2/enemy2/e2_mp" method="_on_tree_entered"]
+[connection signal="command" from="enemies/enemy2/enemy2/e2_spd" to="enemies/enemy2/enemy2/e2_command" method="_on_e_2_spd_command"]
+[connection signal="mp" from="enemies/enemy2/enemy2/e2_spd" to="enemies/enemy2/enemy2/e2_mp" method="_on_e_2_spd_mp"]
+[connection signal="tree_entered" from="enemies/enemy2/enemy2/e2_spd" to="enemies/enemy2/enemy2/e2_spd" method="_on_tree_entered"]
+[connection signal="command" from="enemies/enemy2/enemy2/e2_command" to="enemies" method="_on_e_command_command"]
+[connection signal="mp_update" from="enemies/enemy2/enemy2/e2_command" to="enemies/enemy2/enemy2/e2_mp" method="text_update"]
+[connection signal="spd" from="enemies/enemy2/enemy2/e2_command" to="enemies/enemy2/enemy2/e2_spd" method="_on_e_2_command_spd"]
+[connection signal="button_up" from="enemies/enemy3/enemy3" to="buttle" method="_on_enemy_3_button_up"]
+[connection signal="randomize_set" from="enemies/enemy3/enemy3" to="enemies/enemy3/enemy3/e3_command" method="_on_enemy_3_randomize_set"]
+[connection signal="tree_entered" from="enemies/enemy3/enemy3" to="enemies/enemy3/enemy3" method="_on_tree_entered"]
+[connection signal="death" from="enemies/enemy3/enemy3/e3_hp" to="enemies" method="_on_e_3_hp_death"]
+[connection signal="death" from="enemies/enemy3/enemy3/e3_hp" to="enemies/enemy3/e3_icon" method="_on_e_3_hp_death"]
+[connection signal="tree_entered" from="enemies/enemy3/enemy3/e3_hp" to="enemies/enemy3/enemy3/e3_hp" method="_on_tree_entered"]
+[connection signal="damage_effect" from="enemies/enemy3/enemy3/e3_mp" to="enemies/enemy3/enemy3/e3_hp" method="damage_effect"]
+[connection signal="tree_entered" from="enemies/enemy3/enemy3/e3_mp" to="enemies/enemy3/enemy3/e3_mp" method="_on_tree_entered"]
+[connection signal="command" from="enemies/enemy3/enemy3/e3_spd" to="enemies/enemy3/enemy3/e3_command" method="_on_e_3_spd_command"]
+[connection signal="mp" from="enemies/enemy3/enemy3/e3_spd" to="enemies/enemy3/enemy3/e3_mp" method="_on_e_3_spd_mp"]
+[connection signal="tree_entered" from="enemies/enemy3/enemy3/e3_spd" to="enemies/enemy3/enemy3/e3_spd" method="_on_tree_entered"]
+[connection signal="command" from="enemies/enemy3/enemy3/e3_command" to="enemies" method="_on_e_command_command"]
+[connection signal="mp_update" from="enemies/enemy3/enemy3/e3_command" to="enemies/enemy3/enemy3/e3_mp" method="text_update"]
+[connection signal="spd" from="enemies/enemy3/enemy3/e3_command" to="enemies/enemy3/enemy3/e3_spd" method="_on_e_3_command_spd"]
+[connection signal="toggled" from="help" to="help" method="_on_toggled"]
+[connection signal="button_up" from="バトル終了" to="バトル終了" method="_on_button_up"]
+[connection signal="toggled" from="help2" to="help2" method="_on_toggled"]
+[connection signal="button_up" from="help2/ColorRect/monster_help" to="help2" method="_on_monster_help_button_up"]
+[connection signal="help_command" from="help2/ColorRect/help_player/player1/help_spd" to="help2/ColorRect/help_player/player1/help_command" method="_on_help_spd_help_command"]
+[connection signal="help_mp" from="help2/ColorRect/help_player/player1/help_spd" to="help2/ColorRect/help_player/player1/help_mp" method="_on_help_spd_help_mp"]
+[connection signal="help_spd" from="help2/ColorRect/help_player/player1/help_command" to="help2/ColorRect/help_player/player1/help_spd" method="_on_help_command_help_spd"]
+[connection signal="button_up" from="help2/ColorRect/monster_help_menu/type" to="help2" method="_on_type_button_up"]
+[connection signal="button_up" from="help2/ColorRect/monster_help_menu/status" to="help2" method="_on_status_button_up"]
+[connection signal="button_up" from="help2/ColorRect/monster_help_menu/help_back" to="help2" method="_on_help_back_button_up"]
+[connection signal="button_up" from="help2/ColorRect/monster_help_page/help_back_monster" to="help2" method="_on_help_back_monster_button_up"]

@@ -162,6 +162,10 @@ func evolution(id: int) -> Array[String]:
 		monster = monster_dict[1]
 	elif id == 10002: # 進化
 		monster = monster_dict[2]
+	if player == true:
+		Global.deck1.monster[index] = monster
+	else:
+		Global.enemy_deck.monster[index] = monster
 	# hpを引き継ぐ時、進化で伸びたmaxHPの差だけ回復する
 	monster.HP = pre_monster.HP
 	hp_setter(monster.maxHP - pre_monster.maxHP, false)

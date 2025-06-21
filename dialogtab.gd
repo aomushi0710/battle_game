@@ -14,11 +14,7 @@ signal paging
 
 
 func _ready() -> void:
-	tab_list[0] = ["This is test message with animation!\n" + 
-	"[color=red][b]BBcode is available.[/b][/color]\n" + 
-	"表示可能な最大文字数（全角）：１９文字",
-	"page2",
-	"page3"] # test
+	tab_list[0] = [""] # test
 	tab_list[1] = ["Status ボタンから味方と相手の\nステータスを確認できます！"]
 	tab_list[2] = [""]
 	current_tab = 0
@@ -27,6 +23,8 @@ func _ready() -> void:
 ## ダイアログボックスに表示するテキストのsetter[br]tab:タブのindex text:配列の要素1つで1ページ分[br]
 ## wait true:awaitでメッセージ送りを待つ false:待たない
 func text_setter(tab: int, wait: bool, text: Array) -> void:
+	if tween:
+		tween.kill()
 	if text == []: # array要素の型不明の時
 		text = [""] # string型に修正
 	next_sign = wait
@@ -67,7 +65,7 @@ func label_gui_input(event: InputEvent) -> void:
 
 ## タブのindex、ページ数を引数としてテキストをアニメーション表示させる関数
 func text_animation(tab: int, page: int) -> void:
-	if tween and tween.is_running(): # tweenがすでに動作しているなら停止
+	if tween: # tweenがすでに動作しているなら停止
 		tween.kill()
 	var label: RichTextLabel = get_child(tab) # タブのラベル取得
 	label.visible_characters = 0 # 隠す
@@ -85,6 +83,7 @@ func text_animation(tab: int, page: int) -> void:
 func next_sign_on() -> void:
 	if next_sign_tween and next_sign_tween.is_running():
 		next_sign_tween.kill()
+		await get_tree().process_frame
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND # マウスカーソルを指差しに
 	$"../next_sign".modulate = Color(Color.WHITE) # 初期化
 	$"../next_sign".position.y = 616
@@ -99,8 +98,15 @@ func next_sign_on() -> void:
 func next_sign_off() -> void:
 	if next_sign_tween and next_sign_tween.is_running():
 		next_sign_tween.kill()
+		await get_tree().process_frame
 	mouse_default_cursor_shape = Control.CURSOR_ARROW # マウスカーソルをデフォルトに
 	$"../next_sign".modulate = Color(Color.DIM_GRAY)
 	next_sign_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	next_sign_tween.tween_property($"../next_sign", "position:y", 616, 0.5)\
 	.set_trans(Tween.TRANS_EXPO)
+
+func battle_finished() -> void:
+	if tween and tween.is_running(): # ボタン点滅アニメーション停止
+		tween.stop()
+	if next_sign_tween and next_sign_tween.is_running():
+		next_sign_tween.stop()

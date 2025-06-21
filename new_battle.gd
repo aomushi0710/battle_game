@@ -15,12 +15,50 @@ signal changed
 
 # 味方と敵のデッキを準備
 func _on_tree_entered() -> void:
-	for button: Button in $button/main.get_children():
-			button.disabled = true
-	
+	$"../fade".color.a = 1
+	$"../fade".show()
 	$"../result_rect".hide()
 	$"../result_rect/win".hide()
 	$"../result_rect/lose".hide()
+	$button/next_sign.hide()
+	$button/escape.disabled = true
+	$"button/戻る".disabled = true
+	$button/escape.modulate.a = 0
+	$"button/戻る".modulate.a = 0
+	$button/dialogtab.modulate.a = 0
+	$button/next_sign.modulate.a = 0
+	$button/change.modulate.a = 0
+	$button/main.position.y = 648
+	
+	tween = get_tree().create_tween()
+	tween.tween_property($"../fade", "color:a", 0, 1)
+	tween.tween_interval(1)
+	tween.tween_callback(func(): 
+		$"../fade".hide()
+		$"../battlestart".modulate.a = 1
+		$"../battlestart".show())
+	tween.tween_property($"../battlestart", "scale", Vector2(1.2, 1.2), 0.4)
+	tween.tween_property($"../battlestart", "scale", Vector2(1.0, 1.0), 0.1)
+	tween.tween_interval(0.5)
+	tween.tween_property($"../battlestart", "modulate:a", 0, 0.5)
+	tween.tween_callback(func(): 
+		$"../battlestart".scale = Vector2(0, 0)
+		$"../battlestart".hide())
+	tween.tween_interval(0.5)
+	tween.tween_property($button/escape, "modulate:a", 1, 0.5)
+	tween.parallel().tween_property($"button/戻る", "modulate:a", 1, 0.5)
+	tween.parallel().tween_property($button/dialogtab, "modulate:a", 1, 0.5)
+	tween.parallel().tween_property($button/change, "modulate:a", 1, 0.5)
+	tween.parallel().tween_property($button/main, "position:y", 523, 0.5)\
+	.set_ease(Tween.EASE_IN)
+	await tween.finished
+	
+	$button/escape.disabled = false
+	for button: Button in $button/main.get_children():
+			button.disabled = true
+	$button/next_sign.show()
+	
+	dialog.text_setter(0, false, ["ついにこの戦いが始まった。"])
 	
 	await get_tree().process_frame # 1フレーム待つ
 	for deck in [Global.deck1, Global.enemy_deck]:

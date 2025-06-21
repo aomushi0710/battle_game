@@ -10,6 +10,7 @@ var button_index: int
 var selected_action: Action
 var tween: Tween
 
+signal battle_finished
 
 func _on_tree_entered() -> void: # 初期値
 	$"戻る".disabled = true
@@ -145,6 +146,8 @@ func show_target_button() -> void:
 
 ## target消滅アニメーション
 func hide_target_button() -> void:
+	if tween and tween.is_running(): # ボタン点滅アニメーション停止
+		tween.kill()
 	for child in $target.get_children():
 		if child is TextureButton:
 			child.disabled = true
@@ -239,6 +242,7 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 	match now_showing:
 		-1: # バトル終了後、デッキセレクトに戻る
 			_on_確認メッセージ_confirmed() # 初期化処理を呼ぶ
+			
 		1: # action消滅アニメーション
 			# TODO 現在は仮の文章　後々、デフォルトのものを挿入できるようにする
 			$dialogtab.tab_list[0] = ["This is test message with animation!\n" + 
@@ -280,6 +284,8 @@ func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げら�
 
 
 func _on_確認メッセージ_confirmed() -> void: # バトル終了初期化処理
+	if tween and tween.is_running(): # ボタン点滅アニメーション停止
+		tween.kill()
 	Global.p1_death = false
 	Global.p2_death = false
 	Global.p3_death = false
@@ -306,6 +312,8 @@ func _on_確認メッセージ_confirmed() -> void: # バトル終了初期化�
 		Global.enemy_deck.monster[i] = Global.enemy_deck.monster_dict[i][0]
 		Global.enemy_deck.effect[i].clear()
 	Global.deck_creator(Global.enemy_deck) # 敵デッキ生成
+	await $dialogtab.battle_finished()
+	await $"../../background".battle_finished()
 	get_tree().change_scene_to_packed(Global.deck_scene)
 
 
@@ -329,6 +337,8 @@ func _on_target_3_button_up() -> void:
 
 ## 発動する技とそのターゲットが確定した時、各種情報をまとめて引数を渡す関数
 func target_button_up(i: int) -> void:
+	if tween and tween.is_running(): # ボタン点滅アニメーション停止
+		tween.kill()
 	$"戻る".disabled = true
 	for child in $target.get_children():
 		child.disabled = true

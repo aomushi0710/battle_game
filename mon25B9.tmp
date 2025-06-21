@@ -1,0 +1,77 @@
+{
+  "monsters": [
+	{
+		"id": "1",
+		"name": "スライム",
+		"img": "res://スライム.PNG",
+		"pattern": [
+			"粘液 → 粘液/威圧",
+			"適応力 → 適応力/威圧"
+		],
+		"skill": [
+			"粘液",
+			"適応力"
+			],
+		"action": [
+			{
+				"name": "体当たり",
+				"type": "res://無属性.PNG",
+				"id": "1"
+			},
+			{
+				"name": "スタンプ",
+				"type": "res://無属性.PNG",
+				"id": "3"
+			},
+			{
+				"name": "自己再生",
+				"type": "res://無属性.PNG",
+				"id": "4"
+			},	
+			{
+				"name": "水しぶき",
+				"type": "res://水属性.PNG",
+				"id": "6"
+			},
+		],
+		"evolution": {
+			"name": "キングスライム",
+			"img": "res://キングスライム.PNG",
+			"skill": [
+				"粘液/威圧",
+				"適応力/威圧"
+			],
+			"action": {
+				"name": "シャイニング",
+				"img": "res://光属性.PNG",
+				"id": "15"
+			}
+		}
+  },
+  "2": {
+	"name": "ゴースト",
+	"img": "res://ゴースト.PNG",
+	"pattern1": "霊感 → 霊感/邪悪な力",
+	"pattern2": "威嚇 → 威嚇/威圧",
+	"skill1": "霊感",
+	"skill2": "威嚇",
+	"action1": "体当たり",
+	"action1_type": "res://無属性.PNG",
+	"action1_id": "1",
+	"action2": "ひっかく",
+	"action2_type": "res://無属性.PNG",
+	"action2_id": "2",
+	"action3": "霊魂吸収",
+	"action3_type": "res://無属性.PNG",
+	"action4": "火の玉",
+	"action4_type": "res://火属性.PNG",
+	"action4_id": "5",
+	"evol_name": "キングゴースト",
+	"evol_img": "res://キングゴースト.PNG",
+	"evol_skill1": "霊感/邪悪な力",
+	"evol_skill2": "威嚇/威圧",
+	"evol_action1": "ダークネス",
+	"evol_action1_id": "16",
+	"evol_action1_type": "res://闇属性.PNG"
+  ]
+}

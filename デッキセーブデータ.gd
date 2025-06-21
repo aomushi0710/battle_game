@@ -155,7 +155,6 @@ func save_game(slot: int, data: Dictionary, key: String = "I'm watching you") ->
 	if file:
 		file.store_buffer(encrypted)
 		file.close()
-		print("セーブ完了")
 	else:
 		print("ERROR:セーブ先のファイルが存在しません")
 
@@ -184,8 +183,6 @@ func load_game(slot: int, key: String = "I'm watching you") -> Dictionary:
 		return {}
 	
 	result = cheat_check(slot, result)
-	
-	print("ロード完了")
 	return result
 
 

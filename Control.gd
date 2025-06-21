@@ -4,7 +4,7 @@ var first_texture = load("res://1st.PNG")
 var second_texture = load("res://2nd.PNG")
 var third_texture = load("res://3rd.PNG")
 var monster_data = Global.monster_data
-
+var tween: Tween
 var act_name = ""
 var detail = ""
 
@@ -36,6 +36,7 @@ func _on_third_button_up():
 
 
 func _on_デッキセレクト_tree_entered():
+	$"../../fade".color.a = 0
 	$name.text = Global.deck_name
 	for i in range(3):
 		var monster = Global.deck1.monster[i]
@@ -125,4 +126,6 @@ func _on_new_button_up() -> void:
 			return
 	
 	Global.deck1.evolution_check(Global.deck1) # 自分のデッキに対してチェック
-	get_tree().change_scene_to_packed(Global.new_battle_scene)
+	tween = get_tree().create_tween()
+	tween.tween_property($"../../fade", "color:a", 1, 1)
+	tween.tween_callback(func(): get_tree().change_scene_to_packed(Global.new_battle_scene))

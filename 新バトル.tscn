@@ -34,11 +34,13 @@ script = ExtResource("1_jjjva")
 
 [node name="stage_animation" type="TextureRect" parent="background"]
 z_index = -1
+layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("2_g5d16")
 
 [node name="stage" type="TextureRect" parent="background"]
+layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("3_sraw4")
@@ -201,7 +203,7 @@ disabled = true
 
 [node name="dialogtab" type="TabContainer" parent="battle/button"]
 process_mode = 3
-z_index = 1
+z_index = 2
 layout_mode = 0
 offset_left = 542.0
 offset_top = 481.0
@@ -243,7 +245,7 @@ bbcode_enabled = true
 metadata/_tab_index = 2
 
 [node name="next_sign" type="RichTextLabel" parent="battle/button"]
-z_index = 1
+z_index = 2
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -309,7 +311,29 @@ text = "[color=blue][b]You Lose[font_size=50]...[/font_size][/b][/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="fade" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
 [node name="SoundEffects" parent="." instance=ExtResource("8_tc6cq")]
+
+[node name="battlestart" type="RichTextLabel" parent="."]
+visible = false
+offset_top = 131.0
+offset_right = 1152.0
+offset_bottom = 301.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(576, 85)
+theme = SubResource("Theme_tc6cq")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_outline_size = 10
+bbcode_enabled = true
+text = "[color=yellow][b]Battle Start![/b][/color]"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="tree_entered" from="background" to="background" method="_on_tree_entered"]
 [connection signal="tree_entered" from="battle" to="battle" method="_on_tree_entered"]
