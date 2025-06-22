@@ -92,7 +92,7 @@ func load_file(slot: int) -> void:
 		%.1f 以降に作成されたデータのため、\nロードできません。" % Global.VERSION
 		$エラーメッセージ.popup_centered()
 		return
-	elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.0: # ver3.0~
+	elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.1: # ver3.0~
 		$"エラーメッセージ".title = "過去バージョンのデッキ"
 		$エラーメッセージ.dialog_text = "過去のバージョンで保存されたデータをロードしました。\n" + \
 		"ロードされたデータを再度セーブするとデータのバージョンも更新されます。\n\n" + \
