@@ -341,12 +341,8 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 	if enemy_monster.death == false:
 		enemy_monster.get_node("SPD").set_process(true)
 	
-	dialog.text_setter(0, false, 
-	["This is test message with animation!\n" + 
-	"[color=red][b]BBcode is available.[/b][/color]\n" + 
-	"表示可能な最大文字数（全角）：１９文字",
-	"page2",
-	"page3"]) # 元のメッセージに戻す
+	dialog.now_flavor_text = dialog.flavor_text[randi() % len(dialog.flavor_text)]
+	dialog.text_setter(0, false, dialog.now_flavor_text) # フレーバーテキスト設定
 
 ## バトル終了処理 win true:勝利 false:敗北
 func battle_finish(win: bool) -> void:

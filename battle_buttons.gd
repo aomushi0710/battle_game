@@ -245,9 +245,7 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 			
 		1: # action消滅アニメーション
 			# TODO 現在は仮の文章　後々、デフォルトのものを挿入できるようにする
-			$dialogtab.tab_list[0] = ["This is test message with animation!\n" + 
-			"[color=red][b]BBcode is available.[/b][/color]"]
-			$dialogtab._on_tab_changed(0)
+			$dialogtab.text_setter(0, false, $dialogtab.now_flavor_text)
 			await hide_action_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
