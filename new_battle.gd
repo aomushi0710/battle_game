@@ -331,6 +331,7 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 			monster.effect_dict.erase(effect)
 	monster.effect_icon()
 	
+	# モンスター交代
 	if player == true and player_monster != player_deck[player_next_index]:
 		player_monster.bench_set() # フィールドのモンスターをベンチに
 		player_monster = player_deck[player_next_index]
@@ -340,13 +341,38 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 		enemy_monster = enemy_deck[enemy_next_index]
 		enemy_monster.field_set()
 	
+	# 死んでなきゃSPDゲージ再開
 	if player_monster.death == false:
 		player_monster.get_node("SPD").set_process(true)
 	if enemy_monster.death == false:
 		enemy_monster.get_node("SPD").set_process(true)
 	
-	dialog.now_flavor_text = dialog.flavor_text[randi() % len(dialog.flavor_text)]
-	dialog.text_setter(0, false, dialog.now_flavor_text) # フレーバーテキスト設定
+	if player == true: # 味方モンスターが動いた後にフレーバーテキスト更新
+		
+		var result = randi() % 4 ## 50%:ステージ 25%:味方モンスター 25%:相手モンスター
+		var matching: bool = false ## false:フレーバーテキスト一覧が空
+		match result:
+			0, 1:
+				if len(dialog.stage_flavor_text) != 0: # フレーバーテキストがあれば
+					dialog.now_flavor_text = \
+					dialog.stage_flavor_text[randi() % len(dialog.stage_flavor_text)]
+					matching = true
+			2:
+				if len(player_monster.monster.flavor_text) != 0: # フレーバーテキストがあれば
+					dialog.now_flavor_text = \
+					[player_monster.monster.flavor_text[randi() % len(player_monster.monster.flavor_text)]]
+					matching = true
+			3:
+				if len(enemy_monster.monster.flavor_text) != 0: # フレーバーテキストがあれば
+					dialog.now_flavor_text = \
+					[enemy_monster.monster.flavor_text[randi() % len(enemy_monster.monster.flavor_text)]]
+					matching = true
+		if matching == false: # なければグローバルフレーバーテキスト
+			dialog.now_flavor_text = \
+			dialog.global_flavor_text[randi() % len(dialog.global_flavor_text)]
+	# flavor_text一覧更新
+	
+	dialog.flavor_text_setter(dialog.now_flavor_text) # フレーバーテキスト設定
 
 ## バトル終了処理 win true:勝利 false:敗北
 func battle_finish(win: bool) -> void:

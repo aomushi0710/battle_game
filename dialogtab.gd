@@ -2,25 +2,23 @@ extends TabContainer
 
 var tween: Tween
 var next_sign_tween: Tween
-var text_speed: float = 0.04 # テキストアニメーションの1文字あたりの再生速度
-var now_flavor_text: Array # 現在表示中のflavor_textを保持
-var flavor_text: Array # 待機中に表示されるテキストArray[Array[string]]
-var main_text: Array[String] # メインに表示するテキストのリスト
-var status_text: Array[String] # 1要素につき1ページ、全角19文字が3行まで
-var battle_log_text: Array[String] # NOTE 変更の可能性あり
-var tab_list = [main_text, status_text, battle_log_text] # tabの位置通りに上記変数を格納する配列
-var current_page: int = 0 # 現在のページ
-var next_sign: bool = false # 最終ページでのメッセージ送りボタンの有無
-## ダイアログボックスのテキストをメッセージ送りした時に発行されるシグナル
-signal paging
+var text_speed: float = 0.04 ## テキストアニメーションの1文字あたりの再生速度
+var now_flavor_text: Array ## 現在表示中のflavor_textを保持
+var flavor_text: Array ## 待機中に表示されるテキストArray[Array[string]]
+var global_flavor_text: Array ## ステージに関係なく表示されるフレーバーテキスト
+var stage_flavor_text: Array ## ステージ固定のフレーバーテキスト
+var main_text: Array[String] ## メインに表示するテキストのリスト
+var status_text: Array[String] ## 1要素につき1ページ、全角19文字が3行まで
+var battle_log_text: Array[String] ## NOTE 変更の可能性あり
+var tab_list = [main_text, status_text, battle_log_text] ## tabの位置通りに上記変数を格納する配列
+var current_page: int = 0 ## 現在のページ
+var next_sign: bool = false ## 最終ページでのメッセージ送りボタンの有無
+
+signal paging ## ダイアログボックスのテキストをメッセージ送りした時に発行されるシグナル
 
 
 func _ready() -> void:
-	flavor_text = [
-		["草が風に揺れている..."], 
-		["あの山は遠くにあるように見えるが、\n実際は近くにあるように感じられる。"], 
-		["この辺りは天候が安定している。\n戦いに邪魔が入ることはないだろう。"], 
-		["これは...なんとも作りが粗い。\nテストプレイの気配がする。"]]
+	global_flavor_text = [["これは...なんとも作りが粗い。\nテストプレイの気配がする。"]]
 	tab_list[0] = [""] # test
 	tab_list[1] = ["Status ボタンから味方と相手の\nステータスを確認できます！"]
 	tab_list[2] = [""]

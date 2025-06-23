@@ -30,6 +30,6 @@ skill2_name = Array[String]([])
 skill2_id = Array[int]([])
 actions = Array[ExtResource("1_yucnt")]([ExtResource("2_xk50h")])
 description = "1段階進化したキング系モンスター。相変わらずDEFに少し偏った能力値を持つ。"
-flavor_text = Array[String](["%s は
-体をプルプルさせている...", "%s は乱れたヒゲを整えた。"])
+flavor_text = Array[String](["キングスライム は
+体をプルプルさせている...", "キングスライム は乱れたヒゲを整えた。"])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"

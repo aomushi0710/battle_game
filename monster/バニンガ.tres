@@ -29,5 +29,5 @@ skill2_name = Array[String]([])
 skill2_id = Array[int]([])
 actions = Array[ExtResource("1_lq5mw")]([ExtResource("2_pimii")])
 description = ""
-flavor_text = Array[String](["%s は闘志も燃やしている..."])
+flavor_text = Array[String](["バニンガ の闘志が燃えている..."])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"
