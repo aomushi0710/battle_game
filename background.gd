@@ -3,8 +3,15 @@ extends Control
 var tween: Tween
 var animation_left: TextureRect
 var animation_right: TextureRect
+@onready var dialog: TabContainer = $"../battle/dialogtab"
 
 func _on_tree_entered() -> void:
+	match Global.battle_stage: # ステージ背景の決定
+		Global.Stage.PLAIN: # 草原ステージ
+			$stage.texture = preload("res://image/stage/草原.PNG")
+			$stage_animation.texture = preload("res://image/stage/青空.PNG")
+			dialog
+	
 	animation_left = $stage_animation
 	animation_right = $stage_animation.duplicate()
 	await get_tree().process_frame

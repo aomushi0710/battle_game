@@ -17,6 +17,7 @@ percentage = 0
 evolution = 0
 name = "MAG UP"
 range = 0
+timing = 0
 trigger = 0
 effect = ExtResource("1_2j7fc")
 metadata/_custom_type_script = "uid://n6604vih5t55"

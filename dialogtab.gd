@@ -20,12 +20,22 @@ func _ready() -> void:
 		["草が風に揺れている..."], 
 		["あの山は遠くにあるように見えるが、\n実際は近くにあるように感じられる。"], 
 		["この辺りは天候が安定している。\n戦いに邪魔が入ることはないだろう。"], 
-		["これは......", "なんとも作りが粗い。\nテストプレイの気配がする。"]]
+		["これは...なんとも作りが粗い。\nテストプレイの気配がする。"]]
 	tab_list[0] = [""] # test
 	tab_list[1] = ["Status ボタンから味方と相手の\nステータスを確認できます！"]
 	tab_list[2] = [""]
 	current_tab = 0
 	_on_tab_changed(current_tab) # 初期値タブのテキストをアニメーション
+
+## ダイアログボックスに表示するフレーバーテキストの専用setter
+func flavor_text_setter(text: Array) -> void:
+	if tween:
+		tween.kill()
+	if text == []: # array要素の型不明の時
+		text = [""] # string型に修正
+	next_sign = false
+	tab_list[0] = text
+	_on_tab_changed(0)
 
 ## ダイアログボックスに表示するテキストのsetter[br]tab:タブのindex text:配列の要素1つで1ページ分[br]
 ## wait true:awaitでメッセージ送りを待つ false:待たない

@@ -62,3 +62,6 @@ var MP = maxMP / 5
 @export_category("説明")
 ## モンスターの説明
 @export_multiline var description: String
+
+
+@export_multiline var flavor_text: Array[String]

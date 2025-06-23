@@ -310,6 +310,7 @@ func _on_確認メッセージ_confirmed() -> void: # バトル終了初期化�
 		Global.enemy_deck.monster[i] = Global.enemy_deck.monster_dict[i][0]
 		Global.enemy_deck.effect[i].clear()
 	Global.deck_creator(Global.enemy_deck) # 敵デッキ生成
+	Global.battle_stage = Global.Stage.PLAIN # とりあえず草原ステージ
 	await $dialogtab.battle_finished()
 	await $"../../background".battle_finished()
 	get_tree().change_scene_to_packed(Global.deck_scene)

@@ -1,9 +1,9 @@
 extends Node2D
 
 # バージョン管理 定数
-const VERSION_TEXT: String = "ver 4.1.0(β)" # バージョン
-const VERSION: float = 4.1 # 比較可能バージョン セーブデータ整合性チェック用
-const VERSION_BETA: bool = true # true:ベータ版 false:正式リリース版
+const VERSION_TEXT: String = "ver 4.1.0(β)" ## バージョン
+const VERSION: float = 4.1 ## 比較可能バージョン セーブデータ整合性チェック用
+const VERSION_BETA: bool = true ## true:ベータ版 false:正式リリース版
 
 var monster_data = {}
 var action_data = {}
@@ -48,30 +48,35 @@ var debug_scene = load("res://debug.tscn")
 var deck_save_scene = load("res://デッキセーブデータ.tscn")
 var new_battle_scene = load("res://新バトル.tscn")
 
-@onready var picked_monster = [0,0,0] #モンスター
+@onready var picked_monster = [0,0,0]
 @onready var deck1 = Deck.new()
 @onready var enemy_deck = Deck.new()
-@onready var target = 3 # 現在攻撃対象に選択中のモンスターの位置(0~2:指定indexのモンスターを攻撃 3:未選択)
-@onready var support_target = 3 # 味方から技を受ける場合の位置(0~2:指定indexのモンスターを攻撃 3:未選択)
+@onready var target = 3 ## 現在攻撃対象に選択中のモンスターの位置(0~2:指定indexのモンスターを攻撃 3:未選択)
+@onready var support_target = 3 ## 味方から技を受ける場合の位置(0~2:指定indexのモンスターを攻撃 3:未選択)
 
-@onready var now_picking = 3 #現在選択中のモンスターの位置　3：未選択 0～2：選択中
-@onready var selected_monster = 0 #現在選択中のモンスターID(特性・技セレクトで使用)
+@onready var now_picking = 3 ## 現在選択中のモンスターの位置　3：未選択 0～2：選択中
+@onready var selected_monster = 0 ## 現在選択中のモンスターID(特性・技セレクトで使用)
 @onready var strategy = 0
 
 @onready var deck_name: String
-@onready var save_mode := true # true:デッキセーブ時 false:デッキロード時
+@onready var save_mode := true ## true:デッキセーブ時 false:デッキロード時
 
 const spd_gauge = 10000
-const spd_correction = 30 # spdゲージ増加量補正 SPD * spd_correction
+const spd_correction = 30 ## spdゲージ増加量補正 SPD * spd_correction
 const buff_list = ["ATK_up","DEF_up","MAG_up","RES_up"]
 const debuff_list = ["ATK_down","DEF_down","MAG_down","RES_down"]
 
-@onready var p1_death = false # 死亡フラグ false:生存 true:死亡
+@onready var p1_death = false ## 死亡フラグ false:生存 true:死亡
 @onready var p2_death = false
 @onready var p3_death = false
 @onready var e1_death = false # 敵
 @onready var e2_death = false
 @onready var e3_death = false
+
+enum Stage { ## バトルステージ一覧
+	PLAIN
+}
+@onready var battle_stage: Stage ## バトルステージ
 
 ## モンスターのステータス表示を生成する関数 icon_size:bbcodeのimgタグに用いるアイコンのサイズ
 func status_text(monster: Monster) -> String:

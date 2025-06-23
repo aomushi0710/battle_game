@@ -35,4 +35,5 @@ skill2_name = Array[String]([])
 skill2_id = Array[int]([])
 actions = Array[ExtResource("1_08lmk")]([ExtResource("2_noxkx"), ExtResource("3_m668r"), ExtResource("4_rqmtx"), ExtResource("5_yx1ex"), ExtResource("6_bckvf"), ExtResource("7_ls7ai"), ExtResource("8_1i4rw")])
 description = "最も一般的なモンスター。DEFに少し偏った能力値を持つ。"
+flavor_text = Array[String](["%s は体をプルプルさせている..."])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"

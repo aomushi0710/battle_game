@@ -15,51 +15,7 @@ signal changed
 
 # 味方と敵のデッキを準備
 func _on_tree_entered() -> void:
-	$"../fade".color.a = 1
-	$"../fade".show()
-	$"../result_rect".hide()
-	$"../result_rect/win".hide()
-	$"../result_rect/lose".hide()
-	$button/next_sign.hide()
-	$button/escape.disabled = true
-	$"button/戻る".disabled = true
-	$button/escape.modulate.a = 0
-	$"button/戻る".modulate.a = 0
-	$button/dialogtab.modulate.a = 0
-	$button/next_sign.modulate.a = 0
-	$button/change.modulate.a = 0
-	$button/main.position.y = 648
-	
-	tween = get_tree().create_tween()
-	tween.tween_property($"../fade", "color:a", 0, 1)
-	tween.tween_interval(1)
-	tween.tween_callback(func(): 
-		$"../fade".hide()
-		$"../battlestart".modulate.a = 1
-		$"../battlestart".show())
-	tween.tween_property($"../battlestart", "scale", Vector2(1.2, 1.2), 0.4)
-	tween.tween_property($"../battlestart", "scale", Vector2(1.0, 1.0), 0.1)
-	tween.tween_interval(0.5)
-	tween.tween_property($"../battlestart", "modulate:a", 0, 0.5)
-	tween.tween_callback(func(): 
-		$"../battlestart".scale = Vector2(0, 0)
-		$"../battlestart".hide())
-	tween.tween_interval(0.5)
-	tween.tween_property($button/escape, "modulate:a", 1, 0.5)
-	tween.parallel().tween_property($"button/戻る", "modulate:a", 1, 0.5)
-	tween.parallel().tween_property($button/dialogtab, "modulate:a", 1, 0.5)
-	tween.parallel().tween_property($button/change, "modulate:a", 1, 0.5)
-	tween.parallel().tween_property($button/main, "position:y", 523, 0.5)\
-	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	await tween.finished
-	
-	$button/escape.disabled = false
-	for button: Button in $button/main.get_children():
-			button.disabled = true
-	$button/next_sign.show()
-	
-	dialog.text_setter(0, false, ["ついにこの戦いが始まった。"])
-	
+	await battle_start_animation()
 	await get_tree().process_frame # 1フレーム待つ
 	for deck in [Global.deck1, Global.enemy_deck]:
 		for i: int in len(deck.monster):
@@ -125,6 +81,54 @@ func _on_tree_entered() -> void:
 	tween = get_tree().create_tween() # 相手ベンチ出現アニメーション
 	tween.tween_property($enemy_deck, "position:x", 702, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+
+## バトル開始カットインのアニメーション
+func battle_start_animation() -> void:
+	$"../fade".color.a = 1
+	$"../fade".show()
+	$"../result_rect".hide()
+	$"../result_rect/win".hide()
+	$"../result_rect/lose".hide()
+	$button/next_sign.hide()
+	$button/escape.disabled = true
+	$"button/戻る".disabled = true
+	$button/escape.modulate.a = 0
+	$"button/戻る".modulate.a = 0
+	$button/dialogtab.modulate.a = 0
+	$button/next_sign.modulate.a = 0
+	$button/change.modulate.a = 0
+	$button/main.position.y = 648
+	
+	tween = get_tree().create_tween()
+	tween.tween_property($"../fade", "color:a", 0, 1)
+	tween.tween_interval(1)
+	tween.tween_callback(func(): 
+		$"../fade".hide()
+		$"../battlestart".modulate.a = 1
+		$"../battlestart".show())
+	tween.tween_property($"../battlestart", "scale", Vector2(1.2, 1.2), 0.4)
+	tween.tween_property($"../battlestart", "scale", Vector2(1.0, 1.0), 0.1)
+	tween.tween_interval(0.5)
+	tween.tween_property($"../battlestart", "modulate:a", 0, 0.5)
+	tween.tween_callback(func(): 
+		$"../battlestart".scale = Vector2(0, 0)
+		$"../battlestart".hide())
+	tween.tween_interval(0.5)
+	tween.tween_property($button/escape, "modulate:a", 1, 0.5)
+	tween.parallel().tween_property($"button/戻る", "modulate:a", 1, 0.5)
+	tween.parallel().tween_property($button/dialogtab, "modulate:a", 1, 0.5)
+	tween.parallel().tween_property($button/change, "modulate:a", 1, 0.5)
+	tween.parallel().tween_property($button/main, "position:y", 523, 0.5)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
+	
+	$button/escape.disabled = false
+	for button: Button in $button/main.get_children():
+			button.disabled = true
+	$button/next_sign.show()
+	
+	dialog.now_flavor_text = ["ついにこの戦いが始まった。"]
+	dialog.text_setter(0, false, dialog.now_flavor_text)
 
 # spdgaugeが溜まり行動可能になった時
 func monster_ready(player: bool) -> void:
@@ -490,7 +494,13 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 	# power * ((攻撃側ステータス / 守備側ステータス) ** ステータス乖離ボーナス(1.2) * 属性相性
 	var damage = action.power * ((status[0] / status[1]) ** 1.2) * magnification
 	# モンスターと技の属性一致倍率を乗算
-	if action.element.any(func(a): offense.monster.element.any(func(m): return a.id == m.id)):
-		damage *= 1.5
-	
+	var break_mode: bool = false # 2回目のbreak用
+	for i: Element in action.element:
+		for j: Element in offense.monster.element:
+			if i == j:
+				damage *= 1.5
+				break_mode = true
+				break
+		if break_mode == true:
+			break	
 	return [int(damage), magnification_text]

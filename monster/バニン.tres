@@ -33,4 +33,5 @@ skill2_name = Array[String]([])
 skill2_id = Array[int]([])
 actions = Array[ExtResource("1_hdgl5")]([ExtResource("2_3hkjk"), ExtResource("3_erp8i"), ExtResource("4_kdret"), ExtResource("4_ddnl1"), ExtResource("5_kdret")])
 description = ""
+flavor_text = Array[String](["%s は闘志も燃やしている..."])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"
