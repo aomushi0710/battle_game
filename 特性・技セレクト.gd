@@ -96,52 +96,9 @@ func _on_技_select(act: Action):
 	# 以下、技説明表示
 	var aka = act.name
 	if act.aka != "": # 略称が存在する場合、略称をtooltipに登録
-		aka = "[hint=バトル中は " + act.aka + " と表示されます]" + \
-		act.name + "[/hint]"
+		aka = "[hint=バトル中は %s と表示されます]%s[/hint]" % [act.aka, act.name]
 	
-	var range_text = "" # 技の対象についての記述変形
-	var range_tip = ""
-	match act.range:
-		0:
-			range_text = "なし"
-			range_tip = "発動対象が存在しません"
-		1:
-			range_text = "敵単体"
-			range_tip = "敵単体に技を発動します"
-		2:
-			range_text = "敵全体"
-			range_tip = "敵全体に技を発動します。"
-		3:
-			range_text = "味方単体"
-			range_tip = "味方単体に技を発動します。"
-		4:
-			range_text = "味方全体"
-			range_tip = "味方全体に技を発動します。"
-		5:
-			range_text = "自分"
-			range_tip = "自分に技を発動します。"
-		6:
-			range_text = "敵散開"
-			range_tip = "敵単体に加え、さらに隣の敵にも\n追加で半分のダメージを与えます"
-		_:
-			range_text = "[color=red][b]ERROR[/b][/color]"
-			range_tip = "虚空に向かって技を放つのか？"
-	
-	var dmg_type_text = "" # 技のステータス参照先についての記述変形
-	var dmg_type_tip = ""
-	match act.damage_type:
-		0:
-			dmg_type_text = "なし"
-			dmg_type_tip = "いずれのステータスも参照されません"
-		1:
-			dmg_type_text = "[color=red]物理[/color]"
-			dmg_type_tip = "自身のATKと相手のDEFを参照します"
-		2:
-			dmg_type_text = "[color=dodger_blue]魔法[/color]"
-			dmg_type_tip = "自身のMAGと相手のRESを参照します"
-		_:
-			dmg_type_text = "[color=red][b]ERROR[/b][/color]"
-			dmg_type_tip = "一体どうやって技を放つんだ？"
+	var descriptions: Array[String] = Global.action_description_creator(act)
 	
 	if act.ability.is_empty() == false: # 技の追加効果が存在する場合
 		if (len(act.ability) != len(act.ability_chance) or # エラー処理
@@ -157,7 +114,6 @@ func _on_技_select(act: Action):
 			var text = ability_ui.get_child(0)
 			
 			var ability_descriptions: Array = Global.ability_description_creator(act, i)
-			print(ability_descriptions)
 			
 			text.text = "[center]%s\n%s %s\n%s[/center]" % \
 			[ability_descriptions[0], ability_descriptions[1], 
@@ -179,19 +135,16 @@ func _on_技_select(act: Action):
 		text.text = "[center]なし\n対象:[color=yellow]――――[/color] 確率:[color=green]---%[/color][/center]"
 		$description_ui.add_child(ability,-1)
 	
-	$description_ui/name/name_text.text = "[center][b][i]" + aka + "[/i][/b][/center]"
+	$description_ui/name/name_text.text = "[center][b][i]%s[/i][/b][/center]" % aka
 	$description_ui/element/element_text.selected(act, 25)
-	$description_ui/damage_type/damage_type_text.text = "[center][hint=" + dmg_type_tip + \
-	"]分類:" + dmg_type_text + "[/hint][/center]"
-	$description_ui/target/target_text.text = "[center][hint=" + range_tip + \
-	"]対象:[color=yellow]" + range_text + "[/color][/hint][/center]"
+	$description_ui/damage_type/damage_type_text.text = "[center]%s[/center]" % descriptions[0]
+	$description_ui/target/target_text.text = "[center]%s[/center]" % descriptions[1]
 	$description_ui/max_frequency/max_frequency_text.text = "[center][hint=技の出現率を設定できる上限\n
-	この値を越える確率で技が選ばれることはありません]出現率上限[color=green]" + \
-	str(act.max_chance) + "%[/color][/hint][/center]"
-	$description_ui/mp/mp_text.text = "[center][hint=技の使用に必要なMP]MP Cost:[color=aqua]" + \
-	str(act.mp) + "[/color][/hint][/center]"
-	$description_ui/power/power_text.text = "[center][hint=技の基礎的な威力]Power:[color=red]" + \
-	str(act.power) + "[/color][/hint][/center]"
+	この値を越える確率で技が選ばれることはありません]出現率上限[color=green]%s%%[/color][/hint][/center]" % act.max_chance
+	$description_ui/mp/mp_text.text = \
+	"[center][hint=技の使用に必要なMP]MP Cost:[color=aqua]%s[/color][/hint][/center]" % act.mp
+	$description_ui/power/power_text.text = \
+	"[center][hint=技の基礎的な威力]Power:[color=red]%s[/color][/hint][/center]" % act.power
 	$description_ui/description.text = act.description
 
 

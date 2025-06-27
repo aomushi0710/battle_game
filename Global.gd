@@ -110,14 +110,66 @@ func all_status(monster: Monster, font_size: int) -> Array[RichTextLabel]:
 	return [name_label, element_label, status_label]
 
 
+func action_description_creator(act: Action) -> Array[String]:
+	var range_text: String ## 技の対象
+	var range_tip: String ## 技の対象の補足
+	var dmg_type_text: String ## 技のステータス参照先
+	var dmg_type_tip: String ## 技のステータス参照先の補足
+	match act.range:
+		0:
+			range_text = "なし"
+			range_tip = "発動対象が存在しません"
+		1:
+			range_text = "敵単体"
+			range_tip = "敵単体に技を発動します"
+		2:
+			range_text = "敵全体"
+			range_tip = "敵全体に技を発動します。"
+		3:
+			range_text = "味方単体"
+			range_tip = "味方単体に技を発動します。"
+		4:
+			range_text = "味方全体"
+			range_tip = "味方全体に技を発動します。"
+		5:
+			range_text = "自分"
+			range_tip = "自分に技を発動します。"
+		6:
+			range_text = "敵散開"
+			range_tip = "敵単体に加え、さらに隣の敵にも\n追加で半分のダメージを与えます"
+		_:
+			range_text = "[color=red][b]ERROR[/b][/color]"
+			range_tip = "虚空に向かって技を放つのか？"
+	
+	match act.damage_type:
+		0:
+			dmg_type_text = "なし"
+			dmg_type_tip = "いずれのステータスも参照されません"
+		1:
+			dmg_type_text = "[color=red]物理[/color]"
+			dmg_type_tip = "自身のATKと相手のDEFを参照します"
+		2:
+			dmg_type_text = "[color=dodger_blue]魔法[/color]"
+			dmg_type_tip = "自身のMAGと相手のRESを参照します"
+		_:
+			dmg_type_text = "[color=red][b]ERROR[/b][/color]"
+			dmg_type_tip = "一体どうやって技を放つんだ？"
+	
+	range_text = "[hint=%s]対象:[color=yellow]%s[/color][/hint]" % [range_tip, range_text]
+	dmg_type_text = "[hint=%s]分類:%s[/hint]" % [dmg_type_tip, dmg_type_text]
+	
+	return [range_text, dmg_type_text]
+
+## 技の特殊能力のうち1つのindexを引数として、その特殊能力の説明文などをまとめて返す関数
 func ability_description_creator(act: Action, i: int) -> Array:
 	## 説明文をそれぞれ登録する配列
 	## 0:特殊効果名 1:対象 2:確率 3:特殊効果の強さ 4:特殊効果のイメージ色
-	var descriptions: Array ## 返り値
 	var ability_text: String ## 特殊効果名
 	var ability_tip: String ## 特殊効果名補足
 	var ability_range_text: String ## 特殊効果の対象
 	var ability_range_tip: String ## 特殊効果の対象の補足
+	var ability_chance_text: String = \
+	"[hint=特殊効果の発生確率]確率:[color=green]%3d%%[/color][/hint]" % act.ability_chance
 	var ability_power: String ## 特殊効果の強さ
 	var ability_color: Color ## 特殊効果のイメージ色
 	match act.ability[i].category:
@@ -291,16 +343,11 @@ func ability_description_creator(act: Action, i: int) -> Array:
 			ability_range_tip = "虚空に向かって効果を発動するのか？"
 	
 	ability_text = "[hint=%s]%s[/hint]" % [ability_tip, ability_text] # tooltipを入れる
-	ability_range_text = "[hint=%s]対象:[color=yellow]%4s[/color][/hint]" % [ability_range_tip, ability_range_text]
+	ability_range_text = "[hint=%s]対象:[color=yellow]%4s[/color][/hint]" % \
+	[ability_range_tip, ability_range_text]
 	
-	descriptions.append(ability_text)
-	descriptions.append(ability_range_text)
-	descriptions.append("[hint=特殊効果の発生確率]確率:[color=green]%3d%%[/color][/hint]" % 
-	act.ability_chance)
-	descriptions.append(ability_power)
-	descriptions.append(ability_color)
-	
-	return descriptions
+	return [ability_text, ability_range_text, 
+	ability_chance_text, ability_power, ability_color]
 
 ## ランダムデッキ生成機
 func deck_creator(deck: Deck) -> void:
