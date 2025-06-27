@@ -20,6 +20,7 @@ touch = false
 ability = Array[ExtResource("1_ygod8")]([])
 ability_chance = Array[int]([])
 ability_power = Array[int]([])
+ability_range = Array[int]([])
 description = "敵単体に静電気を放って
 攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

@@ -22,8 +22,11 @@ func _on_action_button_selected(i: int) -> void:
 	$"戻る".disabled = true
 	selected_action_button = $action.get_child(i)
 	button_index = i
-	var instance = action_button.instantiate()
 	selected_action = selected_action_button.action # 選ばれた技を登録
+	$dialogtab.text_setter(0, false, [
+		"%s\n　分類:%4s　　MP Cost:%d" % [selected_action.name, selected_action.damage_type]
+	])
+	var instance = action_button.instantiate()
 	instance.name = "selected"
 	instance.texture_mode = preload("res://技セレクトボタン.gd").Mode.BATTLE
 	instance.action = selected_action

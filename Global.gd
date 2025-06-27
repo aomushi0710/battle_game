@@ -109,6 +109,199 @@ func all_status(monster: Monster, font_size: int) -> Array[RichTextLabel]:
 	
 	return [name_label, element_label, status_label]
 
+
+func ability_description_creator(act: Action, i: int) -> Array:
+	## 説明文をそれぞれ登録する配列
+	## 0:特殊効果名 1:対象 2:確率 3:特殊効果の強さ 4:特殊効果のイメージ色
+	var descriptions: Array ## 返り値
+	var ability_text: String ## 特殊効果名
+	var ability_tip: String ## 特殊効果名補足
+	var ability_range_text: String ## 特殊効果の対象
+	var ability_range_tip: String ## 特殊効果の対象の補足
+	var ability_power: String ## 特殊効果の強さ
+	var ability_color: Color ## 特殊効果のイメージ色
+	match act.ability[i].category:
+		1: # 状態異常
+			ability_power = "状態異常継続ターン数:[color=red]%d[/color]" % \
+			act.ability_power[i]
+			match act.ability[i].ailment:
+				1:
+					ability_text = "[color=red]火傷[/color]"
+					ability_tip = "相手を火傷状態にします"
+					ability_color = Color(1, 0, 0, 0.5) # red
+				2:
+					ability_text = "[color=dodger_blue]水圧[/color]"
+					ability_tip = "相手を水圧状態にします"
+					ability_color = Color(0, 0, 1, 0.5) # blue
+				3:
+					ability_text = "[color=yelllow]感電[/color]"
+					ability_tip = "相手を感電状態にします"
+					ability_color = Color(1, 1, 0, 0.5) # yellow
+				4:
+					ability_text = "[color=chocolate]泥々[/color]"
+					ability_tip = "相手を泥々状態にします" # brown
+					ability_color = Color(0.647059, 0.164706, 0.164706, 0.5)
+				5:
+					ability_text = "[color=green]竜巻[/color]"
+					ability_tip = "相手を竜巻状態にします"
+					ability_color = Color(0, 1, 0, 0.5) # green
+				6:
+					ability_text = "[color=aqua]霜焼[/color]"
+					ability_tip = "相手を霜焼状態にします"
+					ability_color = Color(0, 1, 1, 0.5) # aqua
+				7:
+					ability_text = "[color=light_yellow]紫外線[/color]"
+					ability_tip = "相手を紫外線状態にします"
+					ability_color = Color(1, 1, 0.878431, 0.5) # light_yellow
+				8:
+					ability_text = "[color=violet]呪い[/color]"
+					ability_tip = "相手を呪い状態にします"
+					ability_color = Color(0.580392, 0, 0.827451, 0.5) # violet
+		2: # バフ
+			ability_power = "バフ継続ターン数:[color=red]%d[/color]" % \
+			act.ability_power[i]
+			ability_color = Color(0.545098, 0, 0, 0.5) # dark_red
+			match act.ability[i].buff:
+				1:
+					ability_text = "[color=red]ATK UP[/color]"
+					ability_tip = "ATKを1.5倍に強化させます"
+				2:
+					ability_text = "[color=light_blue]DEF UP[/color]"
+					ability_tip = "DEFを1.5倍に強化させます"
+				3:
+					ability_text = "[color=dodger_blue]MAG UP[/color]"
+					ability_tip = "MAGを1.5倍に強化させます"
+				4:
+					ability_text = "[color=purple]RES UP[/color]"
+					ability_tip = "RESを1.5倍に強化させます"
+				5:
+					ability_text = "[color=green]SPD UP[/color]"
+					ability_tip = "SPDを???倍に強化させます"
+				_:
+					ability_text = "[color=red][b]ERROR[/b][/color]"
+					ability_tip = "強化するものすら存在しなかった"
+		3: # デバフ
+			ability_power = "デバフ継続ターン数:[color=red]%d[/color]" % \
+			act.ability_power[i]
+			ability_color = Color(0, 0, 0.545098, 0.5) # dark_blue
+			match act.ability[i].debuff:
+				1:
+					ability_text = "[color=red]ATK DOWN[/color]"
+					ability_tip = "ATKを2/3倍に弱体化させます"
+				2:
+					ability_text = "[color=light_blue]DEF DOWN[/color]"
+					ability_tip = "DEFを2/3倍に弱体化させます"
+				3:
+					ability_text = "[color=dodger_blue]MAG DOWN[/color]"
+					ability_tip = "MAGを2/3倍に弱体化させます"
+				4:
+					ability_text = "[color=purple]RES DOWN[/color]"
+					ability_tip = "RESを2/3倍に弱体化させます"
+				5:
+					ability_text = "[color=green]SPD DOWN[/color]"
+					ability_tip = "SPDを???倍に弱体化させます"
+				_:
+					ability_text = "[color=red][b]ERROR[/b][/color]"
+					ability_tip = "弱体化するものすら存在しなかった"
+		4: # 回復 forest_green
+			ability_color = Color(0.133333, 0.545098, 0.133333, 0.5)
+			var status: String # 参照するステータス名
+			match act.damage_type:
+				1:
+					status = "[color=red]ATK[/color]"
+				2:
+					status = "[color=dodger_blue]MAG[/color]"
+			match act.ability[i].healing:
+				1:
+					ability_text = "[color=green]HP回復[/color]"
+					ability_tip = "ステータスを参照してHPを回復させます"
+					ability_power = "HP回復量:%sの[color=red]%d%%[/color]相当" % \
+					[status, act.ability_power[i]]
+				2:
+					ability_text = "[color=green]定数HP回復[/color]"
+					ability_tip = "一定の量だけHPを回復させます"
+					ability_power = "HP回復量:[color=red]%d[/color]" % \
+					act.ability_power[i]
+				3:
+					ability_text = "[color=aqua]MP回復[/color]"
+					ability_tip = "ステータスを参照してMPを回復させます"
+					ability_power = "未実装"
+				4:
+					ability_text = "[color=aqua定数MP回復[/color]"
+					ability_tip = "一定の量だけMPを回復させます"
+					ability_power = "MP回復量:[color=red]%d[/color]" % \
+					act.ability_power[i]
+				_:
+					ability_text = "[color=red][b]ERROR[/b][/color]"
+		5: # 吸収
+			ability_power = "吸収率:[color=red]%d%%[/color]" % act.ability_power[i]
+			ability_color = Color(1, 0.411765, 0.705882, 1) # hot_pink
+			match act.ability[i].steal:
+				1:
+					ability_text = "[color=green]HP吸収[/color]"
+					ability_tip = "与えたダメージに対して一定の割合でHPを回復させます"
+				2:
+					ability_text = "[color_aqua]MP吸収[/color]"
+					ability_tip = "与えたダメージに対して一定の割合でMPを回復させます"
+				3:
+					ability_text = "[color=green]SPD吸収[/color]"
+					ability_tip = "未実装"
+	
+	match act.ability_range[i]:
+		0: # rangeと同期
+			match act.range:
+				0:
+					ability_range_text = "　なし　"
+					ability_range_tip = "発動対象が存在しません"
+				1:
+					ability_range_text = " 敵単体 "
+					ability_range_tip = "敵単体に効果を発動します"
+				2:
+					ability_range_text = " 敵全体 "
+					ability_range_tip = "敵全体に効果を発動します。"
+				3:
+					ability_range_text = "味方単体"
+					ability_range_tip = "味方単体に効果を発動します。"
+				4:
+					ability_range_text = "味方全体"
+					ability_range_tip = "味方全体に効果を発動します。"
+				5:
+					ability_range_text = "　自分　"
+					ability_range_tip = "自分に効果を発動します。"
+				_:
+					ability_range_text = "[color=red][b]ERROR[/b][/color]"
+					ability_range_tip = "虚空に向かって効果を放つのか？"
+		1:
+			ability_range_text = " 敵単体 "
+			ability_range_tip = "敵単体に効果を発動します"
+		2:
+			ability_range_text = " 敵全体 "
+			ability_range_tip = "敵全体に効果を発動します。"
+		3:
+			ability_range_text = "味方単体"
+			ability_range_tip = "味方単体に効果を発動します。"
+		4:
+			ability_range_text = "味方全体"
+			ability_range_tip = "味方全体に効果を発動します。"
+		5:
+			ability_range_text = "　自分　"
+			ability_range_tip = "自分に効果を発動します。"
+		_:
+			ability_range_text = "[color=red][b]ERROR[/b][/color]"
+			ability_range_tip = "虚空に向かって効果を発動するのか？"
+	
+	ability_text = "[hint=%s]%s[/hint]" % [ability_tip, ability_text] # tooltipを入れる
+	ability_range_text = "[hint=%s]対象:[color=yellow]%4s[/color][/hint]" % [ability_range_tip, ability_range_text]
+	
+	descriptions.append(ability_text)
+	descriptions.append(ability_range_text)
+	descriptions.append("[hint=特殊効果の発生確率]確率:[color=green]%3d%%[/color][/hint]" % 
+	act.ability_chance)
+	descriptions.append(ability_power)
+	descriptions.append(ability_color)
+	
+	return descriptions
+
 ## ランダムデッキ生成機
 func deck_creator(deck: Deck) -> void:
 	var monster_id_list: Array[int] = [0] # 選ばれたモンスターのIDを登録と0だけ

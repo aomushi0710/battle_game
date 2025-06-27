@@ -16,5 +16,6 @@ percentage = 0
 evolution = 0
 name = "HP回復"
 range = 0
+timing = 0
 trigger = 0
 metadata/_custom_type_script = "uid://n6604vih5t55"

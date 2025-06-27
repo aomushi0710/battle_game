@@ -219,10 +219,9 @@ script = ExtResource("14_3ru5v")
 z_index = 1
 layout_mode = 2
 bbcode_enabled = true
-text = "This is test message with animation!
-[color=red][b]BBcode is available.[/b][/color]
-表示可能な最大文字数（全角）：１９文字
-"
+text = "技名の最大文字数は全角１９文字まで
+　分類:[color=red]物理　　　　[/color]MP Cost:[color=aqua]10[/color]
+　対象:[color=yellow]味方単体　　[/color]  Power:[color=red]10[/color]"
 metadata/_tab_index = 0
 
 [node name="ステータス" type="RichTextLabel" parent="battle/button/dialogtab"]
