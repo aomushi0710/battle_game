@@ -98,7 +98,7 @@ func _on_技_select(act: Action):
 	if act.aka != "": # 略称が存在する場合、略称をtooltipに登録
 		aka = "[hint=バトル中は %s と表示されます]%s[/hint]" % [act.aka, act.name]
 	
-	var descriptions: Array[String] = Global.action_description_creator(act)
+	var descriptions: Array[String] = Global.action_description_creator(act, false)
 	
 	if act.ability.is_empty() == false: # 技の追加効果が存在する場合
 		if (len(act.ability) != len(act.ability_chance) or # エラー処理
@@ -113,7 +113,8 @@ func _on_技_select(act: Action):
 			var ability_ui = load("res://description_ui_ability.tscn").instantiate()
 			var text = ability_ui.get_child(0)
 			
-			var ability_descriptions: Array = Global.ability_description_creator(act, i)
+			var ability_descriptions: Array = \
+			Global.ability_description_creator(act, i, false)
 			
 			text.text = "[center]%s\n%s %s\n%s[/center]" % \
 			[ability_descriptions[0], ability_descriptions[1], 

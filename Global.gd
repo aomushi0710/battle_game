@@ -110,11 +110,14 @@ func all_status(monster: Monster, font_size: int) -> Array[RichTextLabel]:
 	return [name_label, element_label, status_label]
 
 
-func action_description_creator(act: Action) -> Array[String]:
+func action_description_creator(act: Action, blank: bool) -> Array[String]:
 	var range_text: String ## 技の対象
 	var range_tip: String ## 技の対象の補足
+	var range_blank: String ## 技の対象表示の空白
 	var dmg_type_text: String ## 技のステータス参照先
 	var dmg_type_tip: String ## 技のステータス参照先の補足
+	var dmg_type_blank: String ## 技のステータス参照先表示の空白
+	
 	match act.range:
 		0:
 			range_text = "なし"
@@ -142,26 +145,37 @@ func action_description_creator(act: Action) -> Array[String]:
 			range_tip = "虚空に向かって技を放つのか？"
 	
 	match act.damage_type:
-		0:
+		0:	
 			dmg_type_text = "なし"
 			dmg_type_tip = "いずれのステータスも参照されません"
+			dmg_type_blank = "　　"
 		1:
 			dmg_type_text = "[color=red]物理[/color]"
 			dmg_type_tip = "自身のATKと相手のDEFを参照します"
+			dmg_type_blank = "　　"
 		2:
 			dmg_type_text = "[color=dodger_blue]魔法[/color]"
 			dmg_type_tip = "自身のMAGと相手のRESを参照します"
+			dmg_type_blank = "　　"
 		_:
 			dmg_type_text = "[color=red][b]ERROR[/b][/color]"
 			dmg_type_tip = "一体どうやって技を放つんだ？"
 	
+	if blank == true and len(range_text) < 4: # 空白補完
+		for i in 4 - len(range_text):
+			range_blank += "　"
+	
 	range_text = "[hint=%s]対象:[color=yellow]%s[/color][/hint]" % [range_tip, range_text]
 	dmg_type_text = "[hint=%s]分類:%s[/hint]" % [dmg_type_tip, dmg_type_text]
 	
-	return [range_text, dmg_type_text]
+	if blank == true:
+		dmg_type_text += dmg_type_blank
+		range_text += range_blank
+	
+	return [dmg_type_text, range_text]
 
 ## 技の特殊能力のうち1つのindexを引数として、その特殊能力の説明文などをまとめて返す関数
-func ability_description_creator(act: Action, i: int) -> Array:
+func ability_description_creator(act: Action, index: int, blank: bool) -> Array:
 	## 説明文をそれぞれ登録する配列
 	## 0:特殊効果名 1:対象 2:確率 3:特殊効果の強さ 4:特殊効果のイメージ色
 	var ability_text: String ## 特殊効果名
@@ -172,11 +186,11 @@ func ability_description_creator(act: Action, i: int) -> Array:
 	"[hint=特殊効果の発生確率]確率:[color=green]%3d%%[/color][/hint]" % act.ability_chance
 	var ability_power: String ## 特殊効果の強さ
 	var ability_color: Color ## 特殊効果のイメージ色
-	match act.ability[i].category:
+	match act.ability[index].category:
 		1: # 状態異常
 			ability_power = "状態異常継続ターン数:[color=red]%d[/color]" % \
-			act.ability_power[i]
-			match act.ability[i].ailment:
+			act.ability_power[index]
+			match act.ability[index].ailment:
 				1:
 					ability_text = "[color=red]火傷[/color]"
 					ability_tip = "相手を火傷状態にします"
@@ -211,9 +225,9 @@ func ability_description_creator(act: Action, i: int) -> Array:
 					ability_color = Color(0.580392, 0, 0.827451, 0.5) # violet
 		2: # バフ
 			ability_power = "バフ継続ターン数:[color=red]%d[/color]" % \
-			act.ability_power[i]
+			act.ability_power[index]
 			ability_color = Color(0.545098, 0, 0, 0.5) # dark_red
-			match act.ability[i].buff:
+			match act.ability[index].buff:
 				1:
 					ability_text = "[color=red]ATK UP[/color]"
 					ability_tip = "ATKを1.5倍に強化させます"
@@ -234,9 +248,9 @@ func ability_description_creator(act: Action, i: int) -> Array:
 					ability_tip = "強化するものすら存在しなかった"
 		3: # デバフ
 			ability_power = "デバフ継続ターン数:[color=red]%d[/color]" % \
-			act.ability_power[i]
+			act.ability_power[index]
 			ability_color = Color(0, 0, 0.545098, 0.5) # dark_blue
-			match act.ability[i].debuff:
+			match act.ability[index].debuff:
 				1:
 					ability_text = "[color=red]ATK DOWN[/color]"
 					ability_tip = "ATKを2/3倍に弱体化させます"
@@ -263,17 +277,17 @@ func ability_description_creator(act: Action, i: int) -> Array:
 					status = "[color=red]ATK[/color]"
 				2:
 					status = "[color=dodger_blue]MAG[/color]"
-			match act.ability[i].healing:
+			match act.ability[index].healing:
 				1:
 					ability_text = "[color=green]HP回復[/color]"
 					ability_tip = "ステータスを参照してHPを回復させます"
 					ability_power = "HP回復量:%sの[color=red]%d%%[/color]相当" % \
-					[status, act.ability_power[i]]
+					[status, act.ability_power[index]]
 				2:
 					ability_text = "[color=green]定数HP回復[/color]"
 					ability_tip = "一定の量だけHPを回復させます"
 					ability_power = "HP回復量:[color=red]%d[/color]" % \
-					act.ability_power[i]
+					act.ability_power[index]
 				3:
 					ability_text = "[color=aqua]MP回復[/color]"
 					ability_tip = "ステータスを参照してMPを回復させます"
@@ -282,13 +296,13 @@ func ability_description_creator(act: Action, i: int) -> Array:
 					ability_text = "[color=aqua定数MP回復[/color]"
 					ability_tip = "一定の量だけMPを回復させます"
 					ability_power = "MP回復量:[color=red]%d[/color]" % \
-					act.ability_power[i]
+					act.ability_power[index]
 				_:
 					ability_text = "[color=red][b]ERROR[/b][/color]"
 		5: # 吸収
-			ability_power = "吸収率:[color=red]%d%%[/color]" % act.ability_power[i]
+			ability_power = "吸収率:[color=red]%d%%[/color]" % act.ability_power[index]
 			ability_color = Color(1, 0.411765, 0.705882, 1) # hot_pink
-			match act.ability[i].steal:
+			match act.ability[index].steal:
 				1:
 					ability_text = "[color=green]HP吸収[/color]"
 					ability_tip = "与えたダメージに対して一定の割合でHPを回復させます"
@@ -299,17 +313,27 @@ func ability_description_creator(act: Action, i: int) -> Array:
 					ability_text = "[color=green]SPD吸収[/color]"
 					ability_tip = "未実装"
 	
-	match act.ability_range[i]:
+	var blank_text: String ## 空白
+	match act.ability_range[index]:
 		0: # rangeと同期
 			match act.range:
 				0:
-					ability_range_text = "　なし　"
+					if blank == true:
+						ability_range_text = "なし"
+					else:
+						ability_range_text = "　なし　"
 					ability_range_tip = "発動対象が存在しません"
 				1:
-					ability_range_text = " 敵単体 "
+					if blank == true:
+						ability_range_text = "敵単体"
+					else:
+						ability_range_text = " 敵単体 "
 					ability_range_tip = "敵単体に効果を発動します"
 				2:
-					ability_range_text = " 敵全体 "
+					if blank == true:
+						ability_range_text = "敵全体"
+					else:
+						ability_range_text = " 敵全体 "
 					ability_range_tip = "敵全体に効果を発動します。"
 				3:
 					ability_range_text = "味方単体"
@@ -318,16 +342,25 @@ func ability_description_creator(act: Action, i: int) -> Array:
 					ability_range_text = "味方全体"
 					ability_range_tip = "味方全体に効果を発動します。"
 				5:
-					ability_range_text = "　自分　"
+					if blank == true:
+						ability_range_text = "自分"
+					else:
+						ability_range_text = "　自分　"
 					ability_range_tip = "自分に効果を発動します。"
 				_:
 					ability_range_text = "[color=red][b]ERROR[/b][/color]"
 					ability_range_tip = "虚空に向かって効果を放つのか？"
 		1:
-			ability_range_text = " 敵単体 "
+			if blank == true:
+				ability_range_text = "敵単体"
+			else:
+				ability_range_text = " 敵単体 "
 			ability_range_tip = "敵単体に効果を発動します"
 		2:
-			ability_range_text = " 敵全体 "
+			if blank == true:
+				ability_range_text = "敵全体"
+			else:
+				ability_range_text = " 敵全体 "
 			ability_range_tip = "敵全体に効果を発動します。"
 		3:
 			ability_range_text = "味方単体"
@@ -336,17 +369,23 @@ func ability_description_creator(act: Action, i: int) -> Array:
 			ability_range_text = "味方全体"
 			ability_range_tip = "味方全体に効果を発動します。"
 		5:
-			ability_range_text = "　自分　"
+			if blank == true:
+				ability_range_text = "自分"
+			else:
+				ability_range_text = "　自分　"
 			ability_range_tip = "自分に効果を発動します。"
 		_:
 			ability_range_text = "[color=red][b]ERROR[/b][/color]"
 			ability_range_tip = "虚空に向かって効果を発動するのか？"
 	
+	for i in 4 - len(ability_range_text):
+		blank_text += "　"
+	
 	ability_text = "[hint=%s]%s[/hint]" % [ability_tip, ability_text] # tooltipを入れる
-	ability_range_text = "[hint=%s]対象:[color=yellow]%4s[/color][/hint]" % \
+	ability_range_text = "[hint=%s]対象:[color=yellow]%s[/color][/hint]" % \
 	[ability_range_tip, ability_range_text]
 	
-	return [ability_text, ability_range_text, 
+	return [ability_text, ability_range_text + blank_text, 
 	ability_chance_text, ability_power, ability_color]
 
 ## ランダムデッキ生成機

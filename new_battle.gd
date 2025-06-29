@@ -98,6 +98,8 @@ func battle_start_animation() -> void:
 	$button/next_sign.modulate.a = 0
 	$button/change.modulate.a = 0
 	$button/main.position.y = 648
+	for button: Button in $button/main.get_children():
+			button.disabled = true
 	
 	tween = get_tree().create_tween()
 	tween.tween_property($"../fade", "color:a", 0, 1)
@@ -123,8 +125,6 @@ func battle_start_animation() -> void:
 	await tween.finished
 	
 	$button/escape.disabled = false
-	for button: Button in $button/main.get_children():
-			button.disabled = true
 	$button/next_sign.show()
 	
 	dialog.now_flavor_text = ["ついにこの戦いが始まった。"]

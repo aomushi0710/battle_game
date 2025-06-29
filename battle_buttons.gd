@@ -18,19 +18,28 @@ func _on_tree_entered() -> void: # 初期値
 	$change.texture_normal = Global.deck1.monster[0].image
 
 ## 技の対象を選ぶ必要がある時に表示されるボタンを生成する関数
-func _on_action_button_selected(i: int) -> void:
+func _on_action_button_selected(index: int) -> void:
 	$"戻る".disabled = true
-	selected_action_button = $action.get_child(i)
-	button_index = i
+	selected_action_button = $action.get_child(index)
+	button_index = index
 	selected_action = selected_action_button.action # 選ばれた技を登録
-	$dialogtab.text_setter(0, false, [
-		"%s\n　分類:%4s　　MP Cost:%d" % [selected_action.name, selected_action.damage_type]
-	])
+	
+	var descriptions: Array[String] = Global.action_description_creator(selected_action, true)
+	var description_text = ["　[i][u]%s[/u][/i]\n　%s　　MP Cost:[color=aqua]%d[/color]\n" % 
+		[selected_action.name, descriptions[0], selected_action.mp] + 
+		"　%s　　Power　:[color=red]%d[/color]" % [descriptions[1], selected_action.power]]
+	for i in len(selected_action.ability):
+		var ability_descriptions: Array = \
+		Global.ability_description_creator(selected_action, 0, true)
+		description_text.append("　特殊効果:%s\n　%s　　%s\n　%s" % [ability_descriptions[0], 
+		ability_descriptions[1], ability_descriptions[2], ability_descriptions[3]])
+	$dialogtab.text_setter(0, false, description_text)
+	
 	var instance = action_button.instantiate()
 	instance.name = "selected"
 	instance.texture_mode = preload("res://技セレクトボタン.gd").Mode.BATTLE
 	instance.action = selected_action
-	instance.position = Vector2(132, 485 + 40 * i)
+	instance.position = Vector2(132, 485 + 40 * index)
 	instance.size = selected_action_button.size
 	instance.add_theme_font_size_override("font_size", 25)
 	add_child(instance)
@@ -41,18 +50,12 @@ func _on_action_button_selected(i: int) -> void:
 	.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	
-	match selected_action.range:
-		1, 3, 6: # ターゲットを選ぶ必要のある技の時
-			await show_target_button()
-			$"戻る".disabled = false
-			tween = get_tree().create_tween() # ボタン点滅アニメーション
-			tween.set_loops()
-			tween.tween_property(instance, "modulate:a", 0, 0.5)
-			tween.tween_property(instance, "modulate:a", 1, 0.5)
-		5:
-			target_button_up(monster.index) # 自分のindex
-		_:
-			target_button_up(-1) # 引数-1:index指定なし
+	await show_target_button()
+	$"戻る".disabled = false
+	tween = get_tree().create_tween() # ボタン点滅アニメーション
+	tween.set_loops()
+	tween.tween_property(instance, "modulate:a", 0, 0.5)
+	tween.tween_property(instance, "modulate:a", 1, 0.5)
 
 ## メインのactionが押された時
 func _on_action_button_up() -> void:
@@ -123,18 +126,25 @@ func show_target_button() -> void:
 	[Global.e1_death, Global.e2_death, Global.e3_death, \
 	Global.p1_death, Global.p2_death, Global.p3_death] # for文用真理値配列
 	match selected_action.range: # 攻撃対象ごとに生成する画像が違う
-		1, 6: # 敵単体・敵散開
+		1, 2, 6: # 敵単体・敵散開
 			for i in range(3):
 				if death_list[i] == true:
 					$target.get_child(i).texture_normal = load("res://お墓.PNG")
 				else:
 					$target.get_child(i).texture_normal = Global.enemy_deck.monster[i].image
-		3: # 味方単体
+		3, 4: # 味方単体
 			for i in range(3):
 				if death_list[i + 3] == true:
 					$target.get_child(i).texture_normal = load("res://お墓.PNG")
 				else:
 					$target.get_child(i).texture_normal = Global.deck1.monster[i].image
+		5: # 自分
+			for i in range(3):
+				if i == monster.index:
+					$target.get_child(i).texture_normal = monster.monster.image
+				else :
+					$target.get_child(i).texture_normal = load("res://null.PNG")
+			
 	$target.show()
 	tween = get_tree().create_tween()
 	tween.tween_property($target, "position:y", 523, 0.5)\
@@ -142,7 +152,8 @@ func show_target_button() -> void:
 	await tween.finished
 	for child in $target.get_children(): # 最後にボタンを使用可能にするが、死体は使用不可にする
 		if child is TextureButton:
-			if child.texture_normal == load("res://お墓.PNG"):
+			if child.texture_normal == load("res://お墓.PNG") or \
+			   child.texture_normal == load("res://null.PNG"):
 				child.disabled = true
 			else:
 				child.disabled = false
@@ -363,13 +374,13 @@ func target_button_up(i: int) -> void:
 
 ## モンスターのステータスをダイアログにセットして表示する関数
 func status_dialog(i: int) -> void:
-	var monster: Monster
+	var status_monster: Monster
 	if now_player == true:
-		monster = Global.deck1.monster[i]
+		status_monster = Global.deck1.monster[i]
 	else:
-		monster = Global.enemy_deck.monster[i]
+		status_monster = Global.enemy_deck.monster[i]
 	
-	var monster_name: String = monster.name
+	var monster_name: String = status_monster.name
 	if len(monster_name) > MONSTER_NAME_LIMIT: # 10文字より多ければ
 		monster_name = monster_name.substr(0, MONSTER_NAME_LIMIT) # 無理やり10文字にする
 	else:
@@ -378,10 +389,10 @@ func status_dialog(i: int) -> void:
 	
 	$dialogtab.text_setter(1, false, [
 	"   %s[color=coral]HP :%3d[/color]   [color=green]SPD:%3d[/color]\n" % 
-	[monster_name, monster.maxHP, monster.SPD] + 
+	[monster_name, status_monster.maxHP, status_monster.SPD] + 
 	"   [color=aqua]MP :%3d / %3d[/color] " % 
-	[monster.supplyMP, monster.maxMP] + 
+	[status_monster.supplyMP, status_monster.maxMP] + 
 	"    [color=red]ATK:%3d[/color]   [color=light_blue]DEF:%3d[/color]\n" % 
-	[monster.ATK, monster.DEF] + "   [color=aqua](supply / max)[/color]" + 
+	[status_monster.ATK, status_monster.DEF] + "   [color=aqua](supply / max)[/color]" + 
 	"    [color=dodger_blue]MAG:%3d[/color]   [color=violet]RES:%3d[/color]" % 
-	[monster.MAG, monster.RES]])
+	[status_monster.MAG, status_monster.RES]])
