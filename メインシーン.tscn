@@ -15,6 +15,7 @@ default_font_size = 35
 default_font_size = 30
 
 [node name="メインシーン" type="Node2D"]
+scale = Vector2(1.6, 1.6)
 script = ExtResource("1_0gvvv")
 
 [node name="Button" type="Button" parent="."]

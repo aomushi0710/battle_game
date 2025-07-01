@@ -33,3 +33,8 @@ res://action/メガアイス.tres
 res://monster/スノーフ.tres
 res://action/ギガアイス.tres
 res://monster/スノフレク.tres
+res://action/ギガダークネス.tres
+res://action/ギガストーン.tres
+res://battle_monster.gd
+res://background.gd
+res://theme/default_font_50.tres

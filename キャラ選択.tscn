@@ -21,6 +21,7 @@ default_font_size = 30
 default_font_size = 30
 
 [node name="Node2D" type="Node2D"]
+scale = Vector2(1.6, 1.6)
 
 [node name="キャラセレクト" type="Control" parent="."]
 layout_mode = 3

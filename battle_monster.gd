@@ -44,6 +44,7 @@ mid_evol_list: Array, evol_list: Array, chan_list: Array) -> void:
 	
 	$MP.max_value = monster.maxMP
 	$MP.value = monster.MP
+	$MP/text.text = "MP %3d/%3d" % [monster.MP, monster.maxMP]
 	
 	$SPD.max_value = Global.spd_gauge
 	$SPD.value = 0
@@ -210,6 +211,7 @@ func evolution(id: int) -> Array[String]:
 ## ベンチにモンスターをセットする時の処理[br]spdゲージは溜まらない
 func bench_set() -> void:
 	$HP/text.hide()
+	$MP/text.hide()
 	$SPD.hide()
 	if player == true:
 		reparent(get_parent().get_node("player_deck/player_deck"))
@@ -219,13 +221,14 @@ func bench_set() -> void:
 ## フィールドにモンスターをセットする時の処理[br]1f待機後にspdゲージが溜まり始める
 func field_set() -> void:
 	$HP/text.show()
+	$MP/text.show()
 	$SPD.show()
 	reparent(get_parent().get_parent().get_parent())
-	scale = Vector2(0.6, 0.6)
+	scale = Vector2(1, 1)
 	if player == true:
-		position = Vector2(296.8, 210)
+		position = Vector2(500, 350)
 	else:
-		position = Vector2(676, 210)
+		position = Vector2(1164, 350)
 
 ## SPDゲージが溜まり行動可能になった時の処理
 func spd_max() -> void:
@@ -278,9 +281,11 @@ func mp_setter(n: int, text: bool) -> Array[String]:
 	elif monster.MP + n >= monster.maxMP: # 回復するとMPが最大値を越えてしまう時
 		n = monster.maxMP - monster.MP
 	
+	var mp_text = monster.MP
 	monster.MP += n
-	tween = get_tree().create_tween() # mpゲージ増加アニメーション
+	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property($MP, "value", monster.MP, 0.5)
+	tween.parallel().tween_method(mp_text_update, mp_text, monster.MP, 0.5)
 	if n > 0: # 負の数でない(mpを消費したのではなく、回復した)時、アニメーション再生
 		damage_effect(n, 2)
 		return []
@@ -310,7 +315,7 @@ func hp_setter(n: int, text: bool) -> Array[String]:
 	
 	var hp_text = monster.HP
 	monster.HP += n
-	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # hpゲージ増加アニメーション
+	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property($HP, "value", monster.HP, 0.5)
 	tween.parallel().tween_method(hp_text_update, hp_text, monster.HP, 0.5)
 	
@@ -328,6 +333,10 @@ func hp_setter(n: int, text: bool) -> Array[String]:
 ## hp_setterからhp_textの変化アニメーション用 
 func hp_text_update(hp: int) -> void:
 	$HP/text.text = "HP %3d/%3d" % [hp, monster.maxHP]
+
+## hp_setterからhp_textの変化アニメーション用 
+func mp_text_update(mp: int) -> void:
+	$MP/text.text = "MP %3d/%3d" % [mp, monster.maxMP]
 
 ## 増減した数値を視覚的に表示するエフェクトアニメーションを再生する関数
 func damage_effect(dmg: int, type: int) -> void:

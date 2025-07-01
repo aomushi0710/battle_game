@@ -30,16 +30,18 @@ func _on_tree_entered() -> void:
 					monster.name = "player%d" % (i + 1)
 					if i == 0:
 						player_monster = monster
-						monster.position = Vector2(-153.6, 210)
+						monster.position = Vector2(-256, 350)
 						self.add_child(monster)
 						await get_tree().process_frame # 1フレーム待つ
 						monster.get_node("SPD").set_process(true)
 						monster.get_node("HP/text").show()
+						monster.get_node("MP/text").show()
 					else:
 						$player_deck/player_deck.add_child(monster)
 						await get_tree().process_frame # 1フレーム待つ
 						monster.get_node("SPD").set_process(false)
 						monster.get_node("HP/text").hide()
+						monster.get_node("MP/text").hide()
 						monster.get_node("SPD").hide()
 					player_deck.append(monster)
 					monster.button_up.connect(func():monster_button_up(monster.index))
@@ -48,16 +50,18 @@ func _on_tree_entered() -> void:
 					monster.name = "enemy%d" % (i + 1)
 					if i == 0:
 						enemy_monster = monster
-						monster.position = Vector2(1126.4, 210)
+						monster.position = Vector2(1664, 350)
 						self.add_child(monster)
 						await get_tree().process_frame # 1フレーム待つ
 						monster.get_node("SPD").set_process(true)
 						monster.get_node("HP/text").show()
+						monster.get_node("MP/text").show()
 					else:
 						$enemy_deck/enemy_deck.add_child(monster)
 						await get_tree().process_frame # 1フレーム待つ
 						monster.get_node("SPD").set_process(false)
 						monster.get_node("HP/text").hide()
+						monster.get_node("MP/text").hide()
 						monster.get_node("SPD").hide()
 					enemy_deck.append(monster)
 			monster.show()
@@ -69,17 +73,17 @@ func _on_tree_entered() -> void:
 	_on_change_button_up()
 	# シーン遷移アニメーション
 	tween = get_tree().create_tween() # 味方フィールド出現アニメーション
-	tween.tween_property($player1, "position:x", 296.8, 0.5)\
+	tween.tween_property($player1, "position:x", 500, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween = get_tree().create_tween() # 相手フィールド出現アニメーション
-	tween.tween_property($enemy1, "position:x", 676, 0.5)\
+	tween.tween_property($enemy1, "position:x", 1164, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	
 	tween = get_tree().create_tween() # 味方ベンチ出現アニメーション
 	tween.tween_property($player_deck, "position:x", 0, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween = get_tree().create_tween() # 相手ベンチ出現アニメーション
-	tween.tween_property($enemy_deck, "position:x", 702, 0.5)\
+	tween.tween_property($enemy_deck, "position:x", 1170, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 
 ## バトル開始カットインのアニメーション
@@ -97,7 +101,7 @@ func battle_start_animation() -> void:
 	$button/dialogtab.modulate.a = 0
 	$button/next_sign.modulate.a = 0
 	$button/change.modulate.a = 0
-	$button/main.position.y = 648
+	$button/main.position.y = 1080
 	for button: Button in $button/main.get_children():
 			button.disabled = true
 	
@@ -120,7 +124,7 @@ func battle_start_animation() -> void:
 	tween.parallel().tween_property($"button/戻る", "modulate:a", 1, 0.5)
 	tween.parallel().tween_property($button/dialogtab, "modulate:a", 1, 0.5)
 	tween.parallel().tween_property($button/change, "modulate:a", 1, 0.5)
-	tween.parallel().tween_property($button/main, "position:y", 523, 0.5)\
+	tween.parallel().tween_property($button/main, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	

@@ -1,14 +1,10 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://dsj0uaujnbqwe"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bswtj"]
-bg_color = Color(0, 0, 0, 1)
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d1ilrudxl0rhs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xev74"]
 bg_color = Color(0, 0, 0, 1)
 
 [resource]
-default_font_size = 30
-AcceptDialog/styles/panel = SubResource("StyleBoxFlat_bswtj")
+default_font_size = 50
 Button/constants/outline_size = 10
 Button/styles/focus = SubResource("StyleBoxFlat_xev74")
 LineEdit/constants/outline_size = 10

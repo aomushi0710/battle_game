@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bknodr4qnbo7b" path="res://enemy1.gd" id="2_8rv16"]
 [ext_resource type="Script" uid="uid://ccphdi2w0i5vn" path="res://p1_mp.gd" id="3_aqsgc"]
 [ext_resource type="Script" uid="uid://c3xie01uapfmn" path="res://player1.gd" id="3_pfbs1"]
-[ext_resource type="Texture2D" uid="uid://dxssu1v1art5l" path="res://image/bar_empty.PNG" id="4_w33vs"]
+[ext_resource type="Texture2D" uid="uid://dxssu1v1art5l" path="res://image/none.PNG" id="4_w33vs"]
 [ext_resource type="Script" uid="uid://ct488mu4dkvk7" path="res://p1_hp.gd" id="5_85fus"]
 [ext_resource type="Script" uid="uid://cd2idyg2axqvf" path="res://コマンド.gd" id="5_08288"]
 [ext_resource type="Script" uid="uid://ch7qgexcxnsig" path="res://p1_psd.gd" id="5_n4uku"]
@@ -26,8 +26,8 @@
 [ext_resource type="Script" uid="uid://ongi0h8o88fj" path="res://p3_spd.gd" id="18_aoce8"]
 [ext_resource type="Script" uid="uid://ch12aco7nkhpo" path="res://p3_command.gd" id="19_o05ww"]
 [ext_resource type="Script" uid="uid://d32nypsglo7ie" path="res://p2_icon.gd" id="20_ue1s4"]
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="23_4piow"]
 [ext_resource type="Script" uid="uid://cbniier4n8vqu" path="res://p3_icon.gd" id="26_nb4ha"]
-[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="27_3fhy4"]
 [ext_resource type="Script" uid="uid://dbmbsamhtnvva" path="res://enemy2.gd" id="27_spbmn"]
 [ext_resource type="Script" uid="uid://dyy6tqdfn3sw2" path="res://e2_hp.gd" id="28_u4vay"]
 [ext_resource type="Script" uid="uid://db01h2jclpu47" path="res://e2_mp.gd" id="29_xccyd"]
@@ -685,7 +685,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("27_3fhy4")
+theme = ExtResource("23_4piow")
 
 [node name="enemy1" type="ColorRect" parent="enemies"]
 layout_mode = 0

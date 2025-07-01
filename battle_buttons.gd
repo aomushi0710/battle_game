@@ -39,14 +39,14 @@ func _on_action_button_selected(index: int) -> void:
 	instance.name = "selected"
 	instance.texture_mode = preload("res://技セレクトボタン.gd").Mode.BATTLE
 	instance.action = selected_action
-	instance.position = Vector2(132, 485 + 40 * index)
+	instance.position = Vector2(220, 841 + selected_action_button.position.y) # 選ばれたボタンの座標から取得
 	instance.size = selected_action_button.size
-	instance.add_theme_font_size_override("font_size", 25)
+	instance.add_theme_font_size_override("font_size", 40)
 	add_child(instance)
 	
 	await hide_action_button()
 	tween = get_tree().create_tween() # ボタン移動アニメーション
-	tween.tween_property(instance, "position:y", 483, 0.5)\
+	tween.tween_property(instance, "position:y", 802, 0.5)\
 	.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	
@@ -80,7 +80,7 @@ func show_main_button() -> void:
 	for button: Button in $main.get_children():
 		button.show()
 	tween = get_tree().create_tween() # ボタン出現アニメーション
-	tween.tween_property($main, "position:y", 523, 0.5)\
+	tween.tween_property($main, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	# メインボタンのため戻るボタンを有効化する必要なし
 
@@ -89,7 +89,7 @@ func hide_main_button() -> void:
 	for button: Button in $main.get_children():
 		button.disabled = true # 戻るボタンを押した後に入力を受け付けない
 	tween = get_tree().create_tween() 
-	tween.tween_property($main, "position:y", 648, 0.5)\
+	tween.tween_property($main, "position:y", 1020, 0.5)\
 	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	for button: Button in $main.get_children():
@@ -147,7 +147,7 @@ func show_target_button() -> void:
 			
 	$target.show()
 	tween = get_tree().create_tween()
-	tween.tween_property($target, "position:y", 523, 0.5)\
+	tween.tween_property($target, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	for child in $target.get_children(): # 最後にボタンを使用可能にするが、死体は使用不可にする
@@ -169,7 +169,7 @@ func hide_target_button() -> void:
 			child.queue_free()
 	# ボタン消滅アニメーション　ツリーのポーズを無視
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property($target, "position:y", 648, 0.5)\
+	tween.tween_property($target, "position:y", 1020, 0.5)\
 	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	$target.hide()
@@ -179,27 +179,27 @@ func show_player_or_enemy_button() -> void:
 	now_showing = 3
 	for i in range(2):
 		var button = Button.new()
-		button.size = Vector2(120, 120)
+		button.size = Vector2(200, 200)
 		button.disabled = true
 		if i == 0:
 			button.name = "player"
 			button.text = "Player\nStatus"
-			button.position = Vector2(132, 648)
+			button.position = Vector2(220, 1020)
 			button.button_up.connect(func(): # ラムダ関数で次のボタン遷移処理
 				await hide_player_or_enemy_button()
 				show_monsters_button(true))
 		else:
 			button.name = "enemy"
 			button.text = "Enemy\nStatus"
-			button.position = Vector2(255, 648)
+			button.position = Vector2(430, 1020)
 			button.button_up.connect(func():
 				await hide_player_or_enemy_button()
 				show_monsters_button(false))
 		add_child(button)
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property($player, "position:y", 523, 0.5)\
+	tween.tween_property($player, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween.parallel().tween_property($enemy, "position:y", 523, 0.5)\
+	tween.parallel().tween_property($enemy, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	$player.disabled = false
 	$enemy.disabled = false
@@ -211,9 +211,9 @@ func hide_player_or_enemy_button() -> void:
 	$player.disabled = true
 	$enemy.disabled = true
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property($player, "position:y", 648, 0.5)\
+	tween.tween_property($player, "position:y", 1020, 0.5)\
 	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
-	tween.parallel().tween_property($enemy, "position:y", 648, 0.5)\
+	tween.parallel().tween_property($enemy, "position:y", 1020, 0.5)\
 	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	$player.queue_free()
@@ -232,7 +232,7 @@ func show_monsters_button(player: bool) -> void:
 		$target.get_child(i).texture_normal = deck.monster[i].image
 	$target.show()
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property($target, "position:y", 523, 0.5)\
+	tween.tween_property($target, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	for child: TextureButton in $target.get_children():
@@ -245,7 +245,7 @@ func hide_monsters_button() -> void:
 	for child: TextureButton in $target.get_children():
 		child.disabled = true
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property($target, "position:y", 648, 0.5)\
+	tween.tween_property($target, "position:y", 1020, 0.5)\
 	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	$target.hide()

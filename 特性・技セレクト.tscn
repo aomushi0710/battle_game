@@ -47,6 +47,7 @@ default_font_size = 35
 default_font_size = 30
 
 [node name="Node2D" type="Node2D"]
+scale = Vector2(1.6, 1.6)
 
 [node name="セレクト" type="Control" parent="."]
 layout_mode = 3
@@ -69,7 +70,6 @@ offset_top = 25.0
 offset_right = 228.0
 offset_bottom = 465.0
 scale = Vector2(1.4, 1.4)
-theme = ExtResource("1_254va")
 color = Color(0, 0, 0, 1)
 
 [node name="monster" type="Sprite2D" parent="セレクト/status"]
@@ -103,7 +103,6 @@ offset_top = 361.857
 offset_right = 242.0
 offset_bottom = 510.857
 scale = Vector2(0.5, 0.5)
-theme = ExtResource("1_254va")
 bbcode_enabled = true
 text = "[b]現在の出現率[/b]
 

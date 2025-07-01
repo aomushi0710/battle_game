@@ -7,7 +7,6 @@
 offset_right = 115.0
 offset_bottom = 26.0
 mouse_default_cursor_shape = 2
-theme_override_colors/font_pressed_color = Color(1, 1, 0, 1)
 toggle_mode = true
 text = "体当たり"
 icon = ExtResource("1_ryklf")

@@ -59,7 +59,7 @@ func _on_tab_changed(tab: int) -> void:
 func text_change_next() -> void:
 	if tween and tween.is_running(): # tweenがすでに動作しているならアニメーションスキップ
 		tween.kill()
-		get_child(current_tab).visible_characters = len(get_child(current_tab).text) # 全表示
+		get_child(current_tab).get_child(0).visible_characters = len(get_child(current_tab).get_child(0).text) # 全表示
 	else:
 		if len(tab_list[current_tab]) - 1 > current_page: # まだ次のページが存在する場合
 			current_page += 1
@@ -82,7 +82,7 @@ func label_gui_input(event: InputEvent) -> void:
 func text_animation(tab: int, page: int) -> void:
 	if tween: # tweenがすでに動作しているなら停止
 		tween.kill()
-	var label: RichTextLabel = get_child(tab) # タブのラベル取得
+	var label: RichTextLabel = get_child(tab).get_child(0) # タブのラベル取得
 	label.visible_characters = 0 # 隠す
 	label.text = tab_list[tab][page]
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # テキストアニメーション再生
@@ -101,11 +101,11 @@ func next_sign_on() -> void:
 		await get_tree().process_frame
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND # マウスカーソルを指差しに
 	$"../next_sign".modulate = Color(Color.WHITE) # 初期化
-	$"../next_sign".position.y = 616
+	$"../next_sign".position.y = 1025
 	next_sign_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # 矢印アニメーション再生
 	next_sign_tween.set_loops()
-	next_sign_tween.tween_property($"../next_sign", "position:y", 600, 0.5)
-	next_sign_tween.tween_property($"../next_sign", "position:y", 616, 0.3)\
+	next_sign_tween.tween_property($"../next_sign", "position:y", 1000, 0.5)
+	next_sign_tween.tween_property($"../next_sign", "position:y", 1025, 0.3)\
 	.set_trans(Tween.TRANS_EXPO)
 	next_sign_tween.tween_interval(0.5)
 
@@ -117,7 +117,7 @@ func next_sign_off() -> void:
 	mouse_default_cursor_shape = Control.CURSOR_ARROW # マウスカーソルをデフォルトに
 	$"../next_sign".modulate = Color(Color.DIM_GRAY)
 	next_sign_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	next_sign_tween.tween_property($"../next_sign", "position:y", 616, 0.5)\
+	next_sign_tween.tween_property($"../next_sign", "position:y", 1025, 0.5)\
 	.set_trans(Tween.TRANS_EXPO)
 
 func battle_finished() -> void:

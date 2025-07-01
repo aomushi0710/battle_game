@@ -26,7 +26,9 @@ gdscript/warnings/integer_division=0
 
 [display]
 
-window/stretch/mode="viewport"
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
 
 [editor]
 
@@ -41,4 +43,6 @@ theme/custom_font="res://Nosutaru-dotMPlusH-10-Regular.ttf"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
+environment/ssao/half_size=false
+environment/ssil/half_size=false
 environment/defaults/default_clear_color=Color(0.301961, 0.596078, 0.301961, 1)
