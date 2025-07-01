@@ -1,7 +1,7 @@
 extends Control
 
 const action_button = preload("res://技セレクトボタン.tscn")
-const MONSTER_NAME_LIMIT: int = 9 ## statusに表示する上での、モンスターの名前の上限文字数
+const MONSTER_NAME_LIMIT: int = 8 ## statusに表示する上での、モンスターの名前の上限文字数
 var now_showing: int ## 現在表示中のボタンメニュー[br]0:main 1:action 2:item 3:status 4:target 5:monsters
 var now_player: bool ## true:現在playerの情報を表示 false:現在enemyの情報を表示
 var monster: BattleMonster
@@ -25,13 +25,13 @@ func _on_action_button_selected(index: int) -> void:
 	selected_action = selected_action_button.action # 選ばれた技を登録
 	
 	var descriptions: Array[String] = Global.action_description_creator(selected_action, true)
-	var description_text = ["　[i][u]%s[/u][/i]\n　%s　　MP Cost:[color=aqua]%d[/color]\n" % 
+	var description_text = ["[i][u]%s[/u][/i]\n%s　　MP Cost:[color=aqua]%d[/color]\n" % 
 		[selected_action.name, descriptions[0], selected_action.mp] + 
-		"　%s　　Power　:[color=red]%d[/color]" % [descriptions[1], selected_action.power]]
+		"%s　　Power　:[color=red]%d[/color]" % [descriptions[1], selected_action.power]]
 	for i in len(selected_action.ability):
 		var ability_descriptions: Array = \
 		Global.ability_description_creator(selected_action, 0, true)
-		description_text.append("　特殊効果:%s\n　%s　　%s\n　%s" % [ability_descriptions[0], 
+		description_text.append("特殊効果:%s\n%s　　%s\n%s" % [ability_descriptions[0], 
 		ability_descriptions[1], ability_descriptions[2], ability_descriptions[3]])
 	$dialogtab.text_setter(0, false, description_text)
 	
@@ -388,11 +388,11 @@ func status_dialog(i: int) -> void:
 			monster_name += "　" # 空白は全角である
 	
 	$dialogtab.text_setter(1, false, [
-	"   %s[color=coral]HP :%3d[/color]   [color=green]SPD:%3d[/color]\n" % 
+	"%s[color=coral]HP :%3d[/color]   [color=green]SPD:%3d[/color]\n" % 
 	[monster_name, status_monster.maxHP, status_monster.SPD] + 
-	"   [color=aqua]MP :%3d / %3d[/color] " % 
+	"[color=aqua]MP :%3d / %3d[/color]   " % 
 	[status_monster.supplyMP, status_monster.maxMP] + 
-	"    [color=red]ATK:%3d[/color]   [color=light_blue]DEF:%3d[/color]\n" % 
-	[status_monster.ATK, status_monster.DEF] + "   [color=aqua](supply / max)[/color]" + 
-	"    [color=dodger_blue]MAG:%3d[/color]   [color=violet]RES:%3d[/color]" % 
+	"[color=red]ATK:%3d[/color]   [color=light_blue]DEF:%3d[/color]\n" % 
+	[status_monster.ATK, status_monster.DEF] + "[color=aqua](supply / max)[/color]  " + 
+	"[color=dodger_blue]MAG:%3d[/color]   [color=violet]RES:%3d[/color]" % 
 	[status_monster.MAG, status_monster.RES]])
