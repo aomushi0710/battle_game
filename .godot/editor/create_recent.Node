@@ -1,8 +1,8 @@
-MarginContainer
+HBoxContainer
 ColorRect
+MarginContainer
 Control
 TextureRect
-HBoxContainer
 AcceptDialog
 Window
 Popup

@@ -225,8 +225,8 @@ z_index = 1
 layout_mode = 2
 bbcode_enabled = true
 text = "技名の最大文字数は全角１８文字まで！
-　分類:[color=red]物理　　　　[/color]MP Cost:[color=aqua]10[/color]
-　対象:[color=yellow]味方単体　　[/color]  Power:[color=red]10[/color]"
+分類:[color=red]物理　　　　[/color]MP Cost:[color=aqua]10[/color]
+対象:[color=yellow]味方単体　　[/color]  Power:[color=red]10[/color]"
 
 [node name="ステータス" type="MarginContainer" parent="battle/button/dialogtab"]
 visible = false
