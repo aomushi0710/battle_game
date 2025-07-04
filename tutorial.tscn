@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b75oop3n8nq72"]
+
+[ext_resource type="PackedScene" uid="uid://bhqk4iva02mmc" path="res://新バトル.tscn" id="1_7n6eb"]
+[ext_resource type="Script" uid="uid://k0a6gnwbx4e1" path="res://tutorial.gd" id="1_yb1ct"]
+
+[node name="tutorial" type="Node2D"]
+script = ExtResource("1_yb1ct")
+
+[node name="Node2D" parent="." instance=ExtResource("1_7n6eb")]
+
+[editable path="Node2D"]
