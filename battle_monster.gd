@@ -146,7 +146,8 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 		bench_set()
 		parent.enemy_monster = parent.enemy_deck[parent.enemy_next_index]
 		parent.enemy_monster.field_set()
-		parent.enemy_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
+		if parent.tutorial_mode == false:
+			parent.enemy_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
 	else:
 		if player == true:
 			await text_setter_callback.call(0, true, [

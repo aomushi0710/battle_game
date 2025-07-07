@@ -10,8 +10,13 @@ var player_deck: Array[BattleMonster]
 var enemy_deck: Array[BattleMonster]
 var player_monster: BattleMonster
 var enemy_monster: BattleMonster
+var tutorial_mode: bool = false ## true:チュートリアル
 ## 死亡時に交代するモンスターが選ばれるまで待つawait用シグナル
 signal changed
+## チュートリアル用:バトル開始カットイン完了シグナル
+signal cutin_ended
+## チュートリアル用:プレイヤーモンスター行動可能シグナル
+signal player_ready
 
 # 味方と敵のデッキを準備
 func _on_tree_entered() -> void:
@@ -53,7 +58,10 @@ func _on_tree_entered() -> void:
 						monster.position = Vector2(1664, 350)
 						self.add_child(monster)
 						await get_tree().process_frame # 1フレーム待つ
-						monster.get_node("SPD").set_process(true)
+						if tutorial_mode == false:
+							monster.get_node("SPD").set_process(true)
+						else:
+							monster.get_node("SPD").set_process(false)
 						monster.get_node("HP/text").show()
 						monster.get_node("MP/text").show()
 					else:
@@ -72,19 +80,18 @@ func _on_tree_entered() -> void:
 	player_next_index = 2
 	_on_change_button_up()
 	# シーン遷移アニメーション
-	tween = get_tree().create_tween() # 味方フィールド出現アニメーション
+	tween = get_tree().create_tween() # monster出現アニメーション
 	tween.tween_property($player1, "position:x", 500, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween = get_tree().create_tween() # 相手フィールド出現アニメーション
-	tween.tween_property($enemy1, "position:x", 1164, 0.5)\
+	tween.parallel().tween_property($enemy1, "position:x", 1164, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	
-	tween = get_tree().create_tween() # 味方ベンチ出現アニメーション
-	tween.tween_property($player_deck, "position:x", 0, 0.5)\
+	tween.parallel().tween_property($player_deck, "position:x", 0, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween = get_tree().create_tween() # 相手ベンチ出現アニメーション
-	tween.tween_property($enemy_deck, "position:x", 1170, 0.5)\
+	tween.parallel().tween_property($enemy_deck, "position:x", 1170, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween.tween_callback(func():
+		if tutorial_mode == true:
+			cutin_ended.emit())
 
 ## バトル開始カットインのアニメーション
 func battle_start_animation() -> void:
@@ -130,9 +137,9 @@ func battle_start_animation() -> void:
 	
 	$button/escape.disabled = false
 	$button/next_sign.show()
-	
-	dialog.now_flavor_text = ["ついにこの戦いが始まった。"]
-	dialog.text_setter(0, false, dialog.now_flavor_text)
+	if tutorial_mode == false:
+		dialog.now_flavor_text = ["ついにこの戦いが始まった。"]
+		dialog.text_setter(0, false, dialog.now_flavor_text)
 
 # spdgaugeが溜まり行動可能になった時
 func monster_ready(player: bool) -> void:
@@ -160,10 +167,13 @@ func monster_ready(player: bool) -> void:
 		for button: Button in $button/main.get_children():
 			button.disabled = false
 		# dialog更新
-		dialog.text_setter(0, false, [
-		"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
-		[player_monster.monster.name, player_monster.monster.name, player_monster.monster.supplyMP] + 
-		"\n[color=yellow]%s は指示を待っている...[/color]" % player_monster.monster.name])
+		if tutorial_mode == false:
+			dialog.text_setter(0, false, [
+			"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
+			[player_monster.monster.name, player_monster.monster.name, player_monster.monster.supplyMP] + 
+			"\n[color=yellow]%s は指示を待っている...[/color]" % player_monster.monster.name])
+		else:
+			player_ready.emit()
 	else:
 		enemy_monster.mp_setter(enemy_monster.monster.supplyMP, false)
 		
@@ -348,8 +358,9 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 	# 死んでなきゃSPDゲージ再開
 	if player_monster.death == false:
 		player_monster.get_node("SPD").set_process(true)
-	if enemy_monster.death == false:
-		enemy_monster.get_node("SPD").set_process(true)
+	if tutorial_mode == false:
+		if enemy_monster.death == false:
+			enemy_monster.get_node("SPD").set_process(true)
 	
 	if player == true: # 味方モンスターが動いた後にフレーバーテキスト更新
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d4g4bh4y0vc2f"]
+[gd_scene load_steps=18 format=3 uid="uid://d4g4bh4y0vc2f"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_0twro"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_cpkem"]
@@ -29,6 +29,9 @@ default_font_size = 30
 default_font_size = 35
 
 [sub_resource type="Theme" id="Theme_0twro"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_1emw3"]
 default_font_size = 35
 
 [node name="デッキセレクト" type="Node2D"]
@@ -341,9 +344,17 @@ mouse_default_cursor_shape = 2
 theme = SubResource("Theme_0twro")
 text = "バトル！"
 
+[node name="tutorial" type="Button" parent="Control"]
+offset_left = 700.0
+offset_top = 500.0
+offset_right = 1001.0
+offset_bottom = 548.0
+theme = SubResource("Theme_1emw3")
+text = "🔰チュートリアル"
+
 [node name="fade" type="ColorRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
@@ -362,3 +373,4 @@ color = Color(0, 0, 0, 0)
 [connection signal="button_up" from="Control/戻る" to="Control/デッキ1" method="_on_戻る_button_up"]
 [connection signal="toggled" from="Control/help" to="Control/help" method="_on_toggled"]
 [connection signal="button_up" from="Control/new_battle" to="Control/デッキ1" method="_on_new_button_up"]
+[connection signal="button_up" from="Control/tutorial" to="Control/デッキ1" method="_on_tutorial_button_up"]

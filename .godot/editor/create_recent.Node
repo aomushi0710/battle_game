@@ -1,3 +1,5 @@
+RichTextLabel
+Button
 HBoxContainer
 ColorRect
 MarginContainer
@@ -6,8 +8,6 @@ TextureRect
 AcceptDialog
 Window
 Popup
-RichTextLabel
-Button
 TextureButton
 TabContainer
 TextEdit

@@ -16,7 +16,7 @@
 default_font_size = 40
 
 [sub_resource type="Theme" id="Theme_tc6cq"]
-default_font_size = 250
+default_font_size = 240
 
 [sub_resource type="Theme" id="Theme_hwahx"]
 default_font_size = 150
@@ -284,6 +284,7 @@ offset_bottom = 64.0
 text = "逃げる"
 
 [node name="確認メッセージ" type="ConfirmationDialog" parent="battle"]
+process_mode = 3
 auto_translate_mode = 1
 title = "⚠️セーブデータ削除⚠️"
 initial_position = 2
@@ -347,7 +348,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 20
 theme_override_constants/shadow_outline_size = 10
 bbcode_enabled = true
-text = "[color=yellow][b]Battle Start![/b][/color]"
+text = "[color=yellow][b]Tutorial Start![/b][/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 

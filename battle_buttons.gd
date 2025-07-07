@@ -12,7 +12,7 @@ var tween: Tween
 
 signal battle_finished
 
-func _on_tree_entered() -> void: # 初期値
+func _ready() -> void: # 初期値
 	$"戻る".disabled = true
 	now_showing = 0
 	$change.texture_normal = Global.deck1.monster[0].image

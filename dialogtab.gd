@@ -2,6 +2,7 @@ extends TabContainer
 
 var tween: Tween
 var next_sign_tween: Tween
+var dialog_expand_tween: Tween
 var text_speed: float = 0.04 ## テキストアニメーションの1文字あたりの再生速度
 var now_flavor_text: Array ## 現在表示中のflavor_textを保持
 var flavor_text: Array ## 待機中に表示されるテキストArray[Array[string]]
@@ -24,6 +25,7 @@ func _ready() -> void:
 	tab_list[2] = [""]
 	current_tab = 0
 	_on_tab_changed(current_tab) # 初期値タブのテキストをアニメーション
+	set_tab_disabled(2, true)
 
 ## ダイアログボックスに表示するフレーバーテキストの専用setter
 func flavor_text_setter(text: Array) -> void:
@@ -51,9 +53,19 @@ func text_setter(tab: int, wait: bool, text: Array) -> void:
 
 ## タブが切り替えられた時、ページ数を0にリセットしてtext_animationを呼ぶ関数
 func _on_tab_changed(tab: int) -> void:
-	current_tab = tab
-	current_page = 0
-	text_animation(tab, 0)
+	if tab != 2:
+		if size.y != 270: # 拡大されてた時に戻すアニメーション
+			var duration = size.y - 270 / 724 # 現在サイズからアニメーション秒数を逆算
+			dialog_expand_tween.tween_property(self, "size:y", 270, duration)
+			dialog_expand_tween.parallel().tween_property(self, "position:y", 800, duration)
+			await dialog_expand_tween.finished
+		current_tab = tab
+		current_page = 0
+		text_animation(tab, 0)
+	else: # バトルログ表示処理
+		dialog_expand_tween = get_tree().create_tween()
+		dialog_expand_tween.tween_property(self, "size:y", 994, 1)
+		dialog_expand_tween.parallel().tween_property(self, "position:y", 76, 1)
 
 ## _inputもしくはlabel_gui_inputから、次のページを指定してtext_animationを呼ぶ関数
 func text_change_next() -> void:
@@ -65,6 +77,7 @@ func text_change_next() -> void:
 			current_page += 1
 			text_animation(current_tab, current_page)
 		else: # 最後のページの時、処理を進める
+			next_sign_off()
 			paging.emit()
 
 ## Enterキーが押された時、ページ変更ボタンか押された時と同様に振る舞う

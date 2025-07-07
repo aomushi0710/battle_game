@@ -3,7 +3,7 @@ extends Object
 class_name Deck
 var monster_dict = [null ,null ,null] # monsterの全ての形態が辞書として登録される
 var monster = [null, null, null] # monsterの現在の状態が全て入る
-var action: Array[Array] = [[],[],[]]
+var action = [[],[],[]]
 var evolution = [[],[],[]] # 進化技を登録
 var middle_evolution = [[],[],[]] # 中間進化技を登録
 var chance = [[],[],[]] # 各技の出現確率を登録

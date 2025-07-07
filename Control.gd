@@ -4,6 +4,7 @@ var first_texture = load("res://1st.PNG")
 var second_texture = load("res://2nd.PNG")
 var third_texture = load("res://3rd.PNG")
 var monster_data = Global.monster_data
+var action_data = Global.action_data
 var tween: Tween
 var act_name = ""
 var detail = ""
@@ -129,3 +130,32 @@ func _on_new_button_up() -> void:
 	tween = get_tree().create_tween()
 	tween.tween_property($"../../fade", "color:a", 1, 1)
 	tween.tween_callback(func(): get_tree().change_scene_to_packed(Global.new_battle_scene))
+
+## チュートリアルの準備と遷移
+func _on_tutorial_button_up() -> void:
+	# 味方チュートリアルデッキ構築
+	Global.deck1.monster_dict = [monster_data[1], monster_data[2], monster_data[3]]
+	#Global.deck1.skill = [0, 0, 0]
+	for i in range(3):
+		Global.deck1.monster[i] = Global.deck1.monster_dict[i][0].duplicate()
+	Global.deck1.action = [
+		# スライム＠体当たり:50%, 自己再生:30%, DEFエンハンス:10%, ATKブレイク:10%
+		[action_data[1], action_data[4], action_data[46], action_data[49]], 
+		# ゴースト＠体当たり:40%, 暗闇:40%, 霊魂吸収:10%, ギガダークネス:10%
+		[action_data[1], action_data[12], action_data[1001], action_data[36]], 
+		# バニン＠火の玉:40%, 暗闇:40%, フレイム:20%
+		[action_data[5], action_data[12], action_data[13]]
+	]
+	Global.deck1.chance = [[50, 30, 10, 10], [40, 40, 10, 10], [40, 40, 20]]
+	Global.deck1.evolution_check(Global.deck1)
+	# 相手チュートリアルデッキ構築
+	Global.enemy_deck.monster_dict = [monster_data[1], monster_data[1], monster_data[1]]
+	for i in range(3):
+		Global.enemy_deck.monster[i] = Global.enemy_deck.monster_dict[i][0].duplicate()
+	Global.enemy_deck.action = [[action_data[1]], [action_data[1]], [action_data[1]]]
+	Global.enemy_deck.chance = [[100], [100], [100]]
+	Global.enemy_deck.evolution_check(Global.enemy_deck)
+	
+	tween = get_tree().create_tween()
+	tween.tween_property($"../../fade", "color:a", 1, 1)
+	tween.tween_callback(func(): get_tree().change_scene_to_packed(Global.tutorial_scene))

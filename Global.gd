@@ -47,6 +47,7 @@ var battle_scene = load("res://バトル.tscn")
 var debug_scene = load("res://debug.tscn")
 var deck_save_scene = load("res://デッキセーブデータ.tscn")
 var new_battle_scene = load("res://新バトル.tscn")
+var tutorial_scene = load("res://tutorial.tscn")
 
 @onready var picked_monster = [0,0,0]
 @onready var deck1 = Deck.new()
