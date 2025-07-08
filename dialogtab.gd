@@ -25,7 +25,6 @@ func _ready() -> void:
 	tab_list[2] = [""]
 	current_tab = 0
 	_on_tab_changed(current_tab) # 初期値タブのテキストをアニメーション
-	set_tab_disabled(2, true)
 
 ## ダイアログボックスに表示するフレーバーテキストの専用setter
 func flavor_text_setter(text: Array) -> void:
@@ -54,18 +53,27 @@ func text_setter(tab: int, wait: bool, text: Array) -> void:
 ## タブが切り替えられた時、ページ数を0にリセットしてtext_animationを呼ぶ関数
 func _on_tab_changed(tab: int) -> void:
 	if tab != 2:
+		get_child(tab).get_child(0).text = "" # 一旦削除してからアニメーション
 		if size.y != 270: # 拡大されてた時に戻すアニメーション
-			var duration = size.y - 270 / 724 # 現在サイズからアニメーション秒数を逆算
-			dialog_expand_tween.tween_property(self, "size:y", 270, duration)
-			dialog_expand_tween.parallel().tween_property(self, "position:y", 800, duration)
+			var duration = (size.y - 270) / 1448 # 現在サイズからアニメーション秒数を逆算(最大0.5)
+			dialog_expand_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+			dialog_expand_tween.tween_property(self, "size:y", 270, duration)\
+			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+			dialog_expand_tween.parallel().tween_property(self, "position:y", 
+			800, duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+			dialog_expand_tween.parallel().tween_property($"../next_sign", "modulate:a", 1, duration)
 			await dialog_expand_tween.finished
 		current_tab = tab
 		current_page = 0
 		text_animation(tab, 0)
 	else: # バトルログ表示処理
-		dialog_expand_tween = get_tree().create_tween()
-		dialog_expand_tween.tween_property(self, "size:y", 994, 1)
-		dialog_expand_tween.parallel().tween_property(self, "position:y", 76, 1)
+		current_tab = tab
+		dialog_expand_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		dialog_expand_tween.tween_property(self, "size:y", 994, 0.5)\
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+		dialog_expand_tween.parallel().tween_property(self, "position:y", 76, 0.5)\
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+		dialog_expand_tween.parallel().tween_property($"../next_sign", "modulate:a", 0, 0.5)
 
 ## _inputもしくはlabel_gui_inputから、次のページを指定してtext_animationを呼ぶ関数
 func text_change_next() -> void:

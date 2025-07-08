@@ -256,10 +256,8 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 	match now_showing:
 		-1: # バトル終了後、デッキセレクトに戻る
 			_on_確認メッセージ_confirmed() # 初期化処理を呼ぶ
-			
-		1: # action消滅アニメーション
-			# TODO 現在は仮の文章　後々、デフォルトのものを挿入できるようにする
-			$dialogtab.text_setter(0, false, $dialogtab.now_flavor_text)
+		1:
+			$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
 			await hide_action_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
@@ -269,6 +267,7 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
 				button.disabled = false
 		3: # 戻る 味方か相手選択 -> メイン
+			$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
 			await hide_player_or_enemy_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に

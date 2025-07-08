@@ -19,7 +19,7 @@ signal cutin_ended
 signal player_ready
 
 # 味方と敵のデッキを準備
-func _on_tree_entered() -> void:
+func _ready() -> void:
 	await battle_start_animation()
 	await get_tree().process_frame # 1フレーム待つ
 	for deck in [Global.deck1, Global.enemy_deck]:
@@ -109,6 +109,8 @@ func battle_start_animation() -> void:
 	$button/next_sign.modulate.a = 0
 	$button/change.modulate.a = 0
 	$button/main.position.y = 1080
+	dialog.set_tab_disabled(1, true)
+	dialog.set_tab_disabled(2, true)
 	for button: Button in $button/main.get_children():
 			button.disabled = true
 	
@@ -149,6 +151,8 @@ func monster_ready(player: bool) -> void:
 	if player_monster.get_node("SPD").value == enemy_monster.get_node("SPD").value:
 		enemy_monster.get_node("SPD").value -= 10
 	if player == true: # プレイヤーが行動可能になった時
+		dialog.set_tab_disabled(1, false)
+		dialog.set_tab_disabled(2, false)
 		$button.monster = player_monster # 現在フィールドにいるモンスターを渡す
 		player_monster.mp_setter(player_monster.monster.supplyMP, false) # mp回復
 		
@@ -252,6 +256,8 @@ func select_command(i: int) -> void:
 ## 技発動関数[br]player:trueなら味方の行動、falseなら相手の行動
 func command_selected(player: bool, monster: BattleMonster, action: Action, index: int)\
  -> void:
+	dialog.set_tab_disabled(1, true)
+	dialog.set_tab_disabled(2, true)
 	var dialog_text: Array[String] # ダイアログに表示するテキストを収納する
 	# 何らかの理由で発動できない技の場合に中断する処理
 	# 第1形態から最終形態にスキップするのを防止

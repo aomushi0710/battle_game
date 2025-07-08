@@ -6,6 +6,7 @@ var arrow_tween: Tween
 var pause_tween: Tween
 
 func _ready() -> void:
+	super()
 	tutorial_mode = true
 	pause_text.hide()
 	arrow_mark.hide()

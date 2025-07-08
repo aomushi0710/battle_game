@@ -348,12 +348,11 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 20
 theme_override_constants/shadow_outline_size = 10
 bbcode_enabled = true
-text = "[color=yellow][b]Tutorial Start![/b][/color]"
+text = "[color=yellow][b]Battle Start![/b][/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="tree_entered" from="background" to="background" method="_on_tree_entered"]
-[connection signal="tree_entered" from="battle" to="battle" method="_on_tree_entered"]
 [connection signal="tree_entered" from="battle/button" to="battle/button" method="_on_tree_entered"]
 [connection signal="button_up" from="battle/button/change" to="battle" method="_on_change_button_up"]
 [connection signal="button_up" from="battle/button/戻る" to="battle/button" method="_on_戻る_button_up"]
