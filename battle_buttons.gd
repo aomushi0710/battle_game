@@ -9,8 +9,10 @@ var selected_action_button: Button
 var button_index: int
 var selected_action: Action
 var tween: Tween
-
-signal battle_finished
+## チュートリアル用:ステータス表示の、playerかenemyかを選択するボタンが押された時のシグナル
+signal player_or_enemy_button_pressed
+## ステータスのテキストをページ送りされた時のシグナル
+signal status_paging
 
 func _ready() -> void: # 初期値
 	$"戻る".disabled = true
@@ -187,7 +189,9 @@ func show_player_or_enemy_button() -> void:
 			button.position = Vector2(220, 1020)
 			button.button_up.connect(func(): # ラムダ関数で次のボタン遷移処理
 				await hide_player_or_enemy_button()
-				show_monsters_button(true))
+				show_monsters_button(true)
+				player_or_enemy_button_pressed.emit())
+			
 		else:
 			button.name = "enemy"
 			button.text = "Enemy\nStatus"
@@ -195,6 +199,8 @@ func show_player_or_enemy_button() -> void:
 			button.button_up.connect(func():
 				await hide_player_or_enemy_button()
 				show_monsters_button(false))
+			if $"../".tutorial_mode == true:
+				button.disabled = true
 		add_child(button)
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property($player, "position:y", 865, 0.5)\
@@ -386,12 +392,25 @@ func status_dialog(i: int) -> void:
 		for j in MONSTER_NAME_LIMIT - len(monster_name): # 空白を増やして10文字に
 			monster_name += "　" # 空白は全角である
 	
-	$dialogtab.text_setter(1, false, [
-	"%s[color=coral]HP :%3d[/color]   [color=green]SPD:%3d[/color]\n" % 
-	[monster_name, status_monster.maxHP, status_monster.SPD] + 
-	"[color=aqua]MP :%3d / %3d[/color]   " % 
-	[status_monster.supplyMP, status_monster.maxMP] + 
-	"[color=red]ATK:%3d[/color]   [color=light_blue]DEF:%3d[/color]\n" % 
-	[status_monster.ATK, status_monster.DEF] + "[color=aqua](supply / max)[/color]  " + 
-	"[color=dodger_blue]MAG:%3d[/color]   [color=violet]RES:%3d[/color]" % 
-	[status_monster.MAG, status_monster.RES]])
+	# チュートリアル中は、ページ送りを待つ
+	if $"../".tutorial_mode == true:
+		await $dialogtab.text_setter(1, $"../".tutorial_mode, [
+		"%s[color=coral]HP :%3d[/color]   [color=green]SPD:%3d[/color]\n" % 
+		[monster_name, status_monster.maxHP, status_monster.SPD] + 
+		"[color=aqua]MP :%3d / %3d[/color]   " % 
+		[status_monster.supplyMP, status_monster.maxMP] + 
+		"[color=red]ATK:%3d[/color]   [color=light_blue]DEF:%3d[/color]\n" % 
+		[status_monster.ATK, status_monster.DEF] + "[color=aqua](supply / max)[/color]  " + 
+		"[color=dodger_blue]MAG:%3d[/color]   [color=violet]RES:%3d[/color]" % 
+		[status_monster.MAG, status_monster.RES]])
+		status_paging.emit()
+	else:
+		$dialogtab.text_setter(1, $"../".tutorial_mode, [
+		"%s[color=coral]HP :%3d[/color]   [color=green]SPD:%3d[/color]\n" % 
+		[monster_name, status_monster.maxHP, status_monster.SPD] + 
+		"[color=aqua]MP :%3d / %3d[/color]   " % 
+		[status_monster.supplyMP, status_monster.maxMP] + 
+		"[color=red]ATK:%3d[/color]   [color=light_blue]DEF:%3d[/color]\n" % 
+		[status_monster.ATK, status_monster.DEF] + "[color=aqua](supply / max)[/color]  " + 
+		"[color=dodger_blue]MAG:%3d[/color]   [color=violet]RES:%3d[/color]" % 
+		[status_monster.MAG, status_monster.RES]])

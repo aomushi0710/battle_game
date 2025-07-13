@@ -22,7 +22,7 @@ func _ready() -> void:
 	global_flavor_text = [["これは...なんとも作りが粗い。\nテストプレイの気配がする。"]]
 	tab_list[0] = [""] # test
 	tab_list[1] = ["Status ボタンから味方と相手の\nステータスを確認できます！"]
-	tab_list[2] = [""]
+	tab_list[2] = ""
 	current_tab = 0
 	_on_tab_changed(current_tab) # 初期値タブのテキストをアニメーション
 
@@ -104,6 +104,8 @@ func text_animation(tab: int, page: int) -> void:
 	if tween: # tweenがすでに動作しているなら停止
 		tween.kill()
 	var label: RichTextLabel = get_child(tab).get_child(0) # タブのラベル取得
+	if tab == 2:
+		pass
 	label.visible_characters = 0 # 隠す
 	label.text = tab_list[tab][page]
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # テキストアニメーション再生
@@ -119,8 +121,10 @@ func text_animation(tab: int, page: int) -> void:
 func next_sign_on() -> void:
 	if next_sign_tween and next_sign_tween.is_running():
 		next_sign_tween.kill()
-		await get_tree().process_frame
-	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND # マウスカーソルを指差しに
+	for child in get_children(): # マウスカーソルを指差しに
+		child.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		for c in child.get_children():
+			c.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	$"../next_sign".modulate = Color(Color.WHITE) # 初期化
 	$"../next_sign".position.y = 1025
 	next_sign_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # 矢印アニメーション再生
@@ -134,8 +138,10 @@ func next_sign_on() -> void:
 func next_sign_off() -> void:
 	if next_sign_tween and next_sign_tween.is_running():
 		next_sign_tween.kill()
-		await get_tree().process_frame
-	mouse_default_cursor_shape = Control.CURSOR_ARROW # マウスカーソルをデフォルトに
+	for child in get_children(): # マウスカーソルをデフォルトに
+		child.mouse_default_cursor_shape = Control.CURSOR_ARROW
+		for c in child.get_children():
+			c.mouse_default_cursor_shape = Control.CURSOR_ARROW
 	$"../next_sign".modulate = Color(Color.DIM_GRAY)
 	next_sign_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	next_sign_tween.tween_property($"../next_sign", "position:y", 1025, 0.5)\

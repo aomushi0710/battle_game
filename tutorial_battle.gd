@@ -89,6 +89,7 @@ func _on_cutin_ended() -> void:
 func _on_player_ready() -> void:
 	$button/main/Action.disabled = true
 	$button/main/Item.disabled = true
+	$button/main/Status.disabled = true
 	arrow_mark_setter(100, "red", 90, Vector2(790, 660))
 	await dialog.text_setter(0, true, [
 		"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
@@ -98,7 +99,22 @@ func _on_player_ready() -> void:
 		"になるたびに[color=aqua][b]supplyMP[/b][/color]の値だけ回復！\n" + 
 		"バトルは[color=aqua][b]maxMP[/b][/color]の20%から始まるぞ。"])
 	
+	arrow_mark_setter(150, "red", 0, Vector2(665, 640))
+	$button/main/Status.disabled = false
 	dialog.text_setter(0, false, [
 		"それでは、このモンスターの[b]ステータス[/b]\nを確認してみよう！モンスターは、\n" + 
-		"8つのステータスを持っているぞ！"])
-	arrow_mark_setter(150, "red", 0, Vector2(666, 640))
+		"８つのステータスを持っているぞ！",
+		"[color=yellow]Player Statusボタンを選び、\n味方モンスターのいずれかをクリック[/color]"])
+	await $button.status_paging # TODO statusの表示メッセージをページ送りしたときだけ進むようにする
+	dialog.text_setter(0, false, [
+		"[color=coral]HP[/color]: モンスターの体力。ダメージを\n受けると減っていき、0になると\n行動不能になってしまう。",
+		"[color=aqua]MP[/color]: モンスターの持つ魔力。一部の技を使うときに必要になる。"
+	])
+
+
+func _on_status_button_up() -> void:
+	arrow_mark_setter(150, "red", 0, Vector2(245, 640))
+
+
+func _on_button_player_or_enemy_button_pressed() -> void:
+	arrow_mark_setter(150, "red", 0, Vector2(245, 640))

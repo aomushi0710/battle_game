@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b75oop3n8nq72"]
+[gd_scene load_steps=7 format=3 uid="uid://b75oop3n8nq72"]
 
 [ext_resource type="PackedScene" uid="uid://bhqk4iva02mmc" path="res://新バトル.tscn" id="1_7n6eb"]
 [ext_resource type="Script" uid="uid://k0a6gnwbx4e1" path="res://tutorial.gd" id="1_yb1ct"]
 [ext_resource type="Script" uid="uid://dqntmojta1yls" path="res://tutorial_battle.gd" id="3_ehuit"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="4_5mrt3"]
+[ext_resource type="Script" uid="uid://bghjkvjk5m5n1" path="res://tutorial_dialogtab.gd" id="4_rwowx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mrt3"]
 bg_color = Color(0, 0, 0, 0.501961)
@@ -16,14 +17,17 @@ script = ExtResource("1_yb1ct")
 [node name="battle" parent="Node2D" index="1"]
 script = ExtResource("3_ehuit")
 
+[node name="dialogtab" parent="Node2D/battle/button" index="5"]
+script = ExtResource("4_rwowx")
+
 [node name="battlestart" parent="Node2D" index="5"]
 text = "[color=yellow][b][color=green]Tutorial[/color] Start![/b][/color]"
 
 [node name="arrow_mark" type="RichTextLabel" parent="Node2D"]
-offset_left = 664.0
-offset_top = 609.0
-offset_right = 814.0
-offset_bottom = 759.0
+offset_left = 245.0
+offset_top = 707.0
+offset_right = 395.0
+offset_bottom = 857.0
 pivot_offset = Vector2(75, 75)
 theme_override_constants/outline_size = 30
 bbcode_enabled = true
@@ -46,5 +50,7 @@ vertical_alignment = 1
 
 [connection signal="cutin_ended" from="Node2D/battle" to="Node2D/battle" method="_on_cutin_ended"]
 [connection signal="player_ready" from="Node2D/battle" to="Node2D/battle" method="_on_player_ready"]
+[connection signal="player_or_enemy_button_pressed" from="Node2D/battle/button" to="Node2D/battle" method="_on_button_player_or_enemy_button_pressed"]
+[connection signal="button_up" from="Node2D/battle/button/main/Status" to="Node2D/battle" method="_on_status_button_up"]
 
 [editable path="Node2D"]
