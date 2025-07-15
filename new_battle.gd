@@ -11,6 +11,7 @@ var enemy_deck: Array[BattleMonster]
 var player_monster: BattleMonster
 var enemy_monster: BattleMonster
 var tutorial_mode: bool = false ## true:チュートリアル
+var back_disabled: bool = false ## 全ての戻るボタンが true:使用不可 false:使用可能
 ## 死亡時に交代するモンスターが選ばれるまで待つawait用シグナル
 signal changed
 ## チュートリアル用:バトル開始カットイン完了シグナル

@@ -96,7 +96,8 @@ func hide_main_button() -> void:
 	await tween.finished
 	for button: Button in $main.get_children():
 		button.hide()
-	$"戻る".disabled = false
+	if $"../".back_disabled == false:
+		$"戻る".disabled = false
 
 ## action出現アニメーション
 func show_action_button() -> void:
@@ -199,8 +200,6 @@ func show_player_or_enemy_button() -> void:
 			button.button_up.connect(func():
 				await hide_player_or_enemy_button()
 				show_monsters_button(false))
-			if $"../".tutorial_mode == true:
-				button.disabled = true
 		add_child(button)
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property($player, "position:y", 865, 0.5)\
@@ -208,8 +207,10 @@ func show_player_or_enemy_button() -> void:
 	tween.parallel().tween_property($enemy, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	$player.disabled = false
-	$enemy.disabled = false
-	$"戻る".disabled = false
+	if $"../".tutorial_mode == false:
+		$enemy.disabled = false
+	if $"../".back_disabled == false:
+		$"戻る".disabled = false
 
 ## 味方か相手を選択させるボタン消滅アニメーション
 func hide_player_or_enemy_button() -> void:
@@ -243,7 +244,8 @@ func show_monsters_button(player: bool) -> void:
 	await tween.finished
 	for child: TextureButton in $target.get_children():
 		child.disabled = false
-	$"戻る".disabled = false
+	if $"../".back_disabled == false:
+		$"戻る".disabled = false
 
 ## デッキモンスター一覧ボタン消滅アニメーション
 func hide_monsters_button() -> void:
@@ -295,8 +297,12 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 
 
 func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げられないバトル用の処理なども作る
-	$"../確認メッセージ".title = "バトル終了"
-	$"../確認メッセージ".dialog_text = "バトルに敗北したことになりますが、本当に逃げますか？"
+	if $"../".tutorial_mode == true:
+		$"../確認メッセージ".title = "チュートリアル終了"
+		$"../確認メッセージ".dialog_text = "チュートリアルを終わりますか？\nチュートリアルはいつでもプレイ可能です。"
+	else:
+		$"../確認メッセージ".title = "バトル終了"
+		$"../確認メッセージ".dialog_text = "バトルに敗北したことになりますが、本当に逃げますか？"
 	$"../確認メッセージ".popup_centered()
 
 

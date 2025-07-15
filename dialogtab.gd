@@ -67,13 +67,20 @@ func _on_tab_changed(tab: int) -> void:
 		current_page = 0
 		text_animation(tab, 0)
 	else: # バトルログ表示処理
+		get_child(tab).get_child(0).text = "" # 初期化
 		current_tab = tab
+		for child in get_children(): # マウスカーソルをデフォルトに
+			child.mouse_default_cursor_shape = Control.CURSOR_ARROW
+			for c in child.get_children():
+				c.mouse_default_cursor_shape = Control.CURSOR_ARROW
 		dialog_expand_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		dialog_expand_tween.tween_property(self, "size:y", 994, 0.5)\
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 		dialog_expand_tween.parallel().tween_property(self, "position:y", 76, 0.5)\
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 		dialog_expand_tween.parallel().tween_property($"../next_sign", "modulate:a", 0, 0.5)
+		await dialog_expand_tween.finished
+		text_animation(tab, -1) # ページはない
 
 ## _inputもしくはlabel_gui_inputから、次のページを指定してtext_animationを呼ぶ関数
 func text_change_next() -> void:
@@ -105,7 +112,8 @@ func text_animation(tab: int, page: int) -> void:
 		tween.kill()
 	var label: RichTextLabel = get_child(tab).get_child(0) # タブのラベル取得
 	if tab == 2:
-		pass
+		label.text = tab_list[tab]
+		return
 	label.visible_characters = 0 # 隠す
 	label.text = tab_list[tab][page]
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # テキストアニメーション再生

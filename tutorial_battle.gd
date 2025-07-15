@@ -5,6 +5,7 @@ extends "new_battle.gd"
 var arrow_tween: Tween
 var pause_tween: Tween
 
+
 func _ready() -> void:
 	super()
 	tutorial_mode = true
@@ -87,6 +88,7 @@ func _on_cutin_ended() -> void:
 
 ## プレイヤー行動可能時に流れるメッセージ設定
 func _on_player_ready() -> void:
+	back_disabled = true
 	$button/main/Action.disabled = true
 	$button/main/Item.disabled = true
 	$button/main/Status.disabled = true
@@ -105,11 +107,12 @@ func _on_player_ready() -> void:
 		"それでは、このモンスターの[b]ステータス[/b]\nを確認してみよう！モンスターは、\n" + 
 		"８つのステータスを持っているぞ！",
 		"[color=yellow]Player Statusボタンを選び、\n味方モンスターのいずれかをクリック[/color]"])
-	await $button.status_paging # TODO statusの表示メッセージをページ送りしたときだけ進むようにする
+	await $button.status_paging
 	dialog.text_setter(0, false, [
 		"[color=coral]HP[/color]: モンスターの体力。ダメージを\n受けると減っていき、0になると\n行動不能になってしまう。",
-		"[color=aqua]MP[/color]: モンスターの持つ魔力。一部の技を使うときに必要になる。"
+		"[color=aqua]MP[/color]: モンスターの持つ魔力。\n一部の技を使うときに必要になる。\nMPには2つのパラメータがある。"
 	])
+	back_disabled = false
 
 
 func _on_status_button_up() -> void:

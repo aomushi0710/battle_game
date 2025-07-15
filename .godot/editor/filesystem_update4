@@ -17,6 +17,3 @@ res://新バトル.tscn
 res://tutorial.tscn
 res://battle_monster.tscn
 res://debug.tscn
-res://tutorial_battle.gd
-res://tutorial_dialogtab.gd
-res://dialogtab.gd

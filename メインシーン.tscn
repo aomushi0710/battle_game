@@ -117,6 +117,15 @@ horizontal_alignment = 2
 [node name="Popup" type="Popup" parent="."]
 visible = true
 
+[node name="copyright" type="RichTextLabel" parent="."]
+offset_left = 95.6251
+offset_top = 630.0
+offset_right = 406.625
+offset_bottom = 668.0
+theme = ExtResource("2_m5oqv")
+bbcode_enabled = true
+text = "[i](C) 2025 aomushi0710[i]"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="toggled" from="help" to="help" method="_on_toggled"]
 [connection signal="button_up" from="debug" to="." method="_on_debug_button_up"]
