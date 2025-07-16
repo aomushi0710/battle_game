@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("2_h0nk3")
-id = 0
+id = -1
 name = ""
 aka = ""
 element = Array[ExtResource("2_6wnn7")]([])
@@ -19,5 +19,6 @@ touch = false
 ability = Array[ExtResource("1_h0nk3")]([])
 ability_chance = Array[int]([])
 ability_power = Array[int]([])
+ability_range = Array[int]([])
 description = ""
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

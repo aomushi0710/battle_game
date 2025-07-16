@@ -1,6 +1,6 @@
+Action
 Ability
 Effect
-Action
 Monster
 Element
 Resource

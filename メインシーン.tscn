@@ -1,14 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://36mc0q6q01ow"]
+[gd_scene load_steps=9 format=3 uid="uid://36mc0q6q01ow"]
 
 [ext_resource type="Script" uid="uid://cpvp8wu65fblw" path="res://メインシーン.gd" id="1_0gvvv"]
 [ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help.gd" id="2_05cje"]
+[ext_resource type="FontFile" uid="uid://b2cvy5t2fy5pr" path="res://Nosutaru-dotMPlusH-10-Regular.ttf" id="2_lf3g1"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="2_m5oqv"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="4_lf3g1"]
 
 [sub_resource type="Theme" id="Theme_4elko"]
+default_font = ExtResource("2_lf3g1")
 default_font_size = 35
 
 [sub_resource type="Theme" id="Theme_c728d"]
+default_font = ExtResource("2_lf3g1")
 default_font_size = 35
 
 [sub_resource type="Theme" id="Theme_0c3is"]

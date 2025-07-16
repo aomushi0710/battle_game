@@ -139,6 +139,7 @@ modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 offset_right = 200.0
 offset_bottom = 200.0
+tooltip_text = "モンスターの技を選ぶ"
 text = "Action"
 
 [node name="Item" type="Button" parent="battle/button/main"]

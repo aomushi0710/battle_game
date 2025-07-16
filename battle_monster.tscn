@@ -12,8 +12,10 @@
 [ext_resource type="Script" uid="uid://d3uepow15nrsq" path="res://spd_gauge.gd" id="10_v6f8v"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="10_xaxbf"]
 [ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="11_wq4fc"]
-[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="12_c57w8"]
 [ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://sound_effects.tscn" id="13_c57w8"]
+
+[sub_resource type="Theme" id="Theme_xaxbf"]
+default_font_size = 25
 
 [node name="player" type="TextureButton"]
 offset_right = 256.0
@@ -70,7 +72,7 @@ offset_right = 240.0
 offset_bottom = 393.0
 scale = Vector2(1, 0.7)
 mouse_filter = 2
-value = 50.0
+max_value = 0.0
 texture_under = ExtResource("5_x63jt")
 texture_progress = ExtResource("8_xaxbf")
 texture_progress_offset = Vector2(8, 8)
@@ -123,6 +125,7 @@ script = ExtResource("11_wq4fc")
 [node name="name" type="RichTextLabel" parent="name"]
 clip_contents = false
 layout_mode = 2
+theme = SubResource("Theme_xaxbf")
 bbcode_enabled = true
 text = "名前"
 fit_content = true
@@ -141,9 +144,10 @@ color = Color(0, 0, 0, 0.25098)
 
 [node name="effect_detail" type="AcceptDialog" parent="."]
 title = "ATK UP"
-size = Vector2i(154, 154)
+position = Vector2i(8, 32)
+size = Vector2i(240, 218)
 unresizable = true
-theme = ExtResource("12_c57w8")
+theme = ExtResource("10_xaxbf")
 dialog_autowrap = true
 
 [node name="SoundEffects" parent="." instance=ExtResource("13_c57w8")]

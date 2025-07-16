@@ -29,4 +29,5 @@ skill2_name = Array[String]([])
 skill2_id = Array[int]([])
 actions = Array[ExtResource("1_qaqli")]([ExtResource("2_qjykd")])
 description = ""
+flavor_text = Array[String]([])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"

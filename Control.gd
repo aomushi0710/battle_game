@@ -149,10 +149,10 @@ func _on_tutorial_button_up() -> void:
 	Global.deck1.chance = [[50, 30, 10, 10], [40, 40, 10, 10], [40, 40, 20]]
 	Global.deck1.evolution_check(Global.deck1)
 	# 相手チュートリアルデッキ構築
-	Global.enemy_deck.monster_dict = [monster_data[1], monster_data[1], monster_data[1]]
+	Global.enemy_deck.monster_dict = [monster_data[0], monster_data[0], monster_data[0]]
 	for i in range(3):
 		Global.enemy_deck.monster[i] = Global.enemy_deck.monster_dict[i][0].duplicate()
-	Global.enemy_deck.action = [[action_data[1]], [action_data[1]], [action_data[1]]]
+	Global.enemy_deck.action = [[action_data[4]], [action_data[4]], [action_data[4]]]
 	Global.enemy_deck.chance = [[100], [100], [100]]
 	Global.enemy_deck.evolution_check(Global.enemy_deck)
 	

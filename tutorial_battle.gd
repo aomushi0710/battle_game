@@ -109,8 +109,15 @@ func _on_player_ready() -> void:
 		"[color=yellow]Player Statusボタンを選び、\n味方モンスターのいずれかをクリック[/color]"])
 	await $button.status_paging
 	dialog.text_setter(0, false, [
-		"[color=coral]HP[/color]: モンスターの体力。ダメージを\n受けると減っていき、0になると\n行動不能になってしまう。",
-		"[color=aqua]MP[/color]: モンスターの持つ魔力。\n一部の技を使うときに必要になる。\nMPには2つのパラメータがある。"
+		"[color=coral]HP[/color]: モンスターの体力。ダメージを\n" + 
+		"受けると減っていき、０になると\n[color=red]行動不能[/color]になってしまう。",
+		"[color=aqua]MP[/color]: モンスターの持つ魔力。\n一部の技を使うときに必要になる。\n" + 
+		"そして[color=aqua]MP[/color]には[color=yellow]２つのパラメータ[/color]がある。", 
+		"[color=aqua]supplyMP[/color]:1ターンで回復する[color=aqua]MP[/color]の量。\n" + 
+		"[color=aqua]maxMP[/color]:[color=aqua]MP[/color]をため込める量の限界。\n" + 
+		"バトルは[color=aqua]maxMP[/color]の20%の状態で始まる。", 
+		""
+		
 	])
 	back_disabled = false
 

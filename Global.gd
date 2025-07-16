@@ -1,8 +1,8 @@
 extends Node2D
 
 # バージョン管理 定数
-const VERSION_TEXT: String = "ver 4.1.0(β)" ## バージョン
-const VERSION: float = 4.1 ## 比較可能バージョン セーブデータ整合性チェック用
+const VERSION_TEXT: String = "ver 4.2.0(β)" ## バージョン
+const VERSION: float = 4.2 ## 比較可能バージョン セーブデータ整合性チェック用
 const VERSION_BETA: bool = true ## true:ベータ版 false:正式リリース版
 
 var monster_data = {}
@@ -396,7 +396,8 @@ func deck_creator(deck: Deck) -> void:
 	for i in range(3): # 全モンスターからランダムに選ぶ。iは0-2が入りモンスターの位置を表す。
 		# Global.enemy_deck[i]["id"] は敵モンスター[i]枠目のモンスターidが入ります
 		while monster_id in monster_id_list: # 被りがでなくなるまで繰り返す
-			monster_id = randi() % (len(monster_data) - 1) + 1
+			# ID-1とID0は対象外、randi()で割った値は0を含むので+1して修正
+			monster_id = randi() % (len(monster_data) - 2) + 1
 		monster_id_list.append(monster_id)
 		
 		deck.monster_dict[i] = monster_data[monster_id]

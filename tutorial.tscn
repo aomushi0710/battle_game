@@ -17,6 +17,9 @@ script = ExtResource("1_yb1ct")
 [node name="battle" parent="Node2D" index="1"]
 script = ExtResource("3_ehuit")
 
+[node name="enemy_deck" parent="Node2D/battle" index="1"]
+visible = false
+
 [node name="dialogtab" parent="Node2D/battle/button" index="5"]
 script = ExtResource("4_rwowx")
 
@@ -46,8 +49,8 @@ offset_bottom = 381.0
 theme = ExtResource("4_5mrt3")
 theme_override_styles/normal = SubResource("StyleBoxFlat_5mrt3")
 bbcode_enabled = true
-text = "[i][b][color=red]バトル一時停止中...[/color]
-ダイアログボックスの説明を読もう！[/b][/i]"
+text = "[b][i][color=red]バトル一時停止中...[/color]
+ダイアログボックスの説明を読もう！[/i][/b]"
 horizontal_alignment = 1
 vertical_alignment = 1
 

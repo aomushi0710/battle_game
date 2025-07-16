@@ -12,7 +12,7 @@ func _on_戻る_button_up():
 
 func _on_node_2d_tree_entered() -> void:
 	# モンスターの数だけボタンを生成する関数
-	for i in range(1, len(monster_data)): # monster_data[i]:Dictionary[Monster]型
+	for i in range(1, len(monster_data) - 1): # monster_data[i]:Dictionary[Monster]型
 		var button = TextureButton.new()
 		
 		button.name = monster_data[i][0].name
