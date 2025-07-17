@@ -113,6 +113,7 @@ func text_animation(tab: int, page: int) -> void:
 	var label: RichTextLabel = get_child(tab).get_child(0) # タブのラベル取得
 	if tab == 2:
 		label.text = tab_list[tab]
+		label.get_v_scroll_bar().value = label.get_v_scroll_bar().max_value # 1番下でセット
 		return
 	label.visible_characters = 0 # 隠す
 	label.text = tab_list[tab][page]

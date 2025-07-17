@@ -108,23 +108,38 @@ func _on_player_ready() -> void:
 		"８つのステータスを持っているぞ！",
 		"[color=yellow]Player Statusボタンを選び、\n味方モンスターのいずれかをクリック[/color]"])
 	await $button.status_paging
-	dialog.text_setter(0, false, [
-		"[color=coral]HP[/color]: モンスターの体力。ダメージを\n" + 
+	await dialog.text_setter(0, true, [
+		"[color=coral][b]HP[/b][/color]: モンスターの体力。ダメージを\n" + 
 		"受けると減っていき、０になると\n[color=red]行動不能[/color]になってしまう。",
-		"[color=aqua]MP[/color]: モンスターの持つ魔力。\n一部の技を使うときに必要になる。\n" + 
+		"[color=aqua][b]MP[/b][/color]: モンスターの持つ魔力。\n一部の技を使うときに必要になる。\n" + 
 		"そして[color=aqua]MP[/color]には[color=yellow]２つのパラメータ[/color]がある。", 
-		"[color=aqua]supplyMP[/color]:1ターンで回復する[color=aqua]MP[/color]の量。\n" + 
-		"[color=aqua]maxMP[/color]:[color=aqua]MP[/color]をため込める量の限界。\n" + 
+		"[color=aqua][b]supplyMP[/b][/color]:1ターンで回復する[color=aqua]MP[/color]の量。\n" + 
+		"[color=aqua][b]maxMP[/b][/color]:[color=aqua]MP[/color]をため込める量の限界。\n" + 
 		"バトルは[color=aqua]maxMP[/color]の20%の状態で始まる。", 
-		""
-		
-	])
+		"[color=green][b]SPD[/b][/color]:モンスターの素早さ。\nこの値が大きければ大きいほど、\n" + 
+		"[color=green]SPDゲージ[/color]が溜まる速度が上がる。", 
+		"[color=red][b]ATK[/b][/color]:モンスターの物理攻撃力。\n" + 
+		"[color=light_blue][b]DEF[/b][/color]:モンスターの物理防御力。\n" + 
+		"[color=red]物理技[/color]は、このステータスが使われる。", 
+		"[color=dodger_blue][b]MAG[/b][/color]:モンスターの魔法攻撃力。\n" + 
+		"[color=purple][b]RES[/b][/color]:モンスターの魔法防御力。\n" + 
+		"[color=dodger_blue]魔法技[/color]は、このステータスが使われる。", 
+		"バトル中はいつでも敵と味方の\nステータスを確認できるので、\n有効活用して戦おう！"])
 	back_disabled = false
+	$button/戻る.disabled = false
+	arrow_mark_setter(150, "red", 0, Vector2(45, 775))
+	dialog.text_setter(0, false, [
+		"それでは、敵を攻撃してみよう！\n[color=yellow]戻るボタンを2回押してから、\n" + 
+		"Actionボタンをクリック！[/color]"])
+	await $button.back
+	$button/player.disabled = true
+	await $button.back
+	arrow_mark_setter(150, "red", 0, Vector2(248, 640))
 
 
 func _on_status_button_up() -> void:
-	arrow_mark_setter(150, "red", 0, Vector2(245, 640))
+	arrow_mark_setter(150, "red", 0, Vector2(248, 640))
 
 
 func _on_button_player_or_enemy_button_pressed() -> void:
-	arrow_mark_setter(150, "red", 0, Vector2(245, 640))
+	arrow_mark_setter(150, "red", 0, Vector2(248, 640))

@@ -53,6 +53,7 @@ func _ready() -> void:
 					monster.button_up.connect(func():monster_button_up(monster.index))
 				Global.enemy_deck:
 					monster.player = false
+					monster.mouse_filter = Control.MOUSE_FILTER_IGNORE
 					monster.name = "enemy%d" % (i + 1)
 					if i == 0:
 						enemy_monster = monster

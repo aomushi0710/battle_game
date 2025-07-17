@@ -11,8 +11,10 @@ var selected_action: Action
 var tween: Tween
 ## チュートリアル用:ステータス表示の、playerかenemyかを選択するボタンが押された時のシグナル
 signal player_or_enemy_button_pressed
-## ステータスのテキストをページ送りされた時のシグナル
+## チュートリアル用:ステータスのテキストをページ送りされた時のシグナル
 signal status_paging
+## チュートリアル用:戻るボタンが押された時のシグナル
+signal back
 
 func _ready() -> void: # 初期値
 	$"戻る".disabled = true
@@ -294,6 +296,8 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 		5: # 戻る モンスター一覧 -> 味方か相手選択
 			await hide_monsters_button()
 			show_player_or_enemy_button()
+	if $"../".tutorial_mode == true:
+		back.emit()
 
 
 func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げられないバトル用の処理なども作る

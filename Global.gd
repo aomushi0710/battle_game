@@ -62,7 +62,7 @@ var tutorial_scene = load("res://tutorial.tscn")
 @onready var deck_name: String
 @onready var save_mode := true ## true:デッキセーブ時 false:デッキロード時
 
-const spd_gauge = 10000
+const spd_gauge = 5000
 const spd_correction = 30 ## spdゲージ増加量補正 SPD * spd_correction
 const buff_list = ["ATK_up","DEF_up","MAG_up","RES_up"]
 const debuff_list = ["ATK_down","DEF_down","MAG_down","RES_down"]

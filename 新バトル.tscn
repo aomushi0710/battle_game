@@ -55,6 +55,7 @@ theme = ExtResource("4_jjjva")
 script = ExtResource("2_arwha")
 
 [node name="player_deck" type="Control" parent="battle"]
+z_index = -1
 layout_mode = 2
 anchors_preset = 0
 offset_left = -750.0
@@ -70,6 +71,7 @@ scale = Vector2(0.75, 0.75)
 theme_override_constants/separation = 0
 
 [node name="enemy_deck" type="Control" parent="battle"]
+z_index = -1
 layout_direction = 3
 anchors_preset = 0
 offset_left = -2630.0
@@ -95,6 +97,7 @@ script = ExtResource("9_hwahx")
 
 [node name="change" type="TextureButton" parent="battle/button"]
 process_mode = 3
+z_index = -1
 layout_mode = 0
 offset_left = 151.0
 offset_top = 455.0
@@ -207,6 +210,7 @@ offset_left = 904.0
 offset_top = 800.0
 offset_right = 1898.0
 offset_bottom = 1070.0
+mouse_filter = 0
 theme = ExtResource("13_sraw4")
 theme_override_constants/outline_size = 10
 theme_override_constants/side_margin = 0
@@ -214,7 +218,9 @@ current_tab = 0
 script = ExtResource("14_3ru5v")
 
 [node name="メイン" type="MarginContainer" parent="battle/button/dialogtab"]
+z_index = 2
 layout_mode = 2
+mouse_filter = 0
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 17
 theme_override_constants/margin_right = 30
@@ -222,7 +228,7 @@ theme_override_constants/margin_bottom = 17
 metadata/_tab_index = 0
 
 [node name="text" type="RichTextLabel" parent="battle/button/dialogtab/メイン"]
-z_index = 1
+z_index = 2
 layout_mode = 2
 bbcode_enabled = true
 text = "技名の最大文字数は全角１８文字まで！
@@ -231,7 +237,9 @@ text = "技名の最大文字数は全角１８文字まで！
 
 [node name="ステータス" type="MarginContainer" parent="battle/button/dialogtab"]
 visible = false
+z_index = 2
 layout_mode = 2
+mouse_filter = 0
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 17
 theme_override_constants/margin_right = 30
@@ -239,7 +247,7 @@ theme_override_constants/margin_bottom = 17
 metadata/_tab_index = 1
 
 [node name="text" type="RichTextLabel" parent="battle/button/dialogtab/ステータス"]
-z_index = 1
+z_index = 2
 layout_mode = 2
 bbcode_enabled = true
 text = " 　　　　　　　　　　[color=coral]HP :999[/color] [color=green]SPD:999[/color]
@@ -248,7 +256,9 @@ text = " 　　　　　　　　　　[color=coral]HP :999[/color] [color=green
 
 [node name="バトルログ" type="MarginContainer" parent="battle/button/dialogtab"]
 visible = false
+z_index = 2
 layout_mode = 2
+mouse_filter = 0
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 17
 theme_override_constants/margin_right = 30
@@ -256,10 +266,11 @@ theme_override_constants/margin_bottom = 17
 metadata/_tab_index = 2
 
 [node name="text" type="RichTextLabel" parent="battle/button/dialogtab/バトルログ"]
-z_index = 1
+z_index = 2
 layout_mode = 2
 theme_override_constants/outline_size = 0
 bbcode_enabled = true
+scroll_following = true
 
 [node name="next_sign" type="RichTextLabel" parent="battle/button"]
 z_index = 2
