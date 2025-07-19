@@ -34,10 +34,11 @@ text = "終わる"
 text = "[color=yellow][b][color=green]Tutorial[/color] Start![/b][/color]"
 
 [node name="arrow_mark" type="RichTextLabel" parent="Node2D"]
-offset_left = 45.0
-offset_top = 775.0
-offset_right = 195.0
-offset_bottom = 925.0
+offset_left = 881.0
+offset_top = 133.0
+offset_right = 1031.0
+offset_bottom = 283.0
+rotation = 3.14159
 pivot_offset = Vector2(75, 75)
 theme_override_constants/outline_size = 30
 bbcode_enabled = true

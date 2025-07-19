@@ -18,6 +18,8 @@ signal changed
 signal cutin_ended
 ## チュートリアル用:プレイヤーモンスター行動可能シグナル
 signal player_ready
+## チュートリアル用:モンスター行動完了シグナル
+signal command_ended
 
 # 味方と敵のデッキを準備
 func _ready() -> void:
@@ -395,8 +397,10 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 			dialog.now_flavor_text = \
 			dialog.global_flavor_text[randi() % len(dialog.global_flavor_text)]
 	# flavor_text一覧更新
-	
-	dialog.flavor_text_setter(dialog.now_flavor_text) # フレーバーテキスト設定
+	if tutorial_mode == false:
+		dialog.flavor_text_setter(dialog.now_flavor_text) # フレーバーテキスト設定
+	else:
+		command_ended.emit()
 
 ## バトル終了処理 win true:勝利 false:敗北
 func battle_finish(win: bool) -> void:

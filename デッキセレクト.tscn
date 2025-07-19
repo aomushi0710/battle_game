@@ -337,9 +337,9 @@ vertical_alignment = 1
 [node name="new_battle" type="Button" parent="Control"]
 layout_mode = 0
 offset_left = 500.0
-offset_top = 500.0
+offset_top = 562.5
 offset_right = 648.0
-offset_bottom = 548.0
+offset_bottom = 610.5
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_0twro")
 text = "バトル！"
@@ -347,11 +347,25 @@ text = "バトル！"
 [node name="tutorial" type="Button" parent="Control"]
 layout_mode = 0
 offset_left = 700.0
-offset_top = 500.0
+offset_top = 562.5
 offset_right = 1001.0
-offset_bottom = 548.0
+offset_bottom = 610.5
+tooltip_text = "バトル方法を実戦形式で身に着けます！"
 theme = SubResource("Theme_1emw3")
 text = "🔰チュートリアル"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_left = 123.125
+offset_top = 296.25
+offset_right = 1034.13
+offset_bottom = 476.25
+bbcode_enabled = true
+text = "左上のデッキ枠を押して、3枠分モンスターを選ぼう！
+(サクッと遊びたい時は、[color=dodger_blue]おまかせボタン[/color]でワンクリック生成！)
+
+モンスターはそれぞれ異なる[b]ステータス[/b]と[b]技[/b]を持っている。
+[color=yellow][b]技[/b]はバトル中に抽選される確率を自分で操作することができるぞ！[/color]"
 
 [node name="fade" type="ColorRect" parent="."]
 offset_right = 1920.0

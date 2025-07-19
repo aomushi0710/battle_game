@@ -110,6 +110,7 @@ func _on_player_ready() -> void:
 		"８つのステータスを持っているぞ！",
 		"[color=yellow]Player Statusボタンを選び、\n味方モンスターのいずれかをクリック[/color]"])
 	await $button.status_paging
+	arrow_mark_hide()
 	await dialog.text_setter(0, true, [
 		"[color=coral][b]HP[/b][/color]: モンスターの体力。ダメージを\n" + 
 		"受けると減っていき、０になると\n[color=red]行動不能[/color]になってしまう。",
@@ -131,7 +132,7 @@ func _on_player_ready() -> void:
 	$button/戻る.disabled = false
 	arrow_mark_setter(150, "red", 0, Vector2(45, 775))
 	dialog.text_setter(0, false, [
-		"それでは、敵を攻撃してみよう！\n[color=yellow]戻るボタンを2回押してから、\n" + 
+		"それでは、敵を攻撃してみよう！\n[color=yellow]戻るボタンを２回押してから、\n" + 
 		"Actionボタンをクリック！[/color]"])
 	await $button.back
 	$button/player.disabled = true
@@ -157,10 +158,36 @@ func _on_action_button_up() -> void:
 		"（チュートリアル\nでは、選ばれる技は固定です）", 
 		"４つの技から１つを選んで攻撃しよう！\nただし、一度候補に選ばれた技は\n" + 
 		"[b]攻撃で使うまで残り続ける[/b]ぞ。"])
-	arrow_mark_setter(150, "red", 0, Vector2(248, 640))
 	$button/action.get_child(0).disabled = false
 	dialog.text_setter(0, false, [
 		"左のアイコンは技の属性を表している。\n" + 
 		"「体当たり」は[img=50]res://image/element/無属性.PNG[/img]無属性だ。\n" + 
-		"１番上の「体当たり」を選んでみよう！"])
-	
+		"[color=yellow]１番上の「体当たり」を選んでみよう！[/color]"])
+	$button/target/target1.disabled = true
+	await $button.description_paging
+	await dialog.text_setter(0, true, [
+		"[b]分類[/b]: 技が参照するステータスの種類。\n" + 
+		"[color=red]物理[/color]は[color=red]ATK[/color]" + 
+		"と[color=light_blue]DEF[/color]を、" + 
+		"[color=dodger_blue]魔法[/color]は[color=dodger_blue]MAG[/color]" + 
+		"と[color=purple]RES[/color]を\n" + 
+		"それぞれ参照してダメージを計算する！", 
+		"[b]対象[/b]: 技の届く効果範囲。\n敵単体だけでなく敵全体を攻撃したり、\n味方単体に効果を与えることもある。", 
+		"[color=aqua][b]MP Cost[/b][/color]:技の発動に必要な[color=aqua]MP[/color]の量。\n" + 
+		"強い技であればあるほど、大量の[color=aqua]MP[/color]を\n要求されやすい。技の選択は慎重に！", 
+		"[color=red][b]Power[/b][/color]:技で与えるダメージの強さ。\n" + 
+		"大きいほど高いダメージになるが、\nステータスが低いとその限りではない。"])
+	$button/target/target1.disabled = false
+	arrow_mark_setter(150, "red", 0, Vector2(248, 640))
+	dialog.text_setter(0, false, [
+		"それでは、相手を攻撃してみよう！\n今回は相手が１人しかいないが、\n" + 
+		"[color=yellow]狙いたいモンスターをクリック！[/color]"])
+	await $button/target/target1.button_up
+	arrow_mark_hide()
+	await command_ended
+	get_tree().paused = true
+	tree_paused()
+	arrow_mark_setter(150, "red", 180, Vector2(881, 133))
+	dialog.text_setter(0, false, [
+		"チュートリアルはここまで！\nバトルに必要な知識　を手に入れた！\n自分で作ったデッキで相手と戦おう！", 
+		"真ん中上の「終わる」ボタンで\nチュートリアルを終了しよう！"])

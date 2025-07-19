@@ -13,6 +13,8 @@ var tween: Tween
 signal player_or_enemy_button_pressed
 ## チュートリアル用:ステータスのテキストをページ送りされた時のシグナル
 signal status_paging
+## チュートリアル用:技説明テキストをページ送りされた時のシグナル
+signal description_paging
 ## チュートリアル用:戻るボタンが押された時のシグナル
 signal back
 
@@ -63,6 +65,8 @@ func _on_action_button_selected(index: int) -> void:
 		$dialogtab.text_setter(0, false, description_text)
 	else:
 		await $dialogtab.text_setter(0, true, description_text)
+		description_paging.emit()
+		
 
 ## メインのactionが押された時
 func _on_action_button_up() -> void:
@@ -137,10 +141,19 @@ func show_target_button() -> void:
 	match selected_action.range: # 攻撃対象ごとに生成する画像が違う
 		1, 2, 6: # 敵単体・敵散開
 			for i in range(3):
-				if death_list[i] == true:
-					$target.get_child(i).texture_normal = load("res://お墓.PNG")
+				if $"../".tutorial_mode == true:
+					match i: # 0体目をカカシに、1,2体目を隠す
+						0:
+							$target.get_child(i).texture_normal = \
+							load("res://image/monster/カカシスライム.PNG")
+						1, 2:
+							$target.get_child(i).texture_normal = \
+							load("res://null.PNG")
 				else:
-					$target.get_child(i).texture_normal = Global.enemy_deck.monster[i].image
+					if death_list[i] == true:
+						$target.get_child(i).texture_normal = load("res://お墓.PNG")
+					else:
+						$target.get_child(i).texture_normal = Global.enemy_deck.monster[i].image
 		3, 4: # 味方単体
 			for i in range(3):
 				if death_list[i + 3] == true:
@@ -159,13 +172,18 @@ func show_target_button() -> void:
 	tween.tween_property($target, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
-	for child in $target.get_children(): # 最後にボタンを使用可能にするが、死体は使用不可にする
-		if child is TextureButton:
-			if child.texture_normal == load("res://お墓.PNG") or \
-			   child.texture_normal == load("res://null.PNG"):
+	if $"../".tutorial_mode == true:
+		for child in $target.get_children(): # いかなるボタンも使用不可
+			if child is TextureButton:
 				child.disabled = true
-			else:
-				child.disabled = false
+	else:
+		for child in $target.get_children(): # 最後にボタンを使用可能にするが、死体は使用不可にする
+			if child is TextureButton:
+				if child.texture_normal == load("res://お墓.PNG") or \
+				   child.texture_normal == load("res://null.PNG"):
+					child.disabled = true
+				else:
+					child.disabled = false
 
 ## target消滅アニメーション
 func hide_target_button() -> void:
