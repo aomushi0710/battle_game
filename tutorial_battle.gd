@@ -18,7 +18,7 @@ func tree_paused() -> void:
 	pause_text.modulate.a = 0
 	if get_tree().paused == true:
 		pause_text.show()
-		pause_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		pause_tween = get_tree().create_tween().bind_node(pause_text).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		pause_tween.set_loops()
 		pause_tween.tween_property(pause_text, "modulate:a", 1, 1)
 		pause_tween.tween_property(pause_text, "modulate:a", 0, 1)
@@ -41,11 +41,11 @@ func arrow_mark_setter(size_: int, color: String, direction: float, pos: Vector2
 	"[font_size=%d][color=%s][b]↓[/b][/color][/font_size]" % [size_, color]
 	arrow_mark.show()
 	
-	arrow_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	arrow_tween = get_tree().create_tween().bind_node(arrow_mark).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	arrow_tween.tween_property(arrow_mark, "size:y", size_, 1)
 	await arrow_tween.finished
 	arrow_tween = null
-	arrow_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	arrow_tween = get_tree().create_tween().bind_node(arrow_mark).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	arrow_tween.set_loops()
 	arrow_tween.tween_property(arrow_mark, "size:y", size_ * 1.5, 0.5)
 	arrow_tween.tween_property(arrow_mark, "size:y", size_, 0.5)
@@ -192,3 +192,11 @@ func _on_action_button_up() -> void:
 	dialog.text_setter(0, false, [
 		"チュートリアルはここまで！\nバトルに必要な知識　を手に入れた！\n自分で作ったデッキで相手と戦おう！", 
 		"真ん中上の「終わる」ボタンで\nチュートリアルを終了しよう！"])
+
+func battle_finish(_win: bool) -> void:
+	if arrow_tween and arrow_tween.is_running():
+		arrow_tween.kill()
+	if pause_tween and pause_tween.is_running():
+		pause_tween.kill()
+	$button.now_showing = -1
+	
