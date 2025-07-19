@@ -61,6 +61,8 @@ func arrow_mark_hide() -> void:
 	
 ## バトル開始カットイン終了後、最初に流れるメッセージ設定
 func _on_cutin_ended() -> void:
+	player_monster.picked_action = [Global.action_data[1], Global.action_data[4], 
+	Global.action_data[46], Global.action_data[1]]
 	get_tree().paused = true
 	tree_paused()
 	arrow_mark_setter(250, "red", 0, Vector2(1279, 459))
@@ -134,6 +136,9 @@ func _on_player_ready() -> void:
 	await $button.back
 	$button/player.disabled = true
 	await $button.back
+	$button/main/Item.disabled = true
+	$button/main/Status.disabled = true
+	back_disabled = true
 	arrow_mark_setter(150, "red", 0, Vector2(248, 640))
 
 
@@ -143,3 +148,19 @@ func _on_status_button_up() -> void:
 
 func _on_button_player_or_enemy_button_pressed() -> void:
 	arrow_mark_setter(150, "red", 0, Vector2(248, 640))
+
+
+func _on_action_button_up() -> void:
+	arrow_mark_hide()
+	await dialog.text_setter(0, true, [
+		"モンスターは[b]事前に設定された確率[/b]で、\n技の候補を選び出す！" + 
+		"（チュートリアル\nでは、選ばれる技は固定です）", 
+		"４つの技から１つを選んで攻撃しよう！\nただし、一度候補に選ばれた技は\n" + 
+		"[b]攻撃で使うまで残り続ける[/b]ぞ。"])
+	arrow_mark_setter(150, "red", 0, Vector2(248, 640))
+	$button/action.get_child(0).disabled = false
+	dialog.text_setter(0, false, [
+		"左のアイコンは技の属性を表している。\n" + 
+		"「体当たり」は[img=50]res://image/element/無属性.PNG[/img]無属性だ。\n" + 
+		"１番上の「体当たり」を選んでみよう！"])
+	

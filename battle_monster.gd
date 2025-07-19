@@ -4,19 +4,20 @@ extends TextureButton
 const DAMAGE_TEXT = preload("res://damage_text.tscn")
 const EFFECT_ICON = preload("res://effect_icon.tscn")
 var tween: Tween
-var player: bool # true:味方 false:敵
+var parent: Node ## 常にbattleノードを参照するように調整される変数
+var player: bool ## true:味方 false:敵
 var index: int
-var monster_dict # モンスターの全形態を格納する辞書
-var monster: Monster # モンスターの現在の状態 INFO バトル中に更新される場合あり
-var action_list: Array # 設定された技を格納する配列
-var middle_evolution_list: Array # 設定された中間進化技を格納する配列
-var evolution_list: Array # 設定された進化技を格納する配列
-var chance_list: Array # 技の出現確率を格納する配列
-var effect_dict = {} # エフェクトの状態を格納する辞書　INFO 初期値はなし(空)
+var monster_dict ## モンスターの全形態を格納する辞書
+var monster: Monster ## モンスターの現在の状態 INFO バトル中に更新される場合あり
+var action_list: Array ## 設定された技を格納する配列
+var middle_evolution_list: Array ## 設定された中間進化技を格納する配列
+var evolution_list: Array ## 設定された進化技を格納する配列
+var chance_list: Array ## 技の出現確率を格納する配列
+var effect_dict = {} ## エフェクトの状態を格納する辞書　INFO 初期値はなし(空)
 var death: bool = false
-var text_setter_callback: Callable # dialogのtext_setter
-var chance_range: Array[int] # 抽選に用いる範囲
-var picked_action: Array[Action] # 抽選され選ばれた技の配列
+var text_setter_callback: Callable ## dialogのtext_setter
+var chance_range: Array[int] ## 抽選に用いる範囲
+var picked_action: Array[Action] ## 抽選され選ばれた技の配列
 @onready var popup_position: Vector2i = $effect_detail.position
 
 signal monster_ready ## モンスターが行動可能になった時発行されます
@@ -24,6 +25,12 @@ signal monster_ready ## モンスターが行動可能になった時発行さ�
 
 func _ready() -> void:
 	hide()
+
+
+func parent_getter() -> void:
+	parent = get_parent()
+	while parent.name != "battle":
+		parent = parent.get_parent()
 
 # バトル開始時セットアップ
 func setup(dict: Dictionary, mon: Monster, act_list: Array, 
@@ -110,7 +117,7 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	tween.tween_property(self, "self_modulate:a", 1, 0.3)
 	await tween.finished
 	
-	var parent: Node = get_parent()
+	parent = get_parent()
 	while parent.name != "battle":
 		parent = parent.get_parent()
 	$SPD.set_process(false) # 死んだモンスターを停止
@@ -235,12 +242,13 @@ func field_set() -> void:
 ## SPDゲージが溜まり行動可能になった時の処理
 func spd_max() -> void:
 	# picked_action 生成
-	while len(picked_action) < 4: # 4枠全て技で埋まるまで繰り返す
-		var result = randi() % 100 # 0~99の100通りの乱数を生成
-		for i in len(chance_range):
-			if result <= chance_range[i]: # 乱数に応じて出現する技を決定
-				picked_action.append(action_list[i])
-				break # 対応する技があったら終了
+	if parent.tutorial_mode == false:
+		while len(picked_action) < 4: # 4枠全て技で埋まるまで繰り返す
+			var result = randi() % 100 # 0~99の100通りの乱数を生成
+			for i in len(chance_range):
+				if result <= chance_range[i]: # 乱数に応じて出現する技を決定
+					picked_action.append(action_list[i])
+					break # 対応する技があったら終了
 	monster_ready.emit()
 
 ## エフェクトアイコンの作成

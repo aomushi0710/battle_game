@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b75oop3n8nq72"]
+[gd_scene load_steps=8 format=3 uid="uid://b75oop3n8nq72"]
 
 [ext_resource type="PackedScene" uid="uid://bhqk4iva02mmc" path="res://新バトル.tscn" id="1_7n6eb"]
 [ext_resource type="Script" uid="uid://k0a6gnwbx4e1" path="res://tutorial.gd" id="1_yb1ct"]
 [ext_resource type="Script" uid="uid://dqntmojta1yls" path="res://tutorial_battle.gd" id="3_ehuit"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="4_5mrt3"]
+[ext_resource type="Script" uid="uid://ba6b532p8r4rb" path="res://tutorial_buttons.gd" id="4_hu44a"]
 [ext_resource type="Script" uid="uid://bghjkvjk5m5n1" path="res://tutorial_dialogtab.gd" id="4_rwowx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mrt3"]
@@ -19,6 +20,9 @@ script = ExtResource("3_ehuit")
 
 [node name="enemy_deck" parent="Node2D/battle" index="1"]
 visible = false
+
+[node name="button" parent="Node2D/battle" index="2"]
+script = ExtResource("4_hu44a")
 
 [node name="dialogtab" parent="Node2D/battle/button" index="5"]
 script = ExtResource("4_rwowx")
@@ -57,6 +61,7 @@ vertical_alignment = 1
 [connection signal="cutin_ended" from="Node2D/battle" to="Node2D/battle" method="_on_cutin_ended"]
 [connection signal="player_ready" from="Node2D/battle" to="Node2D/battle" method="_on_player_ready"]
 [connection signal="player_or_enemy_button_pressed" from="Node2D/battle/button" to="Node2D/battle" method="_on_button_player_or_enemy_button_pressed"]
+[connection signal="button_up" from="Node2D/battle/button/main/Action" to="Node2D/battle" method="_on_action_button_up"]
 [connection signal="button_up" from="Node2D/battle/button/main/Status" to="Node2D/battle" method="_on_status_button_up"]
 
 [editable path="Node2D"]

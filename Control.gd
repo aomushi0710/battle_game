@@ -133,6 +133,7 @@ func _on_new_button_up() -> void:
 
 ## チュートリアルの準備と遷移
 func _on_tutorial_button_up() -> void:
+	Global.current_deck = Global.deck1.duplicate() # 避難
 	# 味方チュートリアルデッキ構築
 	Global.deck1.monster_dict = [monster_data[1], monster_data[2], monster_data[3]]
 	#Global.deck1.skill = [0, 0, 0]

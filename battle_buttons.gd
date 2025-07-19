@@ -27,18 +27,7 @@ func _on_action_button_selected(index: int) -> void:
 	selected_action_button = $action.get_child(index)
 	button_index = index
 	selected_action = selected_action_button.action # 選ばれた技を登録
-	
-	var descriptions: Array[String] = Global.action_description_creator(selected_action, true)
-	var description_text = ["[i][u]%s[/u][/i]\n%s　　MP Cost:[color=aqua]%d[/color]\n" % 
-		[selected_action.name, descriptions[0], selected_action.mp] + 
-		"%s　　Power　:[color=red]%d[/color]" % [descriptions[1], selected_action.power]]
-	for i in len(selected_action.ability):
-		var ability_descriptions: Array = \
-		Global.ability_description_creator(selected_action, 0, true)
-		description_text.append("特殊効果:%s\n%s　　%s\n%s" % [ability_descriptions[0], 
-		ability_descriptions[1], ability_descriptions[2], ability_descriptions[3]])
-	$dialogtab.text_setter(0, false, description_text)
-	
+	# 選ばれた技ボタンのアニメーション
 	var instance = action_button.instantiate()
 	instance.name = "selected"
 	instance.texture_mode = preload("res://技セレクトボタン.gd").Mode.BATTLE
@@ -60,6 +49,20 @@ func _on_action_button_selected(index: int) -> void:
 	tween.set_loops()
 	tween.tween_property(instance, "modulate:a", 0, 0.5)
 	tween.tween_property(instance, "modulate:a", 1, 0.5)
+	# 技説明テキスト表示
+	var descriptions: Array[String] = Global.action_description_creator(selected_action, true)
+	var description_text = ["[i][u]%s[/u][/i]\n%s　　MP Cost:[color=aqua]%d[/color]\n" % 
+		[selected_action.name, descriptions[0], selected_action.mp] + 
+		"%s　　Power　:[color=red]%d[/color]" % [descriptions[1], selected_action.power]]
+	for i in len(selected_action.ability):
+		var ability_descriptions: Array = \
+		Global.ability_description_creator(selected_action, 0, true)
+		description_text.append("特殊効果:%s\n%s　　%s\n%s" % [ability_descriptions[0], 
+		ability_descriptions[1], ability_descriptions[2], ability_descriptions[3]])
+	if $"../".tutorial_mode == false:
+		$dialogtab.text_setter(0, false, description_text)
+	else:
+		await $dialogtab.text_setter(0, true, description_text)
 
 ## メインのactionが押された時
 func _on_action_button_up() -> void:
@@ -111,8 +114,9 @@ func show_action_button() -> void:
 	for child in $action.get_children():
 		tween.tween_property(child, "modulate:a", 1, 0.2)
 	for button: Button in $action.get_children():
-		button.disabled = false
-	$"戻る".disabled = false
+		button.disabled = $"../".tutorial_mode
+	if $"../".back_disabled == false:
+		$"戻る".disabled = false
 
 ## action消滅アニメーション
 func hide_action_button() -> void:
@@ -265,9 +269,10 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 	$"戻る".disabled = true
 	match now_showing:
 		-1: # バトル終了後、デッキセレクトに戻る
-			_on_確認メッセージ_confirmed() # 初期化処理を呼ぶ
+			battle_finished() # 初期化処理を呼ぶ
 		1:
-			$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
+			if $"../".tutorial_mode == false:
+				$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
 			await hide_action_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
@@ -277,7 +282,8 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
 				button.disabled = false
 		3: # 戻る 味方か相手選択 -> メイン
-			$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
+			if $"../".tutorial_mode == false:
+				$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
 			await hide_player_or_enemy_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
@@ -310,7 +316,7 @@ func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げら�
 	$"../確認メッセージ".popup_centered()
 
 
-func _on_確認メッセージ_confirmed() -> void: # バトル終了初期化処理
+func battle_finished() -> void: # バトル終了初期化処理
 	if tween and tween.is_running(): # ボタン点滅アニメーション停止
 		tween.kill()
 	Global.p1_death = false

@@ -379,4 +379,4 @@ vertical_alignment = 1
 [connection signal="gui_input" from="battle/button/dialogtab/ステータス/text" to="battle/button/dialogtab" method="label_gui_input"]
 [connection signal="gui_input" from="battle/button/next_sign" to="battle/button/dialogtab" method="label_gui_input"]
 [connection signal="button_up" from="battle/button/escape" to="battle/button" method="_on_escape_button_up"]
-[connection signal="confirmed" from="battle/確認メッセージ" to="battle/button" method="_on_確認メッセージ_confirmed"]
+[connection signal="confirmed" from="battle/確認メッセージ" to="battle/button" method="battle_finished"]

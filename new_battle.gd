@@ -37,7 +37,7 @@ func _ready() -> void:
 					if i == 0:
 						player_monster = monster
 						monster.position = Vector2(-256, 350)
-						self.add_child(monster)
+						add_child(monster)
 						await get_tree().process_frame # 1フレーム待つ
 						monster.get_node("SPD").set_process(true)
 						monster.get_node("HP/text").show()
@@ -74,6 +74,7 @@ func _ready() -> void:
 						monster.get_node("MP/text").hide()
 						monster.get_node("SPD").hide()
 					enemy_deck.append(monster)
+			monster.parent_getter()
 			monster.show()
 			# シグナル接続
 			# モンスター行動可能通知シグナル

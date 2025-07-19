@@ -32,3 +32,16 @@ func evolution_check(deck: Deck):
 			for act in current_action:
 				if act in act_list:
 					deck.evolution[i].append(act)
+
+# カスタムクラスのduplicate
+func duplicate() -> Deck:
+	var deck = Deck.new()
+	deck.monster_dict = monster_dict.duplicate()
+	deck.monster = monster.duplicate()
+	deck.action = action.duplicate()
+	deck.evolution = evolution.duplicate()
+	deck.middle_evolution = middle_evolution.duplicate()
+	deck.chance = chance.duplicate()
+	deck.skill = skill.duplicate()
+	deck.effect = effect.duplicate()
+	return deck

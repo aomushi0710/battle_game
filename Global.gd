@@ -52,6 +52,7 @@ var tutorial_scene = load("res://tutorial.tscn")
 @onready var picked_monster = [0,0,0]
 @onready var deck1 = Deck.new()
 @onready var enemy_deck = Deck.new()
+@onready var current_deck = Deck.new()
 @onready var target = 3 ## 現在攻撃対象に選択中のモンスターの位置(0~2:指定indexのモンスターを攻撃 3:未選択)
 @onready var support_target = 3 ## 味方から技を受ける場合の位置(0~2:指定indexのモンスターを攻撃 3:未選択)
 
