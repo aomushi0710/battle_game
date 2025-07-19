@@ -54,6 +54,8 @@ func text_setter(tab: int, wait: bool, text: Array) -> void:
 func _on_tab_changed(tab: int) -> void:
 	if tab != 2:
 		get_child(tab).get_child(0).text = "" # 一旦削除してからアニメーション
+		if $"../../".enemy_monster != null: # 元に戻す
+			$"../../".enemy_monster.get_node("effect").mouse_filter = MouseFilter.MOUSE_FILTER_STOP
 		if size.y != 270: # 拡大されてた時に戻すアニメーション
 			var duration = (size.y - 270) / 1448 # 現在サイズからアニメーション秒数を逆算(最大0.5)
 			dialog_expand_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
@@ -80,6 +82,8 @@ func _on_tab_changed(tab: int) -> void:
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 		dialog_expand_tween.parallel().tween_property($"../next_sign", "modulate:a", 0, 0.5)
 		await dialog_expand_tween.finished
+		if $"../../".enemy_monster != null: # スクロールの邪魔にならないように一旦操作受付を止める
+			$"../../".enemy_monster.get_node("effect").mouse_filter = MouseFilter.MOUSE_FILTER_IGNORE
 		text_animation(tab, -1) # ページはない
 
 ## _inputもしくはlabel_gui_inputから、次のページを指定してtext_animationを呼ぶ関数
