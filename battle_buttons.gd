@@ -46,7 +46,8 @@ func _on_action_button_selected(index: int) -> void:
 	await tween.finished
 	
 	await show_target_button()
-	$"戻る".disabled = false
+	if $"../".back_disabled == false:
+		$"戻る".disabled = false
 	tween = get_tree().create_tween() # ボタン点滅アニメーション
 	tween.set_loops()
 	tween.tween_property(instance, "modulate:a", 0, 0.5)
@@ -66,7 +67,6 @@ func _on_action_button_selected(index: int) -> void:
 	else:
 		await $dialogtab.text_setter(0, true, description_text)
 		description_paging.emit()
-		
 
 ## メインのactionが押された時
 func _on_action_button_up() -> void:
@@ -184,6 +184,8 @@ func show_target_button() -> void:
 					child.disabled = true
 				else:
 					child.disabled = false
+	if $"../".back_disabled == false:
+		$"戻る".disabled = false
 
 ## target消滅アニメーション
 func hide_target_button() -> void:

@@ -152,6 +152,7 @@ func _on_button_player_or_enemy_button_pressed() -> void:
 
 
 func _on_action_button_up() -> void:
+	back_disabled = true
 	arrow_mark_hide()
 	await dialog.text_setter(0, true, [
 		"モンスターは[b]事前に設定された確率[/b]で、\n技の候補を選び出す！" + 
