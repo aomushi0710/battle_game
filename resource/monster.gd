@@ -4,24 +4,16 @@ extends Resource
 
 @export_category("モンスター")
 
-## モンスターのid
-@export var id: int
-
-## モンスターの名前
-@export var name: String
+@export var id: int ## モンスターのid
+@export var name: String ## モンスターの名前
 
 ## モンスターの形態[br]default(0):未進化[br]middle_evolution(1):第2形態(2回進化モンスターのみ該当)
 ## [br]evolution(2):最終形態(1回または2回進化モンスターのみ該当)
 @export_enum("default","middle_evolution","evolution") var form: int
 
-## モンスターの画像
-@export var image: Texture
-
-## モンスターの属性 Element型[br]複数登録可能
-@export var element: Array[Element]
-
-## 進化に必要なmp
-@export var cost: int
+@export var image: Texture ## モンスターの画像
+@export var element: Array[Element] ## モンスターの属性 Element型[br]複数登録可能
+@export var cost: int ## 進化に必要なmp
 
 
 @export_category("ステータス")
@@ -59,9 +51,12 @@ var MP = maxMP / 5
 @export var actions: Array[Action]
 
 
+@export_category("ドロップアイテム")
+
+@export var coin: int ## モンスターが落とすコイン枚数
+
+
 @export_category("説明")
-## モンスターの説明
-@export_multiline var description: String
 
-
-@export_multiline var flavor_text: Array[String]
+@export_multiline var description: String ## モンスターの説明
+@export_multiline var flavor_text: Array[String] ## モンスターのフレーバーテキスト一覧

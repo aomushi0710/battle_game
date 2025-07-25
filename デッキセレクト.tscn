@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d4g4bh4y0vc2f"]
+[gd_scene load_steps=19 format=3 uid="uid://d4g4bh4y0vc2f"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_0twro"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_cpkem"]
@@ -32,6 +32,9 @@ default_font_size = 35
 default_font_size = 35
 
 [sub_resource type="Theme" id="Theme_1emw3"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_cgg8v"]
 default_font_size = 35
 
 [node name="デッキセレクト" type="Node2D"]
@@ -367,7 +370,17 @@ text = "左上のデッキ枠を押して、3枠分モンスターを選ぼう�
 モンスターはそれぞれ異なる[b]ステータス[/b]と[b]技[/b]を持っている。
 [color=yellow][b]技[/b]はバトル中に抽選される確率を自分で操作することができるぞ！[/color]"
 
+[node name="shop" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 250.75
+offset_top = 562.5
+offset_right = 446.75
+offset_bottom = 610.5
+theme = SubResource("Theme_cgg8v")
+text = "🛒ショップ"
+
 [node name="fade" type="ColorRect" parent="."]
+visible = false
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
@@ -389,3 +402,4 @@ color = Color(0, 0, 0, 0)
 [connection signal="toggled" from="Control/help" to="Control/help" method="_on_toggled"]
 [connection signal="button_up" from="Control/new_battle" to="Control/デッキ1" method="_on_new_button_up"]
 [connection signal="button_up" from="Control/tutorial" to="Control/デッキ1" method="_on_tutorial_button_up"]
+[connection signal="button_up" from="Control/shop" to="Control/デッキ1" method="_on_shop_button_up"]

@@ -31,6 +31,7 @@ skill1_id = Array[int]([])
 skill2_name = Array[String]([])
 skill2_id = Array[int]([])
 actions = Array[ExtResource("1_grnmg")]([ExtResource("2_krghb"), ExtResource("3_pwoxo"), ExtResource("4_krghb"), ExtResource("5_7qb4c")])
+coin = 10
 description = ""
 flavor_text = Array[String]([""])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"

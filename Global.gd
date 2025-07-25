@@ -38,6 +38,8 @@ func _ready() -> void:
 		dir.list_dir_end()
 	else:
 		print("ERROR:ディレクトリ「monster」が存在しません")
+	
+	load_game()
 
 var main_scene = load("res://メインシーン.tscn")
 var deck_scene = load("res://デッキセレクト.tscn")
@@ -48,6 +50,7 @@ var debug_scene = load("res://debug.tscn")
 var deck_save_scene = load("res://デッキセーブデータ.tscn")
 var new_battle_scene = load("res://新バトル.tscn")
 var tutorial_scene = load("res://tutorial.tscn")
+var shop_scene = load("res://shop.tscn")
 
 @onready var picked_monster = [0,0,0]
 @onready var deck1 = Deck.new()
@@ -62,6 +65,9 @@ var tutorial_scene = load("res://tutorial.tscn")
 
 @onready var deck_name: String
 @onready var save_mode := true ## true:デッキセーブ時 false:デッキロード時
+
+@onready var auto_save: bool = true ## true:オートセーブ false:セーブされない
+@onready var coin: int ## 所持コイン数
 
 const spd_gauge = 5000
 const spd_correction = 30 ## spdゲージ増加量補正 SPD * spd_correction
@@ -115,7 +121,7 @@ func all_status(monster: Monster, font_size: int) -> Array[RichTextLabel]:
 func action_description_creator(act: Action, blank: bool) -> Array[String]:
 	var range_text: String ## 技の対象
 	var range_tip: String ## 技の対象の補足
-	var range_blank: String ## 技の対象表示の空白
+	var range_blank: String = "" ## 技の対象表示の空白
 	var dmg_type_text: String ## 技のステータス参照先
 	var dmg_type_tip: String ## 技のステータス参照先の補足
 	var dmg_type_blank: String ## 技のステータス参照先表示の空白
@@ -315,7 +321,7 @@ func ability_description_creator(act: Action, index: int, blank: bool) -> Array:
 					ability_text = "[color=green]SPD吸収[/color]"
 					ability_tip = "未実装"
 	
-	var blank_text: String ## 空白
+	var blank_text: String = "" ## 空白
 	match act.ability_range[index]:
 		0: # rangeと同期
 			match act.range:
@@ -441,6 +447,138 @@ func deck_creator(deck: Deck) -> void:
 					sum_chance += chance
 		
 	deck.evolution_check(deck)
+
+## 指定したコイン枚数だけ増減させ、自動でセーブする関数
+func coin_setter(n: int) -> void:
+	Global.coin += n
+	save_game()
+
+# 暗号化及び複合化を行う関数 data:平文または暗号のデータ key:暗号化キー
+func xor_encrypt(data: PackedByteArray, key: String) -> PackedByteArray:
+	var result = PackedByteArray()
+	var key_bytes = key.to_utf8_buffer()
+	var key_len = key_bytes.size()
+	for i in range(data.size()):
+		result.append(data[i] ^ key_bytes[i % key_len])
+	return result
+
+
+func save_game() -> void:
+	var save_data := {
+		"coin": coin, 
+		
+		"version": VERSION,
+		"beta": VERSION_BETA
+	}
+	
+	save_file(save_data)
+
+
+func load_game() -> void:
+	var save_data = load_file()
+	# セーブデータが存在しない時
+	if save_data == {}:
+		# 新規セーブデータ作成
+		save_data = {
+			"coin": 0, # 所持コイン数
+			
+			"version": VERSION, # 比較可能バージョン セーブデータ整合性チェック用
+			"beta": VERSION_BETA # true:ベータ版 false:正式リリース版
+		}
+		save_game()
+		
+		# 現在シーン取得
+		var scene = get_tree().current_scene
+		if not scene:
+			print("ERROR:シーンが存在しません")
+			return
+		# メッセージ表示
+		scene.get_node("error_message").title = "新規セーブデータ作成"
+		scene.get_node("error_message").dialog_text = \
+		"セーブデータが存在しません！\n新たなセーブデータを作成しました。"
+		scene.get_node("error_message").popup_centered()
+		
+	# 現在のバージョン以降のデータの場合、オートセーブを切り、既存データの上書きされるのを防ぐ
+	elif save_data["version"] > VERSION:
+		auto_save = false # オートセーブを切る
+		save_data = {
+			"coin": 0, # 所持コイン数
+			
+			"version": VERSION, # 比較可能バージョン セーブデータ整合性チェック用
+			"beta": VERSION_BETA # true:ベータ版 false:正式リリース版
+		}
+		$エラーメッセージ.title = "⚠️ERROR⚠️"
+		$エラーメッセージ.dialog_text = "現在のバージョン ver %.1f " % Global.VERSION + \
+		"\n以降に作成されたデータのため、ロードできません。\n\n仮のセーブデータをロードしました。" + \
+		"\n現在のバージョンでもプレイ可能ですが、進行状況はセーブされません。" + \
+		"\nまた、既存データの破損については一切の責任を負いません！"
+		$エラーメッセージ.popup_centered()
+	# TODO 過去のバージョンのデータだった場合、互換性があるかチェックし、
+	# データのバージョンを更新する処理を実装する必要あり。
+	
+	# 復元処理
+	coin = save_data["coin"]
+
+## ファイルをセーブする関数
+func save_file(data: Dictionary, key: String = "I'm watching you") -> void:
+	var path: String ## セーブデータファイルパス
+	if VERSION_BETA == true:
+		path = "user://savedata_beta.txt" # β版専用
+	else:
+		path = "user://savedata.txt"
+
+	# 1. データを PackedByteArray に直列化
+	var buffer := PackedByteArray()
+	buffer = var_to_bytes(data)
+
+	# 2. XOR 暗号化
+	var encrypted := xor_encrypt(buffer, key)
+
+	# 3. ファイル保存
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file:
+		file.store_buffer(encrypted)
+		file.close()
+	else:
+		print("ERROR:セーブ先のファイルが存在しません")
+
+## ファイルをロードする関数
+func load_file(key: String = "I'm watching you") -> Dictionary:
+	var path: String ## セーブデータファイルパス
+	if VERSION_BETA == true:
+		path = "user://savedata_beta.txt" # β版専用
+	else:
+		path = "user://savedata.txt"
+	
+	var result ## セーブデータの返り値
+	if not FileAccess.file_exists(path):
+		print("ALERT:セーブデータが存在しません\nALERT:新たにセーブデータを作成します")
+		return {}
+
+	# 1. ファイル読み込み
+	var file := FileAccess.open(path, FileAccess.READ)
+	if not file:
+		print("ERROR:セーブファイルが開けません")
+		return {}
+	var encrypted := file.get_buffer(file.get_length())
+	file.close()
+
+	# 2. XOR 復号
+	var decrypted := xor_encrypt(encrypted, key)
+
+	# 3. デシリアライズして Dictionary に戻す
+	result = bytes_to_var(decrypted)
+	if typeof(result) != TYPE_DICTIONARY:
+		print("ERROR:セーブデータが破損しています！")
+		return {}
+	
+	result = cheat_check(result)
+	return result
+
+## チート検知
+func cheat_check(result: Dictionary) -> Dictionary:
+	return result
+
 
 @onready var help_message = {"type":
 "・属性相性によってダメージが増減し、以下の6すくみになっています。

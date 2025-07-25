@@ -407,14 +407,20 @@ func battle_finish(win: bool) -> void:
 	$button.now_showing = -1
 	$"../result_rect".show()
 	if win == true:
+		var coins: int ## 合計コイン枚数
+		for i in range(3): # コイン獲得
+			coins += enemy_deck[i].monster.coin
+		Global.coin_setter(coins)
 		$"../result_rect/win".show()
 		dialog.text_setter(0, false, [
-		"[color=red]勝利！[/color]\n\n左下の戻るボタンを押してバトルを終了"])
+		"[b][color=red]勝利！[/color][/b]\n" + \
+		"[color=gold]%dコイン[/color]を手に入れた！\n" % coins + \
+		"左下の戻るボタンを押してバトルを終了"])
 		
 	else:
 		$"../result_rect/lose".show()
 		dialog.text_setter(0, false, [
-		"[color=dodger_blue]敗北...[/color]\n\n左下の戻るボタンを押してバトルを終了 "])
+		"[b][color=dodger_blue]敗北...[/color][/b]\n\n左下の戻るボタンを押してバトルを終了 "])
 
 ## 技の発動先targetを設定する関数
 func target_setting(player: bool, action: Action, index: int) -> Array[BattleMonster]:

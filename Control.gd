@@ -160,3 +160,7 @@ func _on_tutorial_button_up() -> void:
 	tween = get_tree().create_tween()
 	tween.tween_property($"../../fade", "color:a", 1, 1)
 	tween.tween_callback(func(): get_tree().change_scene_to_packed(Global.tutorial_scene))
+
+
+func _on_shop_button_up() -> void:
+	get_tree().change_scene_to_packed(Global.shop_scene)

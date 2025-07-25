@@ -29,6 +29,7 @@ skill1_id = Array[int]([])
 skill2_name = Array[String]([])
 skill2_id = Array[int]([])
 actions = Array[ExtResource("1_qo7kq")]([ExtResource("2_apqof")])
+coin = 10
 description = "少し攻撃・素早さ偏重なステータスを持つ。"
 flavor_text = Array[String](["キングゴースト は
 舌を大きくつきだした。", "キングゴースト は

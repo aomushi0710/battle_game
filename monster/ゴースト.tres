@@ -34,6 +34,7 @@ skill1_id = Array[int]([])
 skill2_name = Array[String]([])
 skill2_id = Array[int]([])
 actions = Array[ExtResource("1_gmdy6")]([ExtResource("2_iw7v5"), ExtResource("3_fi0p3"), ExtResource("4_m62fw"), ExtResource("5_xacad"), ExtResource("6_3dbhx"), ExtResource("7_pl3b7"), ExtResource("8_15nmo")])
+coin = 10
 description = "少し攻撃・素早さ偏重なステータスを持つ。"
 flavor_text = Array[String](["ゴースト は舌を大きくつきだした。"])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"

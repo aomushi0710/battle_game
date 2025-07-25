@@ -19,7 +19,7 @@ default_font_size = 40
 default_font_size = 240
 
 [sub_resource type="Theme" id="Theme_hwahx"]
-default_font_size = 150
+default_font_size = 240
 
 [node name="Node2D" type="Node2D"]
 process_mode = 1
@@ -304,8 +304,8 @@ theme = ExtResource("1_nfpvw")
 
 [node name="result_rect" type="ColorRect" parent="."]
 visible = false
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.501961)
 
@@ -313,8 +313,8 @@ color = Color(0, 0, 0, 0.501961)
 visible = false
 layout_mode = 0
 offset_top = 131.0
-offset_right = 1152.0
-offset_bottom = 301.0
+offset_right = 1920.0
+offset_bottom = 396.0
 theme = SubResource("Theme_tc6cq")
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 10
@@ -328,8 +328,8 @@ vertical_alignment = 1
 visible = false
 layout_mode = 0
 offset_top = 131.0
-offset_right = 1152.0
-offset_bottom = 301.0
+offset_right = 1920.0
+offset_bottom = 396.0
 theme = SubResource("Theme_hwahx")
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 10

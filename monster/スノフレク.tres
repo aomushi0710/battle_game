@@ -28,6 +28,7 @@ skill1_id = Array[int]([])
 skill2_name = Array[String]([])
 skill2_id = Array[int]([])
 actions = Array[ExtResource("1_00v00")]([ExtResource("2_otau8")])
+coin = 10
 description = ""
 flavor_text = Array[String](["スノフレク はひらひらと舞っている。"])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"

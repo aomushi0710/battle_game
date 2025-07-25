@@ -14,3 +14,29 @@ func _on_button_pressed():
 
 func _on_debug_button_up():
 	get_tree().change_scene_to_packed(Global.debug_scene)
+
+# セーブデータ削除確認画面表示
+func _on_reset_button_up() -> void:
+	$confirm_message.title = "セーブデータ削除"
+	$confirm_message.dialog_text = \
+	"本当にセーブデータを削除しますか？\n削除したデータは二度と復元できません！"
+	$confirm_message.popup_centered()
+
+# セーブデータ削除
+func _on_confirm_message_confirmed() -> void:
+	var path: String ## セーブデータファイルパス
+	if Global.VERSION_BETA == true:
+		path = "user://savedata_beta.txt" # β版専用
+	else:
+		path = "user://savedata.txt"
+	
+	if FileAccess.file_exists(path):
+		var err := DirAccess.remove_absolute(path)
+		
+		if err != OK:
+			print("ERROR:セーブデータの削除に失敗しました: %s" % err)
+		else:
+			print("セーブデータを削除しました")
+			Global.load_game() # 新規セーブデータ作成
+	else:
+		print("ERROR:セーブデータが存在しません: %s" % path)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://36mc0q6q01ow"]
+[gd_scene load_steps=10 format=3 uid="uid://36mc0q6q01ow"]
 
 [ext_resource type="Script" uid="uid://cpvp8wu65fblw" path="res://メインシーン.gd" id="1_0gvvv"]
 [ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help.gd" id="2_05cje"]
@@ -8,6 +8,9 @@
 
 [sub_resource type="Theme" id="Theme_4elko"]
 default_font = ExtResource("2_lf3g1")
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_lf3g1"]
 default_font_size = 35
 
 [sub_resource type="Theme" id="Theme_c728d"]
@@ -29,6 +32,15 @@ offset_bottom = 131.0
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_4elko")
 text = "コンピューター戦"
+
+[node name="reset" type="Button" parent="."]
+modulate = Color(1, 0, 0, 1)
+offset_left = 650.0
+offset_top = 100.0
+offset_right = 986.0
+offset_bottom = 148.0
+theme = SubResource("Theme_lf3g1")
+text = "🗑️セーブデータ削除"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_left = 100.0
@@ -117,9 +129,6 @@ bbcode_enabled = true
 text = "[i]β.ver.X.X.X[/i] "
 horizontal_alignment = 2
 
-[node name="Popup" type="Popup" parent="."]
-visible = true
-
 [node name="copyright" type="RichTextLabel" parent="."]
 offset_left = 95.6251
 offset_top = 630.0
@@ -129,6 +138,16 @@ theme = ExtResource("2_m5oqv")
 bbcode_enabled = true
 text = "[i](C) 2025 aomushi0710[i]"
 
+[node name="error_message" type="AcceptDialog" parent="."]
+theme = ExtResource("2_m5oqv")
+
+[node name="confirm_message" type="ConfirmationDialog" parent="."]
+auto_translate_mode = 1
+theme = ExtResource("2_m5oqv")
+cancel_button_text = "キャンセル"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="button_up" from="reset" to="." method="_on_reset_button_up"]
 [connection signal="toggled" from="help" to="help" method="_on_toggled"]
 [connection signal="button_up" from="debug" to="." method="_on_debug_button_up"]
+[connection signal="confirmed" from="confirm_message" to="." method="_on_confirm_message_confirmed"]
