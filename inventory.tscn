@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://jew255byj7wb"]
+
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_pohso"]
+[ext_resource type="Script" uid="uid://b4dn6xus4x2h0" path="res://inventory.gd" id="2_psafj"]
+[ext_resource type="PackedScene" uid="uid://caxdvudqjnmpp" path="res://inventory_item.tscn" id="3_5tt2m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_psafj"]
+bg_color = Color(0, 0, 0.392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tt2m"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dw5ng"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0.34, 0.34, 0.34, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrqgh"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 1
+
+[node name="inventory" type="MarginContainer"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme = ExtResource("1_pohso")
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="tab" type="TabContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_psafj")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_5tt2m")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_dw5ng")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_mrqgh")
+current_tab = 0
+script = ExtResource("2_psafj")
+
+[node name="アイテム" type="VBoxContainer" parent="tab"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="inventory_item" parent="tab/アイテム" instance=ExtResource("3_5tt2m")]
+layout_mode = 2
+
+[node name="装備" type="VBoxContainer" parent="tab"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="close" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 1743.0
+offset_right = 1820.0
+offset_bottom = 64.0
+mouse_default_cursor_shape = 2
+text = "❌"
+flat = true
+
+[connection signal="button_up" from="Control/close" to="tab" method="_on_close_button_up"]

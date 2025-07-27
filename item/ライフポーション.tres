@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://hj3empc8v48c"]
+
+[ext_resource type="Script" uid="uid://74cbbboydq3a" path="res://resource/item.gd" id="1_4len3"]
+[ext_resource type="Texture2D" uid="uid://bnr5km71bri1l" path="res://image/item/ライフポーション.PNG" id="1_co27p"]
+
+[resource]
+script = ExtResource("1_4len3")
+id = 1
+name = "ライフポーション"
+image = ExtResource("1_co27p")
+price = 100
+max_level = 10
+power = 50
+power_scale = 1
+description = "飲むと生命力がみなぎる
+ポーション。
+[color=coral]HP[/color]を[color=yellow]%d%%[/color]だけ回復する。"
+metadata/_custom_type_script = "uid://74cbbboydq3a"

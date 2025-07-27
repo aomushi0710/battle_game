@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctd6pgdgdo86l"]
+[gd_scene load_steps=4 format=3 uid="uid://ctd6pgdgdo86l"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_viryw"]
 [ext_resource type="Script" uid="uid://dvghle1vntn6w" path="res://shop.gd" id="2_e7rdd"]
-[ext_resource type="Texture2D" uid="uid://bnr5km71bri1l" path="res://image/item/life_potion.PNG" id="3_fgaav"]
-[ext_resource type="Texture2D" uid="uid://dtyjvjvhfi7wx" path="res://image/item/mana_potion.PNG" id="4_6lah5"]
+[ext_resource type="Script" uid="uid://cor4ln7h2d7oe" path="res://coin_text.gd" id="3_blqjs"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -15,18 +14,29 @@ offset_bottom = 40.0
 theme = ExtResource("1_viryw")
 script = ExtResource("2_e7rdd")
 
-[node name="coin" type="RichTextLabel" parent="Control"]
+[node name="inventory" type="Button" parent="Control"]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 50.0
-offset_right = 371.0
-offset_bottom = 106.0
+offset_right = 127.0
+offset_bottom = 127.0
+tooltip_text = "持ち物の一覧を開きます"
+text = "💼"
+
+[node name="coin" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 60.0
+offset_right = 471.0
+offset_bottom = 116.0
 bbcode_enabled = true
 text = "[img=50]res://image/coin.PNG[/img] [color=gold]100[/color]"
 scroll_active = false
+script = ExtResource("3_blqjs")
 
 [node name="戻る" type="Button" parent="Control"]
 modulate = Color(1, 0, 0, 1)
+layout_mode = 0
 offset_left = 40.0
 offset_top = 990.0
 offset_right = 198.0
@@ -34,82 +44,77 @@ offset_bottom = 1065.0
 mouse_default_cursor_shape = 2
 text = "←戻る"
 
-[node name="TabContainer" type="TabContainer" parent="Control"]
+[node name="buy" type="Button" parent="Control"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 0
+offset_left = 1603.0
+offset_top = 990.0
+offset_right = 1761.0
+offset_bottom = 1065.0
+text = "購入！"
+
+[node name="catalog" type="TabContainer" parent="Control"]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 150.0
 offset_right = 1820.0
-offset_bottom = 543.0
+offset_bottom = 530.0
 current_tab = 0
 
-[node name="アイテム" type="HBoxContainer" parent="Control/TabContainer"]
+[node name="アイテム" type="HBoxContainer" parent="Control/catalog"]
 layout_mode = 2
 theme_override_constants/separation = 10
 metadata/_tab_index = 0
 
-[node name="life_potion" type="VBoxContainer" parent="Control/TabContainer/アイテム"]
+[node name="装備" type="HBoxContainer" parent="Control/catalog"]
+visible = false
 layout_mode = 2
+theme_override_constants/separation = 10
+metadata/_tab_index = 1
 
-[node name="texture" type="TextureButton" parent="Control/TabContainer/アイテム/life_potion"]
-layout_mode = 2
-texture_normal = ExtResource("3_fgaav")
-
-[node name="price" type="RichTextLabel" parent="Control/TabContainer/アイテム/life_potion"]
-layout_mode = 2
-size_flags_vertical = 3
-bbcode_enabled = true
-text = "[img=50]res://image/coin.PNG[/img] [color=gold]100[/color]"
-horizontal_alignment = 1
-
-[node name="TextureButton2" type="TextureButton" parent="Control/TabContainer/アイテム"]
-layout_mode = 2
-texture_normal = ExtResource("4_6lah5")
-
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="dialog" type="ColorRect" parent="Control"]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 600.0
 offset_right = 1820.0
-offset_bottom = 900.0
+offset_bottom = 920.0
 color = Color(0, 0, 0, 0.501961)
 
-[node name="Sprite2D" type="Sprite2D" parent="Control/ColorRect"]
+[node name="texture" type="Sprite2D" parent="Control/dialog"]
 position = Vector2(150, 150)
-texture = ExtResource("3_fgaav")
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/ColorRect"]
+[node name="margin" type="MarginContainer" parent="Control/dialog"]
 layout_mode = 0
 offset_left = 300.0
 offset_right = 1720.0
-offset_bottom = 300.0
+offset_bottom = 320.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/ColorRect/MarginContainer"]
+[node name="descriptions" type="HBoxContainer" parent="Control/dialog/margin"]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="ColorRect" type="ColorRect" parent="Control/ColorRect/MarginContainer/HBoxContainer"]
+[node name="description1" type="ColorRect" parent="Control/dialog/margin/descriptions"]
 custom_minimum_size = Vector2(670, 280)
 layout_mode = 2
 color = Color(0.501961, 0, 1, 0.501961)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/ColorRect/MarginContainer/HBoxContainer/ColorRect"]
-custom_minimum_size = Vector2(660, 280)
+[node name="text" type="RichTextLabel" parent="Control/dialog/margin/descriptions/description1"]
+custom_minimum_size = Vector2(660, 300)
 layout_mode = 2
 offset_left = 5.0
 offset_right = 665.0
 offset_bottom = 280.0
 bbcode_enabled = true
-text = "[center][b]ライフポーション Lv.1[/b][/center]
+text = "[center][b]アイテム名 Lv.0[/b][/center]
 
-飲むと生命力がみなぎる
-ポーション。
-[color=coral]HP[/color]を[color=yellow]50%[/color]だけ回復する。"
+現在所持しているアイテムの能力が表示されます！"
+vertical_alignment = 1
 
-[node name="RichTextLabel3" type="RichTextLabel" parent="Control/ColorRect/MarginContainer/HBoxContainer"]
+[node name="arrow" type="RichTextLabel" parent="Control/dialog/margin/descriptions"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 bbcode_enabled = true
@@ -117,14 +122,28 @@ text = "
 
 [b]→[/b]"
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="Control/ColorRect/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(670, 280)
+[node name="description2" type="ColorRect" parent="Control/dialog/margin/descriptions"]
+custom_minimum_size = Vector2(670, 0)
 layout_mode = 2
+color = Color(0.501961, 0, 1, 0.501961)
+
+[node name="text" type="RichTextLabel" parent="Control/dialog/margin/descriptions/description2"]
+layout_mode = 2
+offset_left = 5.0
+offset_right = 665.0
+offset_bottom = 300.0
 bbcode_enabled = true
-text = "[b]ライフポーション Lv.2[/b]
+text = "[center][b]アイテム名 Lv.0[/b][/center]
 
-飲むと生命力がみなぎる
-ポーション。
-[color=coral]HP[/color]を[color=yellow]51%[/color]だけ回復する。"
+レベルアップ後の能力が
+表示されます！"
+vertical_alignment = 1
 
+[node name="error_message" type="AcceptDialog" parent="Control"]
+
+[node name="confirm_message" type="ConfirmationDialog" parent="Control"]
+
+[connection signal="button_up" from="Control/inventory" to="Control" method="_on_inventory_button_up"]
 [connection signal="button_up" from="Control/戻る" to="Control" method="_on_戻る_button_up"]
+[connection signal="button_up" from="Control/buy" to="Control" method="_on_buy_button_up"]
+[connection signal="confirmed" from="Control/confirm_message" to="Control" method="_on_confirm_message_confirmed"]

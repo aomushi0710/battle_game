@@ -19,3 +19,7 @@ func _on_戻る_button_up():
 	$ColorRect4.hide()
 	$モンスターデータ.show()
 	$戻る.hide()
+
+
+func _on_coin_set_button_up() -> void:
+	Global.coin_setter($SpinBox.value)

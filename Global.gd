@@ -7,10 +7,12 @@ const VERSION_BETA: bool = true ## true:ベータ版 false:正式リリース版
 
 var monster_data = {}
 var action_data = {}
+var item_data = {}
 
 func _ready() -> void:
 	var dir = DirAccess.open("res://action/") # actionディレクトリを開く
 	if dir:
+		print("ディレクトリ「action」のロードを開始...")
 		dir.list_dir_begin() # ループ初期化
 		var file := dir.get_next() # 最初のリソース取得
 		
@@ -20,11 +22,13 @@ func _ready() -> void:
 			print("ロード完了:" + resource.name + " ID:" + str(resource.id))
 			file = dir.get_next() # 次のリソース取得
 		dir.list_dir_end() # ループ終了
+		print("ディレクトリ「action」のロードが完了。\n")
 	else:
 		print("ERROR:ディレクトリ「action」が存在しません")
 	
 	dir = DirAccess.open("res://monster/")
 	if dir:
+		print("ディレクトリ「monster」のロードを開始...")
 		dir.list_dir_begin()
 		var file := dir.get_next() # 最初のリソース取得
 		
@@ -36,8 +40,25 @@ func _ready() -> void:
 			print("ロード完了:" + resource.name)
 			file = dir.get_next()
 		dir.list_dir_end()
+		print("ディレクトリ「monster」のロードが完了。\n")
 	else:
 		print("ERROR:ディレクトリ「monster」が存在しません")
+	
+	dir = DirAccess.open("res://item/")
+	if dir:
+		print("ディレクトリ「item」のロードを開始...")
+		dir.list_dir_begin()
+		var file := dir.get_next() # 最初のリソース取得
+		
+		while file != "": # リソースがなくなるまで繰り返す
+			var resource = load("res://item/" + file)
+			item_data[resource.id] = resource
+			print("ロード完了:" + resource.name)
+			file = dir.get_next()
+		dir.list_dir_end()
+		print("ディレクトリ「item」のロードが完了。\n")
+	else:
+		print("ERROR:ディレクトリ「item」が存在しません")
 	
 	load_game()
 
@@ -51,6 +72,7 @@ var deck_save_scene = load("res://デッキセーブデータ.tscn")
 var new_battle_scene = load("res://新バトル.tscn")
 var tutorial_scene = load("res://tutorial.tscn")
 var shop_scene = load("res://shop.tscn")
+var inventory_scene = load("res://inventory.tscn")
 
 @onready var picked_monster = [0,0,0]
 @onready var deck1 = Deck.new()
@@ -68,6 +90,7 @@ var shop_scene = load("res://shop.tscn")
 
 @onready var auto_save: bool = true ## true:オートセーブ false:セーブされない
 @onready var coin: int ## 所持コイン数
+@onready var inv = {"item": {}} ## 所持アイテム一覧 item:バトルアイテム
 
 const spd_gauge = 5000
 const spd_correction = 30 ## spdゲージ増加量補正 SPD * spd_correction
@@ -466,6 +489,7 @@ func xor_encrypt(data: PackedByteArray, key: String) -> PackedByteArray:
 func save_game() -> void:
 	var save_data := {
 		"coin": coin, 
+		"inv": inv, 
 		
 		"version": VERSION,
 		"beta": VERSION_BETA
@@ -481,6 +505,7 @@ func load_game() -> void:
 		# 新規セーブデータ作成
 		save_data = {
 			"coin": 0, # 所持コイン数
+			"inv": {"item": {}}, 
 			
 			"version": VERSION, # 比較可能バージョン セーブデータ整合性チェック用
 			"beta": VERSION_BETA # true:ベータ版 false:正式リリース版
@@ -503,6 +528,7 @@ func load_game() -> void:
 		auto_save = false # オートセーブを切る
 		save_data = {
 			"coin": 0, # 所持コイン数
+			"inv": {"item": {}}, 
 			
 			"version": VERSION, # 比較可能バージョン セーブデータ整合性チェック用
 			"beta": VERSION_BETA # true:ベータ版 false:正式リリース版
@@ -517,7 +543,8 @@ func load_game() -> void:
 	# データのバージョンを更新する処理を実装する必要あり。
 	
 	# 復元処理
-	coin = save_data["coin"]
+	coin = save_data.coin
+	inv = save_data.inv
 
 ## ファイルをセーブする関数
 func save_file(data: Dictionary, key: String = "I'm watching you") -> void:

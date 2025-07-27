@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnr5km71bri1l"
-path="res://.godot/imported/life_potion.PNG-84e8cde07b90f7d28b368a561dd9e164.ctex"
+uid="uid://dtyjvjvhfi7wx"
+path="res://.godot/imported/マナポーション.PNG-4ce2996ee8f8320093416b712f796b74.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://image/item/life_potion.PNG"
-dest_files=["res://.godot/imported/life_potion.PNG-84e8cde07b90f7d28b368a561dd9e164.ctex"]
+source_file="res://image/item/マナポーション.PNG"
+dest_files=["res://.godot/imported/マナポーション.PNG-4ce2996ee8f8320093416b712f796b74.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://lhdui3dkf60l"]
+[gd_scene load_steps=15 format=3 uid="uid://lhdui3dkf60l"]
 
 [ext_resource type="Script" uid="uid://gr73qw7ffurg" path="res://属性倍率計算機.gd" id="1_w64vr"]
 [ext_resource type="Script" uid="uid://bqcos4cc2oqv7" path="res://debug.gd" id="1_wdv0v"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cqdes4ra5j3dr" path="res://ダメージ計算機.gd" id="2_f36wx"]
 [ext_resource type="Script" uid="uid://c1hgyjf3ov48d" path="res://debug_monsterdata.gd" id="5_1chfk"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="6_uxblv"]
+[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="7_e0a3d"]
 
 [sub_resource type="Theme" id="Theme_u1wox"]
 default_font_size = 30
@@ -221,85 +222,6 @@ bbcode_enabled = true
 text = "ダメージ計算式は以下の通りです
 技の基礎威力 * (攻撃側の[color=red]ATK[/color]([color=dodger_blue]MAG[/color]) / 防御側の[color=light_blue]DEF[/color]([color=purple]RES[/color])) ** 1.2 (小数以下切り捨て)"
 
-[node name="ColorRect3" type="ColorRect" parent="Control"]
-layout_mode = 0
-offset_top = 500.0
-offset_right = 1152.0
-offset_bottom = 740.0
-color = Color(0, 0, 0, 1)
-
-[node name="NPCアルゴリズム演算機" type="RichTextLabel" parent="Control/ColorRect3"]
-layout_mode = 0
-offset_right = 1200.0
-offset_bottom = 250.0
-theme = SubResource("Theme_o6yt0")
-bbcode_enabled = true
-text = "NPCアルゴリズム演算機　選ばれた技：N/A"
-
-[node name="技威力" type="SpinBox" parent="Control/ColorRect3/NPCアルゴリズム演算機"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 100.0
-offset_right = 134.0
-offset_bottom = 142.0
-value = 40.0
-
-[node name="ステータス1" type="SpinBox" parent="Control/ColorRect3/NPCアルゴリズム演算機"]
-layout_mode = 0
-offset_left = 160.0
-offset_top = 100.0
-offset_right = 244.0
-offset_bottom = 142.0
-tooltip_text = "ATKやMAGなどの攻撃する側のステータス"
-max_value = 300.0
-value = 100.0
-
-[node name="ステータス2" type="SpinBox" parent="Control/ColorRect3/NPCアルゴリズム演算機"]
-layout_mode = 0
-offset_left = 340.0
-offset_top = 100.0
-offset_right = 424.0
-offset_bottom = 142.0
-tooltip_text = "DEFやRESなどの攻撃を受ける側のステータス"
-max_value = 300.0
-value = 100.0
-
-[node name="属性倍率" type="SpinBox" parent="Control/ColorRect3/NPCアルゴリズム演算機"]
-layout_mode = 0
-offset_left = 520.0
-offset_top = 100.0
-offset_right = 604.0
-offset_bottom = 142.0
-tooltip_text = "属性倍率計算機で得た値などを入力"
-max_value = 6.0
-step = 0.1
-value = 1.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/ColorRect3/NPCアルゴリズム演算機"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 50.0
-offset_right = 1050.0
-offset_bottom = 90.0
-text = "技威力 ステータス1 ステータス2 属性倍率"
-
-[node name="計算" type="Button" parent="Control/ColorRect3/NPCアルゴリズム演算機"]
-layout_mode = 0
-offset_left = 700.0
-offset_top = 100.0
-offset_right = 768.0
-offset_bottom = 142.0
-text = "計算!"
-
-[node name="help" type="RichTextLabel" parent="Control/ColorRect3/NPCアルゴリズム演算機"]
-layout_mode = 0
-offset_top = 150.0
-offset_right = 1170.0
-offset_bottom = 230.0
-bbcode_enabled = true
-text = "ダメージ計算式は以下の通りです
-技の基礎威力 * (攻撃側の[color=red]ATK[/color]([color=dodger_blue]MAG[/color]) / 防御側の[color=light_blue]DEF[/color]([color=purple]RES[/color])) ** 1.2 (小数以下切り捨て)"
-
 [node name="ColorRect4" type="ColorRect" parent="Control"]
 visible = false
 layout_mode = 0
@@ -464,9 +386,26 @@ offset_bottom = 73.0
 theme = SubResource("Theme_0jkx1")
 text = "戻る"
 
+[node name="SpinBox" type="SpinBox" parent="Control"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 520.0
+offset_right = 139.0
+offset_bottom = 562.0
+theme = ExtResource("7_e0a3d")
+max_value = 10000.0
+
+[node name="coin_set" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 520.0
+offset_right = 338.0
+offset_bottom = 562.0
+theme = ExtResource("7_e0a3d")
+text = "コインセット"
+
 [connection signal="button_up" from="Control/ColorRect/属性倍率計算機/計算" to="Control/ColorRect/属性倍率計算機" method="_on_計算_button_up"]
 [connection signal="button_up" from="Control/ColorRect2/ダメージ計算機/計算" to="Control/ColorRect2/ダメージ計算機" method="_on_計算_button_up"]
-[connection signal="button_up" from="Control/ColorRect3/NPCアルゴリズム演算機/計算" to="Control/ColorRect3/NPCアルゴリズム演算機" method="_on_計算_button_up"]
 [connection signal="value_changed" from="Control/ColorRect4/id" to="Control/ColorRect4" method="_on_spin_box_value_changed"]
 [connection signal="button_up" from="Control/ColorRect4/evolution" to="Control/ColorRect4" method="_on_evolution_button_up"]
 [connection signal="button_up" from="Control/ColorRect4/middle_evolution" to="Control/ColorRect4" method="_on_middle_evolution_button_up"]
@@ -474,3 +413,4 @@ text = "戻る"
 [connection signal="button_up" from="Control/終了" to="Control/ColorRect/属性倍率計算機" method="_on_終了_button_up"]
 [connection signal="button_up" from="Control/モンスターデータ" to="Control" method="_on_モンスターデータ_button_up"]
 [connection signal="button_up" from="Control/戻る" to="Control" method="_on_戻る_button_up"]
+[connection signal="button_up" from="Control/coin_set" to="Control" method="_on_coin_set_button_up"]
