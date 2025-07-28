@@ -33,6 +33,7 @@ func _ready() -> void: # 初期値
 		button.position.x = pos
 		button.scale = Vector2(0.781, 0.781)
 		button.item = Global.item_data[key]
+		button.texture_normal = button.item.image
 		button.button_up.connect(func(): 
 			await  hide_item_button()
 			show_item_target_button(button.item))
@@ -126,6 +127,7 @@ func hide_main_button() -> void:
 ## action出現アニメーション
 func show_action_button() -> void:
 	now_showing = 1
+	$dialogtab.text_setter(0, false, ["技を選んでください！"])
 	for child in $action.get_children():
 		child.modulate.a = 0
 	$action.show() # 透明にしてから表示
@@ -150,12 +152,12 @@ func hide_action_button() -> void:
 ## item出現アニメーション
 func show_item_button() -> void:
 	now_showing = 2
+	$dialogtab.text_setter(0, false, ["アイテムを選んでください！"])
 	$item.show()
 	tween = get_tree().create_tween().bind_node($item)
 	tween.tween_property($item, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
-	$dialogtab.text_setter(0, false, ["アイテムを選んでください！"])
 	for child: ItemButton in $item.get_children(): # 使用可能
 		child.disabled = false
 	if $"../".back_disabled == false:
@@ -197,6 +199,8 @@ func hide_target_button() -> void:
 ## 味方か相手を選択させるボタン出現アニメーション
 func show_player_or_enemy_button() -> void:
 	now_showing = 3
+	$dialogtab.text_setter(0, false, [
+		"Player Status で味方のステータスを、\nEnemy Status  で相手のステータスを\n確認できます！"])
 	for i in range(2):
 		var button = Button.new()
 		button.size = Vector2(200, 200)
@@ -246,6 +250,8 @@ func hide_player_or_enemy_button() -> void:
 ## デッキモンスター一覧ボタン出現アニメーション
 func show_monsters_button(player: bool) -> void:
 	now_showing = 5
+	$dialogtab.text_setter(0, false, 
+	["モンスターをクリックして、\nステータスを確認してください！"])
 	now_player = player
 	var deck: Deck
 	if player == true:
