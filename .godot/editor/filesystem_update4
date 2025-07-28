@@ -22,3 +22,8 @@ res://新バトル.tscn
 res://tutorial.tscn
 res://battle_monster.tscn
 res://debug.tscn
+res://item_button.gd
+res://item/ライフポーション.tres
+res://resource/item.gd
+res://item/マナポーション.tres
+res://shop_item.gd

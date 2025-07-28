@@ -168,6 +168,15 @@ offset_right = 840.0
 offset_bottom = 1065.0
 theme = SubResource("Theme_nfpvw")
 
+[node name="item" type="Control" parent="battle/button"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 220.0
+offset_top = 1080.0
+offset_right = 220.0
+offset_bottom = 1080.0
+
 [node name="target" type="Control" parent="battle/button"]
 layout_mode = 3
 anchors_preset = 0

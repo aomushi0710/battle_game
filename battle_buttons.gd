@@ -8,6 +8,7 @@ var monster: BattleMonster
 var selected_action_button: Button
 var button_index: int
 var selected_action: Action
+var selected_item: Item
 var tween: Tween
 ## チュートリアル用:ステータス表示の、playerかenemyかを選択するボタンが押された時のシグナル
 signal player_or_enemy_button_pressed
@@ -22,6 +23,21 @@ func _ready() -> void: # 初期値
 	$"戻る".disabled = true
 	now_showing = 0
 	$change.texture_normal = Global.deck1.monster[0].image
+	
+	# item生成
+	# TODO 今後、デッキに3つまでアイテムを設定できるようにする。その3つのアイテムについて繰り返す
+	var pos: float = 0 ## 変動するposition.xカウンタ
+	for key in Global.inv.item:
+		var button := ItemButton.new()
+		button.disabled = true
+		button.position.x = pos
+		button.scale = Vector2(0.781, 0.781)
+		button.item = Global.item_data[key]
+		button.button_up.connect(func(): 
+			await  hide_item_button()
+			show_item_target_button(button.item))
+		$item.add_child(button)
+		pos += 210 # 右にずらす
 
 ## 技の対象を選ぶ必要がある時に表示されるボタンを生成する関数
 func _on_action_button_selected(index: int) -> void:
@@ -75,9 +91,8 @@ func _on_action_button_up() -> void:
 
 ## メインのitemが押された時
 func _on_item_button_up() -> void:
-	now_showing = 2
-	hide_main_button()
-	$dialogtab.text_setter(0, false, ["未実装"])
+	await hide_main_button()
+	show_item_button()
 
 ## メインのstatusが押された時
 func _on_status_button_up() -> void:
@@ -132,60 +147,36 @@ func hide_action_button() -> void:
 	$action.hide()
 	$action.modulate.a = 1 # 初期化
 
+## item出現アニメーション
+func show_item_button() -> void:
+	now_showing = 2
+	$item.show()
+	tween = get_tree().create_tween().bind_node($item)
+	tween.tween_property($item, "position:y", 865, 0.5)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
+	$dialogtab.text_setter(0, false, ["アイテムを選んでください！"])
+	for child: ItemButton in $item.get_children(): # 使用可能
+		child.disabled = false
+	if $"../".back_disabled == false:
+		$"戻る".disabled = false
+
+## item消滅アニメーション
+func hide_item_button() -> void:
+	for child: ItemButton in $item.get_children(): # 使用不可
+		child.disabled = true
+	tween = get_tree().create_tween().bind_node($item)
+	tween.tween_property($item, "position:y", 1020, 0.5)\
+	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+	await  tween.finished
+	$item.hide()
+	if $"../".back_disabled == false:
+		$"戻る".disabled = false
+
 ## target出現アニメーション
 func show_target_button() -> void:
 	now_showing = 4
-	var death_list: Array[bool] = \
-	[Global.e1_death, Global.e2_death, Global.e3_death, \
-	Global.p1_death, Global.p2_death, Global.p3_death] # for文用真理値配列
-	match selected_action.range: # 攻撃対象ごとに生成する画像が違う
-		1, 2, 6: # 敵単体・敵散開
-			for i in range(3):
-				if $"../".tutorial_mode == true:
-					match i: # 0体目をカカシに、1,2体目を隠す
-						0:
-							$target.get_child(i).texture_normal = \
-							load("res://image/monster/カカシスライム.PNG")
-						1, 2:
-							$target.get_child(i).texture_normal = \
-							load("res://null.PNG")
-				else:
-					if death_list[i] == true:
-						$target.get_child(i).texture_normal = load("res://お墓.PNG")
-					else:
-						$target.get_child(i).texture_normal = Global.enemy_deck.monster[i].image
-		3, 4: # 味方単体
-			for i in range(3):
-				if death_list[i + 3] == true:
-					$target.get_child(i).texture_normal = load("res://お墓.PNG")
-				else:
-					$target.get_child(i).texture_normal = Global.deck1.monster[i].image
-		5: # 自分
-			for i in range(3):
-				if i == monster.index:
-					$target.get_child(i).texture_normal = monster.monster.image
-				else :
-					$target.get_child(i).texture_normal = load("res://null.PNG")
-			
-	$target.show()
-	tween = get_tree().create_tween()
-	tween.tween_property($target, "position:y", 865, 0.5)\
-	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	await tween.finished
-	if $"../".tutorial_mode == true:
-		for child in $target.get_children(): # いかなるボタンも使用不可
-			if child is TextureButton:
-				child.disabled = true
-	else:
-		for child in $target.get_children(): # 最後にボタンを使用可能にするが、死体は使用不可にする
-			if child is TextureButton:
-				if child.texture_normal == load("res://お墓.PNG") or \
-				   child.texture_normal == load("res://null.PNG"):
-					child.disabled = true
-				else:
-					child.disabled = false
-	if $"../".back_disabled == false:
-		$"戻る".disabled = false
+	target_button_setting()
 
 ## target消滅アニメーション
 func hide_target_button() -> void:
@@ -284,6 +275,26 @@ func hide_monsters_button() -> void:
 	await tween.finished
 	$target.hide()
 
+## アイテム使用先を選ぶtarget出現アニメーション
+func show_item_target_button(item: Item) -> void:
+	now_showing = 6
+	selected_item = item
+	$dialogtab.text_setter(0, false, ["[b]%s Lv.%d[/b]\n%s" % 
+	[item.name, item.get_level(), item.get_battle_description(item.get_level())]])
+	
+	target_button_setting()
+
+## アイテム使用先を選ぶtarget消滅アニメーション
+func hide_item_target_button() -> void:
+	for child in $target.get_children():
+		child.disabled = true
+	# ボタン消滅アニメーション　ツリーのポーズを無視
+	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property($target, "position:y", 1020, 0.5)\
+	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
+	$target.hide()
+
 ## 戻るボタンが押された場合の、各種状態での挙動
 func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdisacleで阻止
 	$"戻る".disabled = true
@@ -297,7 +308,10 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
 				button.disabled = false
-		2:
+		2: # 戻る アイテム選択 -> メイン
+			if $"../".tutorial_mode == false:
+				$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
+			await hide_item_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
 				button.disabled = false
@@ -322,8 +336,71 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 		5: # 戻る モンスター一覧 -> 味方か相手選択
 			await hide_monsters_button()
 			show_player_or_enemy_button()
+		6: # 戻る ターゲット選択 -> アイテム選択
+			await hide_item_target_button()
+			show_item_button()
 	if $"../".tutorial_mode == true:
 		back.emit()
+
+## 対象から必要なtarget候補を割り出し、生死を加味して表示する関数
+func target_button_setting() -> void:
+	var death_list: Array[bool] = \
+	[Global.e1_death, Global.e2_death, Global.e3_death, \
+	Global.p1_death, Global.p2_death, Global.p3_death] # for文用真理値配列
+	var match_number: int ## match文に利用する数値
+	match now_showing:
+		4: # 技の対象選択時
+			match_number = selected_action.range
+		6:
+			match_number = selected_item.range
+	match match_number: # 攻撃対象ごとに生成する画像が違う
+		1, 2, 6: # 敵単体・敵散開
+			for i in range(3):
+				if $"../".tutorial_mode == true:
+					match i: # 0体目をカカシに、1,2体目を隠す
+						0:
+							$target.get_child(i).texture_normal = \
+							load("res://image/monster/カカシスライム.PNG")
+						1, 2:
+							$target.get_child(i).texture_normal = \
+							load("res://null.PNG")
+				else:
+					if death_list[i] == true:
+						$target.get_child(i).texture_normal = load("res://お墓.PNG")
+					else:
+						$target.get_child(i).texture_normal = Global.enemy_deck.monster[i].image
+		3, 4: # 味方単体
+			for i in range(3):
+				if death_list[i + 3] == true:
+					$target.get_child(i).texture_normal = load("res://お墓.PNG")
+				else:
+					$target.get_child(i).texture_normal = Global.deck1.monster[i].image
+		5: # 自分
+			for i in range(3):
+				if i == monster.index:
+					$target.get_child(i).texture_normal = monster.monster.image
+				else :
+					$target.get_child(i).texture_normal = load("res://null.PNG")
+			
+	$target.show()
+	tween = get_tree().create_tween()
+	tween.tween_property($target, "position:y", 865, 0.5)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
+	if $"../".tutorial_mode == true:
+		for child in $target.get_children(): # いかなるボタンも使用不可
+			if child is TextureButton:
+				child.disabled = true
+	else:
+		for child in $target.get_children(): # 最後にボタンを使用可能にするが、死体は使用不可にする
+			if child is TextureButton:
+				if child.texture_normal == load("res://お墓.PNG") or \
+				   child.texture_normal == load("res://null.PNG"):
+					child.disabled = true
+				else:
+					child.disabled = false
+	if $"../".back_disabled == false:
+		$"戻る".disabled = false
 
 
 func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げられないバトル用の処理なども作る

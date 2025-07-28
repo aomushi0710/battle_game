@@ -380,7 +380,6 @@ theme = SubResource("Theme_cgg8v")
 text = "🛒ショップ"
 
 [node name="fade" type="ColorRect" parent="."]
-visible = false
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2

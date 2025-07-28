@@ -6,18 +6,16 @@ var selected_item
 
 func _ready() -> void:
 	for i in range(1, len(Global.item_data) + 1): # 商品表示
-		var item = item_scene.instantiate()
-		item.item = Global.item_data[i]
-		level_setter(item)
-		item.button_up.connect(item_button_up)
-		$"catalog/アイテム".add_child(item)
+		var shop_item = item_scene.instantiate()
+		shop_item.item = Global.item_data[i]
+		shop_item.button_up.connect(item_button_up)
+		$"catalog/アイテム".add_child(shop_item)
 	update(0)
 
 ## 所持コイン数やショップのラインナップを更新する関数
 func update(paid: int) -> void:
-	for item in $"catalog/アイテム".get_children():
-		level_setter(item)
-		item.price_setter()
+	for shop_item in $"catalog/アイテム".get_children():
+		shop_item.update()
 	
 	if selected_item == null: # 選ばれているアイテムがなければ
 		$buy.disabled = true
@@ -29,16 +27,6 @@ func update(paid: int) -> void:
 		item_button_up(selected_item)
 	
 	$coin.change(paid)
-	
-
-## 販売アイテムのレベルを算出するセッター、レベルによって値段も算出するセッターでもある
-func level_setter(item) -> void:
-	if item.item.id in Global.inv.item: # 持ってたら1レベル上のものを販売
-		item.level = Global.inv.item[item.item.id] + 1
-	else: # 持ってなければレベル1を販売
-		item.level = 1
-	
-	item.price_setter()
 
 ## アイテムが選ばれた時、説明文を表示する関数
 func item_button_up(shop_item) -> void:
@@ -46,29 +34,27 @@ func item_button_up(shop_item) -> void:
 	selected_item = shop_item
 	var item: Item = shop_item.item # ショップアイテムシーンに内蔵されているアイテム
 	
-	var level: int
+	var level: int = item.get_level()
 	var description: String
 	$dialog/texture.texture = item.image
 	if item.id not in Global.inv.item: # 未所持の時
 		$buy.disabled = false
-		level = 0
 		$dialog/margin/descriptions/description1/text.text = "[center]未所持[/center]"
-		description = item.description_setter(level + 1)
+		description = item.get_description(level + 1)
 		$dialog/margin/descriptions/description2/text.text = \
 		"[center][b]%s Lv.%d[/b][/center]\n\n%s" % [item.name, level + 1, description]
 	else:
-		level = Global.inv.item[item.id] # 現在のアイテムレベル
 		if level < item.max_level: # 所持しているが最大レベルでない時
 			$buy.disabled = false
-			description = item.description_setter(level)
+			description = item.get_description(level)
 			$dialog/margin/descriptions/description1/text.text = \
 			"[center][b]%s Lv.%d[/b][/center]\n\n%s" % [item.name, level, description]
-			description = item.description_setter(level + 1)
+			description = item.get_description(level + 1)
 			$dialog/margin/descriptions/description2/text.text = \
 			"[center][b]%s Lv.%d[/b][/center]\n\n%s" % [item.name, level + 1, description]
 		else: # 最大レベルに達している時
 			$buy.disabled = true
-			description = item.description_setter(item.max_level)
+			description = item.get_description(item.max_level)
 			$dialog/margin/descriptions/description1/text.text = \
 			"[center][b]%s Lv.%d[/b][/center]\n\n%s" % [item.name, item.max_level, description]
 			$dialog/margin/descriptions/description2/text.text = \
