@@ -152,14 +152,15 @@ func hide_action_button() -> void:
 ## item出現アニメーション
 func show_item_button() -> void:
 	now_showing = 2
-	$dialogtab.text_setter(0, false, ["アイテムを選んでください！"])
+	$dialogtab.text_setter(0, false, 
+	["アイテムを選んでください！\n1回のバトル中に1回だけ使えます。"])
 	$item.show()
 	tween = get_tree().create_tween().bind_node($item)
 	tween.tween_property($item, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	for child: ItemButton in $item.get_children(): # 使用可能
-		child.disabled = false
+		child.disabled = child.used # 使用済みなら押せないまま
 	if $"../".back_disabled == false:
 		$"戻る".disabled = false
 
@@ -200,7 +201,7 @@ func hide_target_button() -> void:
 func show_player_or_enemy_button() -> void:
 	now_showing = 3
 	$dialogtab.text_setter(0, false, [
-		"Player Status で味方のステータスを、\nEnemy Status  で相手のステータスを\n確認できます！"])
+		"Player Status で味方のステータスを、\nEnemy  Status で相手のステータスを\n確認できます！"])
 	for i in range(2):
 		var button = Button.new()
 		button.size = Vector2(200, 200)
@@ -455,22 +456,31 @@ func battle_finished() -> void: # バトル終了初期化処理
 
 
 func _on_target_1_button_up() -> void:
-	if now_showing == 4: # 技の対象を選んだ時の動作
-		target_button_up(0)
-	elif now_showing == 5:
-		status_dialog(0)
+	match now_showing:
+		4: # 技の対象を選んだ時の動作
+			target_button_up(0)
+		5: # ステータスの確認対象を選んだ時の動作
+			status_dialog(0)
+		6: # アイテムの対象を選んだ時の動作
+			item_target_button_up(0)
 
 func _on_target_2_button_up() -> void:
-	if now_showing == 4:
-		target_button_up(1)
-	elif now_showing == 5:
-		status_dialog(1)
+	match now_showing:
+		4:
+			target_button_up(1)
+		5:
+			status_dialog(1)
+		6:
+			item_target_button_up(1)
 
 func _on_target_3_button_up() -> void:
-	if now_showing == 4:
-		target_button_up(2)
-	elif now_showing == 5:
-		status_dialog(2)
+	match now_showing:
+		4:
+			target_button_up(2)
+		5:
+			status_dialog(2)
+		6:
+			item_target_button_up(2)
 
 ## 発動する技とそのターゲットが確定した時、各種情報をまとめて引数を渡す関数
 func target_button_up(i: int) -> void:
@@ -487,14 +497,29 @@ func target_button_up(i: int) -> void:
 	
 	get_parent().command_selected(true, monster, selected_action, i)
 	
-	if $target.visible == true: # target画面が見えてるなら隠す
-		await hide_target_button()
+	await hide_target_button()
 	show_main_button() # 最初の表示に戻す ボタンは利用不可のまま
 	
 	$action.remove_child(selected_action_button) # 選ばれた技ボタンを最後に消す
 	if selected_action_button:
 		selected_action_button.queue_free()
 	monster.picked_action.remove_at(button_index) # モンスターの技一覧から消す
+
+
+func item_target_button_up(i: int) -> void:
+	$"戻る".disabled = true
+	for child in $target.get_children():
+		child.disabled = true
+	
+	get_parent().item_selected(true, monster, selected_item, i)
+	
+	await hide_item_target_button()
+	show_main_button()
+	# 一度使用したアイテムを使用不可にする
+	for child: ItemButton in $item.get_children():
+		if child.item == selected_item:
+			child.modulate = Color(0.5, 0.5, 0.5)
+			child.used = true # 使用済みにする
 
 ## モンスターのステータスをダイアログにセットして表示する関数
 func status_dialog(i: int) -> void:

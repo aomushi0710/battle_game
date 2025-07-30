@@ -7,6 +7,7 @@
 [node name="shop_item" type="VBoxContainer"]
 offset_right = 256.0
 offset_bottom = 260.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_cgojv")
 script = ExtResource("2_d8bsp")
 

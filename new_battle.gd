@@ -320,6 +320,9 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 						match ability.healing:
 							1: # ステータス参照HP回復
 								match action.damage_type:
+									1: # 物理 
+										heal = monster.monster.ATK * \
+										(float(action.ability_power[i]) / 100)
 									2: # 魔法 
 										heal = monster.monster.MAG * \
 										(float(action.ability_power[i]) / 100)
@@ -334,7 +337,7 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 				dialog_text = [] # 初期化
 				var text: Array[String] = target.hp_setter(-damage_array[0], true)
 				for t: String in text: # Array[String]から要素を抜き出す
-					t += "\n%s" % damage_array[1]
+					t += "\n%s" % damage_array[1] # ダメージ相性のテキストを追加
 					dialog_text.append(t)
 			await dialog.text_setter(0, true, dialog_text)
 		
@@ -342,6 +345,30 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 			if target.monster.HP <= 0: # 死亡時処理
 				await target.dead(player_monster, enemy_monster)
 	
+	turn_end(player, monster)
+
+
+func item_selected(player: bool, monster: BattleMonster, item: Item, index: int) -> void:
+	dialog.set_tab_disabled(1, true)
+	dialog.set_tab_disabled(2, true)
+	# アイテム名10文字以下なら1行で表示可能
+	await dialog.text_setter(0, true, ["%s Lv.%dを使った！" % [item.name, item.get_level()]])
+	var target_list: Array[BattleMonster] = target_setting(player, item, index)
+	for target: BattleMonster in target_list:
+		match item.id:
+			1: # ライフポーション
+				var text: Array[String] = target.hp_setter( # 最終的には小数点切り捨て
+					target.monster.HP * (item.get_power(item.get_level() / 100)), true)
+				await dialog.text_setter(0, true, text)
+			2: # マナポーション
+				var text: Array[String] = target.mp_setter( # 最終的には小数点切り捨て
+					target.monster.HP * (item.get_power(item.get_level() / 100)), true)
+				await dialog.text_setter(0, true, text)
+	
+	turn_end(player, monster)
+
+
+func turn_end(player: bool, monster: BattleMonster) -> void:
 	# 相手全滅
 	if Global.e1_death == true and Global.e2_death == true and Global.e3_death == true:
 		return
@@ -422,8 +449,8 @@ func battle_finish(win: bool) -> void:
 		dialog.text_setter(0, false, [
 		"[b][color=dodger_blue]敗北...[/color][/b]\n\n左下の戻るボタンを押してバトルを終了 "])
 
-## 技の発動先targetを設定する関数
-func target_setting(player: bool, action: Action, index: int) -> Array[BattleMonster]:
+## 技の発動先targetを設定する関数 actionにはAction型かItem型が入る
+func target_setting(player: bool, action, index: int) -> Array[BattleMonster]:
 	var target_list: Array[BattleMonster] # 技の発動対象
 	if player == true:
 		match action.range:

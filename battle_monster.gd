@@ -148,7 +148,7 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	elif player == false and self == enemy_monster:
 		await text_setter_callback.call(0, true, [
 		"[color=red]%s を倒した！[/color]\n" % monster.name + 
-		"相手は次にフィールドに出すモンスターを\n選んでいる..."])
+		"次にフィールドに出すモンスターを\n相手が選んでいる..."])
 		await get_tree().create_timer(1).timeout # 考えるフリ
 		parent.enemy_next_index = parent.random_index(false)
 		bench_set()

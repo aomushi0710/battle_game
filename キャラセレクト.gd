@@ -49,7 +49,7 @@ func _on_node_2d_tree_entered() -> void:
 					var j = (id - 1) / HCONTAINER_LIMIT # 行指定
 					var i = id - HCONTAINER_LIMIT * j - 1 # 列指定
 					$VBoxContainer.get_child(j).get_child(i).disabled = true
-					$VBoxContainer.get_child(j).get_child(i).modulate = Color(50, 50, 50)
+					$VBoxContainer.get_child(j).get_child(i).modulate = Color(0.5, 0.5, 0.5)
 
 
 func status(i: int) -> void: # マウスを合わせたモンスターのステータスを表示

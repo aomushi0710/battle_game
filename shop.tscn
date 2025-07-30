@@ -21,6 +21,7 @@ offset_top = 50.0
 offset_right = 127.0
 offset_bottom = 127.0
 tooltip_text = "持ち物の一覧を開きます"
+mouse_default_cursor_shape = 2
 text = "💼"
 
 [node name="coin" type="RichTextLabel" parent="Control"]
@@ -51,6 +52,7 @@ offset_left = 1603.0
 offset_top = 990.0
 offset_right = 1761.0
 offset_bottom = 1065.0
+mouse_default_cursor_shape = 2
 text = "購入！"
 
 [node name="catalog" type="TabContainer" parent="Control"]

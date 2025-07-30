@@ -27,3 +27,5 @@ res://item/ライフポーション.tres
 res://resource/item.gd
 res://item/マナポーション.tres
 res://shop_item.gd
+res://battle_monster.gd
+res://new_battle.gd
