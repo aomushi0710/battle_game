@@ -26,9 +26,8 @@ extends Resource
 @export var RES: int
 @export var SPD: int
 
-var HP = maxHP
-@warning_ignore("integer_division")
-var MP = maxMP / 5
+var HP: int
+var MP: int
 
 @export_category("スキル")
 

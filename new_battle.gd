@@ -159,6 +159,7 @@ func monster_ready(player: bool) -> void:
 		dialog.set_tab_disabled(1, false)
 		dialog.set_tab_disabled(2, false)
 		$button.monster = player_monster # 現在フィールドにいるモンスターを渡す
+		var original_mp: int = player_monster.monster.MP ## MP回復前の値を保持しておく 
 		player_monster.mp_setter(player_monster.monster.supplyMP, false) # mp回復
 		
 		for button in $button/action.get_children(): # 全てのボタンを一旦削除
@@ -177,20 +178,18 @@ func monster_ready(player: bool) -> void:
 			button.disabled = false
 		# dialog更新
 		if tutorial_mode == false:
-			dialog.text_setter(0, false, [
-			"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
-			[player_monster.monster.name, player_monster.monster.name, player_monster.monster.supplyMP] + 
-			"\n[color=yellow]%s は指示を待っている...[/color]" % player_monster.monster.name])
+			var text: Array[String] = set_ready_text(player_monster, original_mp)
+			dialog.text_setter(0, false, text) # 味方の時はコマンド選択を待つ
 		else:
 			player_ready.emit()
 	else:
+		var original_mp: int = enemy_monster.monster.MP ## MP回復前の値を保持しておく
 		enemy_monster.mp_setter(enemy_monster.monster.supplyMP, false)
 		
 		enemy_next_index = random_index(false) # 相手側の次に行動するモンスターをランダムにチェンジ
 		
-		await dialog.text_setter(0, true, [
-		"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
-		[enemy_monster.monster.name, enemy_monster.monster.name, enemy_monster.monster.supplyMP]])
+		var text: Array[String] = set_ready_text(enemy_monster, original_mp)
+		await dialog.text_setter(0, true, text)
 		
 		var button_index = randi() % 4 # 味方モンスターと同じ変数名を使用
 		var action: Action = enemy_monster.picked_action[button_index]
@@ -225,6 +224,21 @@ func random_index(player: bool) -> int:
 				break
 	
 	return index
+
+## モンスターを引数として、そのモンスターが行動可能になった時に表示されるテキストを返す関数
+## 引数mpは、mpが自動回復する前に保持されていたmp。比較用に利用する
+func set_ready_text(monster: BattleMonster, mp: int) -> Array[String]:
+	var mp_text: String = "" ## 自動MP回復によるテキスト
+	if mp < monster.monster.maxMP: # MPが満タンでない時
+		if (monster.monster.maxMP - mp) < monster.monster.supplyMP: # MP回復量が最大MPを越してしまう時
+			mp_text = "%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % \
+			[monster.monster.name, monster.monster.maxMP - mp]
+		else: # supplyMPだけ全て回復しても問題ない時
+			mp_text = "%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % \
+			[monster.monster.name, monster.monster.supplyMP]
+	
+	return ["%s が行動可能になった。\n%s" % [monster.monster.name, mp_text] + 
+	"\n[color=yellow]%s は指示を待っている...[/color]" % monster.monster.name]
 
 ## ターン終了後にフィールドに立つモンスターのindexと画像を設定します
 func _on_change_button_up() -> void:

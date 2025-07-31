@@ -283,24 +283,50 @@ func effect_detail(effect: Effect):
 	$effect_detail.dialog_text = effect.description
 	$effect_detail.popup()
 
-## MP変動処理関数(setter)[br]n:数値 text true:ダイアログ表示 false:ダイアログ非表示
+## MP変動処理関数(setter)[br]n:数値 text true:能動的でダイアログ表示 false:受動的でダイアログ非表示
 func mp_setter(n: int, text: bool) -> Array[String]:
-	if n > 0 and monster.MP >= monster.maxMP: # 既にMPが最大値で、それを越えて回復しようとした時
-		return ["[color=yellow]しかし、%s の[color=aqua]MP[/color]は\n減っていなかった...[/color]" % 
-		monster.name]
-	elif monster.MP + n >= monster.maxMP: # 回復するとMPが最大値を越えてしまう時
-		n = monster.maxMP - monster.MP
+	var original_n: int = n # マイナスになるため補正されたが、元の数値を利用したい時
+	
+	if n > 0: # mpが回復した時、水色でアニメーション再生
+		if monster.MP >= monster.maxMP: # 既にMPが最大値の時
+			if text == true: # 技の効果やアイテムの使用時など何らかの反応が得たい時
+				return ["[color=yellow]しかし、%s の" % monster.name + \
+				"[color=aqua]MP[/color]は\n減っていなかった...[/color]"]
+			else:
+				return []
+		elif monster.MP + n >= monster.maxMP: # 回復するとMPが最大値を越えてしまう時
+			n = monster.maxMP - monster.MP
+		damage_effect(n, 2)
+	else: # MPを削られた時、色でアニメーション再生
+		if monster.MP <= 0: # 何らかの原因で死亡時
+			return []
+		damage_effect(-n, 2) # 仮で水色
+		if monster.MP <= -n: # 残りHPを越えるダメージを受けた時
+			n = -monster.MP # HPがマイナスにならないように補正
 	
 	var mp_text = monster.MP
 	monster.MP += n
 	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property($MP, "value", monster.MP, 0.5)
 	tween.parallel().tween_method(mp_text_update, mp_text, monster.MP, 0.5)
-	if n > 0: # 負の数でない(mpを消費したのではなく、回復した)時、アニメーション再生
-		damage_effect(n, 2)
-		return []
-	else:
-		return ["%s は [color=aqua]%dMP[/color] を消費した..." % [monster.name, -n]]
+	
+	var return_text: Array[String] # textを表示する処理
+	if text == true: # 能動的にmpが変動した場合？
+		if n > 0: # mpが回復した時、水色でアニメーション再生
+			return_text = [
+			"%s の[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
+			[monster.name, n]]
+		else:
+			return_text = [
+			"%s は [color=aqua]%dMP[/color]を消費した..." % [monster.name, -n]]
+		return return_text
+	else: # 受動的にmpが変動した場合?
+		if n > 0: # spdゲージがたまって、mpが回復した時
+			return_text = []
+		else: # 相手の技やアイテムなどによってmpを無理やり減らされた時
+			return_text = [
+			"%s は [color=aqua]%dMP[/color]を失った！" % [monster.name, -original_n]]
+		return return_text
 
 ## HP変動処理関数(setter)[br]n:数値 text true:ダイアログ表示 false:ダイアログ非表示
 func hp_setter(n: int, text: bool) -> Array[String]:
