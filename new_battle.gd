@@ -372,11 +372,11 @@ func item_selected(player: bool, monster: BattleMonster, item: Item, index: int)
 		match item.id:
 			1: # ライフポーション
 				var text: Array[String] = target.hp_setter( # 最終的には小数点切り捨て
-					target.monster.HP * (item.get_power(item.get_level() / 100)), true)
+					target.monster.maxHP * (item.get_power(item.get_level()) / 100.0), true)
 				await dialog.text_setter(0, true, text)
 			2: # マナポーション
 				var text: Array[String] = target.mp_setter( # 最終的には小数点切り捨て
-					target.monster.HP * (item.get_power(item.get_level() / 100)), true)
+					target.monster.maxMP * (item.get_power(item.get_level()) / 100.0), true)
 				await dialog.text_setter(0, true, text)
 	
 	turn_end(player, monster)

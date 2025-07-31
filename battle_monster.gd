@@ -302,7 +302,7 @@ func mp_setter(n: int, text: bool) -> Array[String]:
 			return []
 		damage_effect(-n, 2) # 仮で水色
 		if monster.MP <= -n: # 残りHPを越えるダメージを受けた時
-			n = -monster.MP # HPがマイナスにならないように補正
+			n = -monster.MP # MPがマイナスにならないように補正
 	
 	var mp_text = monster.MP
 	monster.MP += n
