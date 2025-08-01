@@ -23,6 +23,7 @@ Global="*res://Global.gd"
 [debug]
 
 gdscript/warnings/integer_division=0
+gdscript/warnings/narrowing_conversion=0
 
 [display]
 

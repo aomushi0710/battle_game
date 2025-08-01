@@ -24,10 +24,10 @@ visible = false
 [node name="button" parent="Node2D/battle" index="2"]
 script = ExtResource("4_hu44a")
 
-[node name="dialogtab" parent="Node2D/battle/button" index="5"]
+[node name="dialogtab" parent="Node2D/battle/button" index="6"]
 script = ExtResource("4_rwowx")
 
-[node name="escape" parent="Node2D/battle/button" index="7"]
+[node name="escape" parent="Node2D/battle/button" index="8"]
 text = "終わる"
 
 [node name="battlestart" parent="Node2D" index="5"]

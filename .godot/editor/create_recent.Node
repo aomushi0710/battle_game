@@ -1,3 +1,6 @@
+TextureRect
+Sprite2D
+AnimatedSprite2D
 TextureButton
 Button
 SpinBox
@@ -10,5 +13,3 @@ RichTextLabel
 VBoxContainer
 TabContainer
 ColorRect
-Sprite2D
-TextureRect

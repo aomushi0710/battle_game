@@ -237,8 +237,14 @@ func set_ready_text(monster: BattleMonster, mp: int) -> Array[String]:
 			mp_text = "%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % \
 			[monster.monster.name, monster.monster.supplyMP]
 	
-	return ["%s が行動可能になった。\n%s" % [monster.monster.name, mp_text] + 
-	"\n[color=yellow]%s は指示を待っている...[/color]" % monster.monster.name]
+	var text: String ## 敵か味方かで変わるテキスト
+	if monster.player == true:
+		text = "[color=yellow]%s は指示を待っている...[/color]" % monster.monster.name
+	else:
+		text = "[color=yellow]相手の %s の行動！[/color]" % monster.monster.name
+	
+	
+	return ["%s が行動可能になった。\n%s\n%s" % [monster.monster.name, mp_text, text]]
 
 ## ターン終了後にフィールドに立つモンスターのindexと画像を設定します
 func _on_change_button_up() -> void:
@@ -371,17 +377,45 @@ func item_selected(player: bool, monster: BattleMonster, item: Item, index: int)
 	for target: BattleMonster in target_list:
 		match item.id:
 			1: # ライフポーション
+				await item_animation(item, target)
 				var text: Array[String] = target.hp_setter( # 最終的には小数点切り捨て
 					target.monster.maxHP * (item.get_power(item.get_level()) / 100.0), true)
 				await dialog.text_setter(0, true, text)
 			2: # マナポーション
+				await item_animation(item, target)
 				var text: Array[String] = target.mp_setter( # 最終的には小数点切り捨て
 					target.monster.maxMP * (item.get_power(item.get_level()) / 100.0), true)
 				await dialog.text_setter(0, true, text)
 	
 	turn_end(player, monster)
 
+## アイテム使用時のアニメーションを再生する関数
+func item_animation(item: Item, monster: BattleMonster) -> void:
+	match item.id:
+		1, 2: # ライフポーション、マナポーション
+			# ポーションを投げてモンスターに当てるアニメーション
+			var item_node = TextureRect.new()
+			item_node.texture = item.image
+			item_node.position = Vector2(500, 350)
+			item_node.pivot_offset = item_node.size / 2
+			add_child(item_node)
+			var item_tween: Tween = item_node.create_tween()
+			item_tween.tween_property(item_node, "rotation_degrees", 360, 0.5)
+			item_tween.parallel().tween_property(item_node, "position:y", 222, 0.5)
+			item_tween.parallel().tween_property(item_node, "scale", Vector2(0.8, 0.8), 0.5)
+			item_tween.parallel().tween_property(item_node, "modulate:a", 0.8, 0.5)
+			item_tween.tween_callback(func(): item_node.rotation_degrees = -360)
+			item_tween.tween_property(item_node, "rotation_degrees", 360, 1)
+			item_tween.parallel().tween_property(item_node, "position", monster.position, 1)\
+			.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+			item_tween.parallel().tween_property(item_node, "scale", Vector2(0.4, 0.4), 1)\
+			.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+			item_tween.parallel().tween_property(item_node, "modulate:a", 0, 1)\
+			.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+			await item_tween.finished
+			item_node.queue_free()
 
+## モンスターの行動終了時の処理
 func turn_end(player: bool, monster: BattleMonster) -> void:
 	# 相手全滅
 	if Global.e1_death == true and Global.e2_death == true and Global.e3_death == true:
@@ -448,7 +482,7 @@ func battle_finish(win: bool) -> void:
 	$button.now_showing = -1
 	$"../result_rect".show()
 	if win == true:
-		var coins: int ## 合計コイン枚数
+		var coins: int = 0 ## 合計コイン枚数
 		for i in range(3): # コイン獲得
 			coins += enemy_deck[i].monster.coin
 		Global.coin_setter(coins)
