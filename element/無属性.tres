@@ -7,6 +7,8 @@
 script = ExtResource("1_prm7l")
 id = 0
 name = "無属性"
-color = "white"
+color_text = "white"
+outline_color = "black"
+color = Color(1, 1, 1, 1)
 icon = ExtResource("1_4ech3")
 metadata/_custom_type_script = "uid://0hbknewd53sh"

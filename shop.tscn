@@ -38,9 +38,9 @@ script = ExtResource("3_blqjs")
 [node name="戻る" type="Button" parent="Control"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 0
-offset_left = 40.0
+offset_left = 50.0
 offset_top = 990.0
-offset_right = 198.0
+offset_right = 208.0
 offset_bottom = 1065.0
 mouse_default_cursor_shape = 2
 text = "←戻る"
@@ -48,9 +48,9 @@ text = "←戻る"
 [node name="buy" type="Button" parent="Control"]
 modulate = Color(1, 1, 0, 1)
 layout_mode = 0
-offset_left = 1603.0
+offset_left = 1712.0
 offset_top = 990.0
-offset_right = 1761.0
+offset_right = 1870.0
 offset_bottom = 1065.0
 mouse_default_cursor_shape = 2
 text = "購入！"

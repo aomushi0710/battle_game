@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_0twro"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_cpkem"]
-[ext_resource type="Script" uid="uid://dlykw61jg8rb7" path="res://Control.gd" id="1_dgsv0"]
+[ext_resource type="Script" uid="uid://sb20jo78m6dl" path="res://deck_select.gd" id="1_dgsv0"]
 [ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://1st.PNG" id="2_34w54"]
 [ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://2nd.PNG" id="3_qs0ub"]
 [ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://3rd.PNG" id="4_qklf7"]

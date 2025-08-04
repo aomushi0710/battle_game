@@ -7,6 +7,7 @@
 script = ExtResource("1_j3bid")
 id = 1
 name = "火属性"
-color = "red"
+color_text = "red"
+color = Color(1, 0, 0, 1)
 icon = ExtResource("1_oiac7")
 metadata/_custom_type_script = "uid://0hbknewd53sh"

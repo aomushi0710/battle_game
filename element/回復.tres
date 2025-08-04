@@ -7,6 +7,8 @@
 script = ExtResource("1_jvv66")
 id = 9
 name = "回復"
-color = "yellow_green"
+color_text = "yellow_green"
+outline_color = "black"
+color = Color(0.603922, 0.803922, 0.196078, 1)
 icon = ExtResource("1_oul6c")
 metadata/_custom_type_script = "uid://0hbknewd53sh"

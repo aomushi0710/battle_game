@@ -7,6 +7,8 @@
 script = ExtResource("1_0jwra")
 id = 100
 name = "進化"
-color = "gold"
+color_text = "gold"
+outline_color = "black"
+color = Color(1, 0.843137, 0, 1)
 icon = ExtResource("1_bwk17")
 metadata/_custom_type_script = "uid://0hbknewd53sh"

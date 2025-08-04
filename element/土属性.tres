@@ -7,6 +7,8 @@
 script = ExtResource("1_u3m0a")
 id = 4
 name = "土属性"
-color = "chocolate"
+color_text = "chocolate"
+outline_color = "black"
+color = Color(0.823529, 0.411765, 0.117647, 1)
 icon = ExtResource("1_hqljq")
 metadata/_custom_type_script = "uid://0hbknewd53sh"

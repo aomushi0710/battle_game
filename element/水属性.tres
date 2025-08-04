@@ -7,6 +7,8 @@
 script = ExtResource("1_0xkau")
 id = 2
 name = "水属性"
-color = "dodger_blue"
+color_text = "dodger_blue"
+outline_color = "black"
+color = Color(0.117647, 0.564706, 1, 1)
 icon = ExtResource("1_66bm2")
 metadata/_custom_type_script = "uid://0hbknewd53sh"
