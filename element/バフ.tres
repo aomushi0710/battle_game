@@ -8,7 +8,6 @@ script = ExtResource("1_hkjw8")
 id = 10
 name = "バフ"
 color_text = "dark_red"
-outline_color = "white"
 color = Color(0.545098, 0, 0, 1)
 icon = ExtResource("1_0i2xq")
 metadata/_custom_type_script = "uid://0hbknewd53sh"

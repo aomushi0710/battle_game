@@ -27,9 +27,9 @@ text = "💼"
 [node name="coin" type="RichTextLabel" parent="Control"]
 layout_mode = 0
 offset_left = 150.0
-offset_top = 60.0
+offset_top = 57.0
 offset_right = 471.0
-offset_bottom = 116.0
+offset_bottom = 123.0
 bbcode_enabled = true
 text = "[img=50]res://image/coin.PNG[/img] [color=gold]100[/color]"
 scroll_active = false
@@ -60,7 +60,7 @@ layout_mode = 0
 offset_left = 100.0
 offset_top = 150.0
 offset_right = 1820.0
-offset_bottom = 530.0
+offset_bottom = 540.0
 current_tab = 0
 
 [node name="アイテム" type="HBoxContainer" parent="Control/catalog"]

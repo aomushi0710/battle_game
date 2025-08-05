@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhqk4iva02mmc"]
+[gd_scene load_steps=16 format=3 uid="uid://bhqk4iva02mmc"]
 
 [ext_resource type="Script" uid="uid://b775il0q1wk0u" path="res://background.gd" id="1_jjjva"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_nfpvw"]
@@ -11,6 +11,9 @@
 [ext_resource type="Script" uid="uid://o4ioqobn45d0" path="res://battle_buttons.gd" id="9_hwahx"]
 [ext_resource type="Theme" uid="uid://b1eadb2a673y2" path="res://theme/battle_tabcontainer.tres" id="13_sraw4"]
 [ext_resource type="Script" uid="uid://bmvfns1s1615p" path="res://dialogtab.gd" id="14_3ru5v"]
+
+[sub_resource type="Theme" id="Theme_jjjva"]
+default_font_size = 40
 
 [sub_resource type="Theme" id="Theme_nfpvw"]
 default_font_size = 40
@@ -112,7 +115,7 @@ layout_mode = 0
 offset_left = -21.286
 offset_top = -145.0
 offset_right = 278.714
-theme = ExtResource("4_jjjva")
+theme = SubResource("Theme_jjjva")
 bbcode_enabled = true
 text = "次に行動する
 モンスター"
@@ -231,16 +234,16 @@ z_index = 2
 layout_mode = 2
 mouse_filter = 0
 theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 17
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 17
+theme_override_constants/margin_bottom = 0
 metadata/_tab_index = 0
 
 [node name="text" type="RichTextLabel" parent="battle/button/dialogtab/メイン"]
 z_index = 2
 layout_mode = 2
 bbcode_enabled = true
-text = "技名の最大文字数は全角１８文字まで！
+text = "技名の最大文字数は全角２１文字まで！あああ
 分類:[color=red]物理　　　　[/color]MP Cost:[color=aqua]10[/color]
 対象:[color=yellow]味方単体　　[/color]  Power:[color=red]10[/color]"
 
@@ -286,15 +289,14 @@ z_index = 2
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1853.0
-offset_top = 1025.0
-offset_right = 1855.0
-offset_bottom = 1028.0
+offset_left = 1846.0
+offset_top = 1008.0
+offset_right = 1857.0
+offset_bottom = 1033.0
 scale = Vector2(0.8, 0.8)
 bbcode_enabled = true
 text = "▼"
 scroll_active = false
-vertical_alignment = 1
 
 [node name="escape" type="Button" parent="battle/button"]
 modulate = Color(1, 1, 0, 1)

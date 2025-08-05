@@ -42,7 +42,8 @@ rotation = 3.14159
 pivot_offset = Vector2(75, 75)
 theme_override_constants/outline_size = 30
 bbcode_enabled = true
-text = "[font_size=150][color=red][b]↓[/b][/color][/font_size]"
+text = "[font_size=120
+][color=red][b]⬇️[/b][/color][/font_size]"
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 2
@@ -50,7 +51,7 @@ vertical_alignment = 2
 [node name="tutorial_pause_text" type="RichTextLabel" parent="Node2D"]
 offset_top = 246.0
 offset_right = 1920.0
-offset_bottom = 381.0
+offset_bottom = 396.0
 theme = ExtResource("4_5mrt3")
 theme_override_styles/normal = SubResource("StyleBoxFlat_5mrt3")
 bbcode_enabled = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://36mc0q6q01ow"]
+[gd_scene load_steps=12 format=3 uid="uid://36mc0q6q01ow"]
 
 [ext_resource type="Script" uid="uid://cpvp8wu65fblw" path="res://メインシーン.gd" id="1_0gvvv"]
 [ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help.gd" id="2_05cje"]
@@ -6,19 +6,25 @@
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="2_m5oqv"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="4_lf3g1"]
 
-[sub_resource type="Theme" id="Theme_4elko"]
-default_font = ExtResource("2_lf3g1")
+[sub_resource type="Theme" id="Theme_6g3bf"]
 default_font_size = 35
 
 [sub_resource type="Theme" id="Theme_lf3g1"]
 default_font_size = 35
 
-[sub_resource type="Theme" id="Theme_c728d"]
-default_font = ExtResource("2_lf3g1")
-default_font_size = 35
+[sub_resource type="Theme" id="Theme_8u85v"]
+default_font_size = 25
 
 [sub_resource type="Theme" id="Theme_0c3is"]
 default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_4elko"]
+default_font = ExtResource("2_lf3g1")
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_c728d"]
+default_font = ExtResource("2_lf3g1")
+default_font_size = 35
 
 [node name="メインシーン" type="Node2D"]
 scale = Vector2(1.6, 1.6)
@@ -26,27 +32,27 @@ script = ExtResource("1_0gvvv")
 
 [node name="Button" type="Button" parent="."]
 offset_left = 100.0
-offset_top = 100.0
-offset_right = 203.0
-offset_bottom = 131.0
+offset_top = 80.0
+offset_right = 388.0
+offset_bottom = 140.0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_4elko")
+theme = SubResource("Theme_6g3bf")
 text = "コンピューター戦"
 
 [node name="reset" type="Button" parent="."]
 modulate = Color(1, 0, 0, 1)
 offset_left = 650.0
-offset_top = 100.0
+offset_top = 80.0
 offset_right = 986.0
-offset_bottom = 148.0
+offset_bottom = 140.0
 theme = SubResource("Theme_lf3g1")
 text = "🗑️セーブデータ削除"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_left = 100.0
-offset_top = 153.0
+offset_top = 139.375
 offset_right = 1064.0
-offset_bottom = 762.0
+offset_bottom = 670.375
 theme = ExtResource("2_m5oqv")
 bbcode_enabled = true
 text = "↑ここを押してセッティング！
@@ -57,9 +63,7 @@ text = "↑ここを押してセッティング！
 
 現在はコンピュータとの対戦しかできませんが、今後の発展にご期待ください！
 
-[color=red][i]右上の？ボタンを押すとヘルプを閲覧できます！
-
-更に一部のテキスト・ボタンはカーソルを合わせて少し待つとヒントが表示されます！[/i][/color]"
+[color=red]一部のテキスト・ボタンはカーソルを合わせて少し待つとヒントが表示されます！[/color]"
 
 [node name="help" type="Button" parent="."]
 process_mode = 3
@@ -68,7 +72,7 @@ offset_top = 10.0
 offset_right = 1148.0
 offset_bottom = 58.0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_c728d")
+theme = SubResource("Theme_8u85v")
 toggle_mode = true
 text = "?"
 script = ExtResource("2_05cje")
@@ -130,10 +134,10 @@ text = "[i]β.ver.X.X.X[/i] "
 horizontal_alignment = 2
 
 [node name="copyright" type="RichTextLabel" parent="."]
-offset_left = 95.6251
+offset_left = 96.0
 offset_top = 630.0
-offset_right = 406.625
-offset_bottom = 668.0
+offset_right = 443.0
+offset_bottom = 681.0
 theme = ExtResource("2_m5oqv")
 bbcode_enabled = true
 text = "[i](C) 2025 aomushi0710[i]"

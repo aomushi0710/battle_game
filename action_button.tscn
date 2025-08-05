@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqgg7lvejtmh7"]
+
+[ext_resource type="Theme" uid="uid://dukn1t5145x33" path="res://theme/action_button.tres" id="1_hae2l"]
+[ext_resource type="Script" uid="uid://cej28jygy1831" path="res://action_button.gd" id="2_hae2l"]
+[ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="2_nlxtl"]
+
+[sub_resource type="Gradient" id="Gradient_nlxtl"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cotgl"]
+gradient = SubResource("Gradient_nlxtl")
+fill_from = Vector2(0, 1)
+metadata/_snap_count = 2
+
+[node name="action_button" type="Button"]
+offset_right = 583.0
+offset_bottom = 81.0
+theme = ExtResource("1_hae2l")
+text = "アタックエンハンス"
+alignment = 0
+script = ExtResource("2_hae2l")
+
+[node name="element" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 5.5
+offset_top = 5.5
+offset_right = 75.5
+offset_bottom = 75.5
+texture = ExtResource("2_nlxtl")
+expand_mode = 1
+
+[node name="background" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_right = 583.0
+offset_bottom = 81.0
+texture = SubResource("GradientTexture2D_cotgl")

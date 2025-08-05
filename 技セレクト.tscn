@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=20 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://bbbmf3vi2lr1d" path="res://特性・技セレクト.gd" id="2_1hqx4"]
@@ -9,6 +9,7 @@
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_ltw0u"]
 [ext_resource type="Script" uid="uid://c2vp2a6nafdjq" path="res://element_text.gd" id="8_w7dfb"]
 [ext_resource type="Script" uid="uid://b15c8h3h61tnt" path="res://help_type.gd" id="9_jsdkd"]
+[ext_resource type="PackedScene" uid="uid://v6jyvs7dws2y" path="res://PieChart_action.tscn" id="10_1hqx4"]
 
 [sub_resource type="Theme" id="Theme_uaj8f"]
 default_font_size = 20
@@ -503,6 +504,12 @@ offset_right = 163.0
 offset_bottom = 598.0
 theme = SubResource("Theme_ggtdh")
 text = "←戻る"
+
+[node name="PieChart_action" parent="セレクト" instance=ExtResource("10_1hqx4")]
+offset_left = 1265.0
+offset_top = 84.0
+offset_right = 1665.0
+offset_bottom = 484.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -10

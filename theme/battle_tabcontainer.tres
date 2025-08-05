@@ -4,4 +4,6 @@
 bg_color = Color(0, 0, 0, 1)
 
 [resource]
+default_font_size = 44
+TabContainer/font_sizes/font_size = 35
 TabContainer/styles/panel = SubResource("StyleBoxFlat_b7nns")

@@ -12,7 +12,7 @@ default_font_size = 35
 default_font_size = 20
 
 [sub_resource type="Theme" id="Theme_f07vs"]
-default_font_size = 35
+default_font_size = 25
 
 [sub_resource type="Theme" id="Theme_aoflo"]
 default_font_size = 30

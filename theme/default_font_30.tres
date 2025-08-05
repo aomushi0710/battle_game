@@ -1,6 +1,4 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://dsj0uaujnbqwe"]
-
-[ext_resource type="FontFile" uid="uid://b2cvy5t2fy5pr" path="res://Nosutaru-dotMPlusH-10-Regular.ttf" id="1_bswtj"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://dsj0uaujnbqwe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bswtj"]
 bg_color = Color(0, 0, 0, 1)
@@ -12,7 +10,6 @@ bg_color = Color(0, 0, 0, 1)
 default_font_size = 30
 AcceptDialog/styles/panel = SubResource("StyleBoxFlat_bswtj")
 Button/constants/outline_size = 10
-Button/fonts/font = ExtResource("1_bswtj")
 Button/styles/focus = SubResource("StyleBoxFlat_xev74")
 LineEdit/constants/outline_size = 10
 RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
