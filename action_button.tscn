@@ -12,25 +12,32 @@ fill_from = Vector2(0, 1)
 metadata/_snap_count = 2
 
 [node name="action_button" type="Button"]
-offset_right = 583.0
-offset_bottom = 81.0
+custom_minimum_size = Vector2(590, 64)
+offset_right = 590.0
+offset_bottom = 64.0
 theme = ExtResource("1_hae2l")
 text = "アタックエンハンス"
 alignment = 0
 script = ExtResource("2_hae2l")
 
 [node name="element" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 5.5
-offset_top = 5.5
-offset_right = 75.5
-offset_bottom = 75.5
+layout_mode = 1
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 57.0
+offset_bottom = 57.0
 texture = ExtResource("2_nlxtl")
 expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="background" type="TextureRect" parent="."]
 z_index = -1
-layout_mode = 0
-offset_right = 583.0
-offset_bottom = 81.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.5
+offset_bottom = -0.5
+grow_horizontal = 2
+grow_vertical = 2
 texture = SubResource("GradientTexture2D_cotgl")

@@ -554,6 +554,12 @@ offset_bottom = 598.0
 theme = SubResource("Theme_ggtdh")
 text = "←戻る"
 
+[node name="Button" type="Button" parent="セレクト"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "debug"
+
 [connection signal="tree_entered" from="." to="セレクト" method="_on_node_2d_tree_entered"]
 [connection signal="button_up" from="セレクト/戻る" to="セレクト" method="_on_戻る_button_up"]
 [connection signal="button_up" from="セレクト/決定" to="セレクト" method="_on_決定_button_up"]
@@ -582,3 +588,4 @@ text = "←戻る"
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help_menu/status" to="セレクト/help" method="_on_status_button_up"]
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help_menu/help_back" to="セレクト/help" method="_on_help_back_button_up"]
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help_page/help_back_monster" to="セレクト/help" method="_on_help_back_monster_button_up"]
+[connection signal="button_up" from="セレクト/Button" to="セレクト" method="_on_button_button_up"]

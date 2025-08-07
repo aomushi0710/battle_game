@@ -28,3 +28,7 @@ res://element/バフ.tres
 res://action/石の壁.tres
 res://action_button.gd
 res://theme/action_button.tres
+res://特性・技セレクト.gd
+res://PieChart_action.gd
+res://Global.gd
+res://select.gd

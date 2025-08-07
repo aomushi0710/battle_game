@@ -1,7 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=30 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
-[ext_resource type="Script" uid="uid://bbbmf3vi2lr1d" path="res://特性・技セレクト.gd" id="2_1hqx4"]
+[ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="3_250y8"]
 [ext_resource type="Script" uid="uid://bqac3ygdata88" path="res://技.gd" id="4_ilscs"]
 [ext_resource type="Script" uid="uid://dsvpr27yyuc12" path="res://中間進化技.gd" id="5_3py80"]
@@ -9,7 +9,9 @@
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_ltw0u"]
 [ext_resource type="Script" uid="uid://c2vp2a6nafdjq" path="res://element_text.gd" id="8_w7dfb"]
 [ext_resource type="Script" uid="uid://b15c8h3h61tnt" path="res://help_type.gd" id="9_jsdkd"]
-[ext_resource type="PackedScene" uid="uid://v6jyvs7dws2y" path="res://PieChart_action.tscn" id="10_1hqx4"]
+[ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://null.PNG" id="10_ilscs"]
+[ext_resource type="Texture2D" uid="uid://dtb8010gbtf6j" path="res://spinbox_down.png" id="11_3py80"]
+[ext_resource type="Texture2D" uid="uid://bgtiu2klk0bm3" path="res://spinbox_up.png" id="12_4lobs"]
 
 [sub_resource type="Theme" id="Theme_uaj8f"]
 default_font_size = 20
@@ -19,12 +21,6 @@ default_font_size = 20
 
 [sub_resource type="Theme" id="Theme_h0gss"]
 default_font_size = 20
-
-[sub_resource type="Theme" id="Theme_2y5cs"]
-default_font_size = 20
-
-[sub_resource type="Theme" id="Theme_6ihpe"]
-resource_local_to_scene = true
 
 [sub_resource type="Theme" id="Theme_03esk"]
 default_font_size = 35
@@ -38,7 +34,85 @@ default_font_size = 35
 [sub_resource type="Theme" id="Theme_2vljx"]
 default_font_size = 30
 
+[sub_resource type="Theme" id="Theme_250y8"]
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_ilscs"]
+default_font_size = 38
+
+[sub_resource type="Gradient" id="Gradient_1hqx4"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_250y8"]
+gradient = SubResource("Gradient_1hqx4")
+width = 4
+height = 8
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ilscs"]
+color = Color(1, 1, 1, 1)
+thickness = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3py80"]
+bg_color = Color(0.5, 0.5, 0.5, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+expand_margin_right = 4.0
+
+[sub_resource type="Theme" id="Theme_4lobs"]
+default_font_size = 38
+LineEdit/styles/normal = SubResource("StyleBoxFlat_3py80")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7dfb"]
+border_width_right = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsdkd"]
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kch7d"]
+border_width_top = 1
+border_width_right = 1
+border_color = Color(1, 1, 1, 1)
+
 [node name="Node2D" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_14bbj")
+
+[node name="戻る" type="Button" parent="CanvasLayer/Control"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 990.0
+offset_right = 198.0
+offset_bottom = 1071.0
+mouse_default_cursor_shape = 2
+text = "←戻る"
+
+[node name="決定" type="Button" parent="CanvasLayer/Control"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 0
+offset_left = 1712.0
+offset_top = 990.0
+offset_right = 1870.0
+offset_bottom = 1071.0
+mouse_default_cursor_shape = 2
+text = "決定！"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(960, 540)
 
 [node name="セレクト" type="Control" parent="."]
 layout_mode = 3
@@ -62,26 +136,6 @@ offset_right = 1088.0
 offset_bottom = 856.0
 pivot_offset = Vector2(128, 128)
 texture = ExtResource("3_250y8")
-
-[node name="戻る" type="Button" parent="セレクト"]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 0
-offset_left = 40.0
-offset_top = 990.0
-offset_right = 198.0
-offset_bottom = 1065.0
-mouse_default_cursor_shape = 2
-text = "←戻る"
-
-[node name="決定" type="Button" parent="セレクト"]
-modulate = Color(1, 1, 0, 1)
-layout_mode = 0
-offset_left = 1712.0
-offset_top = 990.0
-offset_right = 1870.0
-offset_bottom = 1065.0
-mouse_default_cursor_shape = 2
-text = "決定！"
 
 [node name="セレクトUI" type="TabContainer" parent="セレクト"]
 layout_mode = 1
@@ -276,130 +330,6 @@ bbcode_enabled = true
 text = "[center]特殊能力が表示されます!
 [hint=特殊効果を発生させる対象が表示されます]対象:[color=yellow]――――[/color][/hint] [hint=特殊効果の発生確率]確率:[color=green]---%[/color][/hint][/center]"
 
-[node name="出現率設定UI" type="ColorRect" parent="セレクト"]
-layout_mode = 0
-offset_left = 807.0
-offset_top = -468.0
-offset_right = 1307.0
-offset_bottom = -248.0
-color = Color(0, 0, 0.494118, 0.494118)
-
-[node name="出現率設定UI" type="VBoxContainer" parent="セレクト/出現率設定UI"]
-layout_mode = 0
-offset_right = 500.0
-offset_bottom = 180.0
-theme = SubResource("Theme_2y5cs")
-metadata/_edit_lock_ = true
-
-[node name="act_name1" type="RichTextLabel" parent="セレクト/出現率設定UI/出現率設定UI"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-theme = SubResource("Theme_6ihpe")
-bbcode_enabled = true
-text = "未設定"
-
-[node name="act_slider1" type="HSlider" parent="セレクト/出現率設定UI/出現率設定UI"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-editable = false
-
-[node name="act_name2" type="RichTextLabel" parent="セレクト/出現率設定UI/出現率設定UI"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-bbcode_enabled = true
-text = "未設定"
-
-[node name="act_slider2" type="HSlider" parent="セレクト/出現率設定UI/出現率設定UI"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-editable = false
-
-[node name="act_name3" type="RichTextLabel" parent="セレクト/出現率設定UI/出現率設定UI"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-bbcode_enabled = true
-text = "未設定"
-
-[node name="act_slider3" type="HSlider" parent="セレクト/出現率設定UI/出現率設定UI"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-editable = false
-
-[node name="act_name4" type="RichTextLabel" parent="セレクト/出現率設定UI/出現率設定UI"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-bbcode_enabled = true
-text = "未設定"
-
-[node name="act_slider4" type="HSlider" parent="セレクト/出現率設定UI/出現率設定UI"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-editable = false
-
-[node name="SpinBox" type="SpinBox" parent="セレクト/出現率設定UI"]
-layout_mode = 0
-offset_left = 427.0
-offset_right = 500.0
-offset_bottom = 31.0
-mouse_default_cursor_shape = 2
-theme = ExtResource("7_ltw0u")
-theme_override_colors/up_icon_modulate = Color(1, 0, 0, 1)
-theme_override_colors/down_icon_modulate = Color(0, 1, 1, 1)
-theme_override_constants/field_and_buttons_separation = 0
-theme_override_constants/buttons_vertical_separation = 10
-alignment = 2
-update_on_text_changed = true
-suffix = "%"
-select_all_on_focus = true
-
-[node name="SpinBox2" type="SpinBox" parent="セレクト/出現率設定UI"]
-layout_mode = 0
-offset_left = 427.0
-offset_top = 54.0
-offset_right = 500.0
-offset_bottom = 85.0
-theme = ExtResource("7_ltw0u")
-theme_override_colors/up_icon_modulate = Color(1, 0, 0, 1)
-theme_override_colors/down_icon_modulate = Color(0, 1, 1, 1)
-theme_override_constants/field_and_buttons_separation = 0
-theme_override_constants/buttons_vertical_separation = 10
-alignment = 2
-update_on_text_changed = true
-suffix = "%"
-select_all_on_focus = true
-
-[node name="SpinBox3" type="SpinBox" parent="セレクト/出現率設定UI"]
-layout_mode = 0
-offset_left = 427.0
-offset_top = 108.0
-offset_right = 500.0
-offset_bottom = 139.0
-theme = ExtResource("7_ltw0u")
-theme_override_colors/up_icon_modulate = Color(1, 0, 0, 1)
-theme_override_colors/down_icon_modulate = Color(0, 1, 1, 1)
-theme_override_constants/field_and_buttons_separation = 0
-theme_override_constants/buttons_vertical_separation = 10
-alignment = 2
-update_on_text_changed = true
-suffix = "%"
-select_all_on_focus = true
-
-[node name="SpinBox4" type="SpinBox" parent="セレクト/出現率設定UI"]
-layout_mode = 0
-offset_left = 427.0
-offset_top = 162.0
-offset_right = 500.0
-offset_bottom = 193.0
-theme = ExtResource("7_ltw0u")
-theme_override_colors/up_icon_modulate = Color(1, 0, 0, 1)
-theme_override_colors/down_icon_modulate = Color(0, 1, 1, 1)
-theme_override_constants/field_and_buttons_separation = 0
-theme_override_constants/buttons_vertical_separation = 10
-alignment = 2
-update_on_text_changed = true
-suffix = "%"
-select_all_on_focus = true
-
 [node name="help" type="Button" parent="セレクト"]
 process_mode = 3
 layout_mode = 0
@@ -505,22 +435,173 @@ offset_bottom = 598.0
 theme = SubResource("Theme_ggtdh")
 text = "←戻る"
 
-[node name="PieChart_action" parent="セレクト" instance=ExtResource("10_1hqx4")]
-offset_left = 1265.0
-offset_top = 84.0
-offset_right = 1665.0
-offset_bottom = 484.0
+[node name="actions" type="HBoxContainer" parent="セレクト"]
+layout_mode = 0
+offset_left = 1135.0
+offset_top = 588.0
+offset_right = 1730.0
+offset_bottom = 900.0
+theme_override_constants/separation = 20
+
+[node name="chart_colors" type="VBoxContainer" parent="セレクト/actions"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="chart_color1" type="ColorRect" parent="セレクト/actions/chart_colors"]
+custom_minimum_size = Vector2(86, 63)
+layout_mode = 2
+color = Color(0, 1, 1, 1)
+
+[node name="chance" type="RichTextLabel" parent="セレクト/actions/chart_colors/chart_color1"]
+clip_contents = false
+layout_mode = 1
+offset_right = 80.0
+offset_bottom = 63.0
+theme = SubResource("Theme_250y8")
+bbcode_enabled = true
+text = "10%"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="chart_color2" type="ColorRect" parent="セレクト/actions/chart_colors"]
+custom_minimum_size = Vector2(86, 63)
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="chance" type="RichTextLabel" parent="セレクト/actions/chart_colors/chart_color2"]
+clip_contents = false
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 63.0
+theme = SubResource("Theme_250y8")
+bbcode_enabled = true
+text = "20%"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="chart_color3" type="ColorRect" parent="セレクト/actions/chart_colors"]
+custom_minimum_size = Vector2(86, 63)
+layout_mode = 2
+color = Color(1, 1, 0, 1)
+
+[node name="chance" type="RichTextLabel" parent="セレクト/actions/chart_colors/chart_color3"]
+clip_contents = false
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 63.0
+theme = SubResource("Theme_250y8")
+bbcode_enabled = true
+text = "30%"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="chart_color4" type="ColorRect" parent="セレクト/actions/chart_colors"]
+custom_minimum_size = Vector2(86, 63)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="chance" type="RichTextLabel" parent="セレクト/actions/chart_colors/chart_color4"]
+clip_contents = false
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 63.0
+theme = SubResource("Theme_250y8")
+bbcode_enabled = true
+text = "30%"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="action_buttons" type="VBoxContainer" parent="セレクト/actions"]
+custom_minimum_size = Vector2(590, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="delete_buttons" type="VBoxContainer" parent="セレクト/actions"]
+layout_mode = 2
+theme_override_constants/separation = 19
+
+[node name="delete1" type="Button" parent="セレクト/actions/delete_buttons"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+theme = SubResource("Theme_ilscs")
+text = "❌"
+
+[node name="delete2" type="Button" parent="セレクト/actions/delete_buttons"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+theme = SubResource("Theme_ilscs")
+text = "❌"
+
+[node name="delete3" type="Button" parent="セレクト/actions/delete_buttons"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+theme = SubResource("Theme_ilscs")
+text = "❌"
+
+[node name="delete4" type="Button" parent="セレクト/actions/delete_buttons"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+theme = SubResource("Theme_ilscs")
+text = "❌"
+
+[node name="action_select" type="Control" parent="セレクト"]
+anchors_preset = 0
+offset_left = 1920.0
+offset_right = 1960.0
+offset_bottom = 40.0
+
+[node name="chance" type="HSlider" parent="セレクト/action_select"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 90.0
+offset_right = 748.0
+offset_bottom = 106.0
+theme_override_constants/center_grabber = 1
+theme_override_icons/tick = SubResource("GradientTexture2D_250y8")
+theme_override_styles/slider = SubResource("StyleBoxLine_ilscs")
+tick_count = 5
+ticks_on_borders = true
+
+[node name="SpinBox" type="SpinBox" parent="セレクト/action_select"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 151.0
+offset_bottom = 84.0
+mouse_default_cursor_shape = 1
+theme = SubResource("Theme_4lobs")
+theme_override_colors/up_icon_modulate = Color(1, 0, 0, 1)
+theme_override_colors/down_icon_modulate = Color(0, 1, 1, 1)
+theme_override_constants/field_and_buttons_separation = 4
+theme_override_constants/buttons_vertical_separation = 10
+theme_override_icons/up_disabled = ExtResource("10_ilscs")
+theme_override_icons/down = ExtResource("11_3py80")
+theme_override_icons/down_disabled = ExtResource("10_ilscs")
+theme_override_icons/up = ExtResource("12_4lobs")
+theme_override_styles/up_down_buttons_separator = SubResource("StyleBoxFlat_w7dfb")
+theme_override_styles/down_background_disabled = SubResource("StyleBoxFlat_jsdkd")
+theme_override_styles/down_background = SubResource("StyleBoxFlat_jsdkd")
+theme_override_styles/up_background_disabled = SubResource("StyleBoxFlat_kch7d")
+theme_override_styles/up_background = SubResource("StyleBoxFlat_kch7d")
+alignment = 2
+update_on_text_changed = true
+suffix = "%"
+select_all_on_focus = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -10
-offset_right = 1920.0
+offset_right = 2710.0
 offset_bottom = 1080.0
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
-[connection signal="tree_entered" from="." to="セレクト" method="_on_node_2d_tree_entered"]
-[connection signal="button_up" from="セレクト/戻る" to="セレクト" method="_on_戻る_button_up"]
-[connection signal="button_up" from="セレクト/決定" to="セレクト" method="_on_決定_button_up"]
+[connection signal="button_up" from="CanvasLayer/Control/戻る" to="セレクト" method="_on_戻る_button_up"]
+[connection signal="button_up" from="CanvasLayer/Control/決定" to="セレクト" method="_on_決定_button_up"]
 [connection signal="item_selected" from="セレクト/セレクトUI/スキル/スキルボタン" to="セレクト" method="_on_スキルボタン_item_selected"]
 [connection signal="draw" from="セレクト/セレクトUI/技" to="セレクト" method="_on_技_draw"]
 [connection signal="select" from="セレクト/セレクトUI/技" to="セレクト" method="_on_技_select"]
@@ -532,17 +613,15 @@ metadata/_edit_lock_ = true
 [connection signal="draw" from="セレクト/セレクトUI/進化技" to="セレクト" method="_on_進化技_draw"]
 [connection signal="select" from="セレクト/セレクトUI/進化技" to="セレクト" method="_on_技_select"]
 [connection signal="tree_entered" from="セレクト/セレクトUI/進化技" to="セレクト/セレクトUI/進化技" method="_on_tree_entered"]
-[connection signal="value_changed" from="セレクト/出現率設定UI/出現率設定UI/act_slider1" to="セレクト" method="_on_act_slider_1_value_changed"]
-[connection signal="value_changed" from="セレクト/出現率設定UI/出現率設定UI/act_slider2" to="セレクト" method="_on_act_slider_2_value_changed"]
-[connection signal="value_changed" from="セレクト/出現率設定UI/出現率設定UI/act_slider3" to="セレクト" method="_on_act_slider_3_value_changed"]
-[connection signal="value_changed" from="セレクト/出現率設定UI/出現率設定UI/act_slider4" to="セレクト" method="_on_act_slider_4_value_changed"]
-[connection signal="value_changed" from="セレクト/出現率設定UI/SpinBox" to="セレクト" method="_on_act_slider_1_value_changed"]
-[connection signal="value_changed" from="セレクト/出現率設定UI/SpinBox2" to="セレクト" method="_on_act_slider_2_value_changed"]
-[connection signal="value_changed" from="セレクト/出現率設定UI/SpinBox3" to="セレクト" method="_on_act_slider_3_value_changed"]
-[connection signal="value_changed" from="セレクト/出現率設定UI/SpinBox4" to="セレクト" method="_on_act_slider_4_value_changed"]
 [connection signal="toggled" from="セレクト/help" to="セレクト/help" method="_on_toggled"]
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help" to="セレクト/help" method="_on_monster_help_button_up"]
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help_menu/type" to="セレクト/help" method="_on_type_button_up"]
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help_menu/status" to="セレクト/help" method="_on_status_button_up"]
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help_menu/help_back" to="セレクト/help" method="_on_help_back_button_up"]
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help_page/help_back_monster" to="セレクト/help" method="_on_help_back_monster_button_up"]
+[connection signal="button_up" from="セレクト/actions/delete_buttons/delete1" to="セレクト" method="delete_button_up" binds= [0]]
+[connection signal="button_up" from="セレクト/actions/delete_buttons/delete2" to="セレクト" method="delete_button_up" binds= [1]]
+[connection signal="button_up" from="セレクト/actions/delete_buttons/delete3" to="セレクト" method="delete_button_up" binds= [2]]
+[connection signal="button_up" from="セレクト/actions/delete_buttons/delete4" to="セレクト" method="delete_button_up" binds= [3]]
+[connection signal="value_changed" from="セレクト/action_select/chance" to="セレクト" method="_on_chance_value_changed"]
+[connection signal="value_changed" from="セレクト/action_select/SpinBox" to="セレクト" method="_on_chance_value_changed"]

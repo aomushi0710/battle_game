@@ -1,15 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://v6jyvs7dws2y"]
+[gd_scene load_steps=5 format=3 uid="uid://v6jyvs7dws2y"]
 
 [ext_resource type="Script" uid="uid://yimhsvjrjh05" path="res://PieChart_action.gd" id="1_7xjnu"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_w11q0"]
 [ext_resource type="Texture2D" uid="uid://d05tkdjjbl8u5" path="res://PieChartUnder.png" id="2_m25r1"]
 [ext_resource type="Texture2D" uid="uid://bb2rrb1k047h2" path="res://PieChartOver.png" id="3_w11q0"]
-[ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="5_t4qc0"]
 
 [node name="PieChart_action" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1000.0
+offset_right = 400.0
 offset_bottom = 400.0
 theme = ExtResource("1_w11q0")
 script = ExtResource("1_7xjnu")
@@ -18,66 +17,31 @@ script = ExtResource("1_7xjnu")
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 400.0
-value = 90.0
 fill_mode = 4
 texture_under = ExtResource("2_m25r1")
 texture_progress = ExtResource("3_w11q0")
-tint_progress = Color(1, 0, 1, 1)
+tint_progress = Color(0, 0, 0, 0)
 
 [node name="action3" type="TextureProgressBar" parent="."]
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 400.0
-value = 60.0
 fill_mode = 4
 texture_progress = ExtResource("3_w11q0")
-tint_progress = Color(1, 1, 0, 1)
+tint_progress = Color(1, 1, 1, 0)
 
 [node name="action2" type="TextureProgressBar" parent="."]
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 400.0
-value = 30.0
 fill_mode = 4
 texture_progress = ExtResource("3_w11q0")
-tint_progress = Color(0, 1, 0, 1)
+tint_progress = Color(0, 0, 0, 0)
 
 [node name="action1" type="TextureProgressBar" parent="."]
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 400.0
-value = 10.0
 fill_mode = 4
 texture_progress = ExtResource("3_w11q0")
-tint_progress = Color(0, 1, 1, 1)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 450.0
-offset_right = 957.0
-offset_bottom = 400.0
-theme_override_constants/separation = 5
-
-[node name="action1" type="ColorRect" parent="VBoxContainer"]
-custom_minimum_size = Vector2(507, 62)
-layout_mode = 2
-
-[node name="element" type="TextureRect" parent="VBoxContainer/action1"]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 59.0
-offset_bottom = 59.0
-texture = ExtResource("5_t4qc0")
-expand_mode = 1
-
-[node name="name" type="RichTextLabel" parent="VBoxContainer/action1"]
-custom_minimum_size = Vector2(507, 62)
-layout_mode = 2
-offset_left = 40.0
-offset_right = 547.0
-offset_bottom = 62.0
-bbcode_enabled = true
-text = " 体当たり"
-fit_content = true
-vertical_alignment = 2
+tint_progress = Color(0, 0, 0, 0)

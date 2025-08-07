@@ -7,9 +7,12 @@ var monster_data = Global.monster_data # モンスターの各種データ取得
 var action_data = Global.action_data # 技の各種データ取得
 var monster_id = Global.selected_monster
 var selected_action = {} # key:選ばれた技(Action) value:出現率(int)
+var actions: Array[Action] = [null, null, null, null] ## 選ばれた技
+var chances: Array[int] = [0, 0, 0, 0] ## 選ばれた技の出現確率
 var check_provability = [] # 出現率0%弾き出し用
+var pie_chart
 
-func _on_node_2d_tree_entered():
+func _ready() -> void:
 	_on_技_draw()
 	selected_action.clear() # 以下2行、初期化処理
 	sum_chance = 0
@@ -254,3 +257,7 @@ func _on_中間進化技_draw():
 
 func _on_進化技_draw(): # 最終形態の呼び出しは、1回進化でも2回進化でもindex　-1で参照できる
 	status_text(monster_data[monster_id][2])
+
+
+func _on_button_button_up() -> void:
+	get_tree().change_scene_to_packed(Global.new_select_scene)

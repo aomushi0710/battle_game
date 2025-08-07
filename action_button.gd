@@ -7,20 +7,20 @@ var action: Action ## 技
 var n: int = 0 ## 属性アイコン点滅用
 
 func _ready() -> void:
-	var gradient: Gradient = background.texture.gradient
-	action = Global.action_data[55]
+	background.texture = background.texture.duplicate(true)
+	var gradient: Gradient = background.texture.gradient ## 背景のグラデーション
 	if action == null:
-		text = ""
+		text = " "
 		element.hide()
 		gradient.colors = PackedColorArray([Color.BLACK])
 	else:
 		text = action.name
 		element.texture = action.element[0].icon
-		if len(action.element) <= 1:
+		if len(action.element) <= 1: # 複数属性ではない時
 			gradient.colors = PackedColorArray(
-				[action.element[0].color, action.element[0].color.darkened(0.2)])
+				[action.element[0].color.darkened(0.5), action.element[0].color])
 			gradient.offsets = PackedFloat32Array([1.0 / 3.0, 2.0 / 3.0])
-		else:
+		else: # 複数の属性を持つ技の時
 			var color_list: PackedColorArray
 			for ele: Element in action.element: # 属性の色をリストに全て登録
 				color_list.append(ele.color)
