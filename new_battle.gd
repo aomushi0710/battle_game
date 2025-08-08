@@ -85,7 +85,7 @@ func _ready() -> void:
 	player_next_index = 2
 	_on_change_button_up()
 	# シーン遷移アニメーション
-	tween = get_tree().create_tween() # monster出現アニメーション
+	tween = get_tree().create_tween().bind_node(self) # monster出現アニメーション
 	tween.tween_property($player1, "position:x", 500, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.parallel().tween_property($enemy1, "position:x", 1164, 0.5)\
@@ -119,7 +119,7 @@ func battle_start_animation() -> void:
 	for button: Button in $button/main.get_children():
 			button.disabled = true
 	
-	tween = get_tree().create_tween()
+	tween = get_tree().create_tween().bind_node(self)
 	tween.tween_property($"../fade", "color:a", 0, 1)
 	tween.tween_interval(1)
 	tween.tween_callback(func(): 
@@ -399,7 +399,7 @@ func item_animation(item: Item, monster: BattleMonster) -> void:
 			item_node.position = Vector2(500, 350)
 			item_node.pivot_offset = item_node.size / 2
 			add_child(item_node)
-			var item_tween: Tween = item_node.create_tween()
+			var item_tween: Tween = item_node.create_tween().bind_node(item_node)
 			item_tween.tween_property(item_node, "rotation_degrees", 360, 0.5)
 			item_tween.parallel().tween_property(item_node, "position:y", 222, 0.5)
 			item_tween.parallel().tween_property(item_node, "scale", Vector2(0.8, 0.8), 0.5)

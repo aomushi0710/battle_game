@@ -111,7 +111,8 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 				Global.e3_death = true
 	effect_dict = {} # エフェクト全消し
 	# お墓アニメーション
-	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween = get_tree().create_tween().bind_node(self)\
+	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(self, "self_modulate:a", 0, 0.3)
 	tween.tween_callback(func(): texture_normal = load("res://お墓.PNG"))
 	tween.tween_property(self, "self_modulate:a", 1, 0.3)
@@ -306,7 +307,8 @@ func mp_setter(n: int, text: bool) -> Array[String]:
 	
 	var mp_text = monster.MP
 	monster.MP += n
-	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween = get_tree().create_tween().bind_node($MP)\
+	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property($MP, "value", monster.MP, 0.5)
 	tween.parallel().tween_method(mp_text_update, mp_text, monster.MP, 0.5)
 	
@@ -351,7 +353,8 @@ func hp_setter(n: int, text: bool) -> Array[String]:
 	
 	var hp_text = monster.HP
 	monster.HP += n
-	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween = get_tree().create_tween().bind_node($HP)\
+	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property($HP, "value", monster.HP, 0.5)
 	tween.parallel().tween_method(hp_text_update, hp_text, monster.HP, 0.5)
 	
@@ -391,7 +394,8 @@ func damage_effect(dmg: int, type: int) -> void:
 	text.position =  Vector2(40 + randi() % 100,randi() % 156) # 端や下側に出現しないように調整
 	add_child(text)
 	# ダメージエフェクトアニメーション
-	tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween = get_tree().create_tween().bind_node(text)\
+	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(text, "scale", Vector2(1.5, 1.5), 0.15) # 拡大アニメーション
 	tween.tween_property(text, "scale", Vector2(1, 1), 0.05) # 縮小アニメーション
 	tween.tween_interval(1.0) # 1秒停止# 移動アニメーション

@@ -16,7 +16,6 @@ custom_minimum_size = Vector2(590, 64)
 offset_right = 590.0
 offset_bottom = 64.0
 theme = ExtResource("1_hae2l")
-text = "アタックエンハンス"
 alignment = 0
 script = ExtResource("2_hae2l")
 

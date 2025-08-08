@@ -54,7 +54,7 @@ func arrow_mark_setter(size_: int, color: String, direction: float, pos: Vector2
 func arrow_mark_hide() -> void:
 	if arrow_tween and arrow_tween.is_running():
 		arrow_tween.kill()
-	arrow_tween = get_tree().create_tween()
+	arrow_tween = get_tree().create_tween().bind_node(arrow_mark)
 	arrow_tween.tween_property(arrow_mark, "modulate:a", 0, 0.5)
 	await arrow_tween.finished
 	arrow_mark.hide()

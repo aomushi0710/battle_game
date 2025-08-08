@@ -28,7 +28,7 @@ func _ready() -> void:
 
 
 func blink() -> void:
-	var tween = get_tree().create_tween()
+	var tween = get_tree().create_tween().bind_node(texture)
 	tween.set_loops() # 以下をループ
 	tween.tween_property(texture, "modulate:a", 0, 1)
 	tween.tween_callback(Callable(self, "change"))

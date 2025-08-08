@@ -127,7 +127,7 @@ func _on_new_button_up() -> void:
 			return
 	
 	Global.deck1.evolution_check(Global.deck1) # 自分のデッキに対してチェック
-	tween = get_tree().create_tween()
+	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 1)
 	tween.tween_callback(func(): get_tree().change_scene_to_packed(Global.new_battle_scene))
 
@@ -157,7 +157,7 @@ func _on_tutorial_button_up() -> void:
 	Global.enemy_deck.chance = [[100], [100], [100]]
 	Global.enemy_deck.evolution_check(Global.enemy_deck)
 	
-	tween = get_tree().create_tween()
+	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 1)
 	tween.tween_callback(func(): get_tree().change_scene_to_packed(Global.tutorial_scene))
 
