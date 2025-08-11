@@ -32,3 +32,8 @@ res://battle_monster.tscn
 res://debug.tscn
 res://transition_flash.tscn
 res://技セレクトボタン.tscn
+res://background.gd
+res://action/進化Ⅰ.tres
+res://Global.gd
+res://deck.gd
+res://デッキセーブデータ.gd

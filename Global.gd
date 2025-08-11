@@ -469,8 +469,6 @@ func deck_creator(deck: Deck) -> void:
 					deck.action[i].insert(act_index, action)
 					deck.chance[i].insert(act_index, chance)
 					sum_chance += chance
-		
-	deck.evolution_check(deck)
 
 ## 指定したコイン枚数だけ増減させ、自動でセーブする関数
 func coin_setter(n: int) -> void:

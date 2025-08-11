@@ -24,7 +24,7 @@ func _on_tree_entered() -> void:
 func animation() -> void:
 	animation_left.position.x = -1920
 	animation_right.position.x = 0
-	tween = get_tree().create_tween()
+	tween = get_tree().create_tween().bind_node(self)
 	tween.finished.connect(func(): animation())
 	tween.tween_property(animation_right, "position:x", 1920, 30)
 	tween.parallel().tween_property(animation_left, "position:x", 0, 30)

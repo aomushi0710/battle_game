@@ -71,7 +71,7 @@ func _on_test_button_up():
 			$"../エラーメッセージ".popup_centered()
 			return
 	
-	Global.deck1.evolution_check(Global.deck1) # 自分のデッキに対してチェック
+	Global.deck1.evolution_check() # 自分のデッキに対してチェック
 	get_tree().change_scene_to_packed(Global.battle_scene)
 
 
@@ -126,7 +126,8 @@ func _on_new_button_up() -> void:
 			$"../エラーメッセージ".popup_centered()
 			return
 	
-	Global.deck1.evolution_check(Global.deck1) # 自分のデッキに対してチェック
+	Global.deck1.evolution_check() # 自分のデッキに対してチェック
+	Global.enemy_deck.evolution_check()
 	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 1)
 	tween.tween_callback(func(): get_tree().change_scene_to_packed(Global.new_battle_scene))
@@ -148,14 +149,14 @@ func _on_tutorial_button_up() -> void:
 		[action_data[5], action_data[12], action_data[13]]
 	]
 	Global.deck1.chance = [[50, 30, 10, 10], [40, 40, 10, 10], [40, 40, 20]]
-	Global.deck1.evolution_check(Global.deck1)
+	Global.deck1.evolution_check()
 	# 相手チュートリアルデッキ構築
 	Global.enemy_deck.monster_dict = [monster_data[0], monster_data[0], monster_data[0]]
 	for i in range(3):
 		Global.enemy_deck.monster[i] = Global.enemy_deck.monster_dict[i][0].duplicate()
 	Global.enemy_deck.action = [[action_data[4]], [action_data[4]], [action_data[4]]]
 	Global.enemy_deck.chance = [[100], [100], [100]]
-	Global.enemy_deck.evolution_check(Global.enemy_deck)
+	Global.enemy_deck.evolution_check()
 	
 	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 1)

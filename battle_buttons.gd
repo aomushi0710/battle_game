@@ -340,7 +340,7 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 				tween.kill()
 			for child in get_children():
 				if child.name == "selected": # selectedノードのみ消す
-					tween = get_tree().create_tween() # ボタン消滅アニメーション
+					tween = get_tree().create_tween().bind_node(child) # ボタン消滅アニメーション
 					tween.tween_property(child, "modulate:a", 0, 0.2)
 					await tween.finished
 					child.queue_free()
@@ -396,7 +396,7 @@ func target_button_setting() -> void:
 					$target.get_child(i).texture_normal = load("res://null.PNG")
 			
 	$target.show()
-	tween = get_tree().create_tween()
+	tween = get_tree().create_tween().bind_node($target)
 	tween.tween_property($target, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
@@ -427,8 +427,6 @@ func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げら�
 
 
 func battle_finished() -> void: # バトル終了初期化処理
-	if tween and tween.is_running(): # ボタン点滅アニメーション停止
-		tween.kill()
 	Global.p1_death = false
 	Global.p2_death = false
 	Global.p3_death = false
@@ -495,7 +493,7 @@ func target_button_up(i: int) -> void:
 	$"戻る".disabled = true
 	for child in $target.get_children():
 		child.disabled = true
-	tween = get_tree().create_tween() # 選ばれた技ボタン消滅アニメーション
+	tween = get_tree().create_tween().bind_node($selected) # 選ばれた技ボタン消滅アニメーション
 	tween.tween_property($selected, "modulate:a", 0, 0.5)
 	await tween.finished
 	if $selected:

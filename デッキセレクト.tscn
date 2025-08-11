@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://2nd.PNG" id="3_qs0ub"]
 [ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://3rd.PNG" id="4_qklf7"]
 [ext_resource type="Script" uid="uid://tw743jfyh7c1" path="res://cpu_strategy.gd" id="5_c4lle"]
-[ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help.gd" id="5_jtnis"]
+[ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help_button.gd" id="5_jtnis"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_0twro"]
 
 [sub_resource type="Theme" id="Theme_3nbs8"]

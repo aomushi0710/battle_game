@@ -1,14 +1,14 @@
+RichTextLabel
+Control
+BoxContainer
 ColorRect
 SpinBox
 HSlider
-Control
 CanvasLayer
 Camera2D
 Button
 VBoxContainer
 Label
-RichTextLabel
 HBoxContainer
 TextureRect
 TextureProgressBar
-ProgressBar

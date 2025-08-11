@@ -252,7 +252,7 @@ func spd_max() -> void:
 					break # 対応する技があったら終了
 	monster_ready.emit()
 
-## エフェクトアイコンの作成
+## エフェクトアイコンの更新関数
 func effect_icon() -> void:
 	# 辞書のkeyのEffectクラスの名前のみで再構成された配列
 	var valid_names := effect_dict.keys().map(func(e): return e.name)
@@ -272,10 +272,10 @@ func effect_icon() -> void:
 				icon.button_up.connect(func(): effect_detail(effect))
 				$effect.add_child(icon)
 			icon.get_child(0).text = "[i][b]%d[/b][/i]" % effect_dict[effect]
-			if $effect.tween == null or $effect.tween and $effect.tween.is_running() == false:
+			if $effect.tween == null:
 				$effect.blink() # エフェクトがあるが点滅してない時
-	elif $effect.tween and $effect.tween.is_running() == true:
-		$effect.tween.kill() # エフェクトがないが点滅してる時
+	else:
+		$effect.blink_stop()
 
 
 func effect_detail(effect: Effect):

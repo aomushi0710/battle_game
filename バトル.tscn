@@ -38,7 +38,7 @@
 [ext_resource type="Script" uid="uid://2da2ncvxy6rq" path="res://e3_mp.gd" id="34_g0xjy"]
 [ext_resource type="Script" uid="uid://ce0r7lcpm6s0e" path="res://e3_spd.gd" id="35_fdfku"]
 [ext_resource type="Script" uid="uid://djhu2x6rfobam" path="res://e3_command.gd" id="36_4fl3j"]
-[ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help.gd" id="37_jkkvg"]
+[ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help_button.gd" id="37_jkkvg"]
 [ext_resource type="Script" uid="uid://bdxrc2ixidkge" path="res://バトル終了.gd" id="38_s2cyo"]
 [ext_resource type="Script" uid="uid://bhducy7at7txx" path="res://e2_icon.gd" id="39_acya7"]
 [ext_resource type="Script" uid="uid://b15c8h3h61tnt" path="res://help_type.gd" id="39_c4ddy"]

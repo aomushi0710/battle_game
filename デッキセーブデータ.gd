@@ -120,7 +120,7 @@ func load_file(slot: int) -> void:
 		deck.chance[i] = pos["chance"]
 		deck.skill[i] = pos["skill"]
 	
-	deck.evolution_check(deck)
+	deck.evolution_check()
 
 
 func reset_file(slot: int) -> void:
