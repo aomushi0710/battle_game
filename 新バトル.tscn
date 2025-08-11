@@ -376,7 +376,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="tree_entered" from="background" to="background" method="_on_tree_entered"]
-[connection signal="tree_entered" from="battle/button" to="battle/button" method="_on_tree_entered"]
 [connection signal="button_up" from="battle/button/change" to="battle" method="_on_change_button_up"]
 [connection signal="button_up" from="battle/button/戻る" to="battle/button" method="_on_戻る_button_up"]
 [connection signal="button_up" from="battle/button/main/Action" to="battle/button" method="_on_action_button_up"]

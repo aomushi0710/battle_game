@@ -38,7 +38,7 @@ func arrow_mark_setter(size_: int, color: String, direction: float, pos: Vector2
 	arrow_mark.pivot_offset = Vector2(size_ / 2, size_ / 2)
 	arrow_mark.rotation_degrees = direction
 	arrow_mark.text = \
-	"[font_size=%d][color=%s][b]↓[/b][/color][/font_size]" % [size_, color]
+	"[font_size=%d][color=%s][b]⬇️[/b][/color][/font_size]" % [size_, color]
 	arrow_mark.show()
 	
 	arrow_tween = get_tree().create_tween().bind_node(arrow_mark).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)

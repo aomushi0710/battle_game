@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b75oop3n8nq72"]
+[gd_scene load_steps=9 format=3 uid="uid://b75oop3n8nq72"]
 
 [ext_resource type="PackedScene" uid="uid://bhqk4iva02mmc" path="res://新バトル.tscn" id="1_7n6eb"]
 [ext_resource type="Script" uid="uid://k0a6gnwbx4e1" path="res://tutorial.gd" id="1_yb1ct"]
@@ -6,6 +6,8 @@
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="4_5mrt3"]
 [ext_resource type="Script" uid="uid://ba6b532p8r4rb" path="res://tutorial_buttons.gd" id="4_hu44a"]
 [ext_resource type="Script" uid="uid://bghjkvjk5m5n1" path="res://tutorial_dialogtab.gd" id="4_rwowx"]
+
+[sub_resource type="Theme" id="Theme_hu44a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mrt3"]
 bg_color = Color(0, 0, 0, 0.501961)
@@ -40,6 +42,7 @@ offset_right = 1031.0
 offset_bottom = 283.0
 rotation = 3.14159
 pivot_offset = Vector2(75, 75)
+theme = SubResource("Theme_hu44a")
 theme_override_constants/outline_size = 30
 bbcode_enabled = true
 text = "[font_size=120

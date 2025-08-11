@@ -127,7 +127,8 @@ func hide_main_button() -> void:
 ## action出現アニメーション
 func show_action_button() -> void:
 	now_showing = 1
-	$dialogtab.text_setter(0, false, ["技を選んでください！"])
+	if $"../".tutorial_mode == false:
+		$dialogtab.text_setter(0, false, ["技を選んでください！\nクリックで技の詳細を確認できます。"])
 	for child in $action.get_children():
 		child.modulate.a = 0
 	$action.show() # 透明にしてから表示
@@ -201,7 +202,8 @@ func hide_target_button() -> void:
 ## 味方か相手を選択させるボタン出現アニメーション
 func show_player_or_enemy_button() -> void:
 	now_showing = 3
-	$dialogtab.text_setter(0, false, [
+	if $"../".tutorial_mode == false:
+		$dialogtab.text_setter(0, false, [
 		"Player Status で味方のステータスを、\nEnemy  Status で相手のステータスを\n確認できます！"])
 	for i in range(2):
 		var button = Button.new()
