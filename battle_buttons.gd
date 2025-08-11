@@ -179,7 +179,7 @@ func hide_item_button() -> void:
 ## target出現アニメーション
 func show_target_button() -> void:
 	now_showing = 4
-	target_button_setting()
+	await target_button_setting()
 
 ## target消滅アニメーション
 func hide_target_button() -> void:
@@ -294,7 +294,7 @@ func show_item_target_button(item: Item) -> void:
 	$dialogtab.text_setter(0, false, ["[b]%s Lv.%d[/b]\n%s" % 
 	[item.name, item.get_level(), item.get_battle_description(item.get_level())]])
 	
-	target_button_setting()
+	await target_button_setting()
 
 ## アイテム使用先を選ぶtarget消滅アニメーション
 func hide_item_target_button() -> void:

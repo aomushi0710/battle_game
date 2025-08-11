@@ -1,12 +1,9 @@
-[gd_scene load_steps=37 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=31 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
 [ext_resource type="Script" uid="uid://cpa846ccwna56" path="res://help.gd" id="2_3py80"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="3_250y8"]
-[ext_resource type="Script" uid="uid://bqac3ygdata88" path="res://技.gd" id="4_ilscs"]
-[ext_resource type="Script" uid="uid://dsvpr27yyuc12" path="res://中間進化技.gd" id="5_3py80"]
-[ext_resource type="Script" uid="uid://i26jcs0dmmts" path="res://進化技.gd" id="6_4lobs"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_ltw0u"]
 [ext_resource type="Script" uid="uid://b15c8h3h61tnt" path="res://help_type.gd" id="9_jsdkd"]
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://null.PNG" id="10_ilscs"]
@@ -94,15 +91,6 @@ default_font_size = 40
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4fy06"]
 bg_color = Color(0.5, 1, 0.5, 1)
 expand_margin_left = 4.0
-
-[sub_resource type="Theme" id="Theme_uaj8f"]
-default_font_size = 20
-
-[sub_resource type="Theme" id="Theme_7sbwo"]
-default_font_size = 20
-
-[sub_resource type="Theme" id="Theme_h0gss"]
-default_font_size = 20
 
 [sub_resource type="Theme" id="Theme_03esk"]
 default_font_size = 35
@@ -385,52 +373,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_4fy06")
 bbcode_enabled = true
 text = "[color=green]Limit[/color]:100%"
 
-[node name="セレクトUI" type="TabContainer" parent="セレクト"]
-layout_mode = 1
-offset_left = 284.0
-offset_top = -584.0
-offset_right = 784.0
-offset_bottom = -189.0
-theme = SubResource("Theme_uaj8f")
-current_tab = 1
-
-[node name="スキル" type="VBoxContainer" parent="セレクト/セレクトUI"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="スキルボタン" type="OptionButton" parent="セレクト/セレクトUI/スキル"]
-layout_mode = 2
-theme = SubResource("Theme_7sbwo")
-item_count = 2
-popup/item_0/id = 0
-popup/item_1/id = 1
-
-[node name="RichTextLabel" type="RichTextLabel" parent="セレクト/セレクトUI/スキル"]
-custom_minimum_size = Vector2(500, 200)
-layout_mode = 2
-theme = SubResource("Theme_h0gss")
-bbcode_enabled = true
-text = "※スキルは現在未実装につき、未選択でも先に進めます。
-なお、どちらを選択しても効果はありません"
-
-[node name="技" type="VBoxContainer" parent="セレクト/セレクトUI"]
-layout_mode = 2
-script = ExtResource("4_ilscs")
-metadata/_tab_index = 1
-
-[node name="中間進化技" type="VBoxContainer" parent="セレクト/セレクトUI"]
-visible = false
-layout_mode = 2
-script = ExtResource("5_3py80")
-metadata/_tab_index = 2
-
-[node name="進化技" type="VBoxContainer" parent="セレクト/セレクトUI"]
-visible = false
-layout_mode = 2
-script = ExtResource("6_4lobs")
-metadata/_tab_index = 3
-
 [node name="エラーメッセージ" type="AcceptDialog" parent="セレクト"]
 title = "⚠️ERROR⚠️"
 initial_position = 3
@@ -655,16 +597,6 @@ metadata/_edit_lock_ = true
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete4" to="セレクト" method="delete_button_up" binds= [3]]
 [connection signal="value_changed" from="セレクト/action_select/chance" to="セレクト" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="セレクト/action_select/SpinBox" to="セレクト" method="_on_chance_value_changed"]
-[connection signal="item_selected" from="セレクト/セレクトUI/スキル/スキルボタン" to="セレクト" method="_on_スキルボタン_item_selected"]
-[connection signal="draw" from="セレクト/セレクトUI/技" to="セレクト" method="_on_技_draw"]
-[connection signal="select" from="セレクト/セレクトUI/技" to="セレクト" method="_on_技_select"]
-[connection signal="tree_entered" from="セレクト/セレクトUI/技" to="セレクト/セレクトUI/技" method="_on_tree_entered"]
-[connection signal="draw" from="セレクト/セレクトUI/中間進化技" to="セレクト" method="_on_中間進化技_draw"]
-[connection signal="select" from="セレクト/セレクトUI/中間進化技" to="セレクト" method="_on_技_select"]
-[connection signal="tree_entered" from="セレクト/セレクトUI/中間進化技" to="セレクト/セレクトUI/中間進化技" method="_on_tree_entered"]
-[connection signal="draw" from="セレクト/セレクトUI/進化技" to="セレクト" method="_on_進化技_draw"]
-[connection signal="select" from="セレクト/セレクトUI/進化技" to="セレクト" method="_on_技_select"]
-[connection signal="tree_entered" from="セレクト/セレクトUI/進化技" to="セレクト/セレクトUI/進化技" method="_on_tree_entered"]
 [connection signal="toggled" from="セレクト/help" to="セレクト/help" method="_on_toggled"]
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help" to="セレクト/help" method="_on_monster_help_button_up"]
 [connection signal="button_up" from="セレクト/help/ColorRect/monster_help_menu/type" to="セレクト/help" method="_on_type_button_up"]

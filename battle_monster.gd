@@ -71,14 +71,14 @@ mid_evol_list: Array, evol_list: Array, chan_list: Array) -> void:
 				action_list[i].mp = monster_dict[2].cost # 進化に必要なmp量設定
 				evol_index.append(i) # 置き換えた技の位置indexを保存
 		
-		if middle_evolution_list.is_empty() == false: # さらに中間進化技も存在する場合
-			var middle_evol_index = [] # TODO この変数は必要のない可能性があるので、今後調査する
-			for i in len(action_list):
-				if action_list[i] in middle_evolution_list: # 進化技の時
-					# 進化技を進化Ⅰに置き換える
-					action_list[i] = Global.action_data[10001].duplicate()
-					action_list[i].mp = monster_dict[1].cost
-					middle_evol_index.append(i) # 置き換えた技の位置indexを保存
+	if middle_evolution_list.is_empty() == false: # 中間進化技も存在する場合
+		var middle_evol_index = [] # TODO この変数は必要のない可能性があるので、今後調査する
+		for i in len(action_list):
+			if action_list[i] in middle_evolution_list: # 進化技の時
+				# 進化技を進化Ⅰに置き換える
+				action_list[i] = Global.action_data[10001].duplicate()
+				action_list[i].mp = monster_dict[1].cost
+				middle_evol_index.append(i) # 置き換えた技の位置indexを保存
 	# chance_range 生成
 	var sum_range = 0
 	for i in len(chance_list):
