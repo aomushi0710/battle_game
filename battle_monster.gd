@@ -110,6 +110,7 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 			2:
 				Global.e3_death = true
 	effect_dict = {} # エフェクト全消し
+	$effect.blink_stop()
 	# お墓アニメーション
 	tween = get_tree().create_tween().bind_node(self)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
@@ -272,7 +273,7 @@ func effect_icon() -> void:
 				icon.button_up.connect(func(): effect_detail(effect))
 				$effect.add_child(icon)
 			icon.get_child(0).text = "[i][b]%d[/b][/i]" % effect_dict[effect]
-			if $effect.tween == null:
+			if $effect.visible == false:
 				$effect.blink() # エフェクトがあるが点滅してない時
 	else:
 		$effect.blink_stop()
