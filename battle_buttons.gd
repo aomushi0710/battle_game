@@ -1,6 +1,6 @@
 extends Control
 
-const action_button = preload("res://技セレクトボタン.tscn")
+@onready var action_container = $action
 const MONSTER_NAME_LIMIT: int = 8 ## statusに表示する上での、モンスターの名前の上限文字数
 var now_showing: int ## 現在表示中のボタンメニュー[br]0:main 1:action 2:item 3:status 4:target 5:monsters
 var now_player: bool ## true:現在playerの情報を表示 false:現在enemyの情報を表示
@@ -47,13 +47,12 @@ func _on_action_button_selected(index: int) -> void:
 	button_index = index
 	selected_action = selected_action_button.action # 選ばれた技を登録
 	# 選ばれた技ボタンのアニメーション
-	var instance = action_button.instantiate()
+	var instance = Global.action_button.instantiate()
 	instance.name = "selected"
-	instance.texture_mode = preload("res://技セレクトボタン.gd").Mode.BATTLE
 	instance.action = selected_action
-	instance.position = Vector2(220, 841 + selected_action_button.position.y) # 選ばれたボタンの座標から取得
+	instance.position = Vector2(220, 841 + selected_action_button.position.y * action_container.scale.x) # 選ばれたボタンの座標から取得
 	instance.size = selected_action_button.size
-	instance.add_theme_font_size_override("font_size", 40)
+	instance.scale = action_container.scale
 	add_child(instance)
 	
 	await hide_action_button()
@@ -458,7 +457,7 @@ func battle_finished() -> void: # バトル終了初期化処理
 	Global.battle_stage = Global.Stage.PLAIN # とりあえず草原ステージ
 	await $dialogtab.battle_finished()
 	await $"../../background".battle_finished()
-	get_tree().change_scene_to_packed(Global.deck_scene)
+	get_tree().change_scene_to_file(Global.deck_scene)
 
 
 func _on_target_1_button_up() -> void:

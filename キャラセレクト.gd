@@ -7,7 +7,7 @@ var now_monster_id: int # status関数、同じモンスターかどうかの検
 const HCONTAINER_LIMIT: int = 7 # モンスターボタンを横に並べられる限界の個数
 
 func _on_戻る_button_up():
-	get_tree().change_scene_to_packed(Global.deck_scene)
+	get_tree().change_scene_to_file(Global.deck_scene)
 
 
 func _on_node_2d_tree_entered() -> void:
@@ -91,4 +91,4 @@ func status(i: int) -> void: # マウスを合わせたモンスターのステ�
 
 func button_up(i: int) -> void: # ボタンが押されたらそのIDのモンスターのセレクトページへ
 	Global.selected_monster = i
-	get_tree().change_scene_to_packed(Global.select_scene)
+	get_tree().change_scene_to_file(Global.select_scene)

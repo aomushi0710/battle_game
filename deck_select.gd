@@ -14,26 +14,26 @@ var detail = ""
 func _on_first_button_up():
 	Global.now_picking = 0
 	if Global.deck1.monster[0] == null:
-		get_tree().change_scene_to_packed(Global.chara_scene)
+		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
 		Global.selected_monster = Global.deck1.monster[0].id
-		get_tree().change_scene_to_packed(Global.select_scene)
+		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_second_button_up():
 	Global.now_picking = 1
 	if Global.deck1.monster[1] == null:
-		get_tree().change_scene_to_packed(Global.chara_scene)
+		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
 		Global.selected_monster = Global.deck1.monster[1].id
-		get_tree().change_scene_to_packed(Global.select_scene)
+		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_third_button_up():
 	Global.now_picking = 2
 	if Global.deck1.monster[2] == null:
-		get_tree().change_scene_to_packed(Global.chara_scene)
+		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
 		Global.selected_monster = Global.deck1.monster[2].id
-		get_tree().change_scene_to_packed(Global.select_scene)
+		get_tree().change_scene_to_file(Global.select_scene)
 
 
 func _on_デッキセレクト_tree_entered():
@@ -72,7 +72,7 @@ func _on_test_button_up():
 			return
 	
 	Global.deck1.evolution_check() # 自分のデッキに対してチェック
-	get_tree().change_scene_to_packed(Global.battle_scene)
+	get_tree().change_scene_to_file(Global.battle_scene)
 
 
 func _on_button_button_up(): # 選択可能なモンスター、技からランダムにチームを編成します。
@@ -89,7 +89,7 @@ func _on_button_button_up(): # 選択可能なモンスター、技からラン�
 
 
 func _on_戻る_button_up():
-	get_tree().change_scene_to_packed(Global.main_scene)
+	get_tree().change_scene_to_file(Global.main_scene)
 
 
 func _on_cpu_strategy_item_selected(index): # cpu戦略設定
@@ -99,12 +99,12 @@ func _on_cpu_strategy_item_selected(index): # cpu戦略設定
 func _on_save_button_up() -> void:
 	Global.deck_name = $name.text
 	Global.save_mode = true
-	get_tree().change_scene_to_packed(Global.deck_save_scene)
+	get_tree().change_scene_to_file(Global.deck_save_scene)
 
 
 func _on_load_button_up() -> void:
 	Global.save_mode = false
-	get_tree().change_scene_to_packed(Global.deck_save_scene)
+	get_tree().change_scene_to_file(Global.deck_save_scene)
 
 
 func _on_reset_button_up() -> void:
@@ -130,7 +130,7 @@ func _on_new_button_up() -> void:
 	Global.enemy_deck.evolution_check()
 	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 1)
-	tween.tween_callback(func(): get_tree().change_scene_to_packed(Global.new_battle_scene))
+	tween.tween_callback(func(): get_tree().change_scene_to_file(Global.new_battle_scene))
 
 ## チュートリアルの準備と遷移
 func _on_tutorial_button_up() -> void:
@@ -160,8 +160,8 @@ func _on_tutorial_button_up() -> void:
 	
 	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 1)
-	tween.tween_callback(func(): get_tree().change_scene_to_packed(Global.tutorial_scene))
+	tween.tween_callback(func(): get_tree().change_scene_to_file(Global.tutorial_scene))
 
 
 func _on_shop_button_up() -> void:
-	get_tree().change_scene_to_packed(Global.shop_scene)
+	get_tree().change_scene_to_file(Global.shop_scene)

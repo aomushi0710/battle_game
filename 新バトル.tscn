@@ -167,8 +167,9 @@ visible = false
 layout_mode = 0
 offset_left = 220.0
 offset_top = 841.0
-offset_right = 840.0
-offset_bottom = 1065.0
+offset_right = 949.0
+offset_bottom = 1105.0
+scale = Vector2(0.85, 0.85)
 theme = SubResource("Theme_nfpvw")
 
 [node name="item" type="Control" parent="battle/button"]

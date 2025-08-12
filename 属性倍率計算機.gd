@@ -43,4 +43,4 @@ func _on_計算_button_up():
 
 
 func _on_終了_button_up():
-	get_tree().change_scene_to_packed(Global.main_scene)
+	get_tree().change_scene_to_file(Global.main_scene)

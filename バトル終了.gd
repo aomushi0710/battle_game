@@ -30,4 +30,4 @@ func _on_button_up():
 	$"../buttle/result_rect/lose".hide()
 	$"../buttle/result_rect/win".hide()
 	Global.deck_creator(Global.enemy_deck) # 敵デッキ生成
-	get_tree().change_scene_to_packed(Global.deck_scene)
+	get_tree().change_scene_to_file(Global.deck_scene)

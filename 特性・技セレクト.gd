@@ -28,7 +28,7 @@ func _ready() -> void:
 
 func _on_戻る_button_up():
 	reset()
-	get_tree().change_scene_to_packed(Global.chara_scene)
+	get_tree().change_scene_to_file(Global.chara_scene)
 
 func _on_決定_button_up():
 	var monster_dict = monster_data[monster_id].duplicate() # Dictionary{Monster...}
@@ -65,7 +65,7 @@ func _on_決定_button_up():
 	Global.deck1.chance[Global.now_picking] = action_list.values()
 	#Global.deck1.skill[Global.now_picking] = selected_skill
 	reset()
-	get_tree().change_scene_to_packed(Global.deck_scene)
+	get_tree().change_scene_to_file(Global.deck_scene)
 
 
 func _on_スキルボタン_item_selected(index: int): # オプションボタンで選んだパターンを登録
@@ -260,4 +260,4 @@ func _on_進化技_draw(): # 最終形態の呼び出しは、1回進化でも2�
 
 
 func _on_button_button_up() -> void:
-	get_tree().change_scene_to_packed(Global.new_select_scene)
+	get_tree().change_scene_to_file(Global.new_select_scene)

@@ -6,7 +6,6 @@ extends Control
 @onready var action_select: Control = $action_select
 @onready var slider: HSlider = $action_select/chance
 @onready var spinbox: SpinBox = $action_select/SpinBox
-const action_button = preload("res://action_button.tscn")
 var selected_action: Action ## 現在選択中の技
 var selected_skill = 0 # 選ばれたスキルパターン
 var now_select_action = 0 # 現在指定されている技
@@ -81,7 +80,7 @@ func pie_chart_update() -> void:
 	for child in $actions/action_buttons.get_children():
 		child.queue_free()
 	for i in len(actions):
-		var button = action_button.instantiate()
+		var button = Global.action_button.instantiate()
 		button.action = actions[i]
 		if button.action == null: # 技がなければ
 			button.disabled = true # ボタン無効
@@ -106,7 +105,7 @@ func action_button_up(act: Action) -> void:
 		action_select.remove_child(exists)
 		exists.queue_free()
 	## 新たに表示されるボタン
-	var button = action_button.instantiate()
+	var button = Global.action_button.instantiate()
 	button.name = "action_button"
 	button.position = Vector2(160, 20)
 	button.action = act
@@ -131,7 +130,7 @@ func _on_戻る_button_up():
 	match camera_mode:
 		CameraMode.MAIN: # キャラ選択に戻す
 			reset()
-			get_tree().change_scene_to_packed(Global.chara_scene)
+			get_tree().change_scene_to_file(Global.chara_scene)
 		CameraMode.ACTION: # 画面を戻す
 			camera_mode = CameraMode.MAIN
 
@@ -177,7 +176,7 @@ func _on_決定_button_up():
 			Global.deck1.chance[Global.now_picking] = chances.filter(func(x): return x != 0)
 			#Global.deck1.skill[Global.now_picking] = selected_skill
 			reset()
-			get_tree().change_scene_to_packed(Global.deck_scene)
+			get_tree().change_scene_to_file(Global.deck_scene)
 		CameraMode.ACTION:
 			if selected_action in actions: # 既存の技を選択中の時
 				$エラーメッセージ.dialog_text = "既に登録されている技です！"

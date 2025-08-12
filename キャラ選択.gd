@@ -11,4 +11,4 @@ func _on_スライム_button_up():
 		Global.picked_monster2 = 1
 	if Global.now_picking == 3:
 		Global.picked_monster3 = 1
-	get_tree().change_scene_to_packed(deck_scene)
+	get_tree().change_scene_to_file(deck_scene)

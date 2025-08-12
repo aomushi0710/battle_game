@@ -23,7 +23,7 @@ func _on_tree_entered() -> void: # デッキスロットインスタンス生成
 
 
 func _on_戻る_button_up() -> void:
-	get_tree().change_scene_to_packed(Global.deck_scene)
+	get_tree().change_scene_to_file(Global.deck_scene)
 
 
 func save_file(slot: int) -> void:

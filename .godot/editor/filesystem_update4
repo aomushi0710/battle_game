@@ -38,3 +38,10 @@ res://Global.gd
 res://deck.gd
 res://デッキセーブデータ.gd
 res://select.gd
+res://メインシーン.gd
+res://shop.gd
+res://キャラ選択.gd
+res://バトル終了.gd
+res://属性倍率計算機.gd
+res://戻る.gd
+res://特性・技セレクト.gd

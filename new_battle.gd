@@ -1,7 +1,6 @@
 extends Control
 
 const monster_scene = preload("res://battle_monster.tscn")
-const action_button = preload("res://技セレクトボタン.tscn")
 @onready var dialog = $button/dialogtab
 var tween: Tween
 var player_next_index: int = 0 # 次にチェンジするモンスターのindex
@@ -166,10 +165,8 @@ func monster_ready(player: bool) -> void:
 			button.queue_free()
 		# 抽選された技をactionコンテナに追加
 		for i in len(player_monster.picked_action):
-			var instance = action_button.instantiate()
-			instance.texture_mode = preload("res://技セレクトボタン.gd").Mode.BATTLE
+			var instance = Global.action_button.instantiate()
 			instance.action = player_monster.picked_action[i]
-			instance.text = player_monster.picked_action[i].name
 			instance.button_up.connect(func():select_command(i))
 			$button/action.add_child(instance)
 		

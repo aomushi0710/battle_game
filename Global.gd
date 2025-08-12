@@ -62,18 +62,20 @@ func _ready() -> void:
 	
 	load_game()
 
-var main_scene = load("res://メインシーン.tscn")
-var deck_scene = load("res://デッキセレクト.tscn")
-var chara_scene = load("res://キャラ選択.tscn")
-var select_scene = load("res://特性・技セレクト.tscn")
-var new_select_scene = load("res://技セレクト.tscn")
-var battle_scene = load("res://バトル.tscn")
-var debug_scene = load("res://debug.tscn")
-var deck_save_scene = load("res://デッキセーブデータ.tscn")
-var new_battle_scene = load("res://新バトル.tscn")
-var tutorial_scene = load("res://tutorial.tscn")
-var shop_scene = load("res://shop.tscn")
-var inventory_scene = load("res://inventory.tscn")
+const main_scene = "res://メインシーン.tscn"
+const deck_scene = "res://デッキセレクト.tscn"
+const chara_scene = "res://キャラ選択.tscn"
+const select_scene = "res://特性・技セレクト.tscn"
+const new_select_scene = "res://技セレクト.tscn"
+const battle_scene = "res://バトル.tscn"
+const debug_scene = "res://debug.tscn"
+const deck_save_scene = "res://デッキセーブデータ.tscn"
+const new_battle_scene = "res://新バトル.tscn"
+const tutorial_scene = "res://tutorial.tscn"
+const shop_scene = "res://shop.tscn"
+const inventory_scene = "res://inventory.tscn"
+
+const action_button = preload("res://action_button.tscn")
 
 @onready var picked_monster = [0,0,0]
 @onready var deck1 = Deck.new()
