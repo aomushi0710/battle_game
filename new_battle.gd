@@ -504,11 +504,13 @@ func target_setting(player: bool, action, index: int) -> Array[BattleMonster]:
 			3, 5: # 味方単体 or 自分
 				target_list.append(player_deck[index])
 			2: # 敵全体
-				for mon in enemy_deck:
-					target_list.append(mon)
+				for mon: BattleMonster in enemy_deck:
+					if mon.death == false:
+						target_list.append(mon)
 			4: # 味方全体
-				for mon in player_deck:
-					target_list.append(mon)
+				for mon: BattleMonster in player_deck:
+					if mon.death == false:
+						target_list.append(mon)
 	else:
 		match action.range:
 			1, 6: # 敵単体 or 敵散開
@@ -516,11 +518,13 @@ func target_setting(player: bool, action, index: int) -> Array[BattleMonster]:
 			3, 5: # 味方単体 or 自分
 				target_list.append(enemy_deck[index])
 			2: # 敵全体
-				for mon in player_deck:
-					target_list.append(mon)
+				for mon: BattleMonster in player_deck:
+					if mon.death == false:
+						target_list.append(mon)
 			4: # 味方全体
-				for mon in enemy_deck:
-					target_list.append(mon)
+				for mon: BattleMonster in enemy_deck:
+					if mon.death == false:
+						target_list.append(mon)
 	return target_list
 
 ## 特殊効果の発動先targetを設定する関数[br]i:繰り返し回数 monster:対象が自分の時用
@@ -534,13 +538,15 @@ monster: BattleMonster) -> Array[BattleMonster]:
 			1: # 敵単体
 				target_list.append(enemy_deck[index])
 			2: # 敵全体
-				for mon in enemy_deck:
-					target_list.append(mon)
+				for mon: BattleMonster in enemy_deck:
+					if mon.death == false:
+						target_list.append(mon)
 			3: # 味方単体
 				target_list.append(player_deck[index])
 			4: # 味方全体
-				for mon in player_deck:
-					target_list.append(mon)
+				for mon: BattleMonster in player_deck:
+					if mon.death == false:
+						target_list.append(mon)
 			5: # 自分
 				target_list.append(monster)
 	else:
@@ -548,13 +554,15 @@ monster: BattleMonster) -> Array[BattleMonster]:
 			1: # 敵単体
 				target_list.append(player_deck[index])
 			2: # 敵全体
-				for mon in player_deck:
-					target_list.append(mon)
+				for mon: BattleMonster in player_deck:
+					if mon.death == false:
+						target_list.append(mon)
 			3: # 味方単体
 				target_list.append(enemy_deck[index])
 			4: # 味方全体
-				for mon in enemy_deck:
-					target_list.append(mon)
+				for mon: BattleMonster in enemy_deck:
+					if mon.death == false:
+						target_list.append(mon)
 			5: # 自分
 				target_list.append(monster)
 	return target_list
