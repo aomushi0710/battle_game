@@ -273,10 +273,11 @@ func effect_icon() -> void:
 				icon.button_up.connect(func(): effect_detail(effect))
 				$effect.add_child(icon)
 			icon.get_child(0).text = "[i][b]%d[/b][/i]" % effect_dict[effect]
-			if $effect.visible == false:
-				$effect.blink() # エフェクトがあるが点滅してない時
+			if $effect.tween == null or $effect.tween and $effect.tween.is_running() == false:
+				$effect.blink() # エフェクトがあるがtweenが存在しない、もしくはtweenがあるが点滅していない時
 	else:
-		$effect.blink_stop()
+		if $effect.tween and $effect.tween.is_running():
+			$effect.blink_stop() # エフェクトがないのにtweenが存在し、点滅している時
 
 
 func effect_detail(effect: Effect):
