@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bp2ggvr5hlmwt" path="res://デッキスロット.gd" id="1_16m6o"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_dkjvr"]
-[ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://1st.PNG" id="1_ponrr"]
-[ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://2nd.PNG" id="2_16m6o"]
-[ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://3rd.PNG" id="3_dkjvr"]
+[ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://image/1st.PNG" id="1_ponrr"]
+[ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://image/2nd.PNG" id="2_16m6o"]
+[ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://image/3rd.PNG" id="3_dkjvr"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="6_yn7uq"]
 
 [node name="deck1" type="ColorRect"]

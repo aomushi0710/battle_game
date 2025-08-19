@@ -47,7 +47,7 @@
 [ext_resource type="Script" uid="uid://v3lq4f7h4aac" path="res://help_spd.gd" id="42_iyfdj"]
 [ext_resource type="Script" uid="uid://biu8ymtq44dcj" path="res://help_command.gd" id="43_45x6n"]
 [ext_resource type="Script" uid="uid://ov4chyssus35" path="res://e3_icon.gd" id="45_dks4y"]
-[ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://sound_effects.tscn" id="53_si0x8"]
+[ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://SE_battle.tscn" id="53_si0x8"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="54_0dvy3"]
 [ext_resource type="Script" uid="uid://rm3yvfdhi3tl" path="res://battle_debug.gd" id="54_v3nnf"]
 

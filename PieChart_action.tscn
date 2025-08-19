@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://yimhsvjrjh05" path="res://PieChart_action.gd" id="1_7xjnu"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_w11q0"]
-[ext_resource type="Texture2D" uid="uid://d05tkdjjbl8u5" path="res://PieChartUnder.png" id="2_m25r1"]
-[ext_resource type="Texture2D" uid="uid://bb2rrb1k047h2" path="res://PieChartOver.png" id="3_w11q0"]
+[ext_resource type="Texture2D" uid="uid://d05tkdjjbl8u5" path="res://image/PieChartUnder.png" id="2_m25r1"]
+[ext_resource type="Texture2D" uid="uid://bb2rrb1k047h2" path="res://image/PieChartOver.png" id="3_w11q0"]
 
 [node name="PieChart_action" type="Control"]
 layout_mode = 3

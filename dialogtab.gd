@@ -1,5 +1,6 @@
 extends TabContainer
-
+@onready var sign = $"../next_sign"
+@onready var sign_pos = sign.position
 var tween: Tween
 var next_sign_tween: Tween
 var dialog_expand_tween: Tween
@@ -64,7 +65,7 @@ func _on_tab_changed(tab: int) -> void:
 			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 			dialog_expand_tween.parallel().tween_property(self, "position:y", 
 			800, duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-			dialog_expand_tween.parallel().tween_property($"../next_sign", "modulate:a", 1, duration)
+			dialog_expand_tween.parallel().tween_property(sign, "modulate:a", 1, duration)
 			await dialog_expand_tween.finished
 		current_tab = tab
 		current_page = 0
@@ -82,7 +83,7 @@ func _on_tab_changed(tab: int) -> void:
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 		dialog_expand_tween.parallel().tween_property(self, "position:y", 76, 0.5)\
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-		dialog_expand_tween.parallel().tween_property($"../next_sign", "modulate:a", 0, 0.5)
+		dialog_expand_tween.parallel().tween_property(sign, "modulate:a", 0, 0.5)
 		await dialog_expand_tween.finished
 		if $"../../".enemy_monster != null: # スクロールの邪魔にならないように一旦操作受付を止める
 			$"../../".enemy_monster.get_node("effect").mouse_filter = MouseFilter.MOUSE_FILTER_IGNORE
@@ -141,13 +142,13 @@ func next_sign_on() -> void:
 		child.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		for c in child.get_children():
 			c.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	$"../next_sign".modulate = Color(Color.WHITE) # 初期化
-	$"../next_sign".position.y = 1025
-	next_sign_tween = get_tree().create_tween().bind_node($"../next_sign")\
+	sign.modulate = Color(Color.WHITE) # 初期化
+	sign.position.y = sign_pos.y
+	next_sign_tween = get_tree().create_tween().bind_node(sign)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # 矢印アニメーション再生
 	next_sign_tween.set_loops()
-	next_sign_tween.tween_property($"../next_sign", "position:y", 1000, 0.5)
-	next_sign_tween.tween_property($"../next_sign", "position:y", 1025, 0.3)\
+	next_sign_tween.tween_property(sign, "position:y", sign_pos.y - 25, 0.5)
+	next_sign_tween.tween_property(sign, "position:y", sign_pos.y, 0.3)\
 	.set_trans(Tween.TRANS_EXPO)
 	next_sign_tween.tween_interval(0.5)
 
@@ -159,10 +160,10 @@ func next_sign_off() -> void:
 		child.mouse_default_cursor_shape = Control.CURSOR_ARROW
 		for c in child.get_children():
 			c.mouse_default_cursor_shape = Control.CURSOR_ARROW
-	$"../next_sign".modulate = Color(Color.DIM_GRAY)
-	next_sign_tween = get_tree().create_tween().bind_node($"../next_sign")\
+	sign.modulate = Color(Color.DIM_GRAY)
+	next_sign_tween = get_tree().create_tween().bind_node(sign)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	next_sign_tween.tween_property($"../next_sign", "position:y", 1025, 0.5)\
+	next_sign_tween.tween_property(sign, "position:y", sign_pos.y, 0.5)\
 	.set_trans(Tween.TRANS_EXPO)
 
 func battle_finished() -> void:

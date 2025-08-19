@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb2rrb1k047h2"
-path="res://.godot/imported/PieChartOver.png-0dee3960aa819b5a07299712108be404.ctex"
+uid="uid://0sqjwa6h6xno"
+path="res://.godot/imported/blackbox.png-e89f126c0910c10eb89dac928d9d170d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://PieChartOver.png"
-dest_files=["res://.godot/imported/PieChartOver.png-0dee3960aa819b5a07299712108be404.ctex"]
+source_file="res://image/blackbox.png"
+dest_files=["res://.godot/imported/blackbox.png-e89f126c0910c10eb89dac928d9d170d.ctex"]
 
 [params]
 

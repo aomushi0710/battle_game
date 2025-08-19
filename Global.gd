@@ -73,8 +73,8 @@ const deck_save_scene = "res://デッキセーブデータ.tscn"
 const new_battle_scene = "res://新バトル.tscn"
 const tutorial_scene = "res://tutorial.tscn"
 const shop_scene = "res://shop.tscn"
-const inventory_scene = "res://inventory.tscn"
 
+const inventory_scene = preload("res://inventory.tscn")
 const action_button = preload("res://action_button.tscn")
 
 @onready var picked_monster = [0,0,0]
@@ -228,39 +228,39 @@ func ability_description_creator(act: Action, index: int, blank: bool) -> Array:
 				1:
 					ability_text = "[color=red]火傷[/color]"
 					ability_tip = "相手を火傷状態にします"
-					ability_color = Color(1, 0, 0, 0.5) # red
+					ability_color = Color.RED # red
 				2:
 					ability_text = "[color=dodger_blue]水圧[/color]"
 					ability_tip = "相手を水圧状態にします"
-					ability_color = Color(0, 0, 1, 0.5) # blue
+					ability_color = Color.DODGER_BLUE # blue
 				3:
 					ability_text = "[color=yelllow]感電[/color]"
 					ability_tip = "相手を感電状態にします"
-					ability_color = Color(1, 1, 0, 0.5) # yellow
+					ability_color = Color.YELLOW
 				4:
 					ability_text = "[color=chocolate]泥々[/color]"
-					ability_tip = "相手を泥々状態にします" # brown
-					ability_color = Color(0.647059, 0.164706, 0.164706, 0.5)
+					ability_tip = "相手を泥々状態にします"
+					ability_color = Color.CHOCOLATE
 				5:
 					ability_text = "[color=green]竜巻[/color]"
 					ability_tip = "相手を竜巻状態にします"
-					ability_color = Color(0, 1, 0, 0.5) # green
+					ability_color = Color.GREEN
 				6:
-					ability_text = "[color=aqua]霜焼[/color]"
+					ability_text = "[color=turquoise]霜焼[/color]"
 					ability_tip = "相手を霜焼状態にします"
-					ability_color = Color(0, 1, 1, 0.5) # aqua
+					ability_color = Color.TURQUOISE
 				7:
 					ability_text = "[color=light_yellow]紫外線[/color]"
 					ability_tip = "相手を紫外線状態にします"
-					ability_color = Color(1, 1, 0.878431, 0.5) # light_yellow
+					ability_color = Color.LIGHT_YELLOW
 				8:
 					ability_text = "[color=violet]呪い[/color]"
 					ability_tip = "相手を呪い状態にします"
-					ability_color = Color(0.580392, 0, 0.827451, 0.5) # violet
+					ability_color = Color.PURPLE
 		2: # バフ
 			ability_power = "バフ継続ターン数:[color=red]%d[/color]" % \
 			act.ability_power[index]
-			ability_color = Color(0.545098, 0, 0, 0.5) # dark_red
+			ability_color = Color.DARK_RED
 			match act.ability[index].buff:
 				1:
 					ability_text = "[color=red]ATK UP[/color]"
@@ -283,7 +283,7 @@ func ability_description_creator(act: Action, index: int, blank: bool) -> Array:
 		3: # デバフ
 			ability_power = "デバフ継続ターン数:[color=red]%d[/color]" % \
 			act.ability_power[index]
-			ability_color = Color(0, 0, 0.545098, 0.5) # dark_blue
+			ability_color = Color.DARK_BLUE
 			match act.ability[index].debuff:
 				1:
 					ability_text = "[color=red]ATK DOWN[/color]"
@@ -304,7 +304,7 @@ func ability_description_creator(act: Action, index: int, blank: bool) -> Array:
 					ability_text = "[color=red][b]ERROR[/b][/color]"
 					ability_tip = "弱体化するものすら存在しなかった"
 		4: # 回復 forest_green
-			ability_color = Color(0.133333, 0.545098, 0.133333, 0.5)
+			ability_color = Color.YELLOW_GREEN
 			var status: String # 参照するステータス名
 			match act.damage_type:
 				1:

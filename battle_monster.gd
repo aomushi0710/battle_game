@@ -282,6 +282,8 @@ func effect_icon() -> void:
 
 func effect_detail(effect: Effect):
 	$effect_detail.position = popup_position + Vector2i(position)
+	if get_parent().name == "enemy_deck":
+		$effect_detail.position.x += 980
 	$effect_detail.title = effect.name
 	$effect_detail.dialog_text = effect.description
 	$effect_detail.popup()

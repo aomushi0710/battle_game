@@ -30,7 +30,7 @@ func update() -> void:
 		if sum_chance >= 100: # もし既に100%を越えていたら
 			break
 
-## 既に使用された色のリストcolor_listと、追加したい色colorを引数とする。
+## 既に使用された色のリストcolor_listと、追加したい色colorを引数とする。[br]
 ## color_listの中に、colorと重複する色が含まれていた場合に、色をずらして返す関数
 func color_checker(color_list: Array[Color], color: Color) -> Color:
 	for c: Color in color_list:

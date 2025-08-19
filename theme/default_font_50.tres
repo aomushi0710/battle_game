@@ -11,4 +11,4 @@ Button/styles/focus = SubResource("StyleBoxFlat_xev74")
 LineEdit/constants/outline_size = 10
 RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 10
-TooltipLabel/font_sizes/font_size = 50
+TooltipLabel/font_sizes/font_size = 40

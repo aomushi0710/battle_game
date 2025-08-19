@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1sir626d64j1"
-path="res://.godot/imported/3rd.PNG-2d2dd1263d8db715e0d040f53f5d875c.ctex"
+uid="uid://bb2rrb1k047h2"
+path="res://.godot/imported/PieChartOver.png-8b592ab5e64ebd512e048e619c858d6b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://3rd.PNG"
-dest_files=["res://.godot/imported/3rd.PNG-2d2dd1263d8db715e0d040f53f5d875c.ctex"]
+source_file="res://image/PieChartOver.png"
+dest_files=["res://.godot/imported/PieChartOver.png-8b592ab5e64ebd512e048e619c858d6b.ctex"]
 
 [params]
 

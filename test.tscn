@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://q1o1wv3x1yij"]
+
+[ext_resource type="Script" uid="uid://dtdsnqikcdeve" path="res://test.gd" id="1_37kl0"]
+[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="2_8uh7m"]
+
+[node name="pie_chart" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1000.0
+offset_bottom = 450.0
+mouse_filter = 2
+theme = ExtResource("2_8uh7m")
+script = ExtResource("1_37kl0")

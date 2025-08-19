@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://eebdi12mob5i"
-path="res://.godot/imported/お墓.PNG-df5910ff2ea8246d0fb59a071467f5c1.ctex"
+path="res://.godot/imported/お墓.PNG-7883c325cc38d25cabfce312c2837131.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://お墓.PNG"
-dest_files=["res://.godot/imported/お墓.PNG-df5910ff2ea8246d0fb59a071467f5c1.ctex"]
+source_file="res://image/お墓.PNG"
+dest_files=["res://.godot/imported/お墓.PNG-7883c325cc38d25cabfce312c2837131.ctex"]
 
 [params]
 

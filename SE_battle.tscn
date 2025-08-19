@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://bs8nmf7s1gd6a"]
+
+[ext_resource type="Script" uid="uid://csrgfp2en3o3j" path="res://se_battle.gd" id="1_8jy4m"]
+[ext_resource type="AudioStream" uid="uid://clhtd1im5cf6c" path="res://sound/SE/statuspowerup.ogg" id="2_qf4g3"]
+[ext_resource type="AudioStream" uid="uid://5fxsacrw0m8t" path="res://sound/SE/statuspowerdown.ogg" id="3_7b4xo"]
+[ext_resource type="AudioStream" uid="uid://bjsfjad6qqj3j" path="res://sound/SE/damage.ogg" id="4_i2rjt"]
+[ext_resource type="AudioStream" uid="uid://m1fpu7jtr0i5" path="res://sound/SE/heal.ogg" id="5_qemhu"]
+[ext_resource type="AudioStream" uid="uid://c5x4yrepr7qm" path="res://sound/SE/evolution.ogg" id="6_vagwo"]
+
+[node name="SoundEffects" type="Node2D"]
+script = ExtResource("1_8jy4m")
+
+[node name="buff" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_qf4g3")
+
+[node name="debuff" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_7b4xo")
+
+[node name="damage" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_i2rjt")
+
+[node name="heal" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_qemhu")
+
+[node name="evolution" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_vagwo")

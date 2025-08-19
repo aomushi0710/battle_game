@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dtb8010gbtf6j"
-path="res://.godot/imported/spinbox_down.png-f7ad2374bae280defa8ad81c9787368d.ctex"
+path="res://.godot/imported/spinbox_down.png-0829587efce7dee5fd0594328fe365b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spinbox_down.png"
-dest_files=["res://.godot/imported/spinbox_down.png-f7ad2374bae280defa8ad81c9787368d.ctex"]
+source_file="res://image/spinbox_down.png"
+dest_files=["res://.godot/imported/spinbox_down.png-0829587efce7dee5fd0594328fe365b6.ctex"]
 
 [params]
 

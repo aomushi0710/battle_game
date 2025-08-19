@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgtiu2klk0bm3"
-path="res://.godot/imported/spinbox_up.png-5405d338b8bb55d6145dce8fd5988c34.ctex"
+uid="uid://d05tkdjjbl8u5"
+path="res://.godot/imported/PieChartUnder.png-66efd49d2c22c1ce56e87962bca770c4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spinbox_up.png"
-dest_files=["res://.godot/imported/spinbox_up.png-5405d338b8bb55d6145dce8fd5988c34.ctex"]
+source_file="res://image/PieChartUnder.png"
+dest_files=["res://.godot/imported/PieChartUnder.png-66efd49d2c22c1ce56e87962bca770c4.ctex"]
 
 [params]
 

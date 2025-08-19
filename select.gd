@@ -1,21 +1,24 @@
 extends Control
 
-@onready var camera: Camera2D = $"../Camera2D"
-@onready var back_button: Button = $"../CanvasLayer/Control/戻る"
-@onready var confirm_button: Button = $"../CanvasLayer/Control/決定"
-@onready var action_select: Control = $action_select
-@onready var slider: HSlider = $action_select/chance
-@onready var spinbox: SpinBox = $action_select/SpinBox
+@onready var se := $"../SoundEffects"
+@onready var background := $"../background"
+@onready var camera := $"../Camera2D"
+@onready var back_button := $"../CanvasLayer/Control/戻る"
+@onready var confirm_button := $"../CanvasLayer/Control/決定"
+@onready var action_select := $action_select
+@onready var slider := $action_select/chance
+@onready var spinbox := $action_select/SpinBox
+@onready var action_list := $action_list
 var selected_action: Action ## 現在選択中の技
 var selected_skill = 0 # 選ばれたスキルパターン
 var now_select_action = 0 # 現在指定されている技
-var monster_data = Global.monster_data # モンスターの各種データ取得
-var action_data = Global.action_data # 技の各種データ取得
 var monster_id = Global.selected_monster
+var monster_dict ## 現在選択中のモンスターの辞書
 var actions: Array[Action] = [null, null, null, null] ## 選ばれた技
 var chances: Array[int] = [0, 0, 0, 0] ## 選ばれた技の出現確率
 var check_provability = [] # 出現率0%弾き出し用
 var pie_chart
+var camera_tween: Tween
 var camera_mode: CameraMode = CameraMode.MAIN: ## 現在のカメラ位置
 	set(mode): ## 対応する画面遷移を行ってからモード変更
 		# 全てのボタンを使用不可に
@@ -23,17 +26,19 @@ var camera_mode: CameraMode = CameraMode.MAIN: ## 現在のカメラ位置
 			if child is Button:
 				child.disabled = true
 		## カメラ移動アニメーション
-		var tween: Tween = get_tree().create_tween().bind_node(camera)
+		camera_tween = get_tree().create_tween().bind_node(camera)
 		match mode:
 			CameraMode.MAIN:
-				tween.tween_property(camera, "offset:x", 960, 1)\
+				background.color_change(Color.GREEN) # 背景カラーチェンジ
+				camera_tween.tween_property(camera, "offset:x", 960, 1)\
 				.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 				confirm_button.text = "決定！"
 			CameraMode.ACTION:
-				tween.tween_property(camera, "offset:x", 1750, 1)\
+				background.color_change(Color.ORANGE) # 背景カラーチェンジ
+				camera_tween.tween_property(camera, "offset:x", 1750, 1)\
 				.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 				confirm_button.text = "登録！"
-		await tween.finished
+		await camera_tween.finished
 		# モード切り替え
 		camera_mode = mode
 		# 全てのボタンを使用可能に
@@ -49,9 +54,10 @@ enum CameraMode{
 }
 
 func _ready() -> void:
+	monster_dict = Global.monster_data[monster_id].duplicate() # 初期化
 	camera.offset = Vector2(960, 540)
 	# 進化前モンスターを表示
-	$monster.texture = Global.monster_data[Global.selected_monster][0].image
+	$monster.texture = monster_dict[0].image
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
 	if Global.deck1.monster[Global.now_picking] != null:
 		if Global.deck1.monster[Global.now_picking].id == monster_id:
@@ -59,21 +65,31 @@ func _ready() -> void:
 				# 以下、追加部分
 				actions[i] = Global.deck1.action[Global.now_picking][i]
 				chances[i] = Global.deck1.chance[Global.now_picking][i]
-			# 円グラフ生成
-			pie_chart = load("res://PieChart_action.tscn").instantiate()
-			pie_chart.position = Vector2(1370, 80)
-			add_child(pie_chart)
-			pie_chart_update()
+	
+	# 円グラフ生成
+	pie_chart = load("res://test.tscn").instantiate()
+	pie_chart.position = Vector2(950, 80)
+	add_child(pie_chart)
+	pie_chart_update()
+	
+	setting_action_button()
 
 ## 円グラフ更新関数
 func pie_chart_update() -> void:
 	pie_chart.actions = actions
 	pie_chart.chances = chances
-	pie_chart.update()
+	pie_chart.queue_redraw()
+	await pie_chart.draw_ended # draw関数終了を待つ
 	# グラフ色と確率表記
 	var nodes_i: int = 0 ## nodesのインデックス指定用
-	for child: ColorRect in $actions/chart_colors.get_children():
-		child.color = pie_chart.nodes[nodes_i].tint_progress
+	for child: Panel in $actions/chart_colors.get_children():
+		var panel: StyleBoxFlat = child.get_theme_stylebox("panel")
+		if actions[nodes_i] != null:
+			panel.bg_color = pie_chart.color_list[nodes_i]
+			panel.shadow_size = 30
+		else:
+			panel.bg_color = Color.BLACK
+			panel.shadow_size = 0
 		child.get_child(0).text = "%d%%" % chances[nodes_i]
 		nodes_i += 1
 	# 技ボタン生成と技削除ボタン有効無効切り替え
@@ -82,8 +98,6 @@ func pie_chart_update() -> void:
 	for i in len(actions):
 		var button = Global.action_button.instantiate()
 		button.action = actions[i]
-		if button.action == null: # 技がなければ
-			button.disabled = true # ボタン無効
 		button.button_up.connect(func(): action_button_up(button.action))
 		$actions/action_buttons.add_child(button)
 		if actions[i] == null:
@@ -91,14 +105,32 @@ func pie_chart_update() -> void:
 		else:
 			$actions/delete_buttons.get_child(i).disabled = false
 
+## 全ての形態に関して、技をそれぞれのコンテナにボタン化して追加する関数
+func setting_action_button() -> void:
+	for monster: Monster in monster_dict.values():
+		## 技が追加されるコンテナ(TabContainer -> ScrollContainer -> VboxContainer)
+		var container = action_list.get_child(monster.form).get_child(0)
+		for act: Action in monster.actions:
+			var button = Global.action_button.instantiate()
+			button.action = act
+			button.button_up.connect(func(): action_button_up(button.action))
+			container.add_child(button)
+		
+
 ## 技ボタンが押された時の関数
 func action_button_up(act: Action) -> void:
-	selected_action = act
-	# まだ移動していなければカメラ移動
-	if camera_mode != CameraMode.ACTION:
+	if camera_mode != CameraMode.ACTION: # まだ移動していなければカメラ移動
 		camera_mode = CameraMode.ACTION
-	if selected_action in actions: # 既に選ばれた技を選んだ時
-		confirm_button.disabled = true # 再登録を不可に
+	
+	if act == null: # nullなら移動だけして中断
+		return
+	
+	selected_action = act
+	# 選ばれた技が既に登録されているかどうかで登録ボタンの挙動を変える
+	if act in actions:
+		confirm_button.disabled = true
+	else:
+		confirm_button.disabled = false
 	## 元々ボタンがあれば取得される
 	var exists = action_select.get_node_or_null("action_button")
 	if exists: # 存在したら削除
@@ -110,13 +142,14 @@ func action_button_up(act: Action) -> void:
 	button.position = Vector2(160, 20)
 	button.action = act
 	action_select.add_child(button)
-	# sliderとspinboxのセッティング
-	for node in [slider, spinbox]:
-		node.max_value = float(act.max_chance)
+	
+	for node in [slider, spinbox]: # sliderとspinboxのセッティング
 		if act in actions:
 			node.set_value_no_signal(chances[actions.find(act)])
 		else:
 			node.set_value_no_signal(0)
+		node.max_value = float(act.max_chance)
+		$action_select/max_chance.text = "%d%%" % act.max_chance
 	slider.tick_count = slider.max_value / 10 + 1
 
 ## 技削除ボタンの処理
@@ -127,6 +160,7 @@ func delete_button_up(i: int) -> void:
 
 ## 戻るボタンの処理
 func _on_戻る_button_up():
+	se.click.play()
 	match camera_mode:
 		CameraMode.MAIN: # キャラ選択に戻す
 			reset()
@@ -136,16 +170,9 @@ func _on_戻る_button_up():
 
 ## 決定ボタンの処理
 func _on_決定_button_up():
+	se.click.play()
 	match camera_mode:
 		CameraMode.MAIN:
-			var monster_dict = monster_data[monster_id].duplicate() # Dictionary{Monster...}
-			
-			for i in len(chances): # 技が登録されているが0%になっている時
-				if chances[i] == 0 and actions[i] != null:
-					$エラーメッセージ.dialog_text = "出現率が0%の技は選択を解除してください！"
-					$エラーメッセージ.popup_centered()
-					return
-			
 			var sum_chance = 0 ## 技の出現率の合計
 			for i: int in chances:
 				sum_chance += i
@@ -167,7 +194,12 @@ func _on_決定_button_up():
 				#$エラーメッセージ.dialog_text = "スキルが選択されていません！"
 				#$エラーメッセージ.popup_centered()
 				#return
-			Global.deck1.monster_dict[Global.now_picking] = monster_data[monster_id]
+			
+			for i in len(chances): # 技が登録されているが0%になっている時、nullを入れる
+				if chances[i] == 0:
+					actions[i] = null
+			
+			Global.deck1.monster_dict[Global.now_picking] = monster_dict
 			Global.deck1.monster[Global.now_picking] = \
 			Global.deck1.monster_dict[Global.now_picking][0].duplicate()
 			# nullは消す
@@ -179,16 +211,14 @@ func _on_決定_button_up():
 			get_tree().change_scene_to_file(Global.deck_scene)
 		CameraMode.ACTION:
 			if selected_action in actions: # 既存の技を選択中の時
-				$エラーメッセージ.dialog_text = "既に登録されている技です！"
+				$エラーメッセージ.dialog_text = "既に登録されている技です！\n\n" + \
+				"───妙だな、\"今\"このボタンが押されるなんて。\n" + \
+				"こんなこともあろうかと、対策を施していて正解だった。"
 				$エラーメッセージ.popup_centered()
 				return
 			if null not in actions: # 空きスペース(null)がない時
 				$エラーメッセージ.dialog_text = \
 				"技は4個までしか登録できません！\n既に登録されている技を削除してください！"
-				$エラーメッセージ.popup_centered()
-				return
-			if slider.value == 0:
-				$エラーメッセージ.dialog_text = "0%で技を登録することはできません！"
 				$エラーメッセージ.popup_centered()
 				return
 			# 元々選択されている技の出現率に、登録したい技の出現率を足す計算
@@ -199,6 +229,11 @@ func _on_決定_button_up():
 				$エラーメッセージ.dialog_text = "技の出現率の合計が100%を越えてしまいます！"
 				$エラーメッセージ.popup_centered()
 				return
+			
+			var index = actions.find(null) ## 空き枠のうち先頭のインデックスを取得
+			actions[index] = selected_action
+			chances[index] = int(slider.value)
+			pie_chart_update()
 
 
 func _on_スキルボタン_item_selected(index: int): # オプションボタンで選んだパターンを登録
@@ -277,9 +312,24 @@ func reset():
 	selected_skill = 0
 
 ## slider及びspinboxの値が変更された時に、反映させる関数
-func _on_chance_value_changed(value: float) -> void:
+func _on_chance_value_changed(value: int) -> void:
+	if selected_action in actions: # 既に選択中の技の時
+		var sum_chance: int = 0
+		var index: int = actions.find(selected_action) ## 既に選択中の技のインデックス
+		var previous_chances = chances.duplicate() ## 選択中の技を除いたchances
+		var previous_value = previous_chances.pop_at(index)
+		
+		for i: int in previous_chances:
+			sum_chance += i
+		sum_chance += value
+		
+		if sum_chance > 100: # 100%を越える場合、元の値に差し戻し
+			$"エラーメッセージ".dialog_text = "技の出現率の合計が100%を越えてしまいます！"
+			$"エラーメッセージ".popup_centered()
+			value = previous_value # 元の値に戻す
+		else:
+			chances[index] = value # 技一覧の確率と円グラフを更新
+			pie_chart_update()
+	
 	for node in [slider, spinbox]: # sliderとspinboxを更新
 		node.set_value_no_signal(value)
-	if selected_action in actions: # もし既に選択中の技であれば、
-		chances[actions.find(selected_action)] = int(value) # 技一覧の確率も変更
-		pie_chart_update()
