@@ -3,6 +3,7 @@ extends Control
 @onready var se := $"../SoundEffects"
 @onready var background := $"../background"
 @onready var camera := $"../Camera2D"
+@onready var accept_dialog = $"../AcceptDialog"
 @onready var back_button := $"../CanvasLayer/Control/戻る"
 @onready var confirm_button := $"../CanvasLayer/Control/決定"
 @onready var action_select := $action_select
@@ -177,8 +178,7 @@ func _on_決定_button_up():
 			for i: int in chances:
 				sum_chance += i
 			if sum_chance != 100:
-				$エラーメッセージ.dialog_text = "出現率の合計が100%ではありません！"
-				$エラーメッセージ.popup_centered()
+				accept_dialog.display_dialog("出現率の合計が100%ではありません！")
 				return
 			
 			if len(monster_dict) == 3: # 2回進化モンスター
@@ -187,8 +187,8 @@ func _on_決定_button_up():
 						# 進化技は選択されているが、中間進化技が選択されていない場合に警告メッセージ
 						if evol_action in actions and \
 						middle_evol_action not in actions:
-							$エラーメッセージ.dialog_text = "中間進化技が選択されていません！\nこのモンスターは進化が2回必要です"
-							$エラーメッセージ.popup_centered()
+							accept_dialog.display_dialog(
+								"中間進化技が選択されていません！\nこのモンスターは進化が2回必要です")
 							return
 			#elif selected_skill == 0: #スキル実装後に実装
 				#$エラーメッセージ.dialog_text = "スキルが選択されていません！"
@@ -211,23 +211,20 @@ func _on_決定_button_up():
 			get_tree().change_scene_to_file(Global.deck_scene)
 		CameraMode.ACTION:
 			if selected_action in actions: # 既存の技を選択中の時
-				$エラーメッセージ.dialog_text = "既に登録されている技です！\n\n" + \
-				"───妙だな、\"今\"このボタンが押されるなんて。\n" + \
-				"こんなこともあろうかと、対策を施していて正解だった。"
-				$エラーメッセージ.popup_centered()
+				accept_dialog.display_dialog("既に登録されている技です！\n\n" + 
+				"───妙だな、\"今\"このボタンが押されるなんて。\n" + 
+				"こんなこともあろうかと、対策を施していて正解だった。")
 				return
 			if null not in actions: # 空きスペース(null)がない時
-				$エラーメッセージ.dialog_text = \
-				"技は4個までしか登録できません！\n既に登録されている技を削除してください！"
-				$エラーメッセージ.popup_centered()
+				accept_dialog.display_dialog(
+					"技は4個までしか登録できません！\n既に登録されている技を削除してください！")
 				return
 			# 元々選択されている技の出現率に、登録したい技の出現率を足す計算
 			var sum_chance = 0
 			for i: int in chances:
 				sum_chance += i
 			if sum_chance + slider.value > 100:
-				$エラーメッセージ.dialog_text = "技の出現率の合計が100%を越えてしまいます！"
-				$エラーメッセージ.popup_centered()
+				accept_dialog.display_dialog("技の出現率の合計が100%を越えてしまいます！")
 				return
 			
 			var index = actions.find(null) ## 空き枠のうち先頭のインデックスを取得
@@ -324,8 +321,7 @@ func _on_chance_value_changed(value: int) -> void:
 		sum_chance += value
 		
 		if sum_chance > 100: # 100%を越える場合、元の値に差し戻し
-			$"エラーメッセージ".dialog_text = "技の出現率の合計が100%を越えてしまいます！"
-			$"エラーメッセージ".popup_centered()
+			accept_dialog.display_dialog("技の出現率の合計が100%を越えてしまいます！")
 			value = previous_value # 元の値に戻す
 		else:
 			chances[index] = value # 技一覧の確率と円グラフを更新

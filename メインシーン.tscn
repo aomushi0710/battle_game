@@ -49,6 +49,7 @@ theme = SubResource("Theme_lf3g1")
 text = "🗑️セーブデータ削除"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+clip_contents = false
 offset_left = 100.0
 offset_top = 139.375
 offset_right = 1064.0
@@ -57,11 +58,11 @@ theme = ExtResource("2_m5oqv")
 bbcode_enabled = true
 text = "↑ここを押してセッティング！
 
-[b]2Dコマンドバトルゲーム（β版）[/b]
+[b]確率操作系コマンドバトルゲーム(β版)[/b]
+
+理不尽な運ゲーを極限まで減らした究極の運ゲー！
 
 このゲームはまだ作成途中でバグなども多く存在しています。
-
-現在はコンピュータとの対戦しかできませんが、今後の発展にご期待ください！
 
 [color=red]一部のテキスト・ボタンはカーソルを合わせて少し待つとヒントが表示されます！[/color]"
 
@@ -125,9 +126,9 @@ text = "debug"
 [node name="version" type="RichTextLabel" parent="."]
 z_index = -1
 offset_left = 973.0
-offset_top = 600.0
+offset_top = 611.875
 offset_right = 1130.0
-offset_bottom = 630.0
+offset_bottom = 641.875
 theme = ExtResource("4_lf3g1")
 bbcode_enabled = true
 text = "[i]β.ver.X.X.X[/i] "
@@ -135,9 +136,9 @@ horizontal_alignment = 2
 
 [node name="copyright" type="RichTextLabel" parent="."]
 offset_left = 96.0
-offset_top = 630.0
+offset_top = 601.875
 offset_right = 443.0
-offset_bottom = 681.0
+offset_bottom = 652.875
 theme = ExtResource("2_m5oqv")
 bbcode_enabled = true
 text = "[i](C) 2025 aomushi0710[i]"

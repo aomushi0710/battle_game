@@ -1,6 +1,5 @@
-[gd_scene load_steps=19 format=3 uid="uid://d4g4bh4y0vc2f"]
+[gd_scene load_steps=20 format=3 uid="uid://d4g4bh4y0vc2f"]
 
-[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_0twro"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_cpkem"]
 [ext_resource type="Script" uid="uid://sb20jo78m6dl" path="res://deck_select.gd" id="1_dgsv0"]
 [ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://image/1st.PNG" id="2_34w54"]
@@ -9,6 +8,8 @@
 [ext_resource type="Script" uid="uid://tw743jfyh7c1" path="res://cpu_strategy.gd" id="5_c4lle"]
 [ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help_button.gd" id="5_jtnis"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_0twro"]
+[ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="7_cgg8v"]
+[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="10_c8d0p"]
 
 [sub_resource type="Theme" id="Theme_3nbs8"]
 default_font_size = 35
@@ -174,15 +175,9 @@ offset_left = 5.0
 offset_top = -69.0
 offset_right = 166.0
 offset_bottom = 3.0
-theme = ExtResource("1_0twro")
+theme = ExtResource("7_cgg8v")
 text = " 
  CPUの挙動"
-
-[node name="エラーメッセージ" type="AcceptDialog" parent="Control"]
-title = "⚠️ERROR⚠️"
-initial_position = 2
-size = Vector2i(721, 102)
-theme = ExtResource("7_0twro")
 
 [node name="確認メッセージ" type="ConfirmationDialog" parent="Control"]
 auto_translate_mode = 1
@@ -385,6 +380,9 @@ offset_bottom = 1080.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
+
+[node name="AcceptDialog" parent="." instance=ExtResource("10_c8d0p")]
+size = Vector2i(128, 186)
 
 [connection signal="tree_entered" from="." to="Control/デッキ1" method="_on_デッキセレクト_tree_entered"]
 [connection signal="button_up" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_button_up"]

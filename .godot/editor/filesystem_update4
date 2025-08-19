@@ -7,13 +7,10 @@ res://キャラセレクト.gd
 res://clear_font.tres
 res://battle_buttons.gd
 res://theme/battle_tabcontainer.tres
-<<<<<<< Updated upstream
 res://新バトル.tscn
 res://battle_monster.tscn
 res://メインシーン.tscn
 res://se_battle.gd
-=======
->>>>>>> Stashed changes
 res://デッキセレクト.tscn
 res://デッキセーブデータ.tscn
 res://キャラ選択.tscn
@@ -25,7 +22,6 @@ res://PieChart_action.tscn
 res://action_button.tscn
 res://tutorial.tscn
 res://debug.tscn
-<<<<<<< Updated upstream
 res://transition_flash.tscn
 res://技セレクトボタン.tscn
 res://SE_battle.tscn
@@ -48,6 +44,9 @@ res://action/つむじ風.tres
 res://action/落石.tres
 res://action/ウィンド.tres
 res://monster/ルネ.tres
-=======
 res://export_presets.cfg
->>>>>>> Stashed changes
+res://theme/dialog_theme.tres
+res://accept_dialog.tscn
+res://Global.gd
+res://deck_select.gd
+res://accept_dialog.gd

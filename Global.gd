@@ -74,6 +74,7 @@ const new_battle_scene = "res://新バトル.tscn"
 const tutorial_scene = "res://tutorial.tscn"
 const shop_scene = "res://shop.tscn"
 
+const accept_dialog = preload("res://accept_dialog.tscn")
 const inventory_scene = preload("res://inventory.tscn")
 const action_button = preload("res://action_button.tscn")
 

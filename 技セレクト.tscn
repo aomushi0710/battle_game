@@ -1,6 +1,7 @@
-[gd_scene load_steps=42 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=44 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
+[ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="1_ilscs"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
 [ext_resource type="Script" uid="uid://cpa846ccwna56" path="res://help.gd" id="2_3py80"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="3_250y8"]
@@ -12,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://0sqjwa6h6xno" path="res://image/blackbox.png" id="11_ilscs"]
 [ext_resource type="Texture2D" uid="uid://bgtiu2klk0bm3" path="res://image/spinbox_up.png" id="12_4lobs"]
 [ext_resource type="PackedScene" uid="uid://yl6fo6eqi2u0" path="res://SE_menu.tscn" id="12_ilscs"]
+[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="13_3py80"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lobs"]
 bg_color = Color(0, 0, 0, 1)
@@ -234,7 +236,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("1_14bbj")
+theme = ExtResource("1_ilscs")
 
 [node name="戻る" type="Button" parent="CanvasLayer/Control"]
 modulate = Color(1, 0, 0, 1)
@@ -574,14 +576,6 @@ metadata/_tab_index = 2
 [node name="container" type="VBoxContainer" parent="セレクト/action_list/　進化技　"]
 layout_mode = 2
 
-[node name="エラーメッセージ" type="AcceptDialog" parent="セレクト"]
-title = "⚠️ERROR⚠️"
-initial_position = 3
-size = Vector2i(316, 185)
-current_screen = 0
-visible = true
-dialog_text = "aaaaaaaaaaaa"
-
 [node name="description_ui" type="ColorRect" parent="セレクト"]
 layout_mode = 0
 offset_left = 1364.0
@@ -750,6 +744,8 @@ stretch_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="SoundEffects" parent="." instance=ExtResource("12_ilscs")]
+
+[node name="AcceptDialog" parent="." instance=ExtResource("13_3py80")]
 
 [connection signal="button_up" from="CanvasLayer/Control/戻る" to="セレクト" method="_on_戻る_button_up"]
 [connection signal="button_up" from="CanvasLayer/Control/決定" to="セレクト" method="_on_決定_button_up"]

@@ -25,7 +25,7 @@
 [ext_resource type="Script" uid="uid://ongi0h8o88fj" path="res://p3_spd.gd" id="18_aoce8"]
 [ext_resource type="Script" uid="uid://ch12aco7nkhpo" path="res://p3_command.gd" id="19_o05ww"]
 [ext_resource type="Script" uid="uid://d32nypsglo7ie" path="res://p2_icon.gd" id="20_ue1s4"]
-[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="23_4piow"]
+[ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="22_lvwbn"]
 [ext_resource type="Script" uid="uid://cbniier4n8vqu" path="res://p3_icon.gd" id="26_nb4ha"]
 [ext_resource type="Script" uid="uid://dbmbsamhtnvva" path="res://enemy2.gd" id="27_spbmn"]
 [ext_resource type="Script" uid="uid://dyy6tqdfn3sw2" path="res://e2_hp.gd" id="28_u4vay"]
@@ -668,7 +668,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("23_4piow")
+theme = ExtResource("22_lvwbn")
 
 [node name="enemy1" type="ColorRect" parent="enemies"]
 layout_mode = 0

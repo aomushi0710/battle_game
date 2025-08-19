@@ -1,0 +1,50 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bn2rbnxu4hu44"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d22ta"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 15
+border_width_right = 4
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_left = 24.0
+expand_margin_top = 65.0
+expand_margin_right = 24.0
+expand_margin_bottom = 20.0
+shadow_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8sin8"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 20.0
+bg_color = Color(0, 0.234, 0.52, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[resource]
+default_font_size = 50
+AcceptDialog/colors/title_color = Color(1, 1, 1, 1)
+AcceptDialog/colors/title_outline_modulate = Color(0, 0, 0, 1)
+AcceptDialog/constants/buttons_min_width = 100
+AcceptDialog/constants/close_h_offset = 30
+AcceptDialog/constants/close_v_offset = 30
+AcceptDialog/constants/title_height = 60
+AcceptDialog/constants/title_outline_size = 10
+AcceptDialog/font_sizes/title_font_size = 40
+AcceptDialog/styles/embedded_border = SubResource("StyleBoxFlat_d22ta")
+AcceptDialog/styles/panel = SubResource("StyleBoxFlat_8sin8")
+Button/constants/outline_size = 10
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
+RichTextLabel/constants/outline_size = 10
+TooltipLabel/font_sizes/font_size = 40

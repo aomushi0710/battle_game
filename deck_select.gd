@@ -1,5 +1,6 @@
 extends Control
 
+@onready var accept_dialog = $"../../AcceptDialog"
 var first_texture = load("res://1st.PNG")
 var second_texture = load("res://2nd.PNG")
 var third_texture = load("res://3rd.PNG")
@@ -67,8 +68,7 @@ func _on_デッキセレクト_tree_entered():
 func _on_test_button_up():
 	for i in range(3):
 		if Global.deck1.monster[i] == null:
-			$"../エラーメッセージ".dialog_text = "デッキ内には3体のモンスターを登録してください！"
-			$"../エラーメッセージ".popup_centered()
+			accept_dialog.display_dialog("デッキ内には3体のモンスターを登録してください！")
 			return
 	
 	Global.deck1.evolution_check() # 自分のデッキに対してチェック
@@ -122,8 +122,7 @@ func _on_確認メッセージ_confirmed() -> void:
 func _on_new_button_up() -> void:
 	for i in range(3):
 		if Global.deck1.monster[i] == null:
-			$"../エラーメッセージ".dialog_text = "デッキ内には3体のモンスターを登録してください！"
-			$"../エラーメッセージ".popup_centered()
+			accept_dialog.display_dialog("デッキ内には3体のモンスターを登録してください！")
 			return
 	
 	Global.deck1.evolution_check() # 自分のデッキに対してチェック

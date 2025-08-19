@@ -1,6 +1,6 @@
+RichTextLabel
 AcceptDialog
 Window
-RichTextLabel
 AudioStreamPlayer2D
 Control
 TextureRect
@@ -12,4 +12,3 @@ TabContainer
 Path2D
 RayCast2D
 PathFollow2D
-BoxContainer
