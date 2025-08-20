@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=48 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="1_ilscs"]
@@ -127,7 +127,7 @@ default_font_size = 30
 default_font_size = 40
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ltw0u"]
-bg_color = Color(1, 0.5, 0.5, 0)
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -144,7 +144,7 @@ expand_margin_bottom = 6.0
 default_font_size = 40
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ce10"]
-bg_color = Color(0.501961, 1, 1, 0)
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -158,7 +158,7 @@ expand_margin_left = 4.0
 expand_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oeulo"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -172,7 +172,7 @@ expand_margin_left = 4.0
 expand_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4fy06"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -184,6 +184,45 @@ corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 expand_margin_left = 4.0
 expand_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2vx1"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = 4.0
+expand_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l4b1a"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="Theme" id="Theme_jsdkd"]
+default_font_size = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aw38o"]
+content_margin_left = 16.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_bottom_left = 50
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14bbj"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -488,8 +527,8 @@ horizontal_alignment = 2
 anchors_preset = 0
 offset_left = 1920.0
 offset_top = 200.0
-offset_right = 2503.0
-offset_bottom = 366.0
+offset_right = 2710.0
+offset_bottom = 578.0
 
 [node name="power" type="RichTextLabel" parent="セレクト/action_description"]
 clip_contents = false
@@ -525,7 +564,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_oeulo")
 bbcode_enabled = true
 text = "分類:[color=red]物理[/color]"
 
-[node name="type2" type="RichTextLabel" parent="セレクト/action_description"]
+[node name="range" type="RichTextLabel" parent="セレクト/action_description"]
 clip_contents = false
 layout_mode = 2
 offset_left = 238.0
@@ -536,6 +575,40 @@ theme = SubResource("Theme_3py80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_4fy06")
 bbcode_enabled = true
 text = "[color=yellow]対象[/color]:敵味方全体"
+
+[node name="description" type="RichTextLabel" parent="セレクト/action_description"]
+clip_contents = false
+layout_mode = 0
+offset_left = 597.0
+offset_right = 758.0
+offset_bottom = 130.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_u2vx1")
+
+[node name="ability" type="ScrollContainer" parent="セレクト/action_description"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 160.0
+offset_right = 763.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_l4b1a")
+
+[node name="container" type="HBoxContainer" parent="セレクト/action_description/ability"]
+z_index = 1
+layout_mode = 2
+
+[node name="ability_text" type="RichTextLabel" parent="セレクト/action_description"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 160.0
+offset_right = 78.0
+offset_bottom = 360.0
+theme = SubResource("Theme_jsdkd")
+theme_override_constants/line_separation = -16
+theme_override_styles/normal = SubResource("StyleBoxFlat_aw38o")
+bbcode_enabled = true
+text = "特殊効果"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="action_list" type="TabContainer" parent="セレクト"]
 layout_mode = 0

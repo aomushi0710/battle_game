@@ -1,7 +1,8 @@
 class_name Ability
 extends Resource
 
-## 特殊効果を大別するカテゴリー 
+## 特殊効果を大別するカテゴリー[br]
+## 0:
 @export_enum("なし","状態異常","バフ","デバフ","回復","吸収",\
 "急所ダメージ","追加ダメージ","割合ダメージ","進化:100") var category: int
 
@@ -19,8 +20,16 @@ var ailment: int
 @export_enum("なし","進化Ⅰ","進化Ⅱ") var evolution: int
 @export_group("")
 
+enum Test {
+	TEST1,
+	TEST2
+}
+@export var test: Test
+
 ## 特殊効果の名前
-@export var name: String # 技の説明などに記載される特殊効果の名前 火傷、水没、など
+@export var name: String
+## 特殊効果の名前(BBcode有り)
+@export_multiline var bbcode_name: String
 
 ## 特殊効果の対象
 @warning_ignore("shadowed_global_identifier")

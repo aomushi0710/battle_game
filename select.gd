@@ -68,12 +68,14 @@ func _ready() -> void:
 				chances[i] = Global.deck1.chance[Global.now_picking][i]
 	
 	# 円グラフ生成
-	pie_chart = load("res://test.tscn").instantiate()
+	pie_chart = load("res://pie_chart.tscn").instantiate()
 	pie_chart.position = Vector2(950, 80)
 	add_child(pie_chart)
 	pie_chart_update()
 	
 	setting_action_button()
+	# スクリプト上でしかtabbarはいじれないので
+	action_list.get_tab_bar().mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 ## 円グラフ更新関数
 func pie_chart_update() -> void:
@@ -142,6 +144,8 @@ func action_button_up(act: Action) -> void:
 	button.name = "action_button"
 	button.position = Vector2(160, 20)
 	button.action = act
+	button.mouse_filter = Control.MOUSE_FILTER_IGNORE # 押せなくする
+	button.mouse_default_cursor_shape = Control.CURSOR_ARROW # カーソルも戻す
 	action_select.add_child(button)
 	
 	for node in [slider, spinbox]: # sliderとspinboxのセッティング
@@ -152,6 +156,41 @@ func action_button_up(act: Action) -> void:
 		node.max_value = float(act.max_chance)
 		$action_select/max_chance.text = "%d%%" % act.max_chance
 	slider.tick_count = slider.max_value / 10 + 1
+	
+	var power: RichTextLabel = $action_description/power
+	var mp: RichTextLabel = $action_description/mp
+	var type: RichTextLabel = $action_description/type
+	var range: RichTextLabel = $action_description/range
+	power.text = "[color=red]Power[/color]:%4d" % act.power
+	mp.text = "[color=aqua]MP   [/color]:%4d" % act.mp
+	match act.damage_type: # 分類によってテキストと枠線を変える
+		0:
+			type.text = "分類:なし"
+			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
+			style.border_color = Color.WHITE
+		1:
+			type.text = "分類:[color=red]物理[/color]"
+			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
+			style.border_color = Color.RED
+		2:
+			type.text = "分類:[color=dodger_blue]魔法[/color]"
+			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
+			style.border_color = Color.DODGER_BLUE
+	match act.range: # 範囲によってテキストを変える
+		0:
+			range.text = "[color=yellow]対象[/color]:なし"
+		1:
+			range.text = "[color=yellow]対象[/color]:敵単体"
+		2:
+			range.text = "[color=yellow]対象[/color]:敵全体"
+		3:
+			range.text = "[color=yellow]対象[/color]:味方単体"
+		4:
+			range.text = "[color=yellow]対象[/color]:味方全体"
+		5:
+			range.text = "[color=yellow]対象[/color]:自分"
+		6:
+			range.text = "[color=yellow]対象[/color]:敵散開"
 
 ## 技削除ボタンの処理
 func delete_button_up(i: int) -> void:
@@ -226,6 +265,8 @@ func _on_決定_button_up():
 			if sum_chance + slider.value > 100:
 				accept_dialog.display_dialog("技の出現率の合計が100%を越えてしまいます！")
 				return
+			
+			confirm_button.disabled = true
 			
 			var index = actions.find(null) ## 空き枠のうち先頭のインデックスを取得
 			actions[index] = selected_action

@@ -16,6 +16,7 @@ additional = 0
 percentage = 0
 evolution = 0
 name = "RES UP"
+bbcode_name = "[color=violet]RES[/color] [color=red]UP[/color]"
 range = 0
 timing = 0
 trigger = 0

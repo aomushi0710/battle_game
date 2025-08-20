@@ -15,6 +15,7 @@ additional = 0
 percentage = 0
 evolution = 0
 name = "HP回復"
+bbcode_name = "[color=yellow_green]HP回復[/color]"
 range = 0
 timing = 0
 trigger = 0

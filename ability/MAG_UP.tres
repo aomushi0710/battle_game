@@ -16,6 +16,7 @@ additional = 0
 percentage = 0
 evolution = 0
 name = "MAG UP"
+bbcode_name = "[color=dodger_blue]MAG[/color] [color=red]UP[/color]"
 range = 0
 timing = 0
 trigger = 0

@@ -12,16 +12,10 @@ func display_dialog(text: String, title_text: String = "⚠️ERROR⚠️", ok_t
 	ok_button_text = ok_text
 	## bbcodeタグを除いた本文の長さだけ表示領域を確保
 	var label_size = font.get_multiline_string_size(
-		strip_bbcode(text), 
+		Global.strip_bbcode(text), 
 		HORIZONTAL_ALIGNMENT_CENTER, 
 		-1, 
 		font_size) + Vector2(100, 200) # ちょっと余白
 	size = label_size
 	label.size = label_size
 	popup_centered()
-
-## BBcodeのタグ[]を含む[param text]を平文に戻して返す関数
-func strip_bbcode(text: String) -> String:
-	var regex = RegEx.new()
-	regex.compile("\\[.*?\\]")
-	return regex.sub(text, "", true)

@@ -15,6 +15,7 @@ metadata/_snap_count = 2
 custom_minimum_size = Vector2(590, 64)
 offset_right = 590.0
 offset_bottom = 64.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_hae2l")
 alignment = 0
 script = ExtResource("2_hae2l")

@@ -16,7 +16,9 @@ additional = 0
 percentage = 0
 evolution = 0
 name = "DEF DOWN"
+bbcode_name = "[color=light_blue]DEF[/color] [color=blue]DOWN[/color]"
 range = 0
+timing = 0
 trigger = 0
 effect = ExtResource("1_pqafs")
 metadata/_custom_type_script = "uid://n6604vih5t55"

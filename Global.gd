@@ -113,6 +113,12 @@ enum Stage { ## バトルステージ一覧
 }
 @onready var battle_stage: Stage ## バトルステージ
 
+## BBcodeのタグ[]を含む[param text]を平文に戻して返す関数
+func strip_bbcode(text: String) -> String:
+	var regex = RegEx.new()
+	regex.compile("\\[.*?\\]")
+	return regex.sub(text, "", true)
+
 ## モンスターのステータス表示を生成する関数 icon_size:bbcodeのimgタグに用いるアイコンのサイズ
 func status_text(monster: Monster) -> String:
 	var text = (

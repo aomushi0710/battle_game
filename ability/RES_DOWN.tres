@@ -16,7 +16,9 @@ additional = 0
 percentage = 0
 evolution = 0
 name = "RES DOWN"
+bbcode_name = "[color=violet]RES[/color] [color=blue]DOWN[/color]"
 range = 0
+timing = 0
 trigger = 0
 effect = ExtResource("1_hci5s")
 metadata/_custom_type_script = "uid://n6604vih5t55"

@@ -16,6 +16,7 @@ additional = 0
 percentage = 0
 evolution = 0
 name = "ATK UP"
+bbcode_name = "[color=orange]ATK[/color] [color=redUP[/color]"
 range = 0
 timing = 0
 trigger = 0

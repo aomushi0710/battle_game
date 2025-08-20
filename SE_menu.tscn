@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bcf8nrgn6spqa" path="res://se_menu.gd" id="1_owo5j"]
 
 [node name="SoundEffects" type="Node2D"]
+visible = false
 script = ExtResource("1_owo5j")
 
 [node name="click" type="AudioStreamPlayer2D" parent="."]
