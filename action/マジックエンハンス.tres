@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://r6qjkc4wye84"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_5sier"]
-[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_ewdwn"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_ewdwn"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_846lj"]
 [ext_resource type="Resource" uid="uid://la25aj0f21lg" path="res://ability/MAG_UP.tres" id="2_n5fll"]
 [ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://element/バフ.tres" id="3_n5fll"]

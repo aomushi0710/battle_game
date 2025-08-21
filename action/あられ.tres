@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://b3bo5h7oxgsjd"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_kcn6m"]
-[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_ypsqi"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_ypsqi"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_ji0qx"]
 [ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://element/氷属性.tres" id="3_5l0gu"]
 

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://cj2vq7vrkf8bi"]
 
-[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_74kvh"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_74kvh"]
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_njgjh"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_lap31"]
 [ext_resource type="Resource" uid="uid://dh4jk6w58re6r" path="res://ability/MAG_DOWN.tres" id="2_wthmm"]

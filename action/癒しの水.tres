@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://0sm1taom5kmr"]
 
-[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_b4tmm"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_b4tmm"]
 [ext_resource type="Resource" uid="uid://hw6df4qah1ot" path="res://ability/HP回復.tres" id="2_ldcdm"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_t85q6"]
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="3_ldcdm"]

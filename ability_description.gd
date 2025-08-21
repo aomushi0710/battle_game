@@ -13,7 +13,9 @@ func _ready() -> void:
 	background.texture = background.texture.duplicate(true)
 	var gradient: Gradient = background.texture.gradient
 	gradient.colors = [Color.WHITE]
-	match ability.test
+	match ability.test:
+		ability.Test.TEST1:
+			pass
 	
 	fit_name_label_size(ability.bbcode_name)
 	name_label.text = "[b]%s[/b]" % ability.bbcode_name

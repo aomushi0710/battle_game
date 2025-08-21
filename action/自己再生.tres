@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_8disd"]
 [ext_resource type="Resource" uid="uid://dkvcfj85kkj4r" path="res://ability/定数HP回復.tres" id="1_qvyrv"]
-[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_r2cf8"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_r2cf8"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_pnn4q"]
 [ext_resource type="Resource" uid="uid://wnrb4u76hyxf" path="res://element/回復.tres" id="4_siil7"]
 

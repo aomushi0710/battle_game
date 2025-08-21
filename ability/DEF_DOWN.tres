@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://63hgwhbc6h7e"]
 
-[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_3dr28"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_3dr28"]
 [ext_resource type="Resource" uid="uid://gd3jyy3ug6gb" path="res://effect/DEF_DOWN.tres" id="1_pqafs"]
 
 [resource]

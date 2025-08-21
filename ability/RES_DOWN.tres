@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://cc3164fffkl1j"]
 
 [ext_resource type="Resource" uid="uid://dkgyhvm3gjsw0" path="res://effect/RES_DOWN.tres" id="1_hci5s"]
-[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_jdniv"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_jdniv"]
 
 [resource]
 script = ExtResource("1_jdniv")

@@ -1,7 +1,13 @@
+AbilityPursuit
+AbilityFumble
+AbilityCritical
+AbilityReduction
+AbilityHealing
+AbilityDebuff
+AbilityBuff
 Action
 Item
 Ability
-Effect
 Monster
 Element
 Resource

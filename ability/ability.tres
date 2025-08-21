@@ -1,22 +1,12 @@
 [gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://5rri6dvoh2gq"]
 
-[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/ability.gd" id="1_wtah8"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_wtah8"]
 
 [resource]
 script = ExtResource("1_wtah8")
-category = 0
-ailment = 0
-buff = 0
-debuff = 0
-healing = 0
-steal = 0
-critical = 0
-additional = 0
-percentage = 0
-evolution = 0
-test = 0
 name = ""
 bbcode_name = ""
-range = 0
+target = 3
+chance = 100
 timing = 0
 trigger = 0

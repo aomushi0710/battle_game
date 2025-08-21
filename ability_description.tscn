@@ -74,7 +74,7 @@ expand_margin_left = 4.0
 expand_margin_bottom = 2.0
 
 [node name="ability" type="Panel"]
-custom_minimum_size = Vector2(300, 196)
+custom_minimum_size = Vector2(350, 196)
 offset_right = 350.0
 offset_bottom = 196.0
 theme = ExtResource("1_j65xr")
@@ -83,6 +83,7 @@ script = ExtResource("2_r8xot")
 
 [node name="background" type="TextureRect" parent="."]
 z_index = -1
+layout_mode = 0
 offset_left = 2.0
 offset_right = 348.0
 offset_bottom = 196.0
