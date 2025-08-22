@@ -29,3 +29,4 @@ enum AmountType { ## 参照するステータス及び計算式
 ## [code]現在ゲージ割合[/code], [code]吸収[/code]などでは[param amount]が1なら100%, 0.5なら50%の割合で回復します。[br]
 ## [code]ATK[/code], [code]DEF[/code]などのステータス参照の場合は[param amount]倍したステータスの値だけ回復します。
 @export var amount: float
+@export var test: int

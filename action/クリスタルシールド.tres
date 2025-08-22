@@ -1,8 +1,7 @@
-[gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://x3vx2v4kh17p"]
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://x3vx2v4kh17p"]
 
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_jg3i8"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_wrd0q"]
-[ext_resource type="Resource" uid="uid://c4isb35a6kx3r" path="res://ability/RES_UP.tres" id="2_xtcl5"]
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="3_xtcl5"]
 [ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://element/バフ.tres" id="4_h3fp8"]
 
@@ -18,10 +17,7 @@ mp = 30
 range = 4
 damage_type = 0
 touch = false
-ability = Array[ExtResource("1_jg3i8")]([ExtResource("2_xtcl5")])
-ability_chance = Array[int]([100])
-ability_power = Array[int]([3])
-ability_range = Array[int]([0])
+ability = Array[ExtResource("1_jg3i8")]([])
 description = "大気中の水蒸気を冷却、
 クリスタルシールドを
 展開し、結晶が敵の魔法の

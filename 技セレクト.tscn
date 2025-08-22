@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=48 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="1_ilscs"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="3_250y8"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_ltw0u"]
 [ext_resource type="Script" uid="uid://b15c8h3h61tnt" path="res://help_type.gd" id="9_jsdkd"]
-[ext_resource type="PackedScene" uid="uid://dscwo3p8eel0b" path="res://ability_description.tscn" id="9_ltw0u"]
 [ext_resource type="Script" uid="uid://c800gq5mf7cft" path="res://select_background.gd" id="10_250y8"]
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://image/null.PNG" id="10_ilscs"]
 [ext_resource type="Texture2D" uid="uid://dtb8010gbtf6j" path="res://image/spinbox_down.png" id="11_3py80"]
@@ -596,9 +595,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_l4b1a")
 [node name="container" type="HBoxContainer" parent="セレクト/action_description/ability"]
 z_index = 1
 layout_mode = 2
-
-[node name="ability" parent="セレクト/action_description/ability/container" instance=ExtResource("9_ltw0u")]
-layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="ability_text" type="RichTextLabel" parent="セレクト/action_description"]
 layout_mode = 0

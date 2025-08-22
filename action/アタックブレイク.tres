@@ -1,10 +1,25 @@
-[gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://dl7o7nfn5a8it"]
+[gd_resource type="Resource" script_class="Action" load_steps=8 format=3 uid="uid://dl7o7nfn5a8it"]
 
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_1xn1s"]
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_bfcvd"]
-[ext_resource type="Resource" uid="uid://6echuxyts2na" path="res://ability/ATK_DOWN.tres" id="2_rhn4o"]
+[ext_resource type="Script" uid="uid://b4gbl34tandgs" path="res://resource/Ability/AbilityDebuff.gd" id="2_rhn4o"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_xkwi2"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://resource/Trigger.gd" id="3_mkyd6"]
 [ext_resource type="Resource" uid="uid://b03a6uay0b6bt" path="res://element/デバフ.tres" id="3_rhn4o"]
+
+[sub_resource type="Resource" id="Resource_lrl0y"]
+script = ExtResource("2_rhn4o")
+status = 0
+amount = 1.5
+turn = 5
+name = "ATK DOWN"
+bbcode_name = "[color=orange]ATK[/color] [color=blue]DOWN[/color]"
+target = 0
+chance = 100
+is_after = true
+trigger = Array[ExtResource("3_mkyd6")]([])
+description = ""
+metadata/_custom_type_script = "uid://b4gbl34tandgs"
 
 [resource]
 script = ExtResource("1_bfcvd")
@@ -18,10 +33,7 @@ mp = 20
 range = 1
 damage_type = 0
 touch = false
-ability = Array[ExtResource("1_1xn1s")]([ExtResource("2_rhn4o")])
-ability_chance = Array[int]([100])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
+ability = Array[ExtResource("1_1xn1s")]([SubResource("Resource_lrl0y")])
 description = "ATK弱体魔法。
 敵1体のATKを弱体化する。
 この効果は5ターンだけ

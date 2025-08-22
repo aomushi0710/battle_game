@@ -1,10 +1,25 @@
-[gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://r6qjkc4wye84"]
+[gd_resource type="Resource" script_class="Action" load_steps=8 format=3 uid="uid://r6qjkc4wye84"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_5sier"]
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_ewdwn"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_846lj"]
-[ext_resource type="Resource" uid="uid://la25aj0f21lg" path="res://ability/MAG_UP.tres" id="2_n5fll"]
+[ext_resource type="Script" uid="uid://d2box237wyadg" path="res://resource/Ability/AbilityBuff.gd" id="2_n5fll"]
 [ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://element/バフ.tres" id="3_n5fll"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://resource/Trigger.gd" id="3_ww4dc"]
+
+[sub_resource type="Resource" id="Resource_qtvxb"]
+script = ExtResource("2_n5fll")
+status = 2
+amount = 1.5
+turn = 5
+name = "MAG UP"
+bbcode_name = "[color=dodger_blue]MAG[/color] [color=red]UP[/color]"
+target = 0
+chance = 100
+is_after = true
+trigger = Array[ExtResource("3_ww4dc")]([])
+description = ""
+metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]
 script = ExtResource("1_5sier")
@@ -18,10 +33,7 @@ mp = 20
 range = 3
 damage_type = 0
 touch = false
-ability = Array[ExtResource("1_ewdwn")]([ExtResource("2_n5fll")])
-ability_chance = Array[int]([100])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
+ability = Array[ExtResource("1_ewdwn")]([SubResource("Resource_qtvxb")])
 description = "MAG強化魔法。
 味方1体のMAGを強化する。
 この効果は5ターンだけ

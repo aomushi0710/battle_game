@@ -31,3 +31,7 @@ enum AmountType { ## ダメージを与える際に参照するステータス
 @export var amount_type: AmountType ## ダメージを与える際に参照するステータス[enum AmountType]
 @export var amount: int ## 与えるダメージ量
 @export var turn: int ## 状態異常が継続するターン数
+
+
+func amount_calc(offense: BattleMonster, defense: BattleMonster) -> int:
+	return 0

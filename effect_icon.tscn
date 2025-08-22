@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://4xqdwf0b1t14"]
+[gd_scene load_steps=6 format=3 uid="uid://4xqdwf0b1t14"]
 
 [ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="1_yfs5u"]
+[ext_resource type="Script" uid="uid://dm11csrfq3x6u" path="res://effect_icon.gd" id="2_gw70f"]
+[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="3_3lcfl"]
 
 [sub_resource type="Theme" id="Theme_p8ish"]
 default_font_size = 110
@@ -12,12 +14,15 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [node name="effect_icon" type="TextureButton"]
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_yfs5u")
+script = ExtResource("2_gw70f")
 
-[node name="turn_text" type="RichTextLabel" parent="."]
+[node name="turn" type="RichTextLabel" parent="."]
+clip_contents = false
 layout_mode = 2
-offset_top = 151.0
-offset_right = 256.0
-offset_bottom = 256.0
+offset_left = 5.0
+offset_top = 121.0
+offset_right = 251.0
+offset_bottom = 257.0
 mouse_filter = 2
 theme = SubResource("Theme_p8ish")
 theme_override_colors/default_color = Color(1, 1, 0, 1)
@@ -28,3 +33,7 @@ bbcode_enabled = true
 text = "[i][b]9[/b][/i]"
 scroll_active = false
 horizontal_alignment = 2
+
+[node name="AcceptDialog" parent="." instance=ExtResource("3_3lcfl")]
+
+[connection signal="button_up" from="." to="." method="_on_button_up"]

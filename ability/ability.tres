@@ -6,7 +6,8 @@
 script = ExtResource("1_wtah8")
 name = ""
 bbcode_name = ""
-target = 3
+target = 0
 chance = 100
-timing = 0
-trigger = 0
+is_after = true
+trigger = Array[int]([0])
+description = ""

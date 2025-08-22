@@ -15,7 +15,7 @@ corner_radius_bottom_left = 1
 
 [sub_resource type="Gradient" id="Gradient_sfoxn"]
 offsets = PackedFloat32Array(0.25, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.545098, 0, 0, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0.545098, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2som6"]
 gradient = SubResource("Gradient_sfoxn")
@@ -102,7 +102,7 @@ text = "[color=light_blue][b]DEF [color=red]UP[/color][/b][/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="range" type="RichTextLabel" parent="."]
+[node name="target" type="RichTextLabel" parent="."]
 clip_contents = false
 layout_mode = 0
 offset_left = 12.0
@@ -137,4 +137,4 @@ offset_bottom = 188.0
 theme = SubResource("Theme_wjoii")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ge8po")
 bbcode_enabled = true
-text = "[color=red]バフ継続ターン数[/color]:5"
+text = "[color=dodger_blue]バフ継続ターン数[/color]:5"

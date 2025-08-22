@@ -1,10 +1,25 @@
-[gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://daphc0yp3iv34"]
+[gd_resource type="Resource" script_class="Action" load_steps=8 format=3 uid="uid://daphc0yp3iv34"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_6mbuc"]
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_cbtc7"]
-[ext_resource type="Resource" uid="uid://fmxwcmk5ydfe" path="res://ability/ATK_UP.tres" id="2_h1ij8"]
+[ext_resource type="Script" uid="uid://d2box237wyadg" path="res://resource/Ability/AbilityBuff.gd" id="2_h1ij8"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_ogw27"]
 [ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://element/バフ.tres" id="3_h1ij8"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://resource/Trigger.gd" id="3_tkmfu"]
+
+[sub_resource type="Resource" id="Resource_3fyj2"]
+script = ExtResource("2_h1ij8")
+status = 0
+amount = 1.5
+turn = 5
+name = "ATK UP"
+bbcode_name = "[color=orange]ATK[/color] [color=red]UP[/color]"
+target = 0
+chance = 100
+is_after = true
+trigger = Array[ExtResource("3_tkmfu")]([])
+description = ""
+metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]
 script = ExtResource("1_6mbuc")
@@ -18,10 +33,7 @@ mp = 20
 range = 3
 damage_type = 0
 touch = false
-ability = Array[ExtResource("1_cbtc7")]([ExtResource("2_h1ij8")])
-ability_chance = Array[int]([100])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
+ability = Array[ExtResource("1_cbtc7")]([SubResource("Resource_3fyj2")])
 description = "ATK強化魔法。
 味方1体のATKを強化する。
 この効果は5ターンだけ

@@ -1,10 +1,9 @@
-AbilityPursuit
+AbilityBuff
 AbilityFumble
 AbilityCritical
 AbilityReduction
 AbilityHealing
 AbilityDebuff
-AbilityBuff
 Action
 Item
 Ability

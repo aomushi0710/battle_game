@@ -6,6 +6,7 @@
 [node name="AcceptDialog" type="AcceptDialog"]
 transparent_bg = true
 title = "⚠️ERROR⚠️"
+position = Vector2i(0, 60)
 size = Vector2i(220, 338)
 transparent = true
 theme = ExtResource("1_8dvvl")

@@ -13,7 +13,7 @@ var action_list: Array ## 設定された技を格納する配列
 var middle_evolution_list: Array ## 設定された中間進化技を格納する配列
 var evolution_list: Array ## 設定された進化技を格納する配列
 var chance_list: Array ## 技の出現確率を格納する配列
-var effect_dict = {} ## エフェクトの状態を格納する辞書　INFO 初期値はなし(空)
+var effect_list: Array[MonsterEffect] = [] ## エフェクトが格納される配列　INFO 初期値はなし(空)
 var death: bool = false
 var text_setter_callback: Callable ## dialogのtext_setter
 var chance_range: Array[int] ## 抽選に用いる範囲
@@ -109,7 +109,7 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 				Global.e2_death = true
 			2:
 				Global.e3_death = true
-	effect_dict = {} # エフェクト全消し
+	effect_list.clear() # エフェクト全消し
 	$effect.blink_stop()
 	# お墓アニメーション
 	tween = get_tree().create_tween().bind_node(self)\
@@ -253,40 +253,22 @@ func spd_max() -> void:
 					break # 対応する技があったら終了
 	monster_ready.emit()
 
-## エフェクトアイコンの更新関数
-func effect_icon() -> void:
-	# 辞書のkeyのEffectクラスの名前のみで再構成された配列
-	var valid_names := effect_dict.keys().map(func(e): return e.name)
-	# 辞書内に存在していないものはコンテナから消す
-	for child in $effect.get_children():
-		if not valid_names.has(child.name):
-			child.queue_free()
-	# 辞書に何かあれば
-	if effect_dict.is_empty() == false:
-		for effect: Effect in effect_dict:
-			var icon = $effect.get_node_or_null(effect.name)
-			if icon == null: # 追加された時だけ一度処理
-				icon = EFFECT_ICON.instantiate()
-				icon.name = effect.name
-				if effect.icon: # iconが正常に読み込めたら
-					icon.texture_normal = effect.icon
-				icon.button_up.connect(func(): effect_detail(effect))
-				$effect.add_child(icon)
-			icon.get_child(0).text = "[i][b]%d[/b][/i]" % effect_dict[effect]
-			if $effect.tween == null or $effect.tween and $effect.tween.is_running() == false:
-				$effect.blink() # エフェクトがあるがtweenが存在しない、もしくはtweenがあるが点滅していない時
+## エフェクトアイコンの追加関数
+func add_effect(monster_effect: MonsterEffect) -> void:
+	effect_list.append(monster_effect)
+	var icon = EFFECT_ICON.instantiate()
+	icon.effect = monster_effect
+	$effect.add_child(icon)
+	effect_icon_blink()
+
+## エフェクトアイコンの点滅関数
+func effect_icon_blink() -> void:
+	if effect_list.is_empty() == false: # 何かエフェクトがあれば
+		if $effect.tween == null or $effect.tween and $effect.tween.is_running() == false:
+			$effect.blink() # エフェクトがあるがtweenが存在しない、もしくはtweenがあるが点滅していない時
 	else:
 		if $effect.tween and $effect.tween.is_running():
 			$effect.blink_stop() # エフェクトがないのにtweenが存在し、点滅している時
-
-
-func effect_detail(effect: Effect):
-	$effect_detail.position = popup_position + Vector2i(position)
-	if get_parent().name == "enemy_deck":
-		$effect_detail.position.x += 980
-	$effect_detail.title = effect.name
-	$effect_detail.dialog_text = effect.description
-	$effect_detail.popup()
 
 ## MP変動処理関数(setter)[br]n:数値 text true:能動的でダイアログ表示 false:受動的でダイアログ非表示
 func mp_setter(n: int, text: bool) -> Array[String]:

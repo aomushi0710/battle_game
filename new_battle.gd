@@ -306,47 +306,9 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 			await dialog.text_setter(0, true, dialog_text)
 		
 		for i in len(action.ability): # 全ての特殊能力について順番に処理
-			if randi() % 100 + 1 > action.ability_chance[i]: # 確率範囲外ならその効果の処理スキップ
-				continue
-			var ability = action.ability[i]
-			var ability_target_list: Array[BattleMonster] = \
-			ability_target_setting(player, action, index, i, monster)
-			
-			for target in ability_target_list: # 全ての対象について順番に処理
-				match ability.category:
-					1: # 状態異常 TODO 未実装
-						pass
-					2, 3: # バフ or デバフ
-						if ability.effect in target.effect_dict: # 既に発動中ならターン延長
-							target.effect_dict[ability.effect] += action.ability_power[i]
-						else:
-							target.effect_dict[ability.effect] = action.ability_power[i]
-						target.effect_icon()
-						await dialog.text_setter(0, true, [
-						"%s %s" % [target.monster.name, ability.effect.log]])
-						# もし自分に与えるエフェクトだった場合、発動時にも1ターン減るので付け足す
-						if monster == target:
-							target.effect_dict[ability.effect] += 1
-						match ability.category:
-							2: # バフ効果音
-								$"../SoundEffects/buff".play()
-							3: # デバフ効果音
-								$"../SoundEffects/debuff".play()
-					4: # 回復
-						var heal: int # 回復量
-						match ability.healing:
-							1: # ステータス参照HP回復
-								match action.damage_type:
-									1: # 物理 
-										heal = monster.monster.ATK * \
-										(float(action.ability_power[i]) / 100)
-									2: # 魔法 
-										heal = monster.monster.MAG * \
-										(float(action.ability_power[i]) / 100)
-							2: # 定数HP回復
-								heal = action.ability_power[i]
-						dialog_text = target.hp_setter(heal, true)
-						await dialog.text_setter(0, true, dialog_text)
+			if action.ability[i].is_after == false: # ダメージ判定前に発動するもの
+				execute_ability(monster, action.ability[i], 
+				ability_target_setting(player, action, action.ability[i], index, monster))
 		
 		if action.power != 0:
 			for target: BattleMonster in target_list: # 対象にダメージをあたえる
@@ -361,8 +323,71 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 		for target: BattleMonster in target_list:
 			if target.monster.HP <= 0: # 死亡時処理
 				await target.dead(player_monster, enemy_monster)
+		
+		for i in len(action.ability): # 全ての特殊能力について順番に処理
+			if action.ability[i].is_after == true: # ダメージ判定後に発動するもの
+				execute_ability(monster, action.ability[i], 
+				ability_target_setting(player, action, action.ability[i], index, monster))
 	
 	turn_end(player, monster)
+
+
+func execute_ability(monster: BattleMonster, ability: Ability, 
+	target_list: Array[BattleMonster]) -> void:
+	if randi() % 100 + 1 > ability.chance: # 確率範囲外ならその効果の処理スキップ
+		return
+	
+	for target: BattleMonster in target_list: # 全ての対象について順番に処理
+		if ability is AbilityEffect: # 状態異常 TODO 未実装
+			pass
+		
+		elif ability is AbilityBuff or ability is AbilityDebuff: # バフ or デバフ
+			## abilityを基に作られた、モンスターに付与されるエフェクト
+			var monster_effect = MonsterEffect.new(ability)
+			var found_effect: bool = false ## 同じエフェクトが見つかったかどうかを確認する
+			
+			for me: MonsterEffect in target.effect_list: # 既に対象が持つエフェクトに対して
+				if monster_effect.effect == me.effect: # 同じものが見つかれば
+					me.turn += monster_effect.turn # ターン数を延長する
+					found_effect = true
+					break
+			if found_effect == false: # 同じエフェクトが見つからなかった時、新たに追加
+				target.add_effect(monster_effect)
+			
+			# TODO 文章表示を考える
+			await dialog.text_setter(0, true, [
+			"%s %s" % [target.monster.name, "test"]])
+			
+			if ability is AbilityBuff: # バフ効果音
+				$"../SoundEffects/buff".play()
+			elif ability is AbilityDebuff: # デバフ効果音
+				$"../SoundEffects/debuff".play()
+		
+		elif ability is AbilityHealing: # 回復
+			var heal: int ## 回復量
+			match ability.amount_type:
+				AbilityHealing.AmountType.定数:
+					heal = ability.amount
+				
+				AbilityHealing.AmountType.MAG:
+					heal = monster.monster.MAG * ability.amount
+				
+				_:
+					print("不明な列挙型AbilityHealing -> AmountType。0を返します。")
+					heal = 0
+			
+			var dialog_text: Array[String] ## hp, mp, spdのsetter関数の返り値
+			match ability.status:
+				AbilityHealing.Status.HP:
+					dialog_text = target.hp_setter(heal, true)
+				
+				AbilityHealing.Status.MP:
+					dialog_text = target.mp_setter(heal, true)
+				
+				AbilityHealing.Status.SPD:
+					pass # TODO 未実装
+			
+			await dialog.text_setter(0, true, dialog_text)
 
 
 func item_selected(player: bool, monster: BattleMonster, item: Item, index: int) -> void:
@@ -422,11 +447,8 @@ func turn_end(player: bool, monster: BattleMonster) -> void:
 		return
 	
 	monster.get_node("SPD").value = 0
-	for effect in monster.effect_dict: # エフェクトを1ターン縮める
-		monster.effect_dict[effect] -= 1
-		if monster.effect_dict[effect] == 0:
-			monster.effect_dict.erase(effect)
-	monster.effect_icon()
+	for effect: MonsterEffect in monster.effect_list: # エフェクト効果を引き起こす
+		effect.turn_finished()
 	
 	# モンスター交代
 	if player == true and player_monster != player_deck[player_next_index]:
@@ -528,43 +550,54 @@ func target_setting(player: bool, action, index: int) -> Array[BattleMonster]:
 	return target_list
 
 ## 特殊効果の発動先targetを設定する関数[br]i:繰り返し回数 monster:対象が自分の時用
-func ability_target_setting(player: bool, action: Action, index: int, i: int, \
-monster: BattleMonster) -> Array[BattleMonster]:
-	var target_list: Array[BattleMonster] # 特殊効果の発動対象
-	if action.ability_range[i] == 0:
-		target_list = target_setting(player, action, index) # actionのものと同期
-	elif player == true:
-		match action.ability_range[i]:
-			1: # 敵単体
+func ability_target_setting(player: bool, action: Action, ability: Ability,
+index: int, monster: BattleMonster) -> Array[BattleMonster]:
+	var target_list: Array[BattleMonster] = [] # 特殊効果の発動対象
+	
+	if ability.target == Ability.Target.連動:
+		return target_setting(player, action, index) # actionのものと同期
+	
+	if player == true:
+		match ability.target:
+			Ability.Target.敵単体:
 				target_list.append(enemy_deck[index])
-			2: # 敵全体
+			
+			Ability.Target.敵全体:
 				for mon: BattleMonster in enemy_deck:
 					if mon.death == false:
 						target_list.append(mon)
-			3: # 味方単体
+			
+			Ability.Target.味方単体:
 				target_list.append(player_deck[index])
-			4: # 味方全体
+			
+			Ability.Target.味方全体:
 				for mon: BattleMonster in player_deck:
 					if mon.death == false:
 						target_list.append(mon)
-			5: # 自分
+			
+			Ability.Target.自分:
 				target_list.append(monster)
 	else:
-		match action.ability_range[i]:
-			1: # 敵単体
+		match ability.target:
+			Ability.Target.敵単体:
 				target_list.append(player_deck[index])
-			2: # 敵全体
+			
+			Ability.Target.敵全体:
 				for mon: BattleMonster in player_deck:
 					if mon.death == false:
 						target_list.append(mon)
-			3: # 味方単体
+			
+			Ability.Target.味方単体:
 				target_list.append(enemy_deck[index])
-			4: # 味方全体
+			
+			Ability.Target.味方全体:
 				for mon: BattleMonster in enemy_deck:
 					if mon.death == false:
 						target_list.append(mon)
-			5: # 自分
+			
+			Ability.Target.自分:
 				target_list.append(monster)
+	
 	return target_list
 
 ## 属性倍率計算機(1属性)
@@ -596,34 +629,36 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 		return [0, ""]
 	
 	var status: Array[float] = [0, 0] # ステータス値
-	var type: Array[int] = [0, 0] # 0:なし 1:ATK 2:DEF 3:MAG 4:RES
+	var type: Array[Global.Status] = []
+	type.resize(2)
 	match action.damage_type: # 必要なステータス参照
 		0:
 			pass
 		1:
-			status[0] = float(offense.monster.ATK)
-			status[1] = float(defense.monster.DEF)
-			type[0] = 1
-			type[1] = 2
+			status[0] = offense.monster.ATK
+			status[1] = defense.monster.DEF
+			type[0] = Global.Status.ATK
+			type[1] = Global.Status.DEF
 		2:
-			status[0] = float(offense.monster.MAG)
-			status[1] = float(defense.monster.RES)
-			type[0] = 3
-			type[1] = 4
+			status[0] = offense.monster.MAG
+			status[1] = defense.monster.RES
+			type[0] = Global.Status.MAG
+			type[1] = Global.Status.RES
 		_:
 			print("ERROR:damage_typeが検知できません")
 	
 	# エフェクトをステータスに対応させる処理
-	var effects_list = [offense.effect_dict.keys(), defense.effect_dict.keys()]
+	var effects_list = [offense.effect_list, defense.effect_list]
 	for i in range(2): # i=0:攻撃側ステータスについて i=1:守備側ステータスについて
-		for effect: Effect in effects_list[i]:
-			match effect.category:
-				2: # バフ
-					if effect.buff == type[i]:
-						status[i] *= effect.power
-				3: # デバフ
-					if effect.buff == type[i]:
-						status[i] /= effect.power
+		for effect: MonsterEffect in effects_list[i]:
+			var ability = effect.effect
+			if ability is AbilityBuff: # バフ
+				if type[i] == ability.status: # 計算に用いるステータスと一致している時
+					status[i] *= ability.amount
+			
+			elif ability is AbilityDebuff: # デバフ
+				if type[i] == ability.status: # 計算に用いるステータスと一致している時
+					status[i] /= ability.amount
 	
 	var magnification: float = attribute_setup(action, defense.monster)
 	var magnification_text: String = ""

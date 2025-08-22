@@ -41,15 +41,6 @@ extends Resource
 ## 技の特殊効果 Ability型のリソース[br]複数登録可能
 @export var ability: Array[Ability]
 
-## 特殊効果の発生確率
-@export_range(0,100,1,"suffix:%") var ability_chance: Array[int]
-
-## 特殊効果の強さ[br]バフデバフ継続ターン数、効果量、倍率、パーセンテージなど
-@export var ability_power: Array[int]
-
-@export_enum("連動","敵単体","敵全体","味方単体","味方全体","自分","なし") \
-var ability_range: Array[int]
-
 
 ## 技の説明[br]1行につき全角12文字記述可能
 @export_category("説明文")

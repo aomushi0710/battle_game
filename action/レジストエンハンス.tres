@@ -1,10 +1,25 @@
-[gd_resource type="Resource" script_class="Action" load_steps=6 format=3 uid="uid://cdjo3p6qaotdl"]
+[gd_resource type="Resource" script_class="Action" load_steps=8 format=3 uid="uid://cdjo3p6qaotdl"]
 
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_4ahcs"]
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_jyqct"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_emgix"]
-[ext_resource type="Resource" uid="uid://c4isb35a6kx3r" path="res://ability/RES_UP.tres" id="2_kef63"]
+[ext_resource type="Script" uid="uid://d2box237wyadg" path="res://resource/Ability/AbilityBuff.gd" id="2_kef63"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://resource/Trigger.gd" id="3_44i5o"]
 [ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://element/バフ.tres" id="3_kef63"]
+
+[sub_resource type="Resource" id="Resource_v25v4"]
+script = ExtResource("2_kef63")
+status = 3
+amount = 1.5
+turn = 5
+name = "RES UP"
+bbcode_name = "[color=violet]RES[/color] [color=red]UP[/color]"
+target = 0
+chance = 100
+is_after = true
+trigger = Array[ExtResource("3_44i5o")]([])
+description = "味方単体の[color=violet]RES[/color]を5ターンの間1.5倍に強化する"
+metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]
 script = ExtResource("1_jyqct")
@@ -18,10 +33,7 @@ mp = 20
 range = 3
 damage_type = 0
 touch = false
-ability = Array[ExtResource("1_4ahcs")]([ExtResource("2_kef63")])
-ability_chance = Array[int]([100])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
+ability = Array[ExtResource("1_4ahcs")]([SubResource("Resource_v25v4")])
 description = "RES強化魔法。
 味方1体のRESを強化する。
 この効果は5ターンだけ

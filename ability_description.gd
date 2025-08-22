@@ -2,24 +2,67 @@ extends Panel
 
 @onready var background := $background
 @onready var name_label := $name
-@onready var range_label := $range
+@onready var target_label := $target
 @onready var chance_label := $chance
 @onready var power_label := $power
 
 var ability: Ability
 
 func _ready() -> void:
-	ability = load("res://ability/ATK_DOWN.tres")
 	background.texture = background.texture.duplicate(true)
 	var gradient: Gradient = background.texture.gradient
-	gradient.colors = [Color.WHITE]
-	match ability.test:
-		ability.Test.TEST1:
-			pass
+	var power_text: String = ""
+	if ability is AbilityEffect: # 状態異常
+		pass # 未実装
+	
+	elif ability is AbilityBuff: # バフ
+		gradient.colors = [Color.WHITE, Color.DARK_RED]
+		power_label.text = "[color=red]バフ継続ターン数[/color]:%d" % ability.turn
+	
+	elif ability is AbilityDebuff: # デバフ
+		gradient.colors = [Color.WHITE, Color.DARK_BLUE]
+		power_label.text = "[color=dodger_blue]デバフ継続ターン数[/color]:%d" % ability.turn
+	
+	elif ability is AbilityHealing: # ゲージ回復
+		match ability.status:
+			AbilityHealing.Status.HP:
+				gradient.colors = [Color.WHITE, Color.YELLOW_GREEN]
+			
+			AbilityHealing.Status.MP:
+				gradient.colors = [Color.WHITE, Color.AQUA]
+			
+			AbilityHealing.Status.SPD:
+				gradient.colors = [Color.WHITE, Color.GREEN]
+	
+	else:
+		gradient.colors = [Color.BLACK, Color.BLACK]
 	
 	fit_name_label_size(ability.bbcode_name)
 	name_label.text = "[b]%s[/b]" % ability.bbcode_name
 	
+	match ability.target:
+		Ability.Target.連動: # TODO 今後はactionのものと連動して書き換えるようにする
+			target_label.text = "[color=yellow]対象[/color]:　 連動 　"
+		
+		Ability.Target.敵単体:
+			target_label.text = "[color=yellow]対象[/color]:　敵単体　"
+		
+		Ability.Target.敵全体:
+			target_label.text = "[color=yellow]対象[/color]:　敵全体　"
+		
+		Ability.Target.味方単体:
+			target_label.text = "[color=yellow]対象[/color]: 味方単体 "
+		
+		Ability.Target.味方全体:
+			target_label.text = "[color=yellow]対象[/color]: 味方全体 "
+		
+		Ability.Target.自分:
+			target_label.text = "[color=yellow]対象[/color]:　 自分 　"
+		
+		_:
+			target_label.text = "[center][color=red][b]ERROR[/b][/color][/center]"
+	
+	chance_label.text = "[color=green]確率[/color]:%3d%%" % ability.chance
 
 
 func fit_name_label_size(text: String) -> void:

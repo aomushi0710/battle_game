@@ -18,9 +18,6 @@ range = 1
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_xvx6f")]([])
-ability_chance = Array[int]([])
-ability_power = Array[int]([])
-ability_range = Array[int]([])
 description = "敵単体につむじ風を
 起こして攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

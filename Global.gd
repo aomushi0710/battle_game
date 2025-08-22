@@ -108,6 +108,13 @@ const debuff_list = ["ATK_down","DEF_down","MAG_down","RES_down"]
 @onready var e2_death = false
 @onready var e3_death = false
 
+enum Status {
+	ATK, 
+	DEF, 
+	MAG, 
+	RES, 
+}
+
 enum Stage { ## バトルステージ一覧
 	PLAIN
 }
@@ -141,7 +148,7 @@ func all_status(monster: Monster, font_size: int) -> Array[RichTextLabel]:
 	for label: RichTextLabel in [name_label, element_label, status_label]: # 初期設定
 		label.bbcode_enabled = true
 		label.fit_content = true
-		label.horizontal_alignment = 1
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	
 	name_label.text = "[b][i]%s[/i][/b]" % monster.name
 	element_label.set_script(load("res://element_text.gd"))
