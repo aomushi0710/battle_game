@@ -27,12 +27,22 @@ func _ready() -> void:
 		match ability.status:
 			AbilityHealing.Status.HP:
 				gradient.colors = [Color.WHITE, Color.YELLOW_GREEN]
+				power_text = "[color=yellow_green]HP回復量[/color]:%s"
 			
 			AbilityHealing.Status.MP:
 				gradient.colors = [Color.WHITE, Color.AQUA]
+				power_text = "[color=aqua]MP回復量[/color]:%s"
 			
 			AbilityHealing.Status.SPD:
 				gradient.colors = [Color.WHITE, Color.GREEN]
+				power_text = "[color=green]SPD増加量[/color]:%s"
+		
+		match ability.amount_type:
+			AbilityHealing.AmountType.定数:
+				power_label.text = power_text % "%d" % ability.amount
+			
+			AbilityHealing.AmountType.MAG:
+				power_label.text = power_text % "MAGの%d%%" % (ability.amount * 100)
 	
 	else:
 		gradient.colors = [Color.BLACK, Color.BLACK]

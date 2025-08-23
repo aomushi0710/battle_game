@@ -1,9 +1,25 @@
-[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://x3vx2v4kh17p"]
+[gd_resource type="Resource" script_class="Action" load_steps=8 format=3 uid="uid://x3vx2v4kh17p"]
 
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_jg3i8"]
+[ext_resource type="Script" uid="uid://d2box237wyadg" path="res://resource/Ability/AbilityBuff.gd" id="2_h3fp8"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_wrd0q"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://resource/Trigger.gd" id="3_htxax"]
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="3_xtcl5"]
 [ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://element/バフ.tres" id="4_h3fp8"]
+
+[sub_resource type="Resource" id="Resource_v484n"]
+script = ExtResource("2_h3fp8")
+status = 3
+amount = 1.5
+turn = 3
+name = "RES UP"
+bbcode_name = "[color=violet]RES[/color] [color=red]UP[/color]"
+target = 0
+chance = 100
+is_after = true
+trigger = Array[ExtResource("3_htxax")]([])
+description = ""
+metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]
 script = ExtResource("3_xtcl5")
@@ -17,7 +33,7 @@ mp = 30
 range = 4
 damage_type = 0
 touch = false
-ability = Array[ExtResource("1_jg3i8")]([])
+ability = Array[ExtResource("1_jg3i8")]([SubResource("Resource_v484n")])
 description = "大気中の水蒸気を冷却、
 クリスタルシールドを
 展開し、結晶が敵の魔法の

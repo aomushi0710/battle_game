@@ -7,6 +7,8 @@ extends TextureButton
 var effect: MonsterEffect
 
 func _ready() -> void:
+	turn_label.text = "[b][i]%d[/i][/b]" % effect.turn
+	
 	if effect.effect is AbilityEffect: # TODO 未定
 		texture_normal = preload("res://image/null.PNG")
 	elif effect.effect is AbilityBuff: # バフエフェクトの時

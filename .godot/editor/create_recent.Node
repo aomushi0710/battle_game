@@ -1,7 +1,7 @@
+HBoxContainer
 RichTextLabel
 Panel
 TextureRect
-HBoxContainer
 ScrollContainer
 AcceptDialog
 Window

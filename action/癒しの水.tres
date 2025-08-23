@@ -1,9 +1,25 @@
-[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://0sm1taom5kmr"]
+[gd_resource type="Resource" script_class="Action" load_steps=8 format=3 uid="uid://0sm1taom5kmr"]
 
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_b4tmm"]
+[ext_resource type="Script" uid="uid://bywhlx527vv7b" path="res://resource/Ability/AbilityHealing.gd" id="2_ial7i"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_t85q6"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://resource/Trigger.gd" id="3_byhpq"]
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="3_ldcdm"]
 [ext_resource type="Resource" uid="uid://wnrb4u76hyxf" path="res://element/回復.tres" id="4_ial7i"]
+
+[sub_resource type="Resource" id="Resource_4w8tg"]
+script = ExtResource("2_ial7i")
+status = 0
+amount_type = 8
+amount = 1.0
+name = "HP回復"
+bbcode_name = "[color=yellow_green]HP回復[/color]"
+target = 0
+chance = 100
+is_after = true
+trigger = Array[ExtResource("3_byhpq")]([])
+description = "[color=dodger_blue]MAG[/color]の100%分だけ[color=coral]HP[/color]を回復する"
+metadata/_custom_type_script = "uid://bywhlx527vv7b"
 
 [resource]
 script = ExtResource("3_ldcdm")
@@ -17,7 +33,7 @@ mp = 10
 range = 3
 damage_type = 2
 touch = false
-ability = Array[ExtResource("1_b4tmm")]([])
+ability = Array[ExtResource("1_b4tmm")]([SubResource("Resource_4w8tg")])
 description = "癒し効果を持つ水で、
 味方のHPを回復させる。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

@@ -255,9 +255,9 @@ process_mode = 3
 z_index = 2
 layout_mode = 0
 offset_left = 904.0
-offset_top = 800.0
+offset_top = 805.0
 offset_right = 1898.0
-offset_bottom = 1070.0
+offset_bottom = 1065.0
 mouse_filter = 0
 theme = ExtResource("13_sraw4")
 theme_override_constants/outline_size = 10
@@ -265,56 +265,50 @@ theme_override_constants/side_margin = 0
 current_tab = 0
 script = ExtResource("14_3ru5v")
 
-[node name="メイン" type="MarginContainer" parent="battle/button/dialogtab"]
+[node name="メイン" type="HBoxContainer" parent="battle/button/dialogtab"]
 z_index = 2
 layout_mode = 2
-mouse_filter = 0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 0
+theme_override_constants/separation = 30
+alignment = 1
 metadata/_tab_index = 0
 
 [node name="text" type="RichTextLabel" parent="battle/button/dialogtab/メイン"]
 z_index = 2
+custom_minimum_size = Vector2(930, 0)
 layout_mode = 2
 bbcode_enabled = true
 text = "技名の最大文字数は全角２１文字まで！あああ
 分類:[color=red]物理　　　　[/color]MP Cost:[color=aqua]10[/color]
 対象:[color=yellow]味方単体　　[/color]  Power:[color=red]10[/color]"
 
-[node name="ステータス" type="MarginContainer" parent="battle/button/dialogtab"]
+[node name="ステータス" type="HBoxContainer" parent="battle/button/dialogtab"]
 visible = false
 z_index = 2
 layout_mode = 2
 mouse_filter = 0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 17
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 17
+theme_override_constants/separation = 30
+alignment = 1
 metadata/_tab_index = 1
 
 [node name="text" type="RichTextLabel" parent="battle/button/dialogtab/ステータス"]
 z_index = 2
+custom_minimum_size = Vector2(930, 0)
 layout_mode = 2
 bbcode_enabled = true
 text = " 　　　　　　　　　　[color=coral]HP :999[/color] [color=green]SPD:999[/color]
   [color=aqua]MP :999  /  999[/color]    [color=red]ATK:999[/color] [color=light_blue]DEF:999[/color]
   [color=aqua] (supply / max)[/color]    [color=dodger_blue]MAG:999[/color] [color=violet]RES:999[/color]"
 
-[node name="バトルログ" type="MarginContainer" parent="battle/button/dialogtab"]
+[node name="バトルログ" type="HBoxContainer" parent="battle/button/dialogtab"]
 visible = false
 z_index = 2
 layout_mode = 2
 mouse_filter = 0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 17
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 17
 metadata/_tab_index = 2
 
 [node name="text" type="RichTextLabel" parent="battle/button/dialogtab/バトルログ"]
 z_index = 2
+custom_minimum_size = Vector2(930, 0)
 layout_mode = 2
 theme_override_constants/outline_size = 0
 bbcode_enabled = true

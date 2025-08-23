@@ -161,6 +161,7 @@ func action_button_up(act: Action) -> void:
 	var mp: RichTextLabel = $action_description/mp
 	var type: RichTextLabel = $action_description/type
 	var range: RichTextLabel = $action_description/range
+	var container := $action_description/ability/container
 	power.text = "[color=red]Power[/color]:%4d" % act.power
 	mp.text = "[color=aqua]MP   [/color]:%4d" % act.mp
 	match act.damage_type: # 分類によってテキストと枠線を変える
@@ -191,6 +192,11 @@ func action_button_up(act: Action) -> void:
 			range.text = "[color=yellow]対象[/color]:自分"
 		6:
 			range.text = "[color=yellow]対象[/color]:敵散開"
+	
+	for ability: Ability in act.ability:
+		var description = Global.ability_description.instantiate()
+		description.ability = ability
+		container.add_child(description)
 
 ## 技削除ボタンの処理
 func delete_button_up(i: int) -> void:

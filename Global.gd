@@ -77,6 +77,7 @@ const shop_scene = "res://shop.tscn"
 const accept_dialog = preload("res://accept_dialog.tscn")
 const inventory_scene = preload("res://inventory.tscn")
 const action_button = preload("res://action_button.tscn")
+const ability_description = preload("res://ability_description.tscn")
 
 @onready var picked_monster = [0,0,0]
 @onready var deck1 = Deck.new()

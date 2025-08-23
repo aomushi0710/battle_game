@@ -346,6 +346,9 @@ func execute_ability(monster: BattleMonster, ability: Ability,
 			var monster_effect = MonsterEffect.new(ability)
 			var found_effect: bool = false ## 同じエフェクトが見つかったかどうかを確認する
 			
+			if monster == target:
+				monster_effect.turn += 1
+			
 			for me: MonsterEffect in target.effect_list: # 既に対象が持つエフェクトに対して
 				if monster_effect.effect == me.effect: # 同じものが見つかれば
 					me.turn += monster_effect.turn # ターン数を延長する

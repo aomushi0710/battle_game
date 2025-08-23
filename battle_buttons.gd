@@ -73,13 +73,15 @@ func _on_action_button_selected(index: int) -> void:
 	var description_text = ["[i][u]%s[/u][/i]\n%s　　MP Cost:[color=aqua]%d[/color]\n" % 
 		[selected_action.name, descriptions[0], selected_action.mp] + 
 		"%s　　Power　:[color=red]%d[/color]" % [descriptions[1], selected_action.power]]
-	for i in len(selected_action.ability):
-		var ability_descriptions: Array = \
-		Global.ability_description_creator(selected_action, 0, true)
-		description_text.append("特殊効果:%s\n%s　　%s\n%s" % [ability_descriptions[0], 
-		ability_descriptions[1], ability_descriptions[2], ability_descriptions[3]])
+	# 特殊効果説明テキストを表示
+	var ability_description: Array = [null] ## 特殊効果説明画像のリスト
+	for ability: Ability in selected_action.ability:
+		description_text.append(ability.description)
+		var abi_des = Global.ability_description.instantiate()
+		abi_des.ability = ability
+		ability_description.append(abi_des)
 	if $"../".tutorial_mode == false:
-		$dialogtab.text_setter(0, false, description_text)
+		$dialogtab.text_setter(0, false, description_text, ability_description)
 	else:
 		await $dialogtab.text_setter(0, true, description_text)
 		description_paging.emit()

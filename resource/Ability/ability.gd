@@ -23,4 +23,4 @@ enum Trigger { ## 特殊効果の発動条件(複数選択可)
 ## [code]false[/code][b]ダメージ判定前[/b]に発動します。
 @export var is_after: bool = true
 @export var trigger: Array[Trigger] ## 特殊効果の発動条件(複数選択可)
-@export_multiline var description: String ## 特殊効果の説明文
+@export_multiline var description: String ## 特殊効果の説明文(バトル中の表示は全角13文字が3行まで)

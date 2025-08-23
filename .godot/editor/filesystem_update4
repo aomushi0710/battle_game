@@ -95,3 +95,5 @@ res://action/クリスタルシールド.tres
 res://action/自己再生.tres
 res://action/癒しの水.tres
 res://ability_description.gd
+res://select.gd
+res://dialogtab.gd
