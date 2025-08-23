@@ -346,7 +346,7 @@ func execute_ability(monster: BattleMonster, ability: Ability,
 			var monster_effect = MonsterEffect.new(ability)
 			var found_effect: bool = false ## 同じエフェクトが見つかったかどうかを確認する
 			
-			if monster == target:
+			if monster == target: # 自分で自分にエフェクトを付けたそのターン数を減らさないために
 				monster_effect.turn += 1
 			
 			for me: MonsterEffect in target.effect_list: # 既に対象が持つエフェクトに対して

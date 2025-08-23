@@ -3,7 +3,6 @@ extends HBoxContainer
 var tween: Tween
 
 func blink() -> void: # 点滅関数
-	print("blink")
 	modulate.a = 1
 	show()
 	tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).bind_node(self)

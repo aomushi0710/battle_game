@@ -69,7 +69,7 @@ func _ready() -> void:
 	
 	# 円グラフ生成
 	pie_chart = load("res://pie_chart.tscn").instantiate()
-	pie_chart.position = Vector2(950, 80)
+	pie_chart.position = Vector2(950, 70)
 	add_child(pie_chart)
 	pie_chart_update()
 	
@@ -122,6 +122,10 @@ func setting_action_button() -> void:
 
 ## 技ボタンが押された時の関数
 func action_button_up(act: Action) -> void:
+	var container := $action_description/ability/container
+	for child in container.get_children(): # 初期化
+		child.queue_free()
+	
 	if camera_mode != CameraMode.ACTION: # まだ移動していなければカメラ移動
 		camera_mode = CameraMode.ACTION
 	
@@ -149,11 +153,16 @@ func action_button_up(act: Action) -> void:
 	action_select.add_child(button)
 	
 	for node in [slider, spinbox]: # sliderとspinboxのセッティング
+		# この時点では、先に設定していた技の最大値を、次に選ばれた技の確率が越えていた場合に、
+		# 最大値に引っかかってしまう
 		if act in actions:
 			node.set_value_no_signal(chances[actions.find(act)])
 		else:
 			node.set_value_no_signal(0)
 		node.max_value = float(act.max_chance)
+		# もう一度値を設定して、適切な値に戻す
+		if act in actions:
+			node.set_value_no_signal(chances[actions.find(act)])
 		$action_select/max_chance.text = "%d%%" % act.max_chance
 	slider.tick_count = slider.max_value / 10 + 1
 	
@@ -161,7 +170,6 @@ func action_button_up(act: Action) -> void:
 	var mp: RichTextLabel = $action_description/mp
 	var type: RichTextLabel = $action_description/type
 	var range: RichTextLabel = $action_description/range
-	var container := $action_description/ability/container
 	power.text = "[color=red]Power[/color]:%4d" % act.power
 	mp.text = "[color=aqua]MP   [/color]:%4d" % act.mp
 	match act.damage_type: # 分類によってテキストと枠線を変える

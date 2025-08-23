@@ -61,7 +61,7 @@ func _draw() -> void:
 		var text: String = "%s\n[b]%d%%[/b]" % [actions[i].name, chances[i]] ## 技の名前と確率
 		## フォントサイズと技名の長さから計算
 		var label_size := Vector2(len(actions[i].name) * elements_font_size * 1.1, elements_font_size * 3.2)
-		var label_position := center - (label_size / 2) + angle_point ## labelの位置
+		var label_position := center - (label_size / 2) + (angle_point / 1.2) ## labelの位置
 		
 		var style := StyleBoxFlat.new() ## label背景用styleboxを生成
 		style.bg_color = color

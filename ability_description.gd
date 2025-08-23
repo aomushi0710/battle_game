@@ -21,7 +21,7 @@ func _ready() -> void:
 	
 	elif ability is AbilityDebuff: # デバフ
 		gradient.colors = [Color.WHITE, Color.DARK_BLUE]
-		power_label.text = "[color=dodger_blue]デバフ継続ターン数[/color]:%d" % ability.turn
+		power_label.text = "[color=royal_blue]デバフ継続ターン数[/color]:%d" % ability.turn
 	
 	elif ability is AbilityHealing: # ゲージ回復
 		match ability.status:
@@ -83,6 +83,6 @@ func fit_name_label_size(text: String) -> void:
 			HORIZONTAL_ALIGNMENT_CENTER, 
 			-1, 
 			i)
-		if text_size.x <= name_label.size.x and text_size.y <= name_label.size.y:
+		if text_size.x <= name_label.size.x - 20 and text_size.y <= name_label.size.y - 20:
 			name_label.add_theme_font_size_override("bold_font_size", i)
 			break

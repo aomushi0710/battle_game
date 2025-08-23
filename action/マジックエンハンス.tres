@@ -18,7 +18,8 @@ target = 0
 chance = 100
 is_after = true
 trigger = Array[ExtResource("3_ww4dc")]([])
-description = ""
+description = "味方単体の[color=dodger_blue]MAG[/color]を、\\n5ターンの間\\n1.5倍に強化する。"
+battle_log_message = ""
 metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]

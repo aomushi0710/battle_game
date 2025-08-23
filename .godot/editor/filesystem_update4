@@ -97,3 +97,5 @@ res://action/癒しの水.tres
 res://ability_description.gd
 res://select.gd
 res://dialogtab.gd
+res://blink.gd
+res://pie_chart.gd
