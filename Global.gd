@@ -116,6 +116,17 @@ enum Status {
 	RES, 
 }
 
+enum Target { ## 効果の発動対象
+	なし, ## 効果を発動しません。
+	近接, ## 場に出ている目の前の敵に発動できます。
+	遠隔, ## 場に出ていない遠くの敵にも発動できます。
+	敵全体, ## 敵全体に発動できます。
+	自分, ## 自分に発動できます。
+	味方単体, ## 味方を1体だけ選んで発動できます。
+	味方全体, ## 味方全体に発動できます。
+	敵味方全体, ##　敵全体と味方全体に発動できます。
+}
+
 enum Stage { ## バトルステージ一覧
 	PLAIN
 }
@@ -167,42 +178,45 @@ func action_description_creator(act: Action, blank: bool) -> Array[String]:
 	var dmg_type_tip: String ## 技のステータス参照先の補足
 	var dmg_type_blank: String ## 技のステータス参照先表示の空白
 	
-	match act.range:
-		0:
+	match act.target:
+		Target.なし:
 			range_text = "なし"
 			range_tip = "発動対象が存在しません"
-		1:
-			range_text = "敵単体"
-			range_tip = "敵単体に技を発動します"
-		2:
+		Target.近接:
+			range_text = "近接"
+			range_tip = "場に出ている敵に技を発動します。"
+		Target.遠隔:
+			range_text = "遠隔"
+			range_tip = "場に出ているかどうかに関わらず敵に技を発動します。"
+		Target.敵全体:
 			range_text = "敵全体"
 			range_tip = "敵全体に技を発動します。"
-		3:
-			range_text = "味方単体"
-			range_tip = "味方単体に技を発動します。"
-		4:
-			range_text = "味方全体"
-			range_tip = "味方全体に技を発動します。"
-		5:
+		Target.自分:
 			range_text = "自分"
 			range_tip = "自分に技を発動します。"
-		6:
-			range_text = "敵散開"
-			range_tip = "敵単体に加え、さらに隣の敵にも\n追加で半分のダメージを与えます"
+		Target.味方単体:
+			range_text = "味方単体"
+			range_tip = "味方単体に技を発動します。"
+		Target.味方全体:
+			range_text = "味方全体"
+			range_tip = "味方全体に技を発動します。"
+		Target.敵味方全体:
+			range_text = "敵味方全体"
+			range_tip = "敵味方全体に技を発動します。"
 		_:
 			range_text = "[color=red][b]ERROR[/b][/color]"
 			range_tip = "虚空に向かって技を放つのか？"
 	
 	match act.damage_type:
-		0:	
+		Action.DamageType.なし:	
 			dmg_type_text = "なし"
 			dmg_type_tip = "いずれのステータスも参照されません"
 			dmg_type_blank = "　　"
-		1:
+		Action.DamageType.物理:
 			dmg_type_text = "[color=red]物理[/color]"
 			dmg_type_tip = "自身のATKと相手のDEFを参照します"
 			dmg_type_blank = "　　"
-		2:
+		Action.DamageType.魔法:
 			dmg_type_text = "[color=dodger_blue]魔法[/color]"
 			dmg_type_tip = "自身のMAGと相手のRESを参照します"
 			dmg_type_blank = "　　"

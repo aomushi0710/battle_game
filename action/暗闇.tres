@@ -9,15 +9,14 @@
 script = ExtResource("1_10pq3")
 id = 12
 name = "暗闇"
-aka = ""
 element = Array[ExtResource("2_mhf3h")]([ExtResource("3_sj72q")])
 max_chance = 80
 power = 30
 mp = 0
-range = 1
+target = 1
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_3t1u2")]([])
-description = "敵単体を暗闇に閉じ込め
+description = "目の前の敵を暗闇に閉じ込め
 攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

@@ -9,18 +9,14 @@
 script = ExtResource("1_sejjv")
 id = 18
 name = "アイス"
-aka = ""
 element = Array[ExtResource("2_br6f7")]([ExtResource("3_t4nd8")])
 max_chance = 50
 power = 50
 mp = 10
-range = 1
+target = 2
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_0wyu5")]([])
-ability_chance = Array[int]([10])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
 description = "下級攻撃魔法。
 氷を生み出して攻撃し、
 10%で霜焼状態にする。

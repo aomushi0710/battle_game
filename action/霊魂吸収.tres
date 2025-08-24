@@ -9,12 +9,11 @@
 script = ExtResource("1_jtpq6")
 id = 1001
 name = "霊魂吸収"
-aka = ""
 element = Array[ExtResource("2_5k2ds")]([ExtResource("3_hnhx2")])
 max_chance = 30
 power = 40
 mp = 20
-range = 1
+target = 2
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_sati4")]([])

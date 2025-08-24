@@ -9,18 +9,14 @@
 script = ExtResource("1_n34ki")
 id = 13
 name = "フレイム"
-aka = ""
 element = Array[ExtResource("2_ptt5y")]([ExtResource("3_xkaf2")])
 max_chance = 50
 power = 50
 mp = 10
-range = 1
+target = 2
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_mr2tk")]([])
-ability_chance = Array[int]([10])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
 description = "下級攻撃魔法。
 炎を生み出して攻撃し、
 10%で火傷させる。

@@ -9,18 +9,14 @@
 script = ExtResource("1_d7be1")
 id = 15
 name = "サンダー"
-aka = ""
 element = Array[ExtResource("2_w40uq")]([ExtResource("3_y2it1")])
 max_chance = 50
 power = 50
 mp = 10
-range = 1
+target = 2
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_b2seq")]([])
-ability_chance = Array[int]([10])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
 description = "下級攻撃魔法。
 雷を生み出して攻撃し、
 10%で感電させる。

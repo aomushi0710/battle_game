@@ -51,23 +51,29 @@ func _ready() -> void:
 	name_label.text = "[b]%s[/b]" % ability.bbcode_name
 	
 	match ability.target:
-		Ability.Target.連動: # TODO 今後はactionのものと連動して書き換えるようにする
-			target_label.text = "[color=yellow]対象[/color]:　 連動 　"
+		Global.Target.なし:
+			target_label.text = "[color=yellow]対象[/color]:　 なし 　"
 		
-		Ability.Target.敵単体:
-			target_label.text = "[color=yellow]対象[/color]:　敵単体　"
+		Global.Target.近接:
+			target_label.text = "[color=yellow]対象[/color]:　 近接 　"
 		
-		Ability.Target.敵全体:
+		Global.Target.遠隔:
+			target_label.text = "[color=yellow]対象[/color]:　 遠隔 　"
+		
+		Global.Target.敵全体:
 			target_label.text = "[color=yellow]対象[/color]:　敵全体　"
 		
-		Ability.Target.味方単体:
+		Global.Target.自分:
+			target_label.text = "[color=yellow]対象[/color]:　 自分 　"
+		
+		Global.Target.味方単体:
 			target_label.text = "[color=yellow]対象[/color]: 味方単体 "
 		
-		Ability.Target.味方全体:
+		Global.Target.味方全体:
 			target_label.text = "[color=yellow]対象[/color]: 味方全体 "
 		
-		Ability.Target.自分:
-			target_label.text = "[color=yellow]対象[/color]:　 自分 　"
+		Global.Target.敵味方全体:
+			target_label.text = "[color=yellow]対象[/color]:敵味方全体"
 		
 		_:
 			target_label.text = "[center][color=red][b]ERROR[/b][/color][/center]"

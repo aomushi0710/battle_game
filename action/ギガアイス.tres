@@ -9,12 +9,11 @@
 script = ExtResource("1_qay1f")
 id = 34
 name = "ギガアイス"
-aka = ""
 element = Array[ExtResource("2_r72n2")]([ExtResource("3_8mb3m")])
 max_chance = 10
 power = 90
 mp = 20
-range = 1
+target = 2
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_6shat")]([])

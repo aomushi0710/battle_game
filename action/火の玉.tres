@@ -9,15 +9,14 @@
 script = ExtResource("1_lsnri")
 id = 5
 name = "火の玉"
-aka = ""
 element = Array[ExtResource("2_idkpc")]([ExtResource("3_khydu")])
 max_chance = 80
 power = 30
 mp = 0
-range = 1
+target = 1
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_d7nf3")]([])
-description = "敵単体に火の玉を発射して
+description = "目の前の敵に火の玉を発射して
 攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

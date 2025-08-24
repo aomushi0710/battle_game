@@ -9,15 +9,14 @@
 script = ExtResource("1_h36qx")
 id = 9
 name = "つむじ風"
-aka = ""
 element = Array[ExtResource("2_bowa3")]([ExtResource("3_0qlpb")])
 max_chance = 80
 power = 30
 mp = 0
-range = 1
+target = 1
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_xvx6f")]([])
-description = "敵単体につむじ風を
+description = "目の前の敵につむじ風を
 起こして攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

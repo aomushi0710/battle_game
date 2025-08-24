@@ -9,18 +9,14 @@
 script = ExtResource("1_5om77")
 id = 6
 name = "水しぶき"
-aka = ""
 element = Array[ExtResource("2_v7ny5")]([ExtResource("3_1l4y5")])
 max_chance = 80
 power = 30
 mp = 0
-range = 1
+target = 1
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_c7xh0")]([])
-ability_chance = Array[int]([])
-ability_power = Array[int]([])
-ability_range = Array[int]([])
-description = "敵単体に水しぶきを
+description = "目の前の敵に水しぶきを
 浴びさせて攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

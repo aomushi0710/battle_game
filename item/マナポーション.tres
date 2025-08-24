@@ -12,7 +12,7 @@ price = 100
 max_level = 10
 power = 50
 power_scale = 1
-range = 3
+target = 5
 description = "飲むと魔力がみなぎる
 ポーション。
 [color=aqua]MP[/color]を[color=yellow]%d%%[/color]だけ回復する。"

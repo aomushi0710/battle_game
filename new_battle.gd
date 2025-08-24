@@ -191,16 +191,23 @@ func monster_ready(player: bool) -> void:
 		var button_index = randi() % 4 # 味方モンスターと同じ変数名を使用
 		var action: Action = enemy_monster.picked_action[button_index]
 		var action_index: int
-		match action.range:
-			1, 6: # 敵単体・敵散開
+		match action.target:
+			Global.Target.近接:
+				action_index = player_monster.index
+			
+			Global.Target.遠隔:
 				action_index = random_index(true)
-			3: # 味方単体
-				action_index = random_index(false)
-			5: # 自分
+			
+			Global.Target.自分:
 				action_index = enemy_monster.index
-			_:
+			
+			Global.Target.味方単体:
+				action_index = random_index(false)
+			
+			Global.Target.敵全体, Global.Target.味方全体, Global.Target.敵味方全体:
 				action_index = -1
-		command_selected(false, enemy_monster, action, action_index)
+		
+		command_selected(enemy_monster, action, action_index)
 		enemy_monster.picked_action.remove_at(button_index)
 
 ## 死亡フラグを考慮してindexをランダムに指定する関数[br]true:味方index false:敵index
@@ -276,7 +283,7 @@ func select_command(i: int) -> void:
 	$button._on_action_button_selected(i)
 
 ## 技発動関数[br]player:trueなら味方の行動、falseなら相手の行動
-func command_selected(player: bool, monster: BattleMonster, action: Action, index: int)\
+func command_selected(monster: BattleMonster, action: Action, index: int)\
  -> void:
 	dialog.set_tab_disabled(1, true)
 	dialog.set_tab_disabled(2, true)
@@ -294,7 +301,8 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 		"%s の %s！\n[color=yellow]しかし、[color=aqua]MP[/color]が足りない！[/color]" % 
 		[monster.monster.name, action.name]])
 	else:
-		var target_list: Array[BattleMonster] = target_setting(player, action, index)
+		var target_list: Array[BattleMonster] = \
+		target_setting(monster.player, action, index)
 		
 		if action.mp != 0: # mp消費処理
 			dialog_text = monster.mp_setter(-action.mp, true)
@@ -306,9 +314,8 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 			await dialog.text_setter(0, true, dialog_text)
 		
 		for i in len(action.ability): # 全ての特殊能力について順番に処理
-			if action.ability[i].is_after == false: # ダメージ判定前に発動するもの
-				execute_ability(monster, action.ability[i], 
-				ability_target_setting(player, action, action.ability[i], index, monster))
+			if action.ability[i].timing == Ability.Timing.前:
+				execute_ability(monster, action.ability[i], index)
 		
 		if action.power != 0:
 			for target: BattleMonster in target_list: # 対象にダメージをあたえる
@@ -325,17 +332,19 @@ func command_selected(player: bool, monster: BattleMonster, action: Action, inde
 				await target.dead(player_monster, enemy_monster)
 		
 		for i in len(action.ability): # 全ての特殊能力について順番に処理
-			if action.ability[i].is_after == true: # ダメージ判定後に発動するもの
-				execute_ability(monster, action.ability[i], 
-				ability_target_setting(player, action, action.ability[i], index, monster))
+			if action.ability[i].timing == Ability.Timing.後:
+				execute_ability(monster, action.ability[i], index)
 	
-	turn_end(player, monster)
+	turn_end(monster)
 
-
-func execute_ability(monster: BattleMonster, ability: Ability, 
-	target_list: Array[BattleMonster]) -> void:
+## 特殊効果[param ability]を発動する関数[br]
+## [param monster]はその技を発動したモンスター[br]
+## [param index]でどの敵が対象かを割り出す[code]ability_target_setting[/code]関数を呼び出す
+func execute_ability(monster: BattleMonster, ability: Ability, index: int) -> void:
 	if randi() % 100 + 1 > ability.chance: # 確率範囲外ならその効果の処理スキップ
 		return
+	
+	var target_list := target_setting(monster.player, ability, index)
 	
 	for target: BattleMonster in target_list: # 全ての対象について順番に処理
 		if ability is AbilityEffect: # 状態異常 TODO 未実装
@@ -412,7 +421,7 @@ func item_selected(player: bool, monster: BattleMonster, item: Item, index: int)
 					target.monster.maxMP * (item.get_power(item.get_level()) / 100.0), true)
 				await dialog.text_setter(0, true, text)
 	
-	turn_end(player, monster)
+	turn_end(monster)
 
 ## アイテム使用時のアニメーションを再生する関数
 func item_animation(item: Item, monster: BattleMonster) -> void:
@@ -441,7 +450,7 @@ func item_animation(item: Item, monster: BattleMonster) -> void:
 			item_node.queue_free()
 
 ## モンスターの行動終了時の処理
-func turn_end(player: bool, monster: BattleMonster) -> void:
+func turn_end(monster: BattleMonster) -> void:
 	# 相手全滅
 	if Global.e1_death == true and Global.e2_death == true and Global.e3_death == true:
 		return
@@ -454,11 +463,11 @@ func turn_end(player: bool, monster: BattleMonster) -> void:
 		effect.turn_finished()
 	
 	# モンスター交代
-	if player == true and player_monster != player_deck[player_next_index]:
+	if monster.player == true and player_monster != player_deck[player_next_index]:
 		player_monster.bench_set() # フィールドのモンスターをベンチに
 		player_monster = player_deck[player_next_index]
 		player_monster.field_set() # 次に指定されたモンスターをフィールドに
-	elif player == false and enemy_monster != enemy_deck[enemy_next_index]:
+	elif monster.player == false and enemy_monster != enemy_deck[enemy_next_index]:
 		enemy_monster.bench_set()
 		enemy_monster = enemy_deck[enemy_next_index]
 		enemy_monster.field_set()
@@ -470,7 +479,7 @@ func turn_end(player: bool, monster: BattleMonster) -> void:
 		if enemy_monster.death == false:
 			enemy_monster.get_node("SPD").set_process(true)
 	
-	if player == true: # 味方モンスターが動いた後にフレーバーテキスト更新
+	if monster.player == true: # 味方モンスターが動いた後にフレーバーテキスト更新
 		
 		var result = randi() % 4 ## 50%:ステージ 25%:味方モンスター 25%:相手モンスター
 		var matching: bool = false ## false:フレーバーテキスト一覧が空
@@ -519,87 +528,64 @@ func battle_finish(win: bool) -> void:
 		dialog.text_setter(0, false, [
 		"[b][color=dodger_blue]敗北...[/color][/b]\n\n左下の戻るボタンを押してバトルを終了 "])
 
-## 技の発動先targetを設定する関数 actionにはAction型かItem型が入る
-func target_setting(player: bool, action, index: int) -> Array[BattleMonster]:
-	var target_list: Array[BattleMonster] # 技の発動対象
-	if player == true:
-		match action.range:
-			1, 6: # 敵単体 or 敵散開
-				target_list.append(enemy_deck[index])
-			3, 5: # 味方単体 or 自分
-				target_list.append(player_deck[index])
-			2: # 敵全体
-				for mon: BattleMonster in enemy_deck:
-					if mon.death == false:
-						target_list.append(mon)
-			4: # 味方全体
-				for mon: BattleMonster in player_deck:
-					if mon.death == false:
-						target_list.append(mon)
-	else:
-		match action.range:
-			1, 6: # 敵単体 or 敵散開
-				target_list.append(player_deck[index])
-			3, 5: # 味方単体 or 自分
-				target_list.append(enemy_deck[index])
-			2: # 敵全体
-				for mon: BattleMonster in player_deck:
-					if mon.death == false:
-						target_list.append(mon)
-			4: # 味方全体
-				for mon: BattleMonster in enemy_deck:
-					if mon.death == false:
-						target_list.append(mon)
-	return target_list
-
-## 特殊効果の発動先targetを設定する関数[br]i:繰り返し回数 monster:対象が自分の時用
-func ability_target_setting(player: bool, action: Action, ability: Ability,
-index: int, monster: BattleMonster) -> Array[BattleMonster]:
+## 選ばれた敵または味方の[param index]を基にして技・特殊効果・アイテム[param resource]
+## の発動先をリストにして返す関数[br]
+## [param player]発動者がプレイヤーなら[code]true[/code]、敵なら[code]false[/code]。
+func target_setting(player: bool, resource: Resource, index: int)\
+ -> Array[BattleMonster]:
 	var target_list: Array[BattleMonster] = [] # 特殊効果の発動対象
 	
-	if ability.target == Ability.Target.連動:
-		return target_setting(player, action, index) # actionのものと同期
+	# 技でも特殊効果でもアイテムでもなければ中断
+	if resource is not Action and resource is not Ability and resource is not Item:
+		print("不明な型です")
+		return []
 	
 	if player == true:
-		match ability.target:
-			Ability.Target.敵単体:
+		match resource.target:
+			Global.Target.近接, Global.Target.遠隔:
 				target_list.append(enemy_deck[index])
 			
-			Ability.Target.敵全体:
+			Global.Target.敵全体:
 				for mon: BattleMonster in enemy_deck:
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Ability.Target.味方単体:
+			Global.Target.自分, Global.Target.味方単体:
 				target_list.append(player_deck[index])
 			
-			Ability.Target.味方全体:
+			Global.Target.味方全体:
 				for mon: BattleMonster in player_deck:
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Ability.Target.自分:
-				target_list.append(monster)
+			Global.Target.敵味方全体:
+				for deck: Array[BattleMonster] in [enemy_deck, player_deck]:
+					for mon: BattleMonster in deck:
+						if mon.death == false:
+							target_list.append(mon)
 	else:
-		match ability.target:
-			Ability.Target.敵単体:
+		match resource.target:
+			Global.Target.近接, Global.Target.遠隔:
 				target_list.append(player_deck[index])
 			
-			Ability.Target.敵全体:
+			Global.Target.敵全体:
 				for mon: BattleMonster in player_deck:
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Ability.Target.味方単体:
+			Global.Target.自分, Global.Target.味方単体:
 				target_list.append(enemy_deck[index])
 			
-			Ability.Target.味方全体:
+			Global.Target.味方全体:
 				for mon: BattleMonster in enemy_deck:
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Ability.Target.自分:
-				target_list.append(monster)
+			Global.Target.敵味方全体:
+				for deck: Array[BattleMonster] in [player_deck, enemy_deck]:
+					for mon: BattleMonster in deck:
+						if mon.death == false:
+							target_list.append(mon)
 	
 	return target_list
 
@@ -635,18 +621,21 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 	var type: Array[Global.Status] = []
 	type.resize(2)
 	match action.damage_type: # 必要なステータス参照
-		0:
+		Action.DamageType.なし:
 			pass
-		1:
+		
+		Action.DamageType.物理:
 			status[0] = offense.monster.ATK
 			status[1] = defense.monster.DEF
 			type[0] = Global.Status.ATK
 			type[1] = Global.Status.DEF
-		2:
+		
+		Action.DamageType.魔法:
 			status[0] = offense.monster.MAG
 			status[1] = defense.monster.RES
 			type[0] = Global.Status.MAG
 			type[1] = Global.Status.RES
+		
 		_:
 			print("ERROR:damage_typeが検知できません")
 	

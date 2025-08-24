@@ -1,6 +1,7 @@
 extends Control
 
-@onready var action_container = $action
+@onready var battle_node := $".."
+@onready var action_container := $action
 const MONSTER_NAME_LIMIT: int = 8 ## statusに表示する上での、モンスターの名前の上限文字数
 var now_showing: int ## 現在表示中のボタンメニュー[br]0:main 1:action 2:item 3:status 4:target 5:monsters
 var now_player: bool ## true:現在playerの情報を表示 false:現在enemyの情報を表示
@@ -360,44 +361,83 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 
 ## 対象から必要なtarget候補を割り出し、生死を加味して表示する関数
 func target_button_setting() -> void:
+	for child in $target.get_children():
+		child.modulate = Color(1, 1, 1)
+	
 	var death_list: Array[bool] = \
 	[Global.e1_death, Global.e2_death, Global.e3_death, \
 	Global.p1_death, Global.p2_death, Global.p3_death] # for文用真理値配列
-	var match_number: int ## match文に利用する数値
+	var target: Global.Target ## match文に利用する数値
 	match now_showing:
 		4: # 技の対象選択時
-			match_number = selected_action.range
-		6:
-			match_number = selected_item.range
-	match match_number: # 攻撃対象ごとに生成する画像が違う
-		1, 2, 6: # 敵単体・敵散開
-			for i in range(3):
-				if $"../".tutorial_mode == true:
-					match i: # 0体目をカカシに、1,2体目を隠す
-						0:
-							$target.get_child(i).texture_normal = \
-							load("res://image/monster/カカシスライム.PNG")
-						1, 2:
-							$target.get_child(i).texture_normal = \
-							load("res://null.PNG")
-				else:
+			if selected_action.target == Global.Target.なし:
+				target = selected_action.ability[0].target
+			else:
+				target = selected_action.target
+		6: # アイテムの対象選択時
+			target = selected_item.target
+	
+	var disable_list: Array[bool] = [] ## ボタンが押せるかどうかのboolを格納するリスト
+	if $"../".tutorial_mode == true:
+		match target:
+			Global.Target.近接, Global.Target.遠隔, \
+			Global.Target.敵全体, Global.Target.敵味方全体:
+				$target.get_child(0).texture_normal = \
+				load("res://image/monster/カカシスライム.PNG")
+				disable_list.append(false)
+				for i in range(1, 3):
+					$target.get_child(i).texture_normal = \
+					load("res://null.PNG")
+					disable_list.append(true)
+	
+	else:
+		match target: # 攻撃対象ごとに生成する画像が違う
+			Global.Target.近接, Global.Target.遠隔, \
+			Global.Target.敵全体, Global.Target.敵味方全体:
+				for i in range(3):
+					var disable: bool = true ## そのボタンのdisabledのbool
+					
 					if death_list[i] == true:
 						$target.get_child(i).texture_normal = load("res://お墓.PNG")
+					
+					elif Global.enemy_deck.monster[i] == null:
+						$target.get_child(i).texture_normal = load("res://null.PNG")
+					
 					else:
-						$target.get_child(i).texture_normal = Global.enemy_deck.monster[i].image
-		3, 4: # 味方単体
-			for i in range(3):
-				if death_list[i + 3] == true:
-					$target.get_child(i).texture_normal = load("res://お墓.PNG")
-				else:
-					$target.get_child(i).texture_normal = Global.deck1.monster[i].image
-		5: # 自分
-			for i in range(3):
-				if i == monster.index:
-					$target.get_child(i).texture_normal = monster.monster.image
-				else :
-					$target.get_child(i).texture_normal = load("res://null.PNG")
+						$target.get_child(i).texture_normal = \
+						Global.enemy_deck.monster[i].image
+						disable = false
+					# 近接の時、場にいないモンスターは暗くし、押せなくする
+					if (target == Global.Target.近接 and
+						battle_node.enemy_deck[i].field == false):
+						$target.get_child(i).modulate = Color(0.5, 0.5, 0.5)
+						disable = true
+					
+					disable_list.append(disable)
 			
+			Global.Target.自分, Global.Target.味方単体, Global.Target.味方全体:
+				for i in range(3):
+					var disable: bool = true ## そのボタンのdisabledのbool
+					
+					if death_list[i + 3] == true:
+						$target.get_child(i).texture_normal = load("res://お墓.PNG")
+					
+					elif Global.deck1.monster[i] == null:
+						$target.get_child(i).texture_normal = load("res://null.PNG")
+					
+					else:
+						$target.get_child(i).texture_normal = \
+						Global.deck1.monster[i].image
+						disable = false
+					# 近接の時、場にいないモンスターは暗くし、押せなくする
+					if (target == Global.Target.自分 and
+						battle_node.player_deck[i].field == false):
+						$target.get_child(i).disabled = true
+						$target.get_child(i).modulate = Color(0.5, 0.5, 0.5)
+						disable = true
+					
+					disable_list.append(disable)
+	
 	$target.show()
 	tween = get_tree().create_tween().bind_node($target)
 	tween.tween_property($target, "position:y", 865, 0.5)\
@@ -407,14 +447,9 @@ func target_button_setting() -> void:
 		for child in $target.get_children(): # いかなるボタンも使用不可
 			if child is TextureButton:
 				child.disabled = true
-	else:
-		for child in $target.get_children(): # 最後にボタンを使用可能にするが、死体は使用不可にする
-			if child is TextureButton:
-				if child.texture_normal == load("res://お墓.PNG") or \
-				   child.texture_normal == load("res://null.PNG"):
-					child.disabled = true
-				else:
-					child.disabled = false
+	else: # 最後にボタンを使用可能にするが、disable_listによって使用不可にする
+		for i in range(3):
+			$target.get_child(i).disabled = disable_list[i]
 	if $"../".back_disabled == false:
 		$"戻る".disabled = false
 
@@ -502,7 +537,7 @@ func target_button_up(i: int) -> void:
 	if $selected:
 		$selected.queue_free()
 	
-	get_parent().command_selected(true, monster, selected_action, i)
+	get_parent().command_selected(monster, selected_action, i)
 	
 	await hide_target_button()
 	show_main_button() # 最初の表示に戻す ボタンは利用不可のまま

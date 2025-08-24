@@ -9,18 +9,14 @@
 script = ExtResource("1_qn33a")
 id = 27
 name = "メガシャイニング"
-aka = ""
 element = Array[ExtResource("2_1msr0")]([ExtResource("3_0r4xc")])
 max_chance = 30
 power = 70
 mp = 15
-range = 1
+target = 2
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_f4et4")]([])
-ability_chance = Array[int]([30])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
 description = "中級攻撃魔法。強力な光を
 生み出して攻撃し、30%で
 紫外線に曝露させる。

@@ -9,17 +9,14 @@
 script = ExtResource("1_p10ef")
 id = 37
 name = "エクスプロージョン"
-aka = ""
 element = Array[ExtResource("2_fw5di")]([ExtResource("3_kd4u6")])
 max_chance = 10
 power = 50
 mp = 30
-range = 2
+target = 3
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_kb2rc")]([])
-ability_chance = Array[int]([])
-ability_power = Array[int]([])
 description = "全体攻撃魔法。広範囲を
-爆発させて攻撃する。"
+爆発させて敵全体を攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

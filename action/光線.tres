@@ -9,18 +9,14 @@
 script = ExtResource("1_e55cj")
 id = 11
 name = "光線"
-aka = ""
 element = Array[ExtResource("2_twftb")]([ExtResource("3_rxctn")])
 max_chance = 80
 power = 30
 mp = 0
-range = 1
+target = 1
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_yyx2v")]([])
-ability_chance = Array[int]([])
-ability_power = Array[int]([])
-ability_range = Array[int]([])
-description = "敵単体に光線を射出して
+description = "目の前の敵に光線を射出して
 攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

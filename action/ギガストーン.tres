@@ -9,17 +9,16 @@
 script = ExtResource("1_exiqh")
 id = 32
 name = "ギガストーン"
-aka = ""
 element = Array[ExtResource("2_1wwnc")]([ExtResource("3_nf5sy")])
 max_chance = 10
 power = 90
 mp = 20
-range = 1
+target = 2
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_grgxk")]([])
 description = "上級攻撃魔法。巨大な
-隕石を落として攻撃し、
+岩盤を落として攻撃し、
 50%で泥々状態にする。
 (この特殊効果は未実装)
 "

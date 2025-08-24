@@ -9,19 +9,15 @@
 script = ExtResource("1_qpl7w")
 id = 3
 name = "スタンプ"
-aka = ""
 element = Array[ExtResource("2_vopop")]([ExtResource("3_2cnfl")])
 max_chance = 50
-power = 30
+power = 20
 mp = 0
-range = 6
+target = 1
 damage_type = 1
 touch = true
 ability = Array[ExtResource("1_ctklp")]([])
-ability_chance = Array[int]([])
-ability_power = Array[int]([])
-ability_range = Array[int]([])
-description = "敵単体を押しつぶして
-攻撃し、周囲の敵にも
-衝撃でダメージを与える。"
+description = "目の前の敵を押しつぶして
+攻撃し、さらに衝撃波で
+敵全体にダメージを与える。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

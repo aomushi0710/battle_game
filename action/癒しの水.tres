@@ -14,23 +14,23 @@ amount_type = 8
 amount = 1.0
 name = "HP回復"
 bbcode_name = "[color=yellow_green]HP回復[/color]"
-target = 0
+target = 5
 chance = 100
 is_after = true
 trigger = Array[ExtResource("3_byhpq")]([])
 description = "[color=dodger_blue]MAG[/color]の100%分だけ[color=coral]HP[/color]を回復する"
+battle_log_message = ""
 metadata/_custom_type_script = "uid://bywhlx527vv7b"
 
 [resource]
 script = ExtResource("3_ldcdm")
 id = 53
 name = "癒しの水"
-aka = ""
 element = Array[ExtResource("2_t85q6")]([ExtResource("4_ial7i")])
 max_chance = 30
 power = 0
 mp = 10
-range = 3
+target = 0
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_b4tmm")]([SubResource("Resource_4w8tg")])

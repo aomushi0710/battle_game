@@ -9,18 +9,14 @@
 script = ExtResource("1_guu6k")
 id = 19
 name = "シャイニング"
-aka = ""
 element = Array[ExtResource("2_qds17")]([ExtResource("3_d77ao")])
 max_chance = 50
 power = 50
 mp = 10
-range = 1
+target = 2
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_3rykp")]([])
-ability_chance = Array[int]([10])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
 description = "下級攻撃魔法。光を
 生み出して攻撃し、10%で
 紫外線に曝露させる。

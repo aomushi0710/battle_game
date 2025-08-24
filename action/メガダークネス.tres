@@ -9,18 +9,14 @@
 script = ExtResource("1_10voh")
 id = 28
 name = "メガダークネス"
-aka = ""
 element = Array[ExtResource("2_pgcxx")]([ExtResource("3_u07mn")])
 max_chance = 30
 power = 70
 mp = 15
-range = 1
+target = 2
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_mii5b")]([])
-ability_chance = Array[int]([30])
-ability_power = Array[int]([5])
-ability_range = Array[int]([0])
 description = "中級攻撃魔法。強力な
 闇を生み出して攻撃し、
 30%で呪う。

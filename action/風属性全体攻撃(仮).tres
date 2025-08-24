@@ -9,16 +9,13 @@
 script = ExtResource("1_q4drj")
 id = 40
 name = "風属性全体攻撃(仮)"
-aka = ""
 element = Array[ExtResource("2_pwnkg")]([ExtResource("3_qiq0s")])
 max_chance = 10
 power = 50
 mp = 30
-range = 2
+target = 3
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_o0olv")]([])
-ability_chance = Array[int]([])
-ability_power = Array[int]([])
 description = "全体攻撃魔法。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

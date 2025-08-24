@@ -14,23 +14,23 @@ amount_type = 0
 amount = 50.0
 name = "定数HP回復"
 bbcode_name = "[color=yellow_green]定数HP回復[/color]"
-target = 0
+target = 4
 chance = 100
 is_after = true
 trigger = Array[ExtResource("3_siil7")]([])
 description = "[color=coral]HP[/color]を50回復する。"
+battle_log_message = ""
 metadata/_custom_type_script = "uid://bywhlx527vv7b"
 
 [resource]
 script = ExtResource("1_8disd")
 id = 4
 name = "自己再生"
-aka = ""
 element = Array[ExtResource("3_pnn4q")]([ExtResource("4_siil7")])
 max_chance = 30
 power = 0
 mp = 0
-range = 5
+target = 0
 damage_type = 0
 touch = false
 ability = Array[ExtResource("1_r2cf8")]([SubResource("Resource_ytjhq")])

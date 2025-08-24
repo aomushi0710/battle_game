@@ -14,8 +14,7 @@ extends Resource
 @export var power: int ## アイテムの効果量 ※lv1
 @export var power_scale: int ## レベルアップで増える効果量
 ## アイテムの対象範囲
-@warning_ignore("shadowed_global_identifier")
-@export_enum("なし","敵単体","敵全体","味方単体","味方全体","自分") var range: int
+@export var target: Global.Target
 
 
 @export_category("説明文")

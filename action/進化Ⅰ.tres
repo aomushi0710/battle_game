@@ -9,18 +9,14 @@
 script = ExtResource("1_faank")
 id = 10001
 name = "進化Ⅰ"
-aka = ""
 element = Array[ExtResource("2_yukot")]([ExtResource("3_sgsgu")])
 max_chance = 100
 power = 0
 mp = 999
-range = 5
+target = 4
 damage_type = 0
 touch = false
 ability = Array[ExtResource("1_1rgo7")]([])
-ability_chance = Array[int]([100])
-ability_power = Array[int]([0])
-ability_range = Array[int]([0])
 description = "第二形態へ進化する。
 ステータスが強化され、
 新たな技を獲得する。

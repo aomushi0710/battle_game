@@ -9,17 +9,14 @@
 script = ExtResource("1_jrqf7")
 id = 38
 name = "ライトニングボルト"
-aka = ""
 element = Array[ExtResource("2_d5sy3")]([ExtResource("3_gl1sk")])
 max_chance = 10
 power = 50
 mp = 30
-range = 2
+target = 3
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_uw0ue")]([])
-ability_chance = Array[int]([])
-ability_power = Array[int]([])
-description = "全体攻撃魔法。雷が敵全体
+description = "全体攻撃魔法。稲妻が敵全体
 を駆け巡り、攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

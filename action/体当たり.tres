@@ -9,14 +9,13 @@
 script = ExtResource("1_rf4b2")
 id = 1
 name = "体当たり"
-aka = ""
 element = Array[ExtResource("2_jhqxo")]([ExtResource("3_ct8c2")])
 max_chance = 100
 power = 30
 mp = 0
-range = 1
+target = 1
 damage_type = 1
 touch = true
 ability = Array[ExtResource("1_kuh7w")]([])
-description = "敵にぶつかって攻撃する"
+description = "目の前の敵にぶつかって攻撃する"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

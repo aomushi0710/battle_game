@@ -7,6 +7,7 @@ var tween: Tween
 var parent: Node ## 常にbattleノードを参照するように調整される変数
 var player: bool ## true:味方 false:敵
 var index: int
+var field: bool ## モンスターが場に出ている時[code]true[/code]
 var monster_dict ## モンスターの全形態を格納する辞書
 var monster: Monster ## モンスターの現在の状態 INFO バトル中に更新される場合あり
 var action_list: Array ## 設定された技を格納する配列
@@ -24,6 +25,10 @@ signal monster_ready ## モンスターが行動可能になった時発行さ�
 
 
 func _ready() -> void:
+	if index == 0:
+		field = true
+	else:
+		field = false
 	hide()
 
 
@@ -221,6 +226,7 @@ func evolution(id: int) -> Array[String]:
 
 ## ベンチにモンスターをセットする時の処理[br]spdゲージは溜まらない
 func bench_set() -> void:
+	field = false
 	$HP/text.hide()
 	$MP/text.hide()
 	$SPD.hide()
@@ -231,6 +237,7 @@ func bench_set() -> void:
 
 ## フィールドにモンスターをセットする時の処理[br]1f待機後にspdゲージが溜まり始める
 func field_set() -> void:
+	field = true
 	$HP/text.show()
 	$MP/text.show()
 	$SPD.show()

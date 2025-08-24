@@ -9,17 +9,14 @@
 script = ExtResource("1_d2gxs")
 id = 37
 name = "オーシャンウェーブ"
-aka = ""
 element = Array[ExtResource("2_bgnb0")]([ExtResource("3_vgw5l")])
 max_chance = 10
 power = 50
 mp = 30
-range = 2
+target = 3
 damage_type = 2
 touch = false
 ability = Array[ExtResource("1_m5p23")]([])
-ability_chance = Array[int]([])
-ability_power = Array[int]([])
-description = "全体攻撃魔法。広範囲を
-爆発させて攻撃する。"
+description = "全体攻撃魔法。敵全体に
+荒波を打ち付けて攻撃する。"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"
