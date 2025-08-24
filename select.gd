@@ -6,10 +6,12 @@ extends Control
 @onready var accept_dialog = $"../AcceptDialog"
 @onready var back_button := $"../CanvasLayer/Control/戻る"
 @onready var confirm_button := $"../CanvasLayer/Control/決定"
+@onready var help_label := $"../CanvasLayer/Control/help"
 @onready var action_select := $action_select
 @onready var slider := $action_select/chance
 @onready var spinbox := $action_select/SpinBox
 @onready var action_list := $action_list
+var text_speed: float = 0.04 ## テキストアニメーションの1文字あたりの再生速度
 var selected_action: Action ## 現在選択中の技
 var selected_skill = 0 # 選ばれたスキルパターン
 var now_select_action = 0 # 現在指定されている技
@@ -48,7 +50,7 @@ var camera_mode: CameraMode = CameraMode.MAIN: ## 現在のカメラ位置
 				child.disabled = false
 		if mode == CameraMode.ACTION and selected_action in actions: # 既に選ばれた技を選んだ時
 			confirm_button.disabled = true # 再登録を不可に上書き
-			
+
 enum CameraMode{
 	MAIN, ## 真ん中の画面
 	ACTION, ## 右の技選択画面
@@ -76,6 +78,28 @@ func _ready() -> void:
 	setting_action_button()
 	# スクリプト上でしかtabbarはいじれないので
 	action_list.get_tab_bar().mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	
+	connect_hover_signal(self)
+
+## help_textデータを持つ全てのノード[param node]にシグナルを接続する再起関数
+func connect_hover_signal(node: Node) -> void:
+	if node is Control and node.has_meta("help_text"):
+		node.mouse_entered.connect(func(): 
+			text_animation(help_label, "[i]%s[/i]" % node.get_meta("help_text")))
+		node.mouse_exited.connect(func():
+			text_animation(help_label, "[i]ボタンにカーソルを合わせるとヘルプテキストが表示されます。[/i]"))
+	
+	for child in node.get_children():
+		connect_hover_signal(child)
+
+## [param label]に表示される[param text]を少しずつ表示させるアニメーションを再生する関数
+func text_animation(label: RichTextLabel, text: String) -> void:
+	label.visible_characters = 0
+	label.text = text
+	var text_length: int = len(Global.strip_bbcode(text))
+	var tween: Tween = get_tree().create_tween().bind_node(label)
+	tween.tween_property(label, "visible_characters", 
+	text_length, text_length * text_speed)
 
 ## 円グラフ更新関数
 func pie_chart_update() -> void:
@@ -101,6 +125,7 @@ func pie_chart_update() -> void:
 	for i in len(actions):
 		var button = Global.action_button.instantiate()
 		button.action = actions[i]
+		button.set_meta("help_text", "現在登録されている技。クリックで登録画面に移動します。")
 		button.button_up.connect(func(): action_button_up(button.action))
 		$actions/action_buttons.add_child(button)
 		if actions[i] == null:
@@ -117,8 +142,8 @@ func setting_action_button() -> void:
 			var button = Global.action_button.instantiate()
 			button.action = act
 			button.button_up.connect(func(): action_button_up(button.action))
+			button.set_meta("help_text", "クリックで技の詳細を確認できます。")
 			container.add_child(button)
-		
 
 ## 技ボタンが押された時の関数
 func action_button_up(act: Action) -> void:

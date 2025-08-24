@@ -15,7 +15,7 @@ corner_radius_bottom_left = 1
 
 [sub_resource type="Gradient" id="Gradient_sfoxn"]
 offsets = PackedFloat32Array(0.25, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0.545098, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2som6"]
 gradient = SubResource("Gradient_sfoxn")

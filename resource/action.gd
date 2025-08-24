@@ -3,15 +3,8 @@ extends Resource
 
 
 @export_category("技")
-
-## 技のid
-@export var id: int
-
-## 技の名前
-@export var name: String
-
-## 名前が長い技を表示する際の略称[br]未記入でも可
-@export var aka: String
+@export var id: int ## 技のid
+@export var name: String ## 技の名前
 
 ## 技の属性 Element型のリソース[br]複数登録可能
 @export var element: Array[Element]

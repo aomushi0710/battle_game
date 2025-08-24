@@ -1,9 +1,8 @@
-[gd_scene load_steps=48 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=47 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="1_ilscs"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
-[ext_resource type="Script" uid="uid://cpa846ccwna56" path="res://help.gd" id="2_3py80"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="3_250y8"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_ltw0u"]
 [ext_resource type="Script" uid="uid://b15c8h3h61tnt" path="res://help_type.gd" id="9_jsdkd"]
@@ -306,8 +305,7 @@ offset_right = 1691.0
 offset_bottom = 1051.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_4lobs")
 bbcode_enabled = true
-text = "[i]ヘルプテキストが表示される[/i]"
-script = ExtResource("2_3py80")
+text = "[i]ボタンにカーソルを合わせるとヘルプテキストが表示されます。[/i]"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(960, 540)
@@ -430,6 +428,7 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_ilscs")
 text = "❌"
+flat = true
 
 [node name="delete2" type="Button" parent="セレクト/actions/delete_buttons"]
 modulate = Color(1, 0, 0, 1)
@@ -437,6 +436,7 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_ilscs")
 text = "❌"
+flat = true
 
 [node name="delete3" type="Button" parent="セレクト/actions/delete_buttons"]
 modulate = Color(1, 0, 0, 1)
@@ -444,6 +444,7 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_ilscs")
 text = "❌"
+flat = true
 
 [node name="delete4" type="Button" parent="セレクト/actions/delete_buttons"]
 modulate = Color(1, 0, 0, 1)
@@ -451,6 +452,7 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme = SubResource("Theme_ilscs")
 text = "❌"
+flat = true
 
 [node name="action_select" type="Control" parent="セレクト"]
 anchors_preset = 0
