@@ -1,9 +1,9 @@
 extends Control
 
 @onready var accept_dialog = $"../../AcceptDialog"
-var first_texture = load("res://1st.PNG")
-var second_texture = load("res://2nd.PNG")
-var third_texture = load("res://3rd.PNG")
+var first_texture = load("res://image/1st.PNG")
+var second_texture = load("res://image/2nd.PNG")
+var third_texture = load("res://image/3rd.PNG")
 var monster_data = Global.monster_data
 var action_data = Global.action_data
 var tween: Tween

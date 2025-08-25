@@ -197,34 +197,47 @@ func action_button_up(act: Action) -> void:
 	var range: RichTextLabel = $action_description/range
 	power.text = "[color=red]Power[/color]:%4d" % act.power
 	mp.text = "[color=aqua]MP   [/color]:%4d" % act.mp
+	
 	match act.damage_type: # 分類によってテキストと枠線を変える
-		0:
+		Action.DamageType.なし:
 			type.text = "分類:なし"
 			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
 			style.border_color = Color.WHITE
-		1:
+		
+		Action.DamageType.物理:
 			type.text = "分類:[color=red]物理[/color]"
 			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
 			style.border_color = Color.RED
-		2:
+		
+		Action.DamageType.魔法:
 			type.text = "分類:[color=dodger_blue]魔法[/color]"
 			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
 			style.border_color = Color.DODGER_BLUE
-	match act.range: # 範囲によってテキストを変える
-		0:
+	
+	match act.target: # 範囲によってテキストを変える
+		Global.Target.なし:
 			range.text = "[color=yellow]対象[/color]:なし"
-		1:
-			range.text = "[color=yellow]対象[/color]:敵単体"
-		2:
+		
+		Global.Target.近接:
+			range.text = "[color=yellow]対象[/color]:近接"
+		
+		Global.Target.遠隔:
+			range.text = "[color=yellow]対象[/color]:遠隔"
+		
+		Global.Target.敵全体:
 			range.text = "[color=yellow]対象[/color]:敵全体"
-		3:
-			range.text = "[color=yellow]対象[/color]:味方単体"
-		4:
-			range.text = "[color=yellow]対象[/color]:味方全体"
-		5:
+		
+		Global.Target.自分:
 			range.text = "[color=yellow]対象[/color]:自分"
-		6:
-			range.text = "[color=yellow]対象[/color]:敵散開"
+		
+		Global.Target.味方単体:
+			range.text = "[color=yellow]対象[/color]:味方単体"
+		
+		Global.Target.味方全体:
+			range.text = "[color=yellow]対象[/color]:味方全体"
+		
+		Global.Target.敵味方全体:
+			range.text = "[color=yellow]対象[/color]:敵味方全体"
 	
 	for ability: Ability in act.ability:
 		var description = Global.ability_description.instantiate()

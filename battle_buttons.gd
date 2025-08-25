@@ -398,10 +398,10 @@ func target_button_setting() -> void:
 					var disable: bool = true ## そのボタンのdisabledのbool
 					
 					if death_list[i] == true:
-						$target.get_child(i).texture_normal = load("res://お墓.PNG")
+						$target.get_child(i).texture_normal = load("res://image/お墓.PNG")
 					
 					elif Global.enemy_deck.monster[i] == null:
-						$target.get_child(i).texture_normal = load("res://null.PNG")
+						$target.get_child(i).texture_normal = load("res://image/null.PNG")
 					
 					else:
 						$target.get_child(i).texture_normal = \
@@ -420,10 +420,10 @@ func target_button_setting() -> void:
 					var disable: bool = true ## そのボタンのdisabledのbool
 					
 					if death_list[i + 3] == true:
-						$target.get_child(i).texture_normal = load("res://お墓.PNG")
+						$target.get_child(i).texture_normal = load("res://image/お墓.PNG")
 					
 					elif Global.deck1.monster[i] == null:
-						$target.get_child(i).texture_normal = load("res://null.PNG")
+						$target.get_child(i).texture_normal = load("res://image/null.PNG")
 					
 					else:
 						$target.get_child(i).texture_normal = \

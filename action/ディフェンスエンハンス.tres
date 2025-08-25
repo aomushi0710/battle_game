@@ -16,9 +16,11 @@ name = "DEF UP"
 bbcode_name = "[color=light_blue]DEF[/color] [color=red]UP[/color]"
 target = 5
 chance = 100
-is_after = true
+timing = 2
 trigger = Array[ExtResource("3_1qrvi")]([])
-description = "味方単体の[color=light_blue]DEF[/color]を、\\n5ターンの間\\n1.5倍に強化する。"
+description = "味方単体の[color=light_blue]DEF[/color]を、
+5ターンの間
+1.5倍に強化する。"
 battle_log_message = ""
 metadata/_custom_type_script = "uid://d2box237wyadg"
 

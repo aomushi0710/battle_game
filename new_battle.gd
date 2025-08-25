@@ -1,6 +1,7 @@
 extends Control
 
 const monster_scene = preload("res://battle_monster.tscn")
+@onready var sound_effect := $"../SoundEffects"
 @onready var dialog = $button/dialogtab
 var tween: Tween
 var player_next_index: int = 0 # 次にチェンジするモンスターのindex
@@ -315,7 +316,7 @@ func command_selected(monster: BattleMonster, action: Action, index: int)\
 		
 		for i in len(action.ability): # 全ての特殊能力について順番に処理
 			if action.ability[i].timing == Ability.Timing.前:
-				execute_ability(monster, action.ability[i], index)
+				await execute_ability(monster, action.ability[i], index)
 		
 		if action.power != 0:
 			for target: BattleMonster in target_list: # 対象にダメージをあたえる
@@ -333,7 +334,7 @@ func command_selected(monster: BattleMonster, action: Action, index: int)\
 		
 		for i in len(action.ability): # 全ての特殊能力について順番に処理
 			if action.ability[i].timing == Ability.Timing.後:
-				execute_ability(monster, action.ability[i], index)
+				await execute_ability(monster, action.ability[i], index)
 	
 	turn_end(monster)
 
@@ -366,14 +367,18 @@ func execute_ability(monster: BattleMonster, ability: Ability, index: int) -> vo
 			if found_effect == false: # 同じエフェクトが見つからなかった時、新たに追加
 				target.add_effect(monster_effect)
 			
-			# TODO 文章表示を考える
-			await dialog.text_setter(0, true, [
-			"%s %s" % [target.monster.name, "test"]])
-			
 			if ability is AbilityBuff: # バフ効果音
-				$"../SoundEffects/buff".play()
+				sound_effect.buff.play()
 			elif ability is AbilityDebuff: # デバフ効果音
-				$"../SoundEffects/debuff".play()
+				sound_effect.debuff.play()
+			
+			var text: String
+			if ability.battle_log_message == "":
+				text = "これは...どうやら開発者がメッセージを\n入れ忘れているらしい。" + \
+				"\nそれでも特殊効果は発動した！"
+			else:
+				text = ability.battle_log_message % target.monster.name
+			await dialog.text_setter(0, true, [text])
 		
 		elif ability is AbilityHealing: # 回復
 			var heal: int ## 回復量
@@ -655,9 +660,9 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 	var magnification: float = attribute_setup(action, defense.monster)
 	var magnification_text: String = ""
 	if magnification < 1.0:
-		magnification_text = "[color=light_blue]耐性があるようだ...[/color]"
+		magnification_text = "[color=light_blue]耐性があるようだ...[/color]\n"
 	elif magnification > 1.0:
-		magnification_text = "[color=red]弱点をついた！[/color]"
+		magnification_text = "[color=red]弱点をついた！[/color]\n"
 	# power * ((攻撃側ステータス / 守備側ステータス) ** ステータス乖離ボーナス(1.2) * 属性相性
 	var damage = action.power * ((status[0] / status[1]) ** 1.2) * magnification
 	# モンスターと技の属性一致倍率を乗算
@@ -669,5 +674,27 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 				break_mode = true
 				break
 		if break_mode == true:
-			break	
+			break
+	
+	for ability: Ability in action.ability:
+		if randi() % 100 + 1 > ability.chance: # 確率範囲外ならその効果の処理スキップ
+			continue
+		if ability is AbilityCritical:
+			match ability.amount_type:
+				AbilityCritical.AmountType.加算:
+					damage += ability.amount
+				
+				AbilityCritical.AmountType.乗算:
+					damage *= ability.amount
+		
+		elif ability is AbilityFumble:
+			match ability.amount_type:
+				AbilityFumble.AmountType.減算:
+					damage -= ability.amount
+				
+				AbilityFumble.AmountType.除算:
+					damage /= ability.amount
+		
+		magnification_text += ability.battle_log_message
+	
 	return [int(damage), magnification_text]

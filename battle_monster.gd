@@ -120,7 +120,7 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	tween = get_tree().create_tween().bind_node(self)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(self, "self_modulate:a", 0, 0.3)
-	tween.tween_callback(func(): texture_normal = load("res://お墓.PNG"))
+	tween.tween_callback(func(): texture_normal = load("res://image/お墓.PNG"))
 	tween.tween_property(self, "self_modulate:a", 1, 0.3)
 	await tween.finished
 	

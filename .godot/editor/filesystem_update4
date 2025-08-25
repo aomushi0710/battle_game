@@ -131,3 +131,5 @@ res://resource/item.gd
 res://monster/カカシスライム.tres
 res://action/進化Ⅰ.tres
 res://action/進化Ⅱ.tres
+res://SE_battle.tscn
+res://deck_select.gd
