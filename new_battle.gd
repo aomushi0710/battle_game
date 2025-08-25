@@ -547,7 +547,13 @@ func target_setting(player: bool, resource: Resource, index: int)\
 	
 	if player == true:
 		match resource.target:
-			Global.Target.近接, Global.Target.遠隔:
+			Global.Target.近接:
+				for mon: BattleMonster in enemy_deck:
+					if mon.field == true:
+						target_list.append(mon)
+						break
+			
+			Global.Target.遠隔:
 				target_list.append(enemy_deck[index])
 			
 			Global.Target.敵全体:
@@ -555,7 +561,13 @@ func target_setting(player: bool, resource: Resource, index: int)\
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Global.Target.自分, Global.Target.味方単体:
+			Global.Target.自分:
+				for mon: BattleMonster in player_deck:
+					if mon.field == true:
+						target_list.append(mon)
+						break
+			
+			Global.Target.味方単体:
 				target_list.append(player_deck[index])
 			
 			Global.Target.味方全体:
@@ -570,7 +582,13 @@ func target_setting(player: bool, resource: Resource, index: int)\
 							target_list.append(mon)
 	else:
 		match resource.target:
-			Global.Target.近接, Global.Target.遠隔:
+			Global.Target.近接:
+				for mon: BattleMonster in player_deck:
+					if mon.field == true:
+						target_list.append(mon)
+						break
+			
+			Global.Target.遠隔:
 				target_list.append(player_deck[index])
 			
 			Global.Target.敵全体:
@@ -578,7 +596,13 @@ func target_setting(player: bool, resource: Resource, index: int)\
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Global.Target.自分, Global.Target.味方単体:
+			Global.Target.自分:
+				for mon: BattleMonster in enemy_deck:
+					if mon.field == true:
+						target_list.append(mon)
+						break
+			
+			Global.Target.味方単体:
 				target_list.append(enemy_deck[index])
 			
 			Global.Target.味方全体:
