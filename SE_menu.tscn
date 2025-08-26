@@ -7,5 +7,5 @@
 visible = false
 script = ExtResource("1_owo5j")
 
-[node name="click" type="AudioStreamPlayer2D" parent="."]
+[node name="click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_17xic")

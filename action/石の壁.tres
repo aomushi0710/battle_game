@@ -17,10 +17,13 @@ name = "DEF UP"
 bbcode_name = "[color=light_blue]DEF[/color] [color=red]UP[/color]"
 target = 4
 chance = 100
-is_after = true
+timing = 2
 trigger = Array[ExtResource("3_proxq")]([])
-description = "自分の[color=light_blue]DEF[/color]を、\\n3ターンの間\\n2倍に強化する。"
-battle_log_message = ""
+description = "自分の[color=light_blue]DEF[/color]を、
+3ターンの間
+2倍に強化する。"
+battle_log_message = "出現した石の壁に身を隠した...
+%s は[color=light_blue]DEF[/color]が上がった！"
 metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]

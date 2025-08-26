@@ -621,12 +621,15 @@ func target_setting(player: bool, resource: Resource, index: int)\
 ## 属性倍率計算機(1属性)
 func attribute(o: int,d: int):
 	if ( # 0:無 1:火 2:水 3:雷 4:土 5:風 6:氷 7:光 8:闇
-			(o == 2 and d == 1) or (o == 3 and d == 2) or (o == 4 and d == 3) or 
-			(o == 5 and d == 4) or (o == 6 and d == 5) or (o == 1 and d == 6) or 
-			(o == 7 and d == 8) or (o == 8 and d == 7)):
+		(o == 2 and d == 1) or (o == 3 and d == 2) or (o == 4 and d == 3) or 
+		(o == 5 and d == 4) or (o == 6 and d == 5) or (o == 1 and d == 6) or 
+		(o == 7 and d == 8) or (o == 8 and d == 7)):
 		return 2.0 # 弱点を突いたときダメージ2倍
-	elif o == d and o != 0:
-		return 0.5 # 同じ属性の技を受けた時ダメージ0.5倍
+	elif (
+		(o == 1 and d == 2) or (o == 2 and d == 3) or (o == 3 and d == 4) or 
+		(o == 4 and d == 5) or (o == 5 and d == 6) or (o == 6 and d == 1) or 
+		(o == d and o != 0)):
+		return 0.5 # 得意属性もしくは同じ属性の技を受けた時ダメージ0.5倍
 	elif o == 0 and d != 0:
 		return 0.8 # 無属性でない敵に無属性の技で攻撃する際の軽減倍率0.8倍
 	else:

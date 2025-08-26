@@ -21,6 +21,7 @@ var actions: Array[Action] = [null, null, null, null] ## 選ばれた技
 var chances: Array[int] = [0, 0, 0, 0] ## 選ばれた技の出現確率
 var check_provability = [] # 出現率0%弾き出し用
 var pie_chart
+var text_tween: Tween
 var camera_tween: Tween
 var camera_mode: CameraMode = CameraMode.MAIN: ## 現在のカメラ位置
 	set(mode): ## 対応する画面遷移を行ってからモード変更
@@ -85,7 +86,8 @@ func _ready() -> void:
 func connect_hover_signal(node: Node) -> void:
 	if node is Control and node.has_meta("help_text"):
 		node.mouse_entered.connect(func(): 
-			text_animation(help_label, "[i]%s[/i]" % node.get_meta("help_text")))
+			var text: String = "[i]%s[/i]" % node.get_meta("help_text")
+			text_animation(help_label, text.replace("\n", "")))
 		node.mouse_exited.connect(func():
 			text_animation(help_label, "[i]ボタンにカーソルを合わせるとヘルプテキストが表示されます。[/i]"))
 	
@@ -94,11 +96,13 @@ func connect_hover_signal(node: Node) -> void:
 
 ## [param label]に表示される[param text]を少しずつ表示させるアニメーションを再生する関数
 func text_animation(label: RichTextLabel, text: String) -> void:
+	if text_tween and text_tween.is_running():
+		text_tween.kill()
 	label.visible_characters = 0
 	label.text = text
 	var text_length: int = len(Global.strip_bbcode(text))
-	var tween: Tween = get_tree().create_tween().bind_node(label)
-	tween.tween_property(label, "visible_characters", 
+	text_tween = get_tree().create_tween().bind_node(label)
+	text_tween.tween_property(label, "visible_characters", 
 	text_length, text_length * text_speed)
 
 ## 円グラフ更新関数
@@ -125,13 +129,19 @@ func pie_chart_update() -> void:
 	for i in len(actions):
 		var button = Global.action_button.instantiate()
 		button.action = actions[i]
-		button.set_meta("help_text", "現在登録されている技。クリックで登録画面に移動します。")
 		button.button_up.connect(func(): action_button_up(button.action))
-		$actions/action_buttons.add_child(button)
 		if actions[i] == null:
 			$actions/delete_buttons.get_child(i).disabled = true
+			$actions/delete_buttons.get_child(i).mouse_default_cursor_shape = \
+			CursorShape.CURSOR_ARROW
+			button.set_meta("help_text", "技が登録されていません。クリックで登録画面に移動します。")
 		else:
 			$actions/delete_buttons.get_child(i).disabled = false
+			$actions/delete_buttons.get_child(i).mouse_default_cursor_shape = \
+			CursorShape.CURSOR_POINTING_HAND
+			button.set_meta("help_text", "現在登録されている技。クリックで登録画面に移動します。")
+		connect_hover_signal(button)
+		$actions/action_buttons.add_child(button)
 
 ## 全ての形態に関して、技をそれぞれのコンテナにボタン化して追加する関数
 func setting_action_button() -> void:
@@ -156,6 +166,8 @@ func action_button_up(act: Action) -> void:
 	
 	if act == null: # nullなら移動だけして中断
 		return
+	
+	$action_select.show() # nullじゃなければ表示
 	
 	selected_action = act
 	# 選ばれた技が既に登録されているかどうかで登録ボタンの挙動を変える
@@ -242,6 +254,8 @@ func action_button_up(act: Action) -> void:
 	for ability: Ability in act.ability:
 		var description = Global.ability_description.instantiate()
 		description.ability = ability
+		description.set_meta("help_text", ability.description)
+		connect_hover_signal(description)
 		container.add_child(description)
 
 ## 技削除ボタンの処理

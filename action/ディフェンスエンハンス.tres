@@ -21,7 +21,7 @@ trigger = Array[ExtResource("3_1qrvi")]([])
 description = "味方単体の[color=light_blue]DEF[/color]を、
 5ターンの間
 1.5倍に強化する。"
-battle_log_message = ""
+battle_log_message = "%s は[color=light_blue]DEF[/color]が上がった！"
 metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]

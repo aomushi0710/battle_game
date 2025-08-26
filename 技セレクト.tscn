@@ -455,6 +455,7 @@ text = "❌"
 flat = true
 
 [node name="action_select" type="Control" parent="セレクト"]
+visible = false
 anchors_preset = 0
 offset_left = 1920.0
 offset_right = 1960.0
@@ -635,6 +636,7 @@ metadata/_tab_index = 0
 
 [node name="container" type="VBoxContainer" parent="セレクト/action_list/　　技　　"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="中間進化技" type="ScrollContainer" parent="セレクト/action_list"]
 visible = false
@@ -643,6 +645,7 @@ metadata/_tab_index = 1
 
 [node name="container" type="VBoxContainer" parent="セレクト/action_list/中間進化技"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="　進化技　" type="ScrollContainer" parent="セレクト/action_list"]
 visible = false
@@ -651,6 +654,7 @@ metadata/_tab_index = 2
 
 [node name="container" type="VBoxContainer" parent="セレクト/action_list/　進化技　"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="description_ui" type="ColorRect" parent="セレクト"]
 layout_mode = 0

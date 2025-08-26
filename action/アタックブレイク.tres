@@ -16,10 +16,12 @@ name = "ATK DOWN"
 bbcode_name = "[color=orange]ATK[/color] [color=royal_blue]DOWN[/color]"
 target = 2
 chance = 100
-is_after = true
+timing = 2
 trigger = Array[ExtResource("3_mkyd6")]([])
-description = "敵単体の[color=orange]ATK[/color]を、\\n5ターンの間\\n2/3倍に弱体化する。"
-battle_log_message = ""
+description = "敵単体の[color=orange]ATK[/color]を、
+5ターンの間
+2/3倍に弱体化する。"
+battle_log_message = "%s は[color=orange]ATK[/color]が下がった！"
 metadata/_custom_type_script = "uid://b4gbl34tandgs"
 
 [resource]
