@@ -44,8 +44,17 @@ func _ready() -> void:
 			AbilityHealing.AmountType.MAG:
 				power_label.text = power_text % "MAGの%d%%" % (ability.amount * 100)
 	
+	elif ability is AbilityCritical: # ダメージ倍率増加
+		gradient.colors = [Color.WHITE, Color.DARK_ORANGE]
+		power_label.text = "[color=dark_orange]ダメージ倍率[/color]:%f" % ability.amount
+	
+	elif ability is AbilityExtra: # 連続攻撃
+		gradient.colors = [Color.WHITE, Color.DIM_GRAY]
+		power_label.text = "[color=aqua]MP[/color]:%d" % ability.action.mp
+	
 	else:
 		gradient.colors = [Color.BLACK, Color.BLACK]
+		power_label.text = "[center][color=red]ERROR![/color][/center]"
 	
 	fit_name_label_size(ability.bbcode_name)
 	name_label.text = "[b]%s[/b]" % ability.bbcode_name

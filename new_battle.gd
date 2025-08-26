@@ -283,64 +283,91 @@ func monster_button_up(i: int) -> void:
 func select_command(i: int) -> void:
 	$button._on_action_button_selected(i)
 
-## 技発動関数[br]player:trueなら味方の行動、falseなら相手の行動
-func command_selected(monster: BattleMonster, action: Action, index: int)\
- -> void:
+## [param monster]が[param action]を発動する関数[br]
+## 発動対象は[param monster]が味方か敵かどうかと[param index]によって、
+## [code]target_setting[/code]関数を用いて決定される。[br][br]
+## この関数が特殊効果[code]AbilityExtra[/code]によって呼ばれる場合、
+## [param extra]は[code]true[/code]で呼ぶ。(デフォルトは[code]false[/code])
+func command_selected(monster: BattleMonster, action: Action, index: int, 
+extra: AbilityExtra = null) -> void:
 	dialog.set_tab_disabled(1, true)
 	dialog.set_tab_disabled(2, true)
-	var dialog_text: Array[String] # ダイアログに表示するテキストを収納する
-	# 何らかの理由で発動できない技の場合に中断する処理
+	# 発動可能な技かどうかチェック
+	if await action_checker(monster, action) == false:
+		turn_end(monster)
+		return
+	
+	var dialog_text: Array[String] ## ダイアログに表示するテキストを収納する
+	
+	 # mp消費処理
+	if action.mp != 0:
+		dialog_text = monster.mp_setter(-action.mp, true)
+	# AbilityExtraによって発動した技かどうかで表示メッセージを変える
+	if extra == null:
+		dialog_text.append("%s の %s！" % [monster.monster.name, action.name])
+	else:
+		dialog_text.append(extra.battle_log_message)
+	
+	await dialog.text_setter(0, true, dialog_text)
+	
+	# 進化技の時
+	if action.id == 10001 or action.id == 10002:
+		dialog_text = monster.evolution(action.id)
+		await dialog.text_setter(0, true, dialog_text)
+	
+	# 全ての特殊能力について順番に処理
+	for i in len(action.ability):
+		if action.ability[i].timing == Ability.Timing.前:
+			await execute_ability(monster, action.ability[i], index)
+	
+	# 攻撃をする技なら
+	if action.power != 0:
+		var target_list: Array[BattleMonster] = target_setting(
+			monster.player, action, index)
+		
+		for target: BattleMonster in target_list: # 対象にダメージをあたえる
+			var damage_array = damage_calc(action, monster, target)
+			dialog_text = [] # 初期化
+			var text: Array[String] = target.hp_setter(-damage_array[0], true)
+			for t: String in text: # Array[String]から要素を抜き出す
+				t += "\n%s" % damage_array[1] # ダメージ相性のテキストを追加
+				dialog_text.append(t)
+			await dialog.text_setter(0, true, dialog_text)
+	
+			if target.monster.HP <= 0: # 死亡時処理
+				await target.dead(player_monster, enemy_monster)
+	
+	# 全ての特殊能力について順番に処理
+	for i in len(action.ability):
+		if action.ability[i].timing == Ability.Timing.後:
+			await execute_ability(monster, action.ability[i], index)
+	
+	# AbilityExtraによって発動した技ならばそのまま元の処理に戻り、そうでないならターン終了
+	if extra == null:
+		turn_end(monster)
+
+## [param monster]と[param action]を基に何らかの理由で発動できない技の場合に中断する関数。[br]
+## 発動可能な技の場合[code]true[/code]を返し、発動不可な技の場合[code]false[/code]を返す。
+func action_checker(monster: BattleMonster, action: Action) -> bool:
 	# 第1形態から最終形態にスキップするのを防止
 	if len(monster.monster_dict) == 3 \
 	and monster.monster.form == 0 and action.id == 10002:
 		await dialog.text_setter(0, true, [
 		"[color=yellow]%s はまだ最終形態には進化できない！[/color]\n先に第2形態に進化してください！" % 
 		monster.monster.name])
+		return false
 	# mpが足りない場合
-	elif monster.monster.MP < action.mp:
+	if monster.monster.MP < action.mp:
 		await dialog.text_setter(0, true, [
 		"%s の %s！\n[color=yellow]しかし、[color=aqua]MP[/color]が足りない！[/color]" % 
 		[monster.monster.name, action.name]])
-	else:
-		var target_list: Array[BattleMonster] = \
-		target_setting(monster.player, action, index)
-		
-		if action.mp != 0: # mp消費処理
-			dialog_text = monster.mp_setter(-action.mp, true)
-		dialog_text.append("%s の %s！" % [monster.monster.name, action.name])
-		await dialog.text_setter(0, true, dialog_text)
-		
-		if action.id == 10001 or action.id == 10002:
-			dialog_text = monster.evolution(action.id)
-			await dialog.text_setter(0, true, dialog_text)
-		
-		for i in len(action.ability): # 全ての特殊能力について順番に処理
-			if action.ability[i].timing == Ability.Timing.前:
-				await execute_ability(monster, action.ability[i], index)
-		
-		if action.power != 0:
-			for target: BattleMonster in target_list: # 対象にダメージをあたえる
-				var damage_array = damage_calc(action, monster, target)
-				dialog_text = [] # 初期化
-				var text: Array[String] = target.hp_setter(-damage_array[0], true)
-				for t: String in text: # Array[String]から要素を抜き出す
-					t += "\n%s" % damage_array[1] # ダメージ相性のテキストを追加
-					dialog_text.append(t)
-			await dialog.text_setter(0, true, dialog_text)
-		
-		for target: BattleMonster in target_list:
-			if target.monster.HP <= 0: # 死亡時処理
-				await target.dead(player_monster, enemy_monster)
-		
-		for i in len(action.ability): # 全ての特殊能力について順番に処理
-			if action.ability[i].timing == Ability.Timing.後:
-				await execute_ability(monster, action.ability[i], index)
+		return false
 	
-	turn_end(monster)
+	return true
 
 ## 特殊効果[param ability]を発動する関数[br]
 ## [param monster]はその技を発動したモンスター[br]
-## [param index]でどの敵が対象かを割り出す[code]ability_target_setting[/code]関数を呼び出す
+## [param index]でどの敵が対象かを割り出す[code]target_setting[/code]関数を呼び出す
 func execute_ability(monster: BattleMonster, ability: Ability, index: int) -> void:
 	if randi() % 100 + 1 > ability.chance: # 確率範囲外ならその効果の処理スキップ
 		return
@@ -405,6 +432,9 @@ func execute_ability(monster: BattleMonster, ability: Ability, index: int) -> vo
 					pass # TODO 未実装
 			
 			await dialog.text_setter(0, true, dialog_text)
+		
+		elif ability is AbilityExtra: # 連続攻撃
+			await command_selected(monster, ability.action, index, ability)
 
 
 func item_selected(player: bool, monster: BattleMonster, item: Item, index: int) -> void:
