@@ -289,11 +289,11 @@ func mp_setter(n: int, text: bool) -> Array[String]:
 		elif monster.MP + n >= monster.maxMP: # 回復するとMPが最大値を越えてしまう時
 			n = monster.maxMP - monster.MP
 		damage_effect(n, 2)
-	else: # MPを削られた時、色でアニメーション再生
+	else: # MPを削られた時、dark_redでアニメーション再生
 		if monster.MP <= 0: # 何らかの原因で死亡時
 			return []
-		damage_effect(-n, 2) # 仮で水色
-		if monster.MP <= -n: # 残りHPを越えるダメージを受けた時
+		damage_effect(-n, 3)
+		if monster.MP <= -n: # 残りMPを越えるダメージを受けた時
 			n = -monster.MP # MPがマイナスにならないように補正
 	
 	var mp_text = monster.MP
@@ -373,25 +373,16 @@ func damage_effect(dmg: int, type: int) -> void:
 	var text = DAMAGE_TEXT.instantiate() # インスタンス生成
 	match type: # type引数の値によって色を変更する
 		0: # HP回復処理
-			text.self_modulate = Color(Color.GREEN,1.0) # 緑色指定
-		1: # 被ダメージ処理
-			text.self_modulate = Color(Color.ORANGE,1.0) # オレンジ色指定
+			text.self_modulate = Color(Color.GREEN)
+		1: # HP減少処理
+			text.self_modulate = Color(Color.ORANGE)
 		2: # MP回復処理
-			text.self_modulate = Color(Color.AQUA,1.0) # 青色指定
+			text.self_modulate = Color(Color.AQUA)
+		3: # MP減少処理
+			text.self_modulate = Color(Color.DARK_RED)
 		_: # 不明な引数の場合
-			text.self_modulate = Color(Color.WHITE,1.0) # 白色指定
-	text.text = "[b][i]%d[/i][/b]" % dmg
-	text.scale = Vector2(0, 0)
-	text.position =  Vector2(40 + randi() % 100,randi() % 156) # 端や下側に出現しないように調整
+			text.self_modulate = Color(Color.WHITE)
+	
+	var font_size: int = 30 + 10 * len(str(dmg)) ## ダメージの桁数からサイズを求める
+	text.text = "[font_size=%d][b][i]%d[/i][/b][/font_size]" % [font_size, dmg]
 	add_child(text)
-	# ダメージエフェクトアニメーション
-	tween = get_tree().create_tween().bind_node(text)\
-	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property(text, "scale", Vector2(1.5, 1.5), 0.15) # 拡大アニメーション
-	tween.tween_property(text, "scale", Vector2(1, 1), 0.05) # 縮小アニメーション
-	tween.tween_interval(1.0) # 1秒停止# 移動アニメーション
-	tween.tween_property(text, "position:y", text.position.y - 10, 0.1)
-	# 移動+透明化アニメーション
-	tween.tween_property(text, "position:y", text.position.y - 40, 0.4)
-	tween.parallel().tween_property(text, "self_modulate:a", 0, 0.4)
-	tween.tween_callback(text.queue_free) # 削除

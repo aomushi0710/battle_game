@@ -133,3 +133,5 @@ res://action/進化Ⅰ.tres
 res://action/進化Ⅱ.tres
 res://SE_battle.tscn
 res://deck_select.gd
+res://damage_text.tscn
+res://damage_text.gd

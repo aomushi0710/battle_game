@@ -394,6 +394,11 @@ func execute_ability(monster: BattleMonster, ability: Ability, index: int) -> vo
 			if found_effect == false: # 同じエフェクトが見つからなかった時、新たに追加
 				target.add_effect(monster_effect)
 			
+			var damage_text = Global.damage_text.instantiate()
+			damage_text.text = "[font_size=50][b][i]%s[/i][/b][/font_size]" % \
+			ability.bbcode_name.replace(" ", "\n")
+			target.add_child(damage_text)
+			
 			if ability is AbilityBuff: # バフ効果音
 				sound_effect.buff.play()
 			elif ability is AbilityDebuff: # デバフ効果音
