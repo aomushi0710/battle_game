@@ -1,3 +1,4 @@
+VBoxContainer
 AudioStreamPlayer
 HBoxContainer
 RichTextLabel
@@ -9,7 +10,5 @@ Window
 AudioStreamPlayer2D
 Control
 ColorRect
-VBoxContainer
 TabContainer
 Path2D
-RayCast2D

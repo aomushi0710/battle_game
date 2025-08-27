@@ -565,38 +565,33 @@ func item_target_button_up(i: int) -> void:
 
 ## モンスターのステータスをダイアログにセットして表示する関数
 func status_dialog(i: int) -> void:
-	var status_monster: Monster
+	var mon: Monster
 	if now_player == true:
-		status_monster = Global.deck1.monster[i]
+		mon = Global.deck1.monster[i]
 	else:
-		status_monster = Global.enemy_deck.monster[i]
-	
-	var monster_name: String = status_monster.name
-	if len(monster_name) > MONSTER_NAME_LIMIT: # 10文字より多ければ
-		monster_name = monster_name.substr(0, MONSTER_NAME_LIMIT) # 無理やり10文字にする
-	else:
-		for j in MONSTER_NAME_LIMIT - len(monster_name): # 空白を増やして10文字に
-			monster_name += "　" # 空白は全角である
+		mon = Global.enemy_deck.monster[i]
 	
 	# チュートリアル中は、ページ送りを待つ
 	if $"../".tutorial_mode == true:
 		await $dialogtab.text_setter(1, $"../".tutorial_mode, [
-		"%s[color=coral]HP :%3d[/color]   [color=green]SPD:%3d[/color]\n" % 
-		[monster_name, status_monster.maxHP, status_monster.SPD] + 
-		"[color=aqua]MP :%3d / %3d[/color]   " % 
-		[status_monster.supplyMP, status_monster.maxMP] + 
-		"[color=red]ATK:%3d[/color]   [color=light_blue]DEF:%3d[/color]\n" % 
-		[status_monster.ATK, status_monster.DEF] + "[color=aqua](supply / max)[/color]  " + 
-		"[color=dodger_blue]MAG:%3d[/color]   [color=violet]RES:%3d[/color]" % 
-		[status_monster.MAG, status_monster.RES]])
+		mon.name + "\n" + 
+		"[color=coral]HP :%3d[/color] " % mon.maxHP + 
+		" [color=aqua]MP :%3d  /  %3d[/color] " % [mon.supplyMP, mon.maxMP] + 
+		" [color=orange]ATK:%3d[/color] " % mon.ATK + 
+		" [color=light_blue]DEF:%3d[/color]\n" % mon.DEF + 
+		"[color=green]SPD:%3d[/color] " % mon.SPD + 
+		" [color=aqua] (supply / max)[/color] " + 
+		" [color=dodger_blue]MAG:%3d[/color] " % mon.MAG + 
+		" [color=violet]RES:%3d[/color]" % mon.RES])
 		status_paging.emit()
 	else:
 		$dialogtab.text_setter(1, $"../".tutorial_mode, [
-		"%s[color=coral]HP :%3d[/color]   [color=green]SPD:%3d[/color]\n" % 
-		[monster_name, status_monster.maxHP, status_monster.SPD] + 
-		"[color=aqua]MP :%3d / %3d[/color]   " % 
-		[status_monster.supplyMP, status_monster.maxMP] + 
-		"[color=red]ATK:%3d[/color]   [color=light_blue]DEF:%3d[/color]\n" % 
-		[status_monster.ATK, status_monster.DEF] + "[color=aqua](supply / max)[/color]  " + 
-		"[color=dodger_blue]MAG:%3d[/color]   [color=violet]RES:%3d[/color]" % 
-		[status_monster.MAG, status_monster.RES]])
+		mon.name + "\n" + 
+		"[color=coral]HP :%3d[/color] " % mon.maxHP + 
+		" [color=aqua]MP :%3d  /  %3d[/color] " % [mon.supplyMP, mon.maxMP] + 
+		" [color=orange]ATK:%3d[/color] " % mon.ATK + 
+		" [color=light_blue]DEF:%3d[/color]\n" % mon.DEF + 
+		"[color=green]SPD:%3d[/color] " % mon.SPD + 
+		" [color=aqua] (supply / max)[/color] " + 
+		" [color=dodger_blue]MAG:%3d[/color] " % mon.MAG + 
+		" [color=violet]RES:%3d[/color]" % mon.RES])

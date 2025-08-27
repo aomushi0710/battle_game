@@ -139,7 +139,7 @@ func strip_bbcode(text: String) -> String:
 	regex.compile("\\[.*?\\]")
 	return regex.sub(text, "", true)
 
-## モンスターのステータス表示を生成する関数 icon_size:bbcodeのimgタグに用いるアイコンのサイズ
+## モンスターのステータス表示を生成する関数
 func status_text(monster: Monster) -> String:
 	var text = (
 		"[color=coral]HP :%3d" % monster.maxHP + 
