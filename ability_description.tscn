@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dscwo3p8eel0b"]
+[gd_scene load_steps=14 format=3 uid="uid://dscwo3p8eel0b"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_j65xr"]
 [ext_resource type="Script" uid="uid://cmg2imrfeo4hw" path="res://ability_description.gd" id="2_r8xot"]
+[ext_resource type="FontFile" uid="uid://b7nq4crdd7bl0" path="res://DotGothic16-Regular.ttf" id="3_r8xot"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvmqb"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -15,7 +16,7 @@ corner_radius_bottom_left = 1
 
 [sub_resource type="Gradient" id="Gradient_sfoxn"]
 offsets = PackedFloat32Array(0.25, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.411765, 0.411765, 0.411765, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.603922, 0.803922, 0.196078, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2som6"]
 gradient = SubResource("Gradient_sfoxn")
@@ -56,16 +57,31 @@ corner_radius_bottom_left = 1
 expand_margin_left = 4.0
 expand_margin_bottom = 2.0
 
-[sub_resource type="Theme" id="Theme_wjoii"]
+[sub_resource type="Theme" id="Theme_j65xr"]
+default_font = ExtResource("3_r8xot")
 default_font_size = 25
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ge8po"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j65xr"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
+border_color = Color(0.678431, 0.847059, 0.901961, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = 4.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ocsg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.498039, 0.313726, 1)
 corner_radius_top_left = 1
 corner_radius_top_right = 1
 corner_radius_bottom_right = 1
@@ -106,9 +122,9 @@ vertical_alignment = 1
 [node name="target" type="RichTextLabel" parent="."]
 clip_contents = false
 layout_mode = 0
-offset_left = 12.0
+offset_left = 16.0
 offset_top = 98.0
-offset_right = 208.0
+offset_right = 211.0
 offset_bottom = 139.0
 mouse_filter = 2
 theme = SubResource("Theme_0oypb")
@@ -119,9 +135,9 @@ text = "[color=yellow]対象[/color]:敵味方全体"
 [node name="chance" type="RichTextLabel" parent="."]
 clip_contents = false
 layout_mode = 0
-offset_left = 216.0
+offset_left = 217.0
 offset_top = 98.0
-offset_right = 342.0
+offset_right = 338.0
 offset_bottom = 139.0
 mouse_filter = 2
 theme = SubResource("Theme_yujsf")
@@ -130,18 +146,63 @@ bbcode_enabled = true
 text = "[color=green]確率[/color]:100%"
 fit_content = true
 
-[node name="power" type="RichTextLabel" parent="."]
+[node name="AbilityEffect" type="Control" parent="."]
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="AbilityBuff" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="multiplier" type="RichTextLabel" parent="AbilityBuff"]
 clip_contents = false
 layout_mode = 0
-offset_left = 12.0
+offset_left = 16.0
 offset_top = 147.0
-offset_right = 341.0
+offset_right = 211.0
 offset_bottom = 188.0
 mouse_filter = 2
-theme = SubResource("Theme_wjoii")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ge8po")
+theme = SubResource("Theme_j65xr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_j65xr")
 bbcode_enabled = true
-text = "[color=dodger_blue]バフ継続ターン数[/color]:5"
+text = "[color=light_blue]倍率[/color]:123456.5倍"
 
-[node name="AbilityAction" type="Control" parent="."]
+[node name="turn" type="RichTextLabel" parent="AbilityBuff"]
+clip_contents = false
+layout_mode = 0
+offset_left = 217.0
+offset_top = 147.0
+offset_right = 338.0
+offset_bottom = 188.0
+mouse_filter = 2
+theme = SubResource("Theme_j65xr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ocsg")
+bbcode_enabled = true
+text = "[color=cornflower_blue]ターン[/color]:99"
+
+[node name="AbilityHealing" type="Control" parent="."]
 anchors_preset = 0
+mouse_filter = 2
+
+[node name="amount" type="RichTextLabel" parent="AbilityHealing"]
+clip_contents = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 147.0
+offset_right = 338.0
+offset_bottom = 188.0
+mouse_filter = 2
+theme = SubResource("Theme_j65xr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ocsg")
+bbcode_enabled = true
+text = "[color=green]HP回復量[/color]:99999999[color=dodgerblue]MAG[/color]の99%"
+autowrap_mode = 0
+
+[node name="AbilityCritical" type="Control" parent="."]
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="AbilityExtra" type="Control" parent="."]
+anchors_preset = 0
+mouse_filter = 2

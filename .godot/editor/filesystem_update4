@@ -1,4 +1,4 @@
-res://メインシーン.tscn
+res://ability_description.tscn
 res://theme/dialog_theme.tres
 res://theme/default_font_50.tres
 res://theme/action_button.tres
@@ -8,8 +8,9 @@ res://キャラセレクト.gd
 res://clear_font.tres
 res://battle_buttons.gd
 res://theme/battle_tabcontainer.tres
-res://select.gd
-res://tutorial_dialogtab.gd
+res://theme/new_font_file.tres
+res://ability_description.gd
+res://メインシーン.tscn
 res://デッキセレクト.tscn
 res://デッキセーブデータ.tscn
 res://キャラ選択.tscn
@@ -17,7 +18,6 @@ res://shop.tscn
 res://shop_item.tscn
 res://特性・技セレクト.tscn
 res://技セレクト.tscn
-res://ability_description.tscn
 res://accept_dialog.tscn
 res://新バトル.tscn
 res://tutorial.tscn

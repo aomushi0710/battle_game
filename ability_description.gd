@@ -5,45 +5,160 @@ extends Panel
 @onready var target_label := $target
 @onready var chance_label := $chance
 @onready var power_label := $power
-@onready var ability_action := $AbilityAction
+@onready var ability_effect := $AbilityEffect ## AbilityEffectでのみ表示
+@onready var ability_buff := $AbilityBuff ## AbilityBUff及びAbilityDebuffでのみ表示
+@onready var ability_healing := $AbilityHealing ## AbilityHealing及びAbilityReductionでのみ表示
+@onready var ability_critical := $AbilityCritical ## AbilityCritical及びAbilityFumbleでのみ表示
+@onready var ability_extra := $AbilityExtra ## AbilityExtraでのみ表示
 
 var ability: Ability
 
 func _ready() -> void:
 	background.texture = background.texture.duplicate(true)
 	var gradient: Gradient = background.texture.gradient
-	var power_text: String = ""
+	var amount_text: String ## [code]amount[/code]の値によって変わるテキスト
 	if ability is AbilityEffect: # 状態異常
 		pass # 未実装
 	
 	elif ability is AbilityBuff: # バフ
 		gradient.colors = [Color.WHITE, Color.DARK_RED]
-		power_label.text = "[color=red]バフ継続ターン数[/color]:%d" % ability.turn
+		# 不要なラベルを隠す
+		for child in get_children():
+			if child.get_class() == "Control":
+				if child == ability_buff:
+					child.show()
+				else:
+					child.hide()
+		
+		var color_text: String ## ステータスに対応した色コード
+		match ability.status:
+			Global.Status.ATK:
+				color_text = "orange"
+			
+			Global.Status.DEF:
+				color_text = "light_blue"
+			
+			Global.Status.MAG:
+				color_text = "dodger_blue"
+			
+			Global.Status.RES:
+				color_text = "violet"
+		
+		## バフの倍率を表示するRichTextLabel
+		var multiplier: RichTextLabel = ability_buff.get_child(0)
+		multiplier.text = (
+			"[color=%s]倍率[/color]:%8.2f倍" % [color_text, ability.amount])
+		
+		var multiplier_style: StyleBoxFlat = multiplier.get_theme_stylebox("normal")
+		multiplier_style.border_color = Color(color_text)
+		
+		## バフの持続ターン数を表示するRichTextLabel
+		var turn: RichTextLabel = ability_buff.get_child(1)
+		if ability.turn == -1: # ターン数に-1が設定されていた場合は∞ターン
+			turn.text = "[color=salmon]ターン[/color]:∞"
+		else:
+			turn.text = "[color=salmon]ターン[/color]:%2d" % ability.turn
+		
+		var turn_style: StyleBoxFlat = turn.get_theme_stylebox("normal")
+		turn_style.border_color = Color.SALMON
 	
 	elif ability is AbilityDebuff: # デバフ
 		gradient.colors = [Color.WHITE, Color.DARK_BLUE]
-		power_label.text = "[color=royal_blue]デバフ継続ターン数[/color]:%d" % ability.turn
+		# 不要なラベルを隠す
+		for child in get_children():
+			if child.get_class() == "Control":
+				if child == ability_buff:
+					child.show()
+				else:
+					child.hide()
+		
+		var color_text: String ## ステータスに対応した色コード
+		match ability.status:
+			Global.Status.ATK:
+				color_text = "orange"
+			
+			Global.Status.DEF:
+				color_text = "light_blue"
+			
+			Global.Status.MAG:
+				color_text = "dodger_blue"
+			
+			Global.Status.RES:
+				color_text = "violet"
+		
+		## デバフの倍率を表示するRichTextLabel
+		var multiplier: RichTextLabel = ability_buff.get_child(0)
+		multiplier.text = (
+			"[color=%s]倍率[/color]:%8.2f倍" % [color_text, 1 / ability.amount])
+		
+		var multiplier_style: StyleBoxFlat = multiplier.get_theme_stylebox("normal")
+		multiplier_style.border_color = Color(color_text)
+		
+		## バフの持続ターン数を表示するRichTextLabel
+		var turn: RichTextLabel = ability_buff.get_child(1)
+		if ability.turn == -1: # ターン数に-1が設定されていた場合は∞ターン
+			turn.text = "[color=cornflower_blue]ターン[/color]:∞"
+		else:
+			turn.text = "[color=cornflower_blue]ターン[/color]:%2d" % ability.turn
+		
+		var turn_style: StyleBoxFlat = turn.get_theme_stylebox("normal")
+		turn_style.border_color = Color.CORNFLOWER_BLUE
 	
 	elif ability is AbilityHealing: # ゲージ回復
+		# 不要なラベルを隠す
+		for child in get_children():
+			if child.get_class() == "Control":
+				if child == ability_healing:
+					child.show()
+				else:
+					child.hide()
+		
+		var status_text: String ## [code]ability.status[/code]によって変わるテキスト
+		var color_text: String
+		var space_length: int ## 半角スペースの長さ
 		match ability.status:
 			AbilityHealing.Status.HP:
+				color_text = "coral"
 				gradient.colors = [Color.WHITE, Color.YELLOW_GREEN]
-				power_text = "[color=yellow_green]HP回復量[/color]:%s"
+				status_text = "[color=coral]HP[/color][color=yellow_green]回復量[/color]:"
+				space_length = 16
 			
 			AbilityHealing.Status.MP:
+				color_text = "aqua"
 				gradient.colors = [Color.WHITE, Color.AQUA]
-				power_text = "[color=aqua]MP回復量[/color]:%s"
+				status_text = "[color=aqua]MP回復量[/color]:"
+				space_length = 16
 			
 			AbilityHealing.Status.SPD:
+				color_text = "green"
 				gradient.colors = [Color.WHITE, Color.GREEN]
-				power_text = "[color=green]SPD増加量[/color]:%s"
+				status_text = "[color=green]SPD増加量[/color]:"
+				space_length = 15
 		
 		match ability.amount_type:
 			AbilityHealing.AmountType.定数:
-				power_label.text = power_text % "%d" % ability.amount
+				amount_text = str(int(ability.amount))
 			
 			AbilityHealing.AmountType.MAG:
-				power_label.text = power_text % "MAGの%d%%" % (ability.amount * 100)
+				amount_text = "[color=dodger_blue]MAG[/color]の%d%%" % (ability.amount * 100)
+				space_length -= 1 # 全角の数だけ追加で減らす
+		
+		# ALERT ability.amount_type及びamountによって変わるテキストamount_text
+		# の長さによって必要なだけ"0"を入力し、BBcodeのcolorタグで透明を指定することで
+		# 半角スペースと同様に扱っている。これは膨大な桁数において文字列フォーマットの%
+		# を使用すると、実際に文字が入った場合と空白で補完された場合の幅に、差異が生じる
+		# バグへの原始的かつ応急的な処置である。
+		space_length -= len(Global.strip_bbcode(amount_text))
+		var space: String = "" ## 空白の代わりとして用いる"0"の集まり
+		for i in space_length:
+			space += "0"
+		
+		## 増加量を表示するRichTextLabel
+		var amount: RichTextLabel = ability_healing.get_child(0)
+		amount.text = "%s[color=transparent]%s[/color]%s" % [status_text, space, amount_text]
+		
+		var amount_style: StyleBoxFlat = amount.get_theme_stylebox("normal")
+		amount_style.border_color = Color(color_text)
 	
 	elif ability is AbilityCritical: # ダメージ倍率増加
 		gradient.colors = [Color.WHITE, Color.DARK_ORANGE]
@@ -52,7 +167,12 @@ func _ready() -> void:
 	elif ability is AbilityExtra: # 連続攻撃
 		gradient.colors = [Color.WHITE, Color.DIM_GRAY]
 		# 不要なラベルを隠す
-		power_label.hide()
+		for child in get_children():
+			if child.get_class() == "Control":
+				if child == ability_extra:
+					child.show()
+				else:
+					child.hide()
 		# 技ボタンを生成する
 		var button = Global.action_button.instantiate()
 		button.action = ability.action
@@ -65,8 +185,7 @@ func _ready() -> void:
 		if parent.name == "セレクト":
 			button.button_up.connect(func(): 
 				parent.action_button_up(ability.action, true))
-		ability_action.add_child(button)
-		ability_action.show()
+		ability_extra.add_child(button)
 	
 	else:
 		gradient.colors = [Color.BLACK, Color.BLACK]

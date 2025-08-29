@@ -1,3 +1,4 @@
+FontFile
 AbilityBuff
 AbilityFumble
 AbilityCritical
@@ -10,4 +11,3 @@ Ability
 Monster
 Element
 Resource
-FontFile
