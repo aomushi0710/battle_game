@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=48 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="1_ilscs"]
@@ -16,7 +16,6 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lobs"]
 bg_color = Color(0, 0, 0, 1)
-skew = Vector2(0.2, 0)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -26,8 +25,9 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-expand_margin_left = 2.0
-expand_margin_right = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ltw0u"]
+content_margin_left = 8.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hqx4"]
 border_width_left = 2
@@ -296,16 +296,31 @@ offset_bottom = 1051.0
 mouse_default_cursor_shape = 2
 text = "決定！"
 
-[node name="help" type="RichTextLabel" parent="CanvasLayer/Control"]
-clip_contents = false
+[node name="Panel" type="Panel" parent="CanvasLayer/Control"]
+clip_contents = true
 layout_mode = 0
 offset_left = 233.0
 offset_top = 970.0
 offset_right = 1691.0
 offset_bottom = 1051.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_4lobs")
+theme_override_styles/panel = SubResource("StyleBoxFlat_4lobs")
+
+[node name="mask" type="Control" parent="CanvasLayer/Control/Panel"]
+clip_contents = true
+anchors_preset = 0
+offset_left = 2.0
+offset_right = 1456.0
+offset_bottom = 81.0
+
+[node name="help" type="RichTextLabel" parent="CanvasLayer/Control/Panel/mask"]
+clip_contents = false
+layout_mode = 0
+offset_right = 1472.0
+offset_bottom = 81.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ltw0u")
 bbcode_enabled = true
-text = "[i]ボタンにカーソルを合わせるとヘルプテキストが表示されます。[/i]"
+text = "[i]ボタンにカーソルを合わせるとヘルプテキストが表示さaaaaaaaaaaaaaaaaaaaaaaaれます。[/i]"
+autowrap_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(960, 540)
@@ -455,7 +470,6 @@ text = "❌"
 flat = true
 
 [node name="action_select" type="Control" parent="セレクト"]
-visible = false
 anchors_preset = 0
 offset_left = 1920.0
 offset_right = 1960.0
@@ -472,7 +486,6 @@ mouse_default_cursor_shape = 2
 theme_override_constants/center_grabber = 1
 theme_override_icons/tick = SubResource("GradientTexture2D_250y8")
 theme_override_styles/slider = SubResource("StyleBoxLine_ilscs")
-tick_count = 5
 ticks_on_borders = true
 
 [node name="SpinBox" type="SpinBox" parent="セレクト/action_select"]
@@ -567,7 +580,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_oeulo")
 bbcode_enabled = true
 text = "分類:[color=red]物理[/color]"
 
-[node name="range" type="RichTextLabel" parent="セレクト/action_description"]
+[node name="target" type="RichTextLabel" parent="セレクト/action_description"]
 clip_contents = false
 layout_mode = 2
 offset_left = 238.0
@@ -636,6 +649,8 @@ metadata/_tab_index = 0
 
 [node name="container" type="VBoxContainer" parent="セレクト/action_list/　　技　　"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 0
 
 [node name="中間進化技" type="ScrollContainer" parent="セレクト/action_list"]
@@ -801,6 +816,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("10_250y8")
+metadata/_edit_lock_ = true
 
 [node name="ColorRect" type="ColorRect" parent="background"]
 z_index = -10

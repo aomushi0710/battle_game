@@ -142,3 +142,6 @@ theme = SubResource("Theme_wjoii")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ge8po")
 bbcode_enabled = true
 text = "[color=dodger_blue]バフ継続ターン数[/color]:5"
+
+[node name="AbilityAction" type="Control" parent="."]
+anchors_preset = 0

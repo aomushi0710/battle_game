@@ -5,6 +5,7 @@ extends Panel
 @onready var target_label := $target
 @onready var chance_label := $chance
 @onready var power_label := $power
+@onready var ability_action := $AbilityAction
 
 var ability: Ability
 
@@ -50,7 +51,22 @@ func _ready() -> void:
 	
 	elif ability is AbilityExtra: # 連続攻撃
 		gradient.colors = [Color.WHITE, Color.DIM_GRAY]
-		power_label.text = "[color=aqua]MP[/color]:%d" % ability.action.mp
+		# 不要なラベルを隠す
+		power_label.hide()
+		# 技ボタンを生成する
+		var button = Global.action_button.instantiate()
+		button.action = ability.action
+		button.position = Vector2(8, 147)
+		button.scale = Vector2(0.67, 0.67)
+		button.size.x = 497
+		# 再帰的に親のセレクトノードを探す
+		var parent = get_parent().get_parent().get_parent().get_parent()
+		# セレクト画面の時だけ、技の説明を表示する関数に接続
+		if parent.name == "セレクト":
+			button.button_up.connect(func(): 
+				parent.action_button_up(ability.action, true))
+		ability_action.add_child(button)
+		ability_action.show()
 	
 	else:
 		gradient.colors = [Color.BLACK, Color.BLACK]

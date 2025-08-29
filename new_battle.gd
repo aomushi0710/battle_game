@@ -748,6 +748,8 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 				
 				AbilityCritical.AmountType.乗算:
 					damage *= ability.amount
+			
+			magnification_text += ability.battle_log_message
 		
 		elif ability is AbilityFumble:
 			match ability.amount_type:
@@ -757,6 +759,6 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 				AbilityFumble.AmountType.除算:
 					damage /= ability.amount
 		
-		magnification_text += ability.battle_log_message
+			magnification_text += ability.battle_log_message
 	
 	return [int(damage), magnification_text]

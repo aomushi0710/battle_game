@@ -6,12 +6,13 @@ extends Control
 @onready var accept_dialog = $"../AcceptDialog"
 @onready var back_button := $"../CanvasLayer/Control/戻る"
 @onready var confirm_button := $"../CanvasLayer/Control/決定"
-@onready var help_label := $"../CanvasLayer/Control/help"
+@onready var help_mask := $"../CanvasLayer/Control/Panel/mask"
+@onready var help_label := $"../CanvasLayer/Control/Panel/mask/help"
 @onready var action_select := $action_select
 @onready var slider := $action_select/chance
 @onready var spinbox := $action_select/SpinBox
 @onready var action_list := $action_list
-var text_speed: float = 0.04 ## テキストアニメーションの1文字あたりの再生速度
+var text_speed: float = 0.05 ## テキストアニメーションの1文字あたりの再生速度
 var selected_action: Action ## 現在選択中の技
 var selected_skill = 0 # 選ばれたスキルパターン
 var now_select_action = 0 # 現在指定されている技
@@ -80,7 +81,7 @@ func _ready() -> void:
 	# スクリプト上でしかtabbarはいじれないので
 	action_list.get_tab_bar().mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	
-	connect_hover_signal(self)
+	connect_hover_signal($"..")
 
 ## help_textデータを持つ全てのノード[param node]にシグナルを接続する再起関数
 func connect_hover_signal(node: Node) -> void:
@@ -96,14 +97,25 @@ func connect_hover_signal(node: Node) -> void:
 
 ## [param label]に表示される[param text]を少しずつ表示させるアニメーションを再生する関数
 func text_animation(label: RichTextLabel, text: String) -> void:
+	# アニメーション中なら中断
 	if text_tween and text_tween.is_running():
 		text_tween.kill()
-	label.visible_characters = 0
+	
 	label.text = text
-	var text_length: int = len(Global.strip_bbcode(text))
-	text_tween = get_tree().create_tween().bind_node(label)
-	text_tween.tween_property(label, "visible_characters", 
-	text_length, text_length * text_speed)
+	label.size.x = label.get_content_width()
+	label.position.x = 0
+	# 文字が枠をはみ出す時
+	if label.get_content_width() > help_mask.size.x:
+		label.text += "　　" # 前後を空白で区切る
+		var final_val: int = -label.get_content_width() # 1ループ分の移動先
+		var duration: float = -final_val * text_speed * 0.1
+		label.text += text # ループ後に元の文字が戻ってくるように追加
+		label.size.x = label.get_content_width() # 画面外に消えるのを防止
+		
+		text_tween = get_tree().create_tween().bind_node(label).set_loops()
+		text_tween.tween_interval(2)
+		text_tween.tween_property(label, "position:x", final_val, duration)
+		text_tween.tween_callback(func(): label.position.x = 0)
 
 ## 円グラフ更新関数
 func pie_chart_update() -> void:
@@ -156,7 +168,7 @@ func setting_action_button() -> void:
 			container.add_child(button)
 
 ## 技ボタンが押された時の関数
-func action_button_up(act: Action) -> void:
+func action_button_up(act: Action, extra: bool = false) -> void:
 	var container := $action_description/ability/container
 	for child in container.get_children(): # 初期化
 		child.queue_free()
@@ -185,28 +197,39 @@ func action_button_up(act: Action) -> void:
 	button.name = "action_button"
 	button.position = Vector2(160, 20)
 	button.action = act
-	button.mouse_filter = Control.MOUSE_FILTER_IGNORE # 押せなくする
 	button.mouse_default_cursor_shape = Control.CURSOR_ARROW # カーソルも戻す
+	button.set_meta("help_text", act.description)
+	connect_hover_signal(button)
 	action_select.add_child(button)
 	
-	for node in [slider, spinbox]: # sliderとspinboxのセッティング
-		# この時点では、先に設定していた技の最大値を、次に選ばれた技の確率が越えていた場合に、
-		# 最大値に引っかかってしまう
-		if act in actions:
-			node.set_value_no_signal(chances[actions.find(act)])
-		else:
-			node.set_value_no_signal(0)
-		node.max_value = float(act.max_chance)
-		# もう一度値を設定して、適切な値に戻す
-		if act in actions:
-			node.set_value_no_signal(chances[actions.find(act)])
-		$action_select/max_chance.text = "%d%%" % act.max_chance
-	slider.tick_count = slider.max_value / 10 + 1
+	if extra == true: # 技ボタン以外隠す
+		for child in action_select.get_children():
+			if child is Range:
+				child.editable = false
+				if child is HSlider:
+					child.tick_count = 0
+			elif child is RichTextLabel:
+				child.hide()
+	else:
+		for node in [slider, spinbox]: # sliderとspinboxのセッティング
+			# この時点では、先に設定していた技の最大値を、次に選ばれた技の確率が越えていた場合に、
+			# 最大値に引っかかってしまう
+			if act in actions:
+				node.set_value_no_signal(chances[actions.find(act)])
+			else:
+				node.set_value_no_signal(0)
+			node.max_value = float(act.max_chance)
+			# もう一度値を設定して、適切な値に戻す
+			if act in actions:
+				node.set_value_no_signal(chances[actions.find(act)])
+			$action_select/max_chance.text = "%d%%" % act.max_chance
+			node.editable = true
+		slider.tick_count = slider.max_value / 10 + 1
 	
 	var power: RichTextLabel = $action_description/power
 	var mp: RichTextLabel = $action_description/mp
 	var type: RichTextLabel = $action_description/type
-	var range: RichTextLabel = $action_description/range
+	var target: RichTextLabel = $action_description/target
 	power.text = "[color=red]Power[/color]:%4d" % act.power
 	mp.text = "[color=aqua]MP   [/color]:%4d" % act.mp
 	
@@ -228,28 +251,28 @@ func action_button_up(act: Action) -> void:
 	
 	match act.target: # 範囲によってテキストを変える
 		Global.Target.なし:
-			range.text = "[color=yellow]対象[/color]:なし"
+			target.text = "[color=yellow]対象[/color]:なし"
 		
 		Global.Target.近接:
-			range.text = "[color=yellow]対象[/color]:近接"
+			target.text = "[color=yellow]対象[/color]:近接"
 		
 		Global.Target.遠隔:
-			range.text = "[color=yellow]対象[/color]:遠隔"
+			target.text = "[color=yellow]対象[/color]:遠隔"
 		
 		Global.Target.敵全体:
-			range.text = "[color=yellow]対象[/color]:敵全体"
+			target.text = "[color=yellow]対象[/color]:敵全体"
 		
 		Global.Target.自分:
-			range.text = "[color=yellow]対象[/color]:自分"
+			target.text = "[color=yellow]対象[/color]:自分"
 		
 		Global.Target.味方単体:
-			range.text = "[color=yellow]対象[/color]:味方単体"
+			target.text = "[color=yellow]対象[/color]:味方単体"
 		
 		Global.Target.味方全体:
-			range.text = "[color=yellow]対象[/color]:味方全体"
+			target.text = "[color=yellow]対象[/color]:味方全体"
 		
 		Global.Target.敵味方全体:
-			range.text = "[color=yellow]対象[/color]:敵味方全体"
+			target.text = "[color=yellow]対象[/color]:敵味方全体"
 	
 	for ability: Ability in act.ability:
 		var description = Global.ability_description.instantiate()

@@ -1,14 +1,14 @@
+Control
+RichTextLabel
+Panel
 VBoxContainer
 AudioStreamPlayer
 HBoxContainer
-RichTextLabel
-Panel
 TextureRect
 ScrollContainer
 AcceptDialog
 Window
 AudioStreamPlayer2D
-Control
 ColorRect
 TabContainer
 Path2D
