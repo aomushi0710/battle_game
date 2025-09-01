@@ -114,23 +114,19 @@ func _ready() -> void:
 					child.hide()
 		
 		var status_text: String ## [code]ability.status[/code]によって変わるテキスト
-		var color_text: String
 		var space_length: int ## 半角スペースの長さ
 		match ability.status:
 			AbilityHealing.Status.HP:
-				color_text = "coral"
 				gradient.colors = [Color.WHITE, Color.YELLOW_GREEN]
 				status_text = "[color=coral]HP[/color][color=yellow_green]回復量[/color]:"
 				space_length = 16
 			
 			AbilityHealing.Status.MP:
-				color_text = "aqua"
 				gradient.colors = [Color.WHITE, Color.AQUA]
 				status_text = "[color=aqua]MP回復量[/color]:"
 				space_length = 16
 			
 			AbilityHealing.Status.SPD:
-				color_text = "green"
 				gradient.colors = [Color.WHITE, Color.GREEN]
 				status_text = "[color=green]SPD増加量[/color]:"
 				space_length = 15
@@ -149,20 +145,48 @@ func _ready() -> void:
 		# を使用すると、実際に文字が入った場合と空白で補完された場合の幅に、差異が生じる
 		# バグへの原始的かつ応急的な処置である。
 		space_length -= len(Global.strip_bbcode(amount_text))
-		var space: String = "" ## 空白の代わりとして用いる"0"の集まり
+		## 空白の代わりとして用いる"0"の集まり
+		var space: String = "[color=transparent]"
 		for i in space_length:
 			space += "0"
+		space += "[/color]"
 		
 		## 増加量を表示するRichTextLabel
 		var amount: RichTextLabel = ability_healing.get_child(0)
-		amount.text = "%s[color=transparent]%s[/color]%s" % [status_text, space, amount_text]
+		amount.text = "%s%s%s" % [status_text, space, amount_text]
 		
 		var amount_style: StyleBoxFlat = amount.get_theme_stylebox("normal")
-		amount_style.border_color = Color(color_text)
+		amount_style.border_color = Color.WHITE
 	
 	elif ability is AbilityCritical: # ダメージ倍率増加
 		gradient.colors = [Color.WHITE, Color.DARK_ORANGE]
-		power_label.text = "[color=dark_orange]ダメージ倍率[/color]:%f" % ability.amount
+		# 不要なラベルを隠す
+		for child in get_children():
+			if child.get_class() == "Control":
+				if child == ability_critical:
+					child.show()
+				else:
+					child.hide()
+		
+		## 増加量を表示するRichTextLabel
+		var amount: RichTextLabel = ability_critical.get_child(0)
+		var space_length: int = 10 ## 半角スペースの長さ
+		amount_text = "%.2f" % ability.amount
+		
+		# ALERT この処理についてはmatch文のAbilityHealingの部分を参照
+		space_length -= len(Global.strip_bbcode(amount_text))
+		## 空白の代わりとして用いる"0"の集まり
+		var space: String = "[color=transparent]"
+		for i in space_length:
+			space += "0"
+		space += "[/color]"
+		
+		amount.text = (
+			"[color=dark_orange]ダメージ倍率[/color]:%s%s倍" % 
+			[space, amount_text])
+		
+		var amount_style: StyleBoxFlat = amount.get_theme_stylebox("normal")
+		amount_style.border_color = Color.RED
 	
 	elif ability is AbilityExtra: # 連続攻撃
 		gradient.colors = [Color.WHITE, Color.DIM_GRAY]

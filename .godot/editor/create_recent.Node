@@ -1,10 +1,11 @@
+Button
 Control
-RichTextLabel
+TextureRect
 Panel
 VBoxContainer
-AudioStreamPlayer
+RichTextLabel
 HBoxContainer
-TextureRect
+AudioStreamPlayer
 ScrollContainer
 AcceptDialog
 Window

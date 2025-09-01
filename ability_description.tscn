@@ -2,7 +2,6 @@
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_j65xr"]
 [ext_resource type="Script" uid="uid://cmg2imrfeo4hw" path="res://ability_description.gd" id="2_r8xot"]
-[ext_resource type="FontFile" uid="uid://b7nq4crdd7bl0" path="res://DotGothic16-Regular.ttf" id="3_r8xot"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvmqb"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -16,7 +15,7 @@ corner_radius_bottom_left = 1
 
 [sub_resource type="Gradient" id="Gradient_sfoxn"]
 offsets = PackedFloat32Array(0.25, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.603922, 0.803922, 0.196078, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.54902, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2som6"]
 gradient = SubResource("Gradient_sfoxn")
@@ -58,7 +57,6 @@ expand_margin_left = 4.0
 expand_margin_bottom = 2.0
 
 [sub_resource type="Theme" id="Theme_j65xr"]
-default_font = ExtResource("3_r8xot")
 default_font_size = 25
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j65xr"]
@@ -76,6 +74,20 @@ expand_margin_left = 4.0
 expand_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ocsg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = 4.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8xot"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 2
 border_width_top = 2
@@ -196,12 +208,27 @@ mouse_filter = 2
 theme = SubResource("Theme_j65xr")
 theme_override_styles/normal = SubResource("StyleBoxFlat_6ocsg")
 bbcode_enabled = true
-text = "[color=green]HP回復量[/color]:99999999[color=dodgerblue]MAG[/color]の99%"
+text = "[color=darkorange]ダメージ倍率[/color]:0000000.00倍"
 autowrap_mode = 0
 
 [node name="AbilityCritical" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 mouse_filter = 2
+
+[node name="multiplier" type="RichTextLabel" parent="AbilityCritical"]
+clip_contents = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 147.0
+offset_right = 338.0
+offset_bottom = 188.0
+mouse_filter = 2
+theme = SubResource("Theme_j65xr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_r8xot")
+bbcode_enabled = true
+text = "[color=green]HP回復量[/color]:99999999[color=dodgerblue]MAG[/color]の99%"
+autowrap_mode = 0
 
 [node name="AbilityExtra" type="Control" parent="."]
 anchors_preset = 0

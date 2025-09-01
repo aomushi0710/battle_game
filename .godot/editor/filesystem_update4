@@ -8,7 +8,6 @@ res://キャラセレクト.gd
 res://clear_font.tres
 res://battle_buttons.gd
 res://theme/battle_tabcontainer.tres
-res://theme/new_font_file.tres
 res://ability_description.gd
 res://メインシーン.tscn
 res://デッキセレクト.tscn
@@ -28,3 +27,5 @@ res://transition_flash.tscn
 res://SE_menu.tscn
 res://SE_battle.tscn
 res://action_button.tscn
+res://Global.gd
+res://select.gd

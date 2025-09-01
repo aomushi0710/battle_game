@@ -8,9 +8,11 @@ extends Control
 @onready var confirm_button := $"../CanvasLayer/Control/決定"
 @onready var help_mask := $"../CanvasLayer/Control/Panel/mask"
 @onready var help_label := $"../CanvasLayer/Control/Panel/mask/help"
+@onready var status := $status
 @onready var action_select := $action_select
 @onready var slider := $action_select/chance
 @onready var spinbox := $action_select/SpinBox
+@onready var action_description := $action_description
 @onready var action_list := $action_list
 var text_speed: float = 0.05 ## テキストアニメーションの1文字あたりの再生速度
 var selected_action: Action ## 現在選択中の技
@@ -18,6 +20,7 @@ var selected_skill = 0 # 選ばれたスキルパターン
 var now_select_action = 0 # 現在指定されている技
 var monster_id = Global.selected_monster
 var monster_dict ## 現在選択中のモンスターの辞書
+var monster: Monster ## 現在選択中のモンスター
 var actions: Array[Action] = [null, null, null, null] ## 選ばれた技
 var chances: Array[int] = [0, 0, 0, 0] ## 選ばれた技の出現確率
 var check_provability = [] # 出現率0%弾き出し用
@@ -60,9 +63,14 @@ enum CameraMode{
 
 func _ready() -> void:
 	monster_dict = Global.monster_data[monster_id].duplicate() # 初期化
+	monster = monster_dict[0] # 進化前
 	camera.offset = Vector2(960, 540)
 	# 進化前モンスターを表示
 	$monster.texture = monster_dict[0].image
+	
+	# 棒グラフ生成
+	bar_chart_update()
+	
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
 	if Global.deck1.monster[Global.now_picking] != null:
 		if Global.deck1.monster[Global.now_picking].id == monster_id:
@@ -80,6 +88,13 @@ func _ready() -> void:
 	setting_action_button()
 	# スクリプト上でしかtabbarはいじれないので
 	action_list.get_tab_bar().mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	action_list.set_tab_metadata(0, "モンスターが発動できる技の一覧です。")
+	action_list.set_tab_metadata(1, 
+	"モンスターが中間進化後に、発動できる技の一覧です。この技を登録すると、" + 
+	"バトル中に同じ確率で「進化Ⅰ」が現れ、中間進化することでこの技が発動できるようになります。")
+	action_list.set_tab_metadata(2, 
+	"モンスターが進化後に、発動できる技の一覧です。この技を登録すると、" + 
+	"バトル中に同じ確率で「進化Ⅱ」が現れ、進化することでこの技が発動できるようになります。")
 	
 	connect_hover_signal($"..")
 
@@ -89,8 +104,11 @@ func connect_hover_signal(node: Node) -> void:
 		node.mouse_entered.connect(func(): 
 			var text: String = "[i]%s[/i]" % node.get_meta("help_text")
 			text_animation(help_label, text.replace("\n", "")))
-		node.mouse_exited.connect(func():
-			text_animation(help_label, "[i]ボタンにカーソルを合わせるとヘルプテキストが表示されます。[/i]"))
+	
+	elif node is TabContainer: # TabBarにおけるメタデータの設定はやり方が違うので
+			node.tab_clicked.connect(func(index):
+				var text: String = "[i]%s[/i]" % node.get_tab_metadata(index)
+				text_animation(help_label, text.replace("\n", "")))
 	
 	for child in node.get_children():
 		connect_hover_signal(child)
@@ -117,7 +135,34 @@ func text_animation(label: RichTextLabel, text: String) -> void:
 		text_tween.tween_property(label, "position:x", final_val, duration)
 		text_tween.tween_callback(func(): label.position.x = 0)
 
-## 円グラフ更新関数
+## ステータス棒グラフ更新関数
+func bar_chart_update() -> void:
+	var status_list = [ ## 表示したいモンスターのステータス一覧
+		monster.maxHP, 
+		monster.maxMP, 
+		monster.supplyMP, 
+		monster.SPD, 
+		monster.ATK, 
+		monster.DEF, 
+		monster.MAG, 
+		monster.RES
+		]
+	var status_index: int = 0 ## status_listのindex指定用
+	for child in status.get_child(0).get_children():
+		for c in child.get_children():
+			if c is RichTextLabel: # ステータス値表示
+				c.text = c.text % status_list[status_index]
+			elif c is TextureRect: # バー生成
+				# TODO 長さの表現は修正の余地あり
+				c.custom_minimum_size.x = 0
+				var tween: Tween
+				tween = get_tree().create_tween().bind_node(c)\
+				.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+				tween.tween_property(c, "custom_minimum_size:x", 
+				status_list[status_index], 1)
+		status_index += 1
+
+## 選択中の技出現確率円グラフ更新関数
 func pie_chart_update() -> void:
 	pie_chart.actions = actions
 	pie_chart.chances = chances
@@ -157,10 +202,15 @@ func pie_chart_update() -> void:
 
 ## 全ての形態に関して、技をそれぞれのコンテナにボタン化して追加する関数
 func setting_action_button() -> void:
-	for monster: Monster in monster_dict.values():
+	if len(monster_dict) == 2: # 中間進化がない時
+		action_list.set_tab_disabled(1, true)
+		if len(monster_dict) == 1: # 進化がない時
+			action_list.set_tab_disabled(2, true)
+	
+	for mon: Monster in monster_dict.values():
 		## 技が追加されるコンテナ(TabContainer -> ScrollContainer -> VboxContainer)
-		var container = action_list.get_child(monster.form).get_child(0)
-		for act: Action in monster.actions:
+		var container = action_list.get_child(mon.form).get_child(0)
+		for act: Action in mon.actions:
 			var button = Global.action_button.instantiate()
 			button.action = act
 			button.button_up.connect(func(): action_button_up(button.action))
@@ -179,7 +229,8 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 	if act == null: # nullなら移動だけして中断
 		return
 	
-	$action_select.show() # nullじゃなければ表示
+	action_select.show() # nullじゃなければ表示
+	action_description.show()
 	
 	selected_action = act
 	# 選ばれた技が既に登録されているかどうかで登録ボタンの挙動を変える
@@ -202,7 +253,7 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 	connect_hover_signal(button)
 	action_select.add_child(button)
 	
-	if extra == true: # 技ボタン以外隠す
+	if extra == true: # 確率表記を隠し、sliderとspinboxを操作不能に
 		for child in action_select.get_children():
 			if child is Range:
 				child.editable = false
@@ -225,6 +276,9 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 			$action_select/max_chance.text = "%d%%" % act.max_chance
 			node.editable = true
 		slider.tick_count = slider.max_value / 10 + 1
+		
+		for child in action_select.get_children():
+			child.show()
 	
 	var power: RichTextLabel = $action_description/power
 	var mp: RichTextLabel = $action_description/mp
@@ -238,48 +292,64 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 			type.text = "分類:なし"
 			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
 			style.border_color = Color.WHITE
+			type.set_meta("help_text", "いずれのステータスも参照しません。")
 		
 		Action.DamageType.物理:
 			type.text = "分類:[color=red]物理[/color]"
 			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
 			style.border_color = Color.RED
+			type.set_meta("help_text", 
+			"攻撃側の[color=orange]ATK[/color]と" + \
+			"守備側の[color=lightblue]DEF[/color]を参照します。")
 		
 		Action.DamageType.魔法:
 			type.text = "分類:[color=dodger_blue]魔法[/color]"
 			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
 			style.border_color = Color.DODGER_BLUE
+			type.set_meta("help_text", 
+			"攻撃側の[color=dodgerblue]MAG[/color]と" + \
+			"守備側の[color=violet]RES[/color]を参照します。")
 	
 	match act.target: # 範囲によってテキストを変える
 		Global.Target.なし:
 			target.text = "[color=yellow]対象[/color]:なし"
+			target.set_meta("help_text", "ダメージを与えません。")
 		
 		Global.Target.近接:
 			target.text = "[color=yellow]対象[/color]:近接"
+			target.set_meta("help_text", "場に出ている目の前の敵にダメージを与えます。")
 		
 		Global.Target.遠隔:
 			target.text = "[color=yellow]対象[/color]:遠隔"
+			target.set_meta("help_text", "場に出ていない遠くの敵にもダメージを与えられます。")
 		
 		Global.Target.敵全体:
 			target.text = "[color=yellow]対象[/color]:敵全体"
+			target.set_meta("help_text", "敵全体にダメージを与えます。")
 		
 		Global.Target.自分:
 			target.text = "[color=yellow]対象[/color]:自分"
+			target.set_meta("help_text", "自分にダメージを与えます。")
 		
 		Global.Target.味方単体:
 			target.text = "[color=yellow]対象[/color]:味方単体"
+			target.set_meta("help_text", "味方を1体だけ選んでダメージを与えます。")
 		
 		Global.Target.味方全体:
 			target.text = "[color=yellow]対象[/color]:味方全体"
+			target.set_meta("help_text", "味方全体にダメージを与えます。")
 		
 		Global.Target.敵味方全体:
 			target.text = "[color=yellow]対象[/color]:敵味方全体"
+			target.set_meta("help_text", "敵全体と味方全体にダメージを与えます。")
 	
 	for ability: Ability in act.ability:
 		var description = Global.ability_description.instantiate()
 		description.ability = ability
 		description.set_meta("help_text", ability.description)
-		connect_hover_signal(description)
 		container.add_child(description)
+	
+	connect_hover_signal(action_description)
 
 ## 技削除ボタンの処理
 func delete_button_up(i: int) -> void:
@@ -366,72 +436,6 @@ func _on_決定_button_up():
 func _on_スキルボタン_item_selected(index: int): # オプションボタンで選んだパターンを登録
 	selected_skill = index + 1
 
-func _on_技_select(act: Action):
-	$description_ui/description.position.y = 250 # 説明文の位置初期化
-	$description_ui/description.size.y = 365
-	if $description_ui/ability:
-		$description_ui/ability.queue_free() # 初回のみ表示され、以降表示しない
-	
-	# ability数をget_children()でカウントしてその数だけabilityを消す。
-	# index-1指定のループは予期しない動作をするため
-	for i in range($description_ui.get_children().size() - 1, 7, -1):
-		$description_ui.get_child(i).queue_free()
-	
-	# 以下、技説明表示
-	var aka = act.name
-	if act.aka != "": # 略称が存在する場合、略称をtooltipに登録
-		aka = "[hint=バトル中は %s と表示されます]%s[/hint]" % [act.aka, act.name]
-	
-	var descriptions: Array[String] = Global.action_description_creator(act, false)
-	
-	if act.ability.is_empty() == false: # 技の追加効果が存在する場合
-		if (len(act.ability) != len(act.ability_chance) or # エラー処理
-		len(act.ability_chance) != len(act.ability_power) or 
-		len(act.ability_power) != len(act.ability)):
-			$エラーメッセージ.dialog_text = "エラーメッセージ\n\
-			特殊効果カテゴリの配列のサイズが一致しません！"
-			$エラーメッセージ.popup_centered()
-			return
-			
-		for i in len(act.ability):
-			var ability_ui = load("res://description_ui_ability.tscn").instantiate()
-			var text = ability_ui.get_child(0)
-			
-			var ability_descriptions: Array = \
-			Global.ability_description_creator(act, i, false)
-			
-			text.text = "[center]%s\n%s %s\n%s[/center]" % \
-			[ability_descriptions[0], ability_descriptions[1], 
-			ability_descriptions[2], ability_descriptions[3]]
-			
-			ability_ui.color = ability_descriptions[4]
-			
-			if i != 0: # 複数のabilityを持つときabilityの表示位置をずらす
-				ability_ui.position.y += i * 80 # abilityの位置はループごとにリセットされるので乗算
-				$description_ui/description.position.y += 80 # descriptionの位置は
-				$description_ui/description.size.y -= 80 # ループしてもリセットされない
-			
-			$description_ui.add_child(ability_ui,-1)
-	
-	else: # 技の追加効果が存在しない場合
-		var ability = load("res://description_ui_ability.tscn").instantiate()
-		ability.color = Color(0, 0, 0, 0.5)
-		var text = ability.get_child(0)
-		text.text = "[center]なし\n対象:[color=yellow]――――[/color] 確率:[color=green]---%[/color][/center]"
-		$description_ui.add_child(ability,-1)
-	
-	$description_ui/name/name_text.text = "[center][b][i]%s[/i][/b][/center]" % aka
-	$description_ui/element/element_text.selected(act, 25)
-	$description_ui/damage_type/damage_type_text.text = "[center]%s[/center]" % descriptions[0]
-	$description_ui/target/target_text.text = "[center]%s[/center]" % descriptions[1]
-	$description_ui/max_frequency/max_frequency_text.text = "[center][hint=技の出現率を設定できる上限\n
-	この値を越える確率で技が選ばれることはありません]出現率上限[color=green]%s%%[/color][/hint][/center]" % act.max_chance
-	$description_ui/mp/mp_text.text = \
-	"[center][hint=技の使用に必要なMP]MP Cost:[color=aqua]%s[/color][/hint][/center]" % act.mp
-	$description_ui/power/power_text.text = \
-	"[center][hint=技の基礎的な威力]Power:[color=red]%s[/color][/hint][/center]" % act.power
-	$description_ui/description.text = act.description
-
 
 func reset():
 	actions = [null, null, null, null]
@@ -459,3 +463,7 @@ func _on_chance_value_changed(value: int) -> void:
 	
 	for node in [slider, spinbox]: # sliderとspinboxを更新
 		node.set_value_no_signal(value)
+
+
+func _on_action_list_tab_changed(tab: int) -> void:
+	$monster.texture = monster_dict[tab].image

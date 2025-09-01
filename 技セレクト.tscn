@@ -1,11 +1,10 @@
-[gd_scene load_steps=48 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=68 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="1_ilscs"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="3_250y8"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_ltw0u"]
-[ext_resource type="Script" uid="uid://b15c8h3h61tnt" path="res://help_type.gd" id="9_jsdkd"]
 [ext_resource type="Script" uid="uid://c800gq5mf7cft" path="res://select_background.gd" id="10_250y8"]
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://image/null.PNG" id="10_ilscs"]
 [ext_resource type="Texture2D" uid="uid://dtb8010gbtf6j" path="res://image/spinbox_down.png" id="11_3py80"]
@@ -28,6 +27,161 @@ corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ltw0u"]
 content_margin_left = 8.0
+
+[sub_resource type="Theme" id="Theme_4ce10"]
+default_font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msxfx"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.498039, 0.313726, 1)
+expand_margin_left = 4.0
+
+[sub_resource type="Gradient" id="Gradient_crhb1"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.498039, 0.313726, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_epq06"]
+gradient = SubResource("Gradient_crhb1")
+width = 1
+height = 49
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crhb1"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 1)
+expand_margin_left = 4.0
+
+[sub_resource type="Gradient" id="Gradient_epq06"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 0, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j08b8"]
+gradient = SubResource("Gradient_epq06")
+width = 1
+height = 49
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mu04y"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 1)
+expand_margin_left = 4.0
+
+[sub_resource type="Gradient" id="Gradient_e1jok"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 0, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0c3n4"]
+gradient = SubResource("Gradient_e1jok")
+width = 1
+height = 49
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spf5i"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.196078, 0.803922, 0.196078, 1)
+expand_margin_left = 4.0
+
+[sub_resource type="Gradient" id="Gradient_lfr5f"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lvrxx"]
+gradient = SubResource("Gradient_lfr5f")
+width = 1
+height = 49
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkjnp"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.647059, 0, 1)
+expand_margin_left = 4.0
+
+[sub_resource type="Gradient" id="Gradient_66jsg"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.647059, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ydts3"]
+gradient = SubResource("Gradient_66jsg")
+width = 1
+height = 49
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bmcow"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.678431, 0.847059, 0.901961, 1)
+expand_margin_left = 4.0
+
+[sub_resource type="Gradient" id="Gradient_gftk7"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 0.678431, 0.847059, 0.901961, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2uk2t"]
+gradient = SubResource("Gradient_gftk7")
+width = 1
+height = 49
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dy60e"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.117647, 0.564706, 1, 1)
+expand_margin_left = 4.0
+
+[sub_resource type="Gradient" id="Gradient_e7hon"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 0.117647, 0.564706, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gcshb"]
+gradient = SubResource("Gradient_e7hon")
+width = 1
+height = 49
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0fa8"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.933333, 0.509804, 0.933333, 1)
+expand_margin_left = 4.0
+
+[sub_resource type="Gradient" id="Gradient_idr3v"]
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 0.933333, 0.509804, 0.933333, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mmr34"]
+gradient = SubResource("Gradient_idr3v")
+width = 1
+height = 49
+fill_to = Vector2(0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hqx4"]
 border_width_left = 2
@@ -253,18 +407,6 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.5, 0.5, 0.5, 1)
 
-[sub_resource type="Theme" id="Theme_03esk"]
-default_font_size = 35
-
-[sub_resource type="Theme" id="Theme_88gvl"]
-default_font_size = 30
-
-[sub_resource type="Theme" id="Theme_ggtdh"]
-default_font_size = 35
-
-[sub_resource type="Theme" id="Theme_2vljx"]
-default_font_size = 30
-
 [node name="Node2D" type="Node2D"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -319,7 +461,7 @@ offset_right = 1472.0
 offset_bottom = 81.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_ltw0u")
 bbcode_enabled = true
-text = "[i]ボタンにカーソルを合わせるとヘルプテキストが表示さaaaaaaaaaaaaaaaaaaaaaaaれます。[/i]"
+text = "[i]ボタンにカーソルを合わせるとヘルプテキストが表示されます。[/i]"
 autowrap_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -347,6 +489,195 @@ offset_right = 1088.0
 offset_bottom = 856.0
 pivot_offset = Vector2(128, 128)
 texture = ExtResource("3_250y8")
+
+[node name="status" type="Control" parent="セレクト"]
+anchors_preset = 0
+
+[node name="status" type="VBoxContainer" parent="セレクト/status"]
+layout_mode = 2
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 512.0
+theme = SubResource("Theme_4ce10")
+theme_override_constants/separation = 10
+
+[node name="HP" type="HBoxContainer" parent="セレクト/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="セレクト/status/status/HP"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_msxfx")
+bbcode_enabled = true
+text = "[color=coral]HP [font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "体力。0になると先頭不能になります。"
+
+[node name="bar" type="TextureRect" parent="セレクト/status/status/HP"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_epq06")
+metadata/help_text = "体力。0になると先頭不能になります。"
+
+[node name="maxMP" type="HBoxContainer" parent="セレクト/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+metadata/help_text = ""
+
+[node name="status" type="RichTextLabel" parent="セレクト/status/status/maxMP"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_constants/line_separation = -16
+theme_override_styles/normal = SubResource("StyleBoxFlat_crhb1")
+bbcode_enabled = true
+text = "[table=2]
+[cell][font_size=20][color=aqua]MP
+max   [/color][/font_size][/cell]
+[cell][center]:%4d[/center][/cell]"
+vertical_alignment = 1
+metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
+
+[node name="bar" type="TextureRect" parent="セレクト/status/status/maxMP"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_j08b8")
+metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
+
+[node name="supplyMP" type="HBoxContainer" parent="セレクト/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="セレクト/status/status/supplyMP"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_constants/line_separation = -16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mu04y")
+bbcode_enabled = true
+text = "[table=2]
+[cell][font_size=20][color=aqua]MP
+supply[/color][/font_size][/cell]
+[cell][center]:%4d[/center][/cell]"
+vertical_alignment = 1
+metadata/help_text = "行動可能になった時、回復する魔力の量。"
+
+[node name="bar" type="TextureRect" parent="セレクト/status/status/supplyMP"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_0c3n4")
+metadata/help_text = "行動可能になった時、回復する魔力の量。"
+
+[node name="SPD" type="HBoxContainer" parent="セレクト/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="セレクト/status/status/SPD"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_spf5i")
+bbcode_enabled = true
+text = "[color=limegreen]SPD[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
+
+[node name="bar" type="TextureRect" parent="セレクト/status/status/SPD"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_lvrxx")
+metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
+
+[node name="ATK" type="HBoxContainer" parent="セレクト/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="セレクト/status/status/ATK"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_hkjnp")
+bbcode_enabled = true
+text = "[color=orange]ATK[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
+
+[node name="bar" type="TextureRect" parent="セレクト/status/status/ATK"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_ydts3")
+metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
+
+[node name="DEF" type="HBoxContainer" parent="セレクト/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="セレクト/status/status/DEF"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_bmcow")
+bbcode_enabled = true
+text = "[color=lightblue]DEF[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
+
+[node name="bar" type="TextureRect" parent="セレクト/status/status/DEF"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_2uk2t")
+metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
+
+[node name="MAG" type="HBoxContainer" parent="セレクト/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="セレクト/status/status/MAG"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_dy60e")
+bbcode_enabled = true
+text = "[color=dodgerblue]MAG[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
+
+[node name="bar" type="TextureRect" parent="セレクト/status/status/MAG"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_gcshb")
+metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
+
+[node name="RES" type="HBoxContainer" parent="セレクト/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="セレクト/status/status/RES"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_j0fa8")
+bbcode_enabled = true
+text = "[color=violet]RES[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
+
+[node name="bar" type="TextureRect" parent="セレクト/status/status/RES"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_mmr34")
+metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
 
 [node name="actions" type="HBoxContainer" parent="セレクト"]
 layout_mode = 0
@@ -470,6 +801,7 @@ text = "❌"
 flat = true
 
 [node name="action_select" type="Control" parent="セレクト"]
+visible = false
 anchors_preset = 0
 offset_left = 1920.0
 offset_right = 1960.0
@@ -540,6 +872,7 @@ text = "100%"
 horizontal_alignment = 2
 
 [node name="action_description" type="Control" parent="セレクト"]
+visible = false
 anchors_preset = 0
 offset_left = 1920.0
 offset_top = 200.0
@@ -556,6 +889,7 @@ theme = SubResource("Theme_3py80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ltw0u")
 bbcode_enabled = true
 text = "[color=red]Power[/color]:9999"
+metadata/help_text = "技の威力。"
 
 [node name="mp" type="RichTextLabel" parent="セレクト/action_description"]
 clip_contents = false
@@ -568,6 +902,7 @@ theme = SubResource("Theme_ltw0u")
 theme_override_styles/normal = SubResource("StyleBoxFlat_4ce10")
 bbcode_enabled = true
 text = "[color=aqua]MP   [/color]:9999"
+metadata/help_text = "技を発動する時に消費するMPの量。"
 
 [node name="type" type="RichTextLabel" parent="セレクト/action_description"]
 clip_contents = false
@@ -660,6 +995,8 @@ metadata/_tab_index = 1
 
 [node name="container" type="VBoxContainer" parent="セレクト/action_list/中間進化技"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 0
 
 [node name="　進化技　" type="ScrollContainer" parent="セレクト/action_list"]
@@ -669,6 +1006,8 @@ metadata/_tab_index = 2
 
 [node name="container" type="VBoxContainer" parent="セレクト/action_list/　進化技　"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 0
 
 [node name="description_ui" type="ColorRect" parent="セレクト"]
@@ -704,111 +1043,6 @@ offset_bottom = 75.0
 bbcode_enabled = true
 text = "[center]特殊能力が表示されます!
 [hint=特殊効果を発生させる対象が表示されます]対象:[color=yellow]――――[/color][/hint] [hint=特殊効果の発生確率]確率:[color=green]---%[/color][/hint][/center]"
-
-[node name="help" type="Button" parent="セレクト"]
-process_mode = 3
-layout_mode = 0
-offset_left = 1907.0
-offset_top = -227.0
-offset_right = 1955.0
-offset_bottom = -179.0
-theme = SubResource("Theme_03esk")
-toggle_mode = true
-text = "?"
-script = ExtResource("9_jsdkd")
-
-[node name="ColorRect" type="ColorRect" parent="セレクト/help"]
-visible = false
-layout_mode = 0
-offset_left = -1050.0
-offset_bottom = 650.0
-color = Color(0, 0.494118, 0.494118, 1)
-
-[node name="help_label" type="RichTextLabel" parent="セレクト/help/ColorRect"]
-layout_mode = 2
-offset_right = 1050.0
-offset_bottom = 650.0
-theme = SubResource("Theme_88gvl")
-bbcode_enabled = true
-text = "
-①好きな技を選んでボタンを押してください
-
-②技の[color=yellow]出現率[/color]を好きな値に設定してください（上限はあります）
-
-③合計が100%になったら、スキルタブからスキルを選択してください
-　（スキルは未実装のため現在機能しません...）
-
-④決定ボタンを押して確定！
-
-
-[i][color=red]進化技とは...？[/color][/i]
-進化技を持つモンスターはバトル中に進化が可能です！
-最初はステータスが低い代わりに進化すると強くなる大器晩成型！
-進化にはMPが必要で、モンスターによって要求MPは変動します。
-進化と同時に進化技で攻撃することができます！"
-
-[node name="monster_help" type="Button" parent="セレクト/help/ColorRect"]
-layout_mode = 0
-offset_left = 650.0
-offset_top = 550.0
-offset_right = 973.0
-offset_bottom = 598.0
-text = "モンスターのヘルプ"
-
-[node name="monster_help_menu" type="Control" parent="セレクト/help/ColorRect"]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="type" type="Button" parent="セレクト/help/ColorRect/monster_help_menu"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 50.0
-offset_right = 233.0
-offset_bottom = 98.0
-text = "タイプ相性"
-
-[node name="status" type="Button" parent="セレクト/help/ColorRect/monster_help_menu"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 150.0
-offset_right = 233.0
-offset_bottom = 198.0
-text = "ステータス"
-
-[node name="help_back" type="Button" parent="セレクト/help/ColorRect/monster_help_menu"]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 0
-offset_left = 50.0
-offset_top = 550.0
-offset_right = 163.0
-offset_bottom = 598.0
-theme = SubResource("Theme_ggtdh")
-text = "←戻る"
-
-[node name="monster_help_page" type="Control" parent="セレクト/help/ColorRect"]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="monster_help_label" type="RichTextLabel" parent="セレクト/help/ColorRect/monster_help_page"]
-layout_mode = 0
-offset_right = 1050.0
-offset_bottom = 650.0
-theme = SubResource("Theme_2vljx")
-bbcode_enabled = true
-
-[node name="help_back_monster" type="Button" parent="セレクト/help/ColorRect/monster_help_page"]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 0
-offset_left = 50.0
-offset_top = 550.0
-offset_right = 163.0
-offset_bottom = 598.0
-theme = SubResource("Theme_ggtdh")
-text = "←戻る"
 
 [node name="background" type="Control" parent="."]
 layout_mode = 3
@@ -851,9 +1085,4 @@ metadata/_edit_lock_ = true
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete4" to="セレクト" method="delete_button_up" binds= [3]]
 [connection signal="value_changed" from="セレクト/action_select/chance" to="セレクト" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="セレクト/action_select/SpinBox" to="セレクト" method="_on_chance_value_changed"]
-[connection signal="toggled" from="セレクト/help" to="セレクト/help" method="_on_toggled"]
-[connection signal="button_up" from="セレクト/help/ColorRect/monster_help" to="セレクト/help" method="_on_monster_help_button_up"]
-[connection signal="button_up" from="セレクト/help/ColorRect/monster_help_menu/type" to="セレクト/help" method="_on_type_button_up"]
-[connection signal="button_up" from="セレクト/help/ColorRect/monster_help_menu/status" to="セレクト/help" method="_on_status_button_up"]
-[connection signal="button_up" from="セレクト/help/ColorRect/monster_help_menu/help_back" to="セレクト/help" method="_on_help_back_button_up"]
-[connection signal="button_up" from="セレクト/help/ColorRect/monster_help_page/help_back_monster" to="セレクト/help" method="_on_help_back_monster_button_up"]
+[connection signal="tab_changed" from="セレクト/action_list" to="セレクト" method="_on_action_list_tab_changed"]

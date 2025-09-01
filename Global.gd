@@ -100,8 +100,6 @@ const damage_text = preload("res://damage_text.tscn")
 
 const spd_gauge = 5000
 const spd_correction = 30 ## spdゲージ増加量補正 SPD * spd_correction
-const buff_list = ["ATK_up","DEF_up","MAG_up","RES_up"]
-const debuff_list = ["ATK_down","DEF_down","MAG_down","RES_down"]
 
 @onready var p1_death = false ## 死亡フラグ false:生存 true:死亡
 @onready var p2_death = false
