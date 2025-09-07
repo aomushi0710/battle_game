@@ -58,37 +58,25 @@ func status(i: int) -> void: # マウスを合わせたモンスターのステ�
 	now_monster_id = i
 	for label in statcontainer.get_children(): # 初期化
 		label.queue_free()
-	var monster = monster_data[i] # dictionary
-	var default = monster[0]
-	var middle_evolution = null
-	var evolution = null
+	## モンスターの各形態情報が入った辞書のkeyのみのリスト
+	var monster_keys: Array = monster_data[i].keys()
+	monster_keys.sort()
 	
-	if monster.size() >= 2: # 1回以上進化するモンスター 
-		evolution = monster[2]
-		if monster.size() == 3: # 2回進化モンスター
-			middle_evolution = monster[1]
-	
-	for form: Monster in [default, middle_evolution, evolution]:
-		if form == null: # その形態が存在しなかった場合、次のループへ
-			continue
-		
+	for key in monster_keys:
+		var monster: Monster = monster_data[i][key]
 		var evolution_text := RichTextLabel.new() # 進化形態のみ追加テキスト
 		evolution_text.bbcode_enabled = true
 		evolution_text.fit_content = true
-		evolution_text.horizontal_alignment = 1
+		evolution_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		
-		if form.form == 1:
-			evolution_text.text = "[center][u]　　　　　　　　 [/u][/center]\n\
-			[center][color=yellow]中間進化後\n[u]ステータス[/u][/color][/center]\n\n"
-		elif form.form == 2:
-			evolution_text.text = "[center][u]　　　　　　　　 [/u][/center]\n\
-			[center][color=red]進化後\n[u]ステータス[/u][/color][/center]\n\n"
+		evolution_text.text = "[u]　　　　　　　　 [/u]\n\
+		[center]%s[/center]\n[u]ステータス[/u]\n\n" % monster.form_names[monster.form]
 		
 		statcontainer.add_child(evolution_text)
-		for label: RichTextLabel in Global.all_status(form, 25):
+		for label: RichTextLabel in Global.all_status(monster, 25):
 			statcontainer.add_child(label)
 
 
 func button_up(i: int) -> void: # ボタンが押されたらそのIDのモンスターのセレクトページへ
 	Global.selected_monster = i
-	get_tree().change_scene_to_file(Global.select_scene)
+	get_tree().change_scene_to_file(Global.new_select_scene)

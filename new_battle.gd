@@ -351,7 +351,7 @@ extra: AbilityExtra = null) -> void:
 func action_checker(monster: BattleMonster, action: Action) -> bool:
 	# 第1形態から最終形態にスキップするのを防止
 	if len(monster.monster_dict) == 3 \
-	and monster.monster.form == 0 and action.id == 10002:
+	and monster.monster.form == Monster.Form.第一形態 and action.id == 10002:
 		await dialog.text_setter(0, true, [
 		"[color=yellow]%s はまだ最終形態には進化できない！[/color]\n先に第2形態に進化してください！" % 
 		monster.monster.name])

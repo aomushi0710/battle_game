@@ -1,15 +1,20 @@
 class_name Monster
 extends Resource
 
+enum Form { ## モンスターの形態
+	第一形態, 
+	第二形態, 
+	第三形態, 
+}
+
+static var form_names = {} ## Formの値をkey、Formの定数名をvalueとする辞書
 
 @export_category("モンスター")
 
 @export var id: int ## モンスターのid
 @export var name: String ## モンスターの名前
 
-## モンスターの形態[br]default(0):未進化[br]middle_evolution(1):第2形態(2回進化モンスターのみ該当)
-## [br]evolution(2):最終形態(1回または2回進化モンスターのみ該当)
-@export_enum("default","middle_evolution","evolution") var form: int
+@export var form: Form ## モンスターの形態
 
 @export var image: Texture ## モンスターの画像
 @export var element: Array[Element] ## モンスターの属性 Element型[br]複数登録可能
@@ -45,8 +50,7 @@ var MP: int
 
 
 @export_category("技")
-## form==default:未進化モンスターに割り当て可能な技の配列[br]
-## form!=default:進化後に置き換えられる進化技
+## その形態で使用可能な技の配列
 @export var actions: Array[Action]
 
 
@@ -59,3 +63,9 @@ var MP: int
 
 @export_multiline var description: String ## モンスターの説明
 @export_multiline var flavor_text: Array[String] ## モンスターのフレーバーテキスト一覧
+
+
+static func _static_init() -> void:
+	for key in Form:
+		var value = Form[key]
+		form_names[value] = key

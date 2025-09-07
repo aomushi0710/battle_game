@@ -29,3 +29,16 @@ res://SE_battle.tscn
 res://action_button.tscn
 res://Global.gd
 res://select.gd
+res://resource/monster.gd
+res://action/自己再生.tres
+res://monster/カカシスライム.tres
+res://action/ギガダークネス.tres
+res://monster/キングゴースト.tres
+res://action/ギガシャイニング.tres
+res://monster/キングスライム.tres
+res://action/メガウィンド.tres
+res://monster/クルネ.tres
+res://action/ギガウィンド.tres
+res://monster/クルネード.tres
+res://new_battle.gd
+res://deck_select.gd

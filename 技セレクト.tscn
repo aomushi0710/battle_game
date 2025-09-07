@@ -1,9 +1,10 @@
-[gd_scene load_steps=68 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=70 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
-[ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="1_ilscs"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="3_250y8"]
+[ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="4_3py80"]
+[ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="5_4lobs"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_ltw0u"]
 [ext_resource type="Script" uid="uid://c800gq5mf7cft" path="res://select_background.gd" id="10_250y8"]
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://image/null.PNG" id="10_ilscs"]
@@ -27,6 +28,9 @@ corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ltw0u"]
 content_margin_left = 8.0
+
+[sub_resource type="Theme" id="Theme_oeulo"]
+default_font_size = 30
 
 [sub_resource type="Theme" id="Theme_4ce10"]
 default_font_size = 30
@@ -386,9 +390,9 @@ border_width_bottom = 2
 border_color = Color(0.5, 0.5, 0.5, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t10s7"]
-content_margin_left = 16.0
+content_margin_left = 35.0
 content_margin_top = 0.0
-content_margin_right = 16.0
+content_margin_right = 35.0
 bg_color = Color(1, 1, 1, 1)
 border_width_left = 2
 border_width_top = 2
@@ -397,9 +401,9 @@ border_width_bottom = 2
 border_color = Color(0.5, 0.5, 0.5, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tlog8"]
-content_margin_left = 16.0
+content_margin_left = 35.0
 content_margin_top = 0.0
-content_margin_right = 16.0
+content_margin_right = 35.0
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
@@ -416,7 +420,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("1_ilscs")
+theme = ExtResource("1_14bbj")
 
 [node name="戻る" type="Button" parent="CanvasLayer/Control"]
 modulate = Color(1, 0, 0, 1)
@@ -490,6 +494,33 @@ offset_bottom = 856.0
 pivot_offset = Vector2(128, 128)
 texture = ExtResource("3_250y8")
 
+[node name="name" type="HBoxContainer" parent="セレクト/monster"]
+clip_contents = true
+layout_direction = 2
+offset_left = -22.0
+offset_top = -50.0
+offset_right = 278.0
+offset_bottom = -6.0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="element" type="TextureRect" parent="セレクト/monster/name"]
+layout_mode = 2
+texture = ExtResource("4_3py80")
+expand_mode = 2
+script = ExtResource("5_4lobs")
+
+[node name="name" type="RichTextLabel" parent="セレクト/monster/name"]
+clip_contents = false
+layout_mode = 2
+theme = SubResource("Theme_oeulo")
+bbcode_enabled = true
+text = "名前"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+
 [node name="status" type="Control" parent="セレクト"]
 anchors_preset = 0
 
@@ -526,7 +557,6 @@ metadata/help_text = "体力。0になると先頭不能になります。"
 [node name="maxMP" type="HBoxContainer" parent="セレクト/status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
-metadata/help_text = ""
 
 [node name="status" type="RichTextLabel" parent="セレクト/status/status/maxMP"]
 clip_contents = false
@@ -678,6 +708,15 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_mmr34")
 metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
+
+[node name="evolution" type="Button" parent="セレクト/status"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 526.0
+offset_right = 500.0
+offset_bottom = 574.0
+theme_override_font_sizes/font_size = 30
+text = "中間進化後のステータスを表示"
 
 [node name="actions" type="HBoxContainer" parent="セレクト"]
 layout_mode = 0
@@ -978,33 +1017,33 @@ theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_tlog8")
 tab_alignment = 1
 current_tab = 0
 
-[node name="　　技　　" type="ScrollContainer" parent="セレクト/action_list"]
+[node name="第一形態" type="ScrollContainer" parent="セレクト/action_list"]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="container" type="VBoxContainer" parent="セレクト/action_list/　　技　　"]
+[node name="container" type="VBoxContainer" parent="セレクト/action_list/第一形態"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="中間進化技" type="ScrollContainer" parent="セレクト/action_list"]
+[node name="第二形態" type="ScrollContainer" parent="セレクト/action_list"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="container" type="VBoxContainer" parent="セレクト/action_list/中間進化技"]
+[node name="container" type="VBoxContainer" parent="セレクト/action_list/第二形態"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="　進化技　" type="ScrollContainer" parent="セレクト/action_list"]
+[node name="第三形態" type="ScrollContainer" parent="セレクト/action_list"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="container" type="VBoxContainer" parent="セレクト/action_list/　進化技　"]
+[node name="container" type="VBoxContainer" parent="セレクト/action_list/第三形態"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1079,6 +1118,7 @@ metadata/_edit_lock_ = true
 
 [connection signal="button_up" from="CanvasLayer/Control/戻る" to="セレクト" method="_on_戻る_button_up"]
 [connection signal="button_up" from="CanvasLayer/Control/決定" to="セレクト" method="_on_決定_button_up"]
+[connection signal="button_up" from="セレクト/status/evolution" to="セレクト" method="_on_evolution_button_up"]
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete1" to="セレクト" method="delete_button_up" binds= [0]]
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete2" to="セレクト" method="delete_button_up" binds= [1]]
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete3" to="セレクト" method="delete_button_up" binds= [2]]

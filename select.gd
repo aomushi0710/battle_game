@@ -8,6 +8,7 @@ extends Control
 @onready var confirm_button := $"../CanvasLayer/Control/決定"
 @onready var help_mask := $"../CanvasLayer/Control/Panel/mask"
 @onready var help_label := $"../CanvasLayer/Control/Panel/mask/help"
+@onready var monster_node := $monster
 @onready var status := $status
 @onready var action_select := $action_select
 @onready var slider := $action_select/chance
@@ -65,8 +66,10 @@ func _ready() -> void:
 	monster_dict = Global.monster_data[monster_id].duplicate() # 初期化
 	monster = monster_dict[0] # 進化前
 	camera.offset = Vector2(960, 540)
-	# 進化前モンスターを表示
-	$monster.texture = monster_dict[0].image
+	# モンスターを表示
+	monster_node.texture = monster.image
+	monster_node.get_child(0).get_child(0).monster = monster
+	monster_node.get_child(0).get_child(1).text = monster.name
 	
 	# 棒グラフ生成
 	bar_chart_update()
@@ -90,10 +93,10 @@ func _ready() -> void:
 	action_list.get_tab_bar().mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	action_list.set_tab_metadata(0, "モンスターが発動できる技の一覧です。")
 	action_list.set_tab_metadata(1, 
-	"モンスターが中間進化後に、発動できる技の一覧です。この技を登録すると、" + 
+	"第二形態に進化したモンスターが、発動できる技の一覧です。この技を登録すると、" + 
 	"バトル中に同じ確率で「進化Ⅰ」が現れ、中間進化することでこの技が発動できるようになります。")
 	action_list.set_tab_metadata(2, 
-	"モンスターが進化後に、発動できる技の一覧です。この技を登録すると、" + 
+	"第三形態に進化したモンスターが、発動できる技の一覧です。この技を登録すると、" + 
 	"バトル中に同じ確率で「進化Ⅱ」が現れ、進化することでこの技が発動できるようになります。")
 	
 	connect_hover_signal($"..")
@@ -134,6 +137,13 @@ func text_animation(label: RichTextLabel, text: String) -> void:
 		text_tween.tween_interval(2)
 		text_tween.tween_property(label, "position:x", final_val, duration)
 		text_tween.tween_callback(func(): label.position.x = 0)
+
+## モンスターの進化プレビュー表示更新関数
+func monster_evolution() -> void:
+	if len(monster_dict) == 2:
+		pass
+	elif len(monster_dict) == 3:
+		pass
 
 ## ステータス棒グラフ更新関数
 func bar_chart_update() -> void:
@@ -202,10 +212,10 @@ func pie_chart_update() -> void:
 
 ## 全ての形態に関して、技をそれぞれのコンテナにボタン化して追加する関数
 func setting_action_button() -> void:
-	if len(monster_dict) == 2: # 中間進化がない時
-		action_list.set_tab_disabled(1, true)
-		if len(monster_dict) == 1: # 進化がない時
-			action_list.set_tab_disabled(2, true)
+	if len(monster_dict) <= 2: # 第三形態がない時
+		action_list.set_tab_disabled(2, true)
+		if len(monster_dict) == 1: # 第二形態もない時
+			action_list.set_tab_disabled(1, true)
 	
 	for mon: Monster in monster_dict.values():
 		## 技が追加されるコンテナ(TabContainer -> ScrollContainer -> VboxContainer)
@@ -467,3 +477,7 @@ func _on_chance_value_changed(value: int) -> void:
 
 func _on_action_list_tab_changed(tab: int) -> void:
 	$monster.texture = monster_dict[tab].image
+
+
+func _on_evolution_button_up() -> void:
+	pass # Replace with function body.

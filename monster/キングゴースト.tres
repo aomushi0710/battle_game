@@ -12,7 +12,7 @@
 script = ExtResource("10_e7eik")
 id = 2
 name = "キングゴースト"
-form = 2
+form = 1
 image = ExtResource("3_a27pn")
 element = Array[ExtResource("3_wbs3u")]([ExtResource("4_ihhas"), ExtResource("5_sqbbu")])
 cost = 40

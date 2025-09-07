@@ -1,13 +1,22 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://d1ilrudxl0rhs"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xev74"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4xhw"]
 bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [resource]
 default_font_size = 50
 AcceptDialog/font_sizes/title_font_size = 50
 Button/constants/outline_size = 10
-Button/styles/focus = SubResource("StyleBoxFlat_xev74")
+Button/styles/normal = SubResource("StyleBoxFlat_n4xhw")
 LineEdit/constants/outline_size = 10
 RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 10

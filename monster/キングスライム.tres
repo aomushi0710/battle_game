@@ -12,7 +12,7 @@
 script = ExtResource("10_v7wje")
 id = 1
 name = "キングスライム"
-form = 2
+form = 1
 image = ExtResource("3_f2iaj")
 element = Array[ExtResource("3_mle5m")]([ExtResource("4_nsuit"), ExtResource("5_arpli")])
 cost = 40

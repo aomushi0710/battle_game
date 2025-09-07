@@ -18,7 +18,7 @@ func _on_first_button_up():
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
 		Global.selected_monster = Global.deck1.monster[0].id
-		get_tree().change_scene_to_file(Global.select_scene)
+		get_tree().change_scene_to_file(Global.new_select_scene)
 
 func _on_second_button_up():
 	Global.now_picking = 1
@@ -26,7 +26,7 @@ func _on_second_button_up():
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
 		Global.selected_monster = Global.deck1.monster[1].id
-		get_tree().change_scene_to_file(Global.select_scene)
+		get_tree().change_scene_to_file(Global.new_select_scene)
 
 func _on_third_button_up():
 	Global.now_picking = 2
@@ -34,7 +34,7 @@ func _on_third_button_up():
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
 		Global.selected_monster = Global.deck1.monster[2].id
-		get_tree().change_scene_to_file(Global.select_scene)
+		get_tree().change_scene_to_file(Global.new_select_scene)
 
 
 func _on_デッキセレクト_tree_entered():
