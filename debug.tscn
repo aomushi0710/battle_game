@@ -1,28 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://lhdui3dkf60l"]
+[gd_scene load_steps=8 format=3 uid="uid://lhdui3dkf60l"]
 
 [ext_resource type="Script" uid="uid://gr73qw7ffurg" path="res://属性倍率計算機.gd" id="1_w64vr"]
 [ext_resource type="Script" uid="uid://c5cm3u8kdwsx8" path="res://debug.gd" id="2_2jd23"]
 [ext_resource type="Script" uid="uid://cqdes4ra5j3dr" path="res://ダメージ計算機.gd" id="2_f36wx"]
-[ext_resource type="Script" uid="uid://c1hgyjf3ov48d" path="res://debug_monsterdata.gd" id="5_1chfk"]
-[ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="6_uxblv"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="7_e0a3d"]
 
 [sub_resource type="Theme" id="Theme_u1wox"]
 default_font_size = 30
 
 [sub_resource type="Theme" id="Theme_o6yt0"]
-default_font_size = 30
-
-[sub_resource type="Theme" id="Theme_tfufr"]
-default_font_size = 30
-
-[sub_resource type="Theme" id="Theme_0jttf"]
-default_font_size = 30
-
-[sub_resource type="Theme" id="Theme_7yh2j"]
-default_font_size = 30
-
-[sub_resource type="Theme" id="Theme_lhwio"]
 default_font_size = 30
 
 [sub_resource type="Theme" id="Theme_0jkx1"]
@@ -220,139 +206,6 @@ bbcode_enabled = true
 text = "ダメージ計算式は以下の通りです
 技の基礎威力 * (攻撃側の[color=red]ATK[/color]([color=dodger_blue]MAG[/color]) / 防御側の[color=light_blue]DEF[/color]([color=purple]RES[/color])) ** 1.2 (小数以下切り捨て)"
 
-[node name="ColorRect4" type="ColorRect" parent="Control"]
-visible = false
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-color = Color(0, 0, 0, 1)
-script = ExtResource("5_1chfk")
-
-[node name="data" type="RichTextLabel" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 145.0
-offset_right = 594.0
-offset_bottom = 333.0
-theme = SubResource("Theme_tfufr")
-bbcode_enabled = true
-text = "名前　:　モンスターの名前
-形態　:　第1形態とか第2形態とか
-属性1 :　1つ目の属性と属性id
-属性2 :　2つ目の属性と属性id
-コスト:　この形態になるのに必要なコスト"
-
-[node name="status" type="RichTextLabel" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 340.0
-offset_right = 278.0
-offset_bottom = 617.0
-theme = SubResource("Theme_tfufr")
-bbcode_enabled = true
-text = "ステータス
-
-[color=coral]HP:---[/color] [color=green]SPD:---[/color]
-[color=aqua]MP:---/---
-(supply/max)[/color]
-[color=red]ATK:---[/color] [color=light_blue]DEF:---[/color]
-[color=dodger_blue]MAG:---[/color] [color=violet]RES:---[/color]"
-
-[node name="skill" type="RichTextLabel" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 300.0
-offset_top = 340.0
-offset_right = 618.0
-offset_bottom = 647.0
-theme = SubResource("Theme_tfufr")
-bbcode_enabled = true
-text = "スキル
-
-・パターン1
-スキル名1 id
-スキル名2 id
-
-・パターン2
-スキル名1 id
-スキル名2 id"
-
-[node name="action" type="RichTextLabel" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 652.0
-offset_top = 170.0
-offset_right = 1083.0
-offset_bottom = 628.0
-theme = SubResource("Theme_tfufr")
-bbcode_enabled = true
-text = "技一覧
-
-体当たり
-体当たり
-体当たり
-体当たり
-体当たり
-体当たり
-体当たり
-体当たり"
-
-[node name="id" type="SpinBox" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 969.0
-offset_top = 82.0
-offset_right = 1053.0
-offset_bottom = 124.0
-theme = SubResource("Theme_0jttf")
-min_value = 1.0
-max_value = 3.0
-value = 2.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 25.0
-offset_right = 368.0
-offset_bottom = 135.0
-theme = SubResource("Theme_7yh2j")
-text = "画像を押して
-その形態の　→
-データを表示"
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 776.0
-offset_top = 85.0
-offset_right = 973.0
-offset_bottom = 125.0
-theme = SubResource("Theme_lhwio")
-text = "モンスターID:"
-
-[node name="evolution" type="TextureButton" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 630.0
-offset_top = 5.0
-offset_right = 886.0
-offset_bottom = 261.0
-scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("6_uxblv")
-
-[node name="middle_evolution" type="TextureButton" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 502.0
-offset_top = 5.0
-offset_right = 758.0
-offset_bottom = 261.0
-scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("6_uxblv")
-
-[node name="default" type="TextureButton" parent="Control/ColorRect4"]
-layout_mode = 0
-offset_left = 374.0
-offset_top = 5.0
-offset_right = 630.0
-offset_bottom = 261.0
-scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("6_uxblv")
-
 [node name="終了" type="Button" parent="Control"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 0
@@ -410,10 +263,6 @@ offset_bottom = 40.0
 
 [connection signal="button_up" from="Control/ColorRect/属性倍率計算機/計算" to="Control/ColorRect/属性倍率計算機" method="_on_計算_button_up"]
 [connection signal="button_up" from="Control/ColorRect2/ダメージ計算機/計算" to="Control/ColorRect2/ダメージ計算機" method="_on_計算_button_up"]
-[connection signal="value_changed" from="Control/ColorRect4/id" to="Control/ColorRect4" method="_on_spin_box_value_changed"]
-[connection signal="button_up" from="Control/ColorRect4/evolution" to="Control/ColorRect4" method="_on_evolution_button_up"]
-[connection signal="button_up" from="Control/ColorRect4/middle_evolution" to="Control/ColorRect4" method="_on_middle_evolution_button_up"]
-[connection signal="button_up" from="Control/ColorRect4/default" to="Control/ColorRect4" method="_on_default_button_up"]
 [connection signal="button_up" from="Control/終了" to="Control/ColorRect/属性倍率計算機" method="_on_終了_button_up"]
 [connection signal="button_up" from="Control/モンスターデータ" to="Control" method="_on_モンスターデータ_button_up"]
 [connection signal="button_up" from="Control/戻る" to="Control" method="_on_戻る_button_up"]

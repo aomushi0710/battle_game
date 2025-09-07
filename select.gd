@@ -69,7 +69,8 @@ func _ready() -> void:
 	# モンスターを表示
 	monster_node.texture = monster.image
 	monster_node.get_child(0).get_child(0).monster = monster
-	monster_node.get_child(0).get_child(1).text = monster.name
+	monster_node.get_child(0).get_child(1).text = (
+		"[b][i]%s[/i][/b]" % monster.name)
 	
 	# 棒グラフ生成
 	bar_chart_update()
@@ -411,9 +412,11 @@ func _on_決定_button_up():
 			Global.deck1.monster[Global.now_picking] = \
 			Global.deck1.monster_dict[Global.now_picking][0].duplicate()
 			# nullは消す
-			Global.deck1.action[Global.now_picking] = actions.filter(func(x): return x != null)
+			Global.deck1.action[Global.now_picking] = actions.filter(
+				func(x): return x != null)
 			# 0は消す
-			Global.deck1.chance[Global.now_picking] = chances.filter(func(x): return x != 0)
+			Global.deck1.chance[Global.now_picking] = chances.filter(
+				func(x): return x != 0)
 			#Global.deck1.skill[Global.now_picking] = selected_skill
 			reset()
 			get_tree().change_scene_to_file(Global.deck_scene)

@@ -477,15 +477,15 @@ func battle_finished() -> void: # バトル終了初期化処理
 		Global.deck1.effect[i].clear()
 		
 		for j: int in len(Global.deck1.action[i]):
-			var e := 0 # evolution用index
-			var m := 0 # middle_evolution湯index
+			var second := 0 ## second_form_action用index
+			var third := 0 ## third_form_action用index
 			match Global.deck1.action[i][j].id:
-				10002: # 進化Ⅱが残っている場合
-					Global.deck1.action[i][j] = Global.deck1.evolution[i][e] # 元に戻す
-					e += 1
 				10001: # 進化Ⅰが残っている場合
-					Global.deck1.action[i][j] = Global.deck1.middle_evolution[i][m]
-					m += 1
+					Global.deck1.action[i][j] = Global.deck1.second_form_action[i][second]
+					second += 1
+				10002: # 進化Ⅱが残っている場合
+					Global.deck1.action[i][j] = Global.deck1.third_form_action[i][third]
+					third += 1
 	
 	for i in range(3):
 		Global.enemy_deck.monster[i] = Global.enemy_deck.monster_dict[i][0]

@@ -1,6 +1,6 @@
 extends Control
 
-@onready var statcontainer = get_node("status/ScrollContainer/VBoxContainer")
+@onready var statcontainer = $status/ScrollContainer/VBoxContainer
 
 var monster_data = Global.monster_data
 var now_monster_id: int # status関数、同じモンスターかどうかの検出用
@@ -13,15 +13,16 @@ func _on_戻る_button_up():
 func _on_node_2d_tree_entered() -> void:
 	# モンスターの数だけボタンを生成する関数
 	for i in range(1, len(monster_data) - 1): # monster_data[i]:Dictionary[Monster]型
-		var button = TextureButton.new()
-		
-		button.name = monster_data[i][0].name
+		var button := TextureButton.new()
 		button.texture_normal = monster_data[i][0].image
-		if 2 in monster_data[i]: # 進化可能モンスターならホバーの画像を変える
-			button.texture_hover = monster_data[i][2].image
+		## モンスターの各形態情報が入った辞書のkeyのみのリスト
+		var monster_keys: Array = monster_data[i].keys()
+		monster_keys.sort()
+		# ホバー状態の時、最後の形態の姿を表示させる
+		button.texture_hover = monster_data[i][monster_keys[-1]].image
 		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		button.mouse_entered.connect(func():status(monster_data[i][0].id))
-		button.button_up.connect(func():button_up(monster_data[i][0].id))
+		button.mouse_entered.connect(func():status(i))
+		button.button_up.connect(func():button_up(i))
 		
 		if i > $VBoxContainer.get_child_count() * HCONTAINER_LIMIT: # コンテナがいっぱいの時
 			var container = HBoxContainer.new()

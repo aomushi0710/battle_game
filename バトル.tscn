@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://cshv2kldt6i4x"]
+[gd_scene load_steps=70 format=3 uid="uid://cshv2kldt6i4x"]
 
 [ext_resource type="Script" uid="uid://dlxb0doriep3s" path="res://battle.gd" id="1_csbr0"]
 [ext_resource type="Script" uid="uid://bknodr4qnbo7b" path="res://enemy1.gd" id="2_8rv16"]
@@ -39,7 +39,6 @@
 [ext_resource type="Script" uid="uid://ce0r7lcpm6s0e" path="res://e3_spd.gd" id="35_fdfku"]
 [ext_resource type="Script" uid="uid://djhu2x6rfobam" path="res://e3_command.gd" id="36_4fl3j"]
 [ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help_button.gd" id="37_jkkvg"]
-[ext_resource type="Script" uid="uid://bdxrc2ixidkge" path="res://バトル終了.gd" id="38_s2cyo"]
 [ext_resource type="Script" uid="uid://bhducy7at7txx" path="res://e2_icon.gd" id="39_acya7"]
 [ext_resource type="Script" uid="uid://b15c8h3h61tnt" path="res://help_type.gd" id="39_c4ddy"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="40_qw033"]
@@ -1236,7 +1235,6 @@ offset_right = 218.0
 offset_bottom = 48.0
 theme = SubResource("Theme_nkyw0")
 text = "バトル終了！"
-script = ExtResource("38_s2cyo")
 
 [node name="help2" type="Button" parent="."]
 process_mode = 3

@@ -42,3 +42,7 @@ res://action/ギガウィンド.tres
 res://monster/クルネード.tres
 res://new_battle.gd
 res://deck_select.gd
+res://deck.gd
+res://バトル終了.gd
+res://バトル.tscn
+res://battle_monster.gd

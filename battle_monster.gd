@@ -11,8 +11,8 @@ var field: bool ## モンスターが場に出ている時[code]true[/code]
 var monster_dict ## モンスターの全形態を格納する辞書
 var monster: Monster ## モンスターの現在の状態 INFO バトル中に更新される場合あり
 var action_list: Array ## 設定された技を格納する配列
-var middle_evolution_list: Array ## 設定された中間進化技を格納する配列
-var evolution_list: Array ## 設定された進化技を格納する配列
+var second_form_action: Array ## 設定された中間進化技を格納する配列
+var third_form_action: Array ## 設定された進化技を格納する配列
 var chance_list: Array ## 技の出現確率を格納する配列
 var effect_list: Array[MonsterEffect] = [] ## エフェクトが格納される配列　INFO 初期値はなし(空)
 var death: bool = false
@@ -39,13 +39,13 @@ func parent_getter() -> void:
 
 # バトル開始時セットアップ
 func setup(dict: Dictionary, mon: Monster, act_list: Array, 
-mid_evol_list: Array, evol_list: Array, chan_list: Array) -> void:
+second_form_act: Array, third_form_act: Array, chan_list: Array) -> void:
 	# 引数から全て代入
 	monster_dict = dict
 	monster = mon
 	action_list = act_list
-	middle_evolution_list = mid_evol_list
-	evolution_list = evol_list
+	second_form_action = second_form_act
+	third_form_action = third_form_act
 	chance_list = chan_list
 	# 初期値を設定
 	monster.HP = monster.maxHP
@@ -67,23 +67,17 @@ mid_evol_list: Array, evol_list: Array, chan_list: Array) -> void:
 	$name/name.text = "[b][i]%s[/i][/b]" % monster.name
 	self.texture_normal = monster.image
 	# 進化技、中間進化技の置換
-	if evolution_list.is_empty() == false: # 進化技が存在する場合
-		var evol_index = [] # TODO この変数は必要のない可能性があるので、今後調査する
+	if second_form_act.is_empty() == false: # 進化技が存在する場合
 		for i in len(action_list):
-			if action_list[i] in evolution_list: # 進化技の時
-				# 進化技を進化Ⅱに置き換える
-				action_list[i] = Global.action_data[10002].duplicate()
-				action_list[i].mp = monster_dict[2].cost # 進化に必要なmp量設定
-				evol_index.append(i) # 置き換えた技の位置indexを保存
+			if action_list[i] in second_form_act: # その技が進化技だった時
+				action_list[i] = Global.action_data[10001].duplicate() # 進化Ⅰに置き換える
+				action_list[i].mp = monster_dict[Monster.Form.第二形態].cost # MP設定
 		
-	if middle_evolution_list.is_empty() == false: # 中間進化技も存在する場合
-		var middle_evol_index = [] # TODO この変数は必要のない可能性があるので、今後調査する
-		for i in len(action_list):
-			if action_list[i] in middle_evolution_list: # 進化技の時
-				# 進化技を進化Ⅰに置き換える
-				action_list[i] = Global.action_data[10001].duplicate()
-				action_list[i].mp = monster_dict[1].cost
-				middle_evol_index.append(i) # 置き換えた技の位置indexを保存
+		if third_form_act.is_empty() == false:
+			for i in len(action_list):
+				if action_list[i] in third_form_act:
+					action_list[i] = Global.action_data[10002].duplicate()
+					action_list[i].mp = monster_dict[Monster.Form.第三形態].cost
 	# chance_range 生成
 	var sum_range = 0
 	for i in len(chance_list):
@@ -199,9 +193,9 @@ func evolution(id: int) -> Array[String]:
 		if action_list[i].id == id:
 			match id:
 				10001:
-					action_list[i] = middle_evolution_list[act]
+					action_list[i] = second_form_action[act]
 				10002:
-					action_list[i] = evolution_list[act]
+					action_list[i] = third_form_action[act]
 				_:
 					print("ERROR:不明なID")
 			act += 1

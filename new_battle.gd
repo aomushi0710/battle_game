@@ -25,12 +25,12 @@ signal command_ended
 func _ready() -> void:
 	await battle_start_animation()
 	await get_tree().process_frame # 1フレーム待つ
-	for deck in [Global.deck1, Global.enemy_deck]:
+	for deck: Deck in [Global.deck1, Global.enemy_deck]:
 		for i: int in len(deck.monster):
 			var monster: BattleMonster = monster_scene.instantiate()
 			monster.index = i
 			monster.setup(deck.monster_dict[i], deck.monster[i], deck.action[i], 
-			deck.middle_evolution[i], deck.evolution[i], deck.chance[i])
+			deck.second_form_action[i], deck.third_form_action[i], deck.chance[i])
 			monster.text_setter_callback = Callable(dialog, "text_setter")
 			match deck:
 				Global.deck1:

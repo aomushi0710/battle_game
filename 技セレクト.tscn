@@ -497,6 +497,7 @@ texture = ExtResource("3_250y8")
 [node name="name" type="HBoxContainer" parent="セレクト/monster"]
 clip_contents = true
 layout_direction = 2
+layout_mode = 0
 offset_left = -22.0
 offset_top = -50.0
 offset_right = 278.0
