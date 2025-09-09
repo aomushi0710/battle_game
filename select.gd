@@ -1,5 +1,17 @@
 extends Control
 
+const STATUS_BAR_TEXT: Array[String] = [
+	"[color=coral]HP [font_size=2]                   [/font_size][/color]:%4d", 
+	"[table=2][cell][font_size=20][color=aqua]MP\nmax   " + 
+	"[/color][/font_size][/cell][cell][center]:%4d[/center][/cell]", 
+	"[table=2][cell][font_size=20][color=aqua]MP\nsupply" + 
+	"[/color][/font_size][/cell][cell][center]:%4d[/center][/cell]", 
+	"[color=limegreen]SPD[font_size=2]                   [/font_size][/color]:%4d", 
+	"[color=orange]ATK[font_size=2]                   [/font_size][/color]:%4d", 
+	"[color=lightblue]DEF[font_size=2]                   [/font_size][/color]:%4d", 
+	"[color=dodgerblue]MAG[font_size=2]                   [/font_size][/color]:%4d", 
+	"[color=violet]RES[font_size=2]                   [/font_size][/color]:%4d"
+	]
 @onready var se := $"../SoundEffects"
 @onready var background := $"../background"
 @onready var camera := $"../Camera2D"
@@ -10,6 +22,7 @@ extends Control
 @onready var help_label := $"../CanvasLayer/Control/Panel/mask/help"
 @onready var monster_node := $monster
 @onready var status := $status
+@onready var evolution_button := $status/evolution
 @onready var action_select := $action_select
 @onready var slider := $action_select/chance
 @onready var spinbox := $action_select/SpinBox
@@ -22,6 +35,7 @@ var now_select_action = 0 # 現在指定されている技
 var monster_id = Global.selected_monster
 var monster_dict ## 現在選択中のモンスターの辞書
 var monster: Monster ## 現在選択中のモンスター
+var next_form: Monster.Form ## 次に表示されるモンスターの形態
 var actions: Array[Action] = [null, null, null, null] ## 選ばれた技
 var chances: Array[int] = [0, 0, 0, 0] ## 選ばれた技の出現確率
 var check_provability = [] # 出現率0%弾き出し用
@@ -64,16 +78,9 @@ enum CameraMode{
 
 func _ready() -> void:
 	monster_dict = Global.monster_data[monster_id].duplicate() # 初期化
-	monster = monster_dict[0] # 進化前
 	camera.offset = Vector2(960, 540)
 	# モンスターを表示
-	monster_node.texture = monster.image
-	monster_node.get_child(0).get_child(0).monster = monster
-	monster_node.get_child(0).get_child(1).text = (
-		"[b][i]%s[/i][/b]" % monster.name)
-	
-	# 棒グラフ生成
-	bar_chart_update()
+	monster_previw(Monster.Form.第一形態)
 	
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
 	if Global.deck1.monster[Global.now_picking] != null:
@@ -95,7 +102,7 @@ func _ready() -> void:
 	action_list.set_tab_metadata(0, "モンスターが発動できる技の一覧です。")
 	action_list.set_tab_metadata(1, 
 	"第二形態に進化したモンスターが、発動できる技の一覧です。この技を登録すると、" + 
-	"バトル中に同じ確率で「進化Ⅰ」が現れ、中間進化することでこの技が発動できるようになります。")
+	"バトル中に同じ確率で「進化Ⅰ」が現れ、進化することでこの技が発動できるようになります。")
 	action_list.set_tab_metadata(2, 
 	"第三形態に進化したモンスターが、発動できる技の一覧です。この技を登録すると、" + 
 	"バトル中に同じ確率で「進化Ⅱ」が現れ、進化することでこの技が発動できるようになります。")
@@ -139,12 +146,28 @@ func text_animation(label: RichTextLabel, text: String) -> void:
 		text_tween.tween_property(label, "position:x", final_val, duration)
 		text_tween.tween_callback(func(): label.position.x = 0)
 
-## モンスターの進化プレビュー表示更新関数
-func monster_evolution() -> void:
-	if len(monster_dict) == 2:
-		pass
-	elif len(monster_dict) == 3:
-		pass
+## モンスターの形態[param form]のプレビュー表示更新関数[br]
+## この時点で既に、次に呼ばれる形態を予測しておくが、
+## これは[code]next_form[/code]変数が他の関数でも利用されるものであるためである。
+func monster_previw(form: Monster.Form) -> void:
+	# 棒グラフのアニメーションが終わるまで押せなくする
+	evolution_button.disabled = true
+	
+	monster = monster_dict[form]
+	
+	monster_node.texture = monster.image
+	monster_node.get_child(0).get_child(0).monster = monster
+	monster_node.get_child(0).get_child(1).text = (
+		"[b][i]%s[/i][/b]" % monster.name)
+	
+	bar_chart_update()
+	
+	@warning_ignore("int_as_enum_without_cast")
+	next_form = monster.form + 1 # 1つ次の形態を代入しているのでintで足している
+	if next_form >= len(monster_dict): # 存在しない形態を表示しないように
+		next_form = monster.Form.第一形態 # 第一形態に戻してループさせる
+	
+	evolution_button.text = "%sのステータスを表示" % monster.form_names[next_form]
 
 ## ステータス棒グラフ更新関数
 func bar_chart_update() -> void:
@@ -162,6 +185,7 @@ func bar_chart_update() -> void:
 	for child in status.get_child(0).get_children():
 		for c in child.get_children():
 			if c is RichTextLabel: # ステータス値表示
+				c.text = STATUS_BAR_TEXT[status_index]
 				c.text = c.text % status_list[status_index]
 			elif c is TextureRect: # バー生成
 				# TODO 長さの表現は修正の余地あり
@@ -171,6 +195,7 @@ func bar_chart_update() -> void:
 				.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 				tween.tween_property(c, "custom_minimum_size:x", 
 				status_list[status_index], 1)
+				tween.tween_callback(func(): evolution_button.disabled = false)
 		status_index += 1
 
 ## 選択中の技出現確率円グラフ更新関数
@@ -477,10 +502,6 @@ func _on_chance_value_changed(value: int) -> void:
 	for node in [slider, spinbox]: # sliderとspinboxを更新
 		node.set_value_no_signal(value)
 
-
-func _on_action_list_tab_changed(tab: int) -> void:
-	$monster.texture = monster_dict[tab].image
-
-
+## ボタンが押された時に、次の形態(もしくは第一形態)で[code]monster_preview[/code]関数を呼ぶ関数
 func _on_evolution_button_up() -> void:
-	pass # Replace with function body.
+	monster_previw(next_form)

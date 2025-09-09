@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=71 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
@@ -381,6 +381,17 @@ border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 50
 corner_radius_bottom_left = 50
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_epq06"]
+content_margin_left = 35.0
+content_margin_top = 0.0
+content_margin_right = 35.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.5, 0.5, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14bbj"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 2
@@ -716,6 +727,7 @@ offset_left = 50.0
 offset_top = 526.0
 offset_right = 500.0
 offset_bottom = 574.0
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 30
 text = "中間進化後のステータスを表示"
 
@@ -1011,6 +1023,7 @@ offset_bottom = 901.0
 theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 32
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_epq06")
 theme_override_styles/panel = SubResource("StyleBoxFlat_14bbj")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_t10s7")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_tlog8")
@@ -1126,4 +1139,4 @@ metadata/_edit_lock_ = true
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete4" to="セレクト" method="delete_button_up" binds= [3]]
 [connection signal="value_changed" from="セレクト/action_select/chance" to="セレクト" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="セレクト/action_select/SpinBox" to="セレクト" method="_on_chance_value_changed"]
-[connection signal="tab_changed" from="セレクト/action_list" to="セレクト" method="_on_action_list_tab_changed"]
+[connection signal="tab_changed" from="セレクト/action_list" to="セレクト" method="monster_previw"]

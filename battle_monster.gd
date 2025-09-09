@@ -184,7 +184,7 @@ func evolution(id: int) -> Array[String]:
 	$HP/text.text = "HP %3d/%3d" % [monster.HP, monster.maxHP]
 	$MP.max_value = monster.maxMP
 	$SPD.monster = monster
-	$name/element.selected(monster)
+	$name/element.monster = monster
 	$name/name.text = "[b][i]%s[/i][/b]" % monster.name
 	self.texture_normal = monster.image
 	
