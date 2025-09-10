@@ -292,16 +292,25 @@ func command_selected(monster: BattleMonster, action: Action, index: int,
 extra: AbilityExtra = null) -> void:
 	dialog.set_tab_disabled(1, true)
 	dialog.set_tab_disabled(2, true)
+	
+	# 相手全滅
+	if Global.e1_death == true and Global.e2_death == true and Global.e3_death == true:
+		return
+	# 味方全滅
+	elif Global.p1_death == true and Global.p2_death == true and Global.p3_death == true:
+		return
+	
 	# 発動可能な技かどうかチェック
 	if await action_checker(monster, action) == false:
 		turn_end(monster)
 		return
 	
-	var dialog_text: Array[String] ## ダイアログに表示するテキストを収納する
+	var dialog_text: Array[String] = [] ## ダイアログに表示するテキストを収納する
+	var damage: int ## 与えたダメージの記録用
 	
 	 # mp消費処理
 	if action.mp != 0:
-		dialog_text = monster.mp_setter(-action.mp, true)
+		dialog_text.append(monster.mp_setter(-action.mp, true))
 	# AbilityExtraによって発動した技かどうかで表示メッセージを変える
 	if extra == null:
 		dialog_text.append("%s の %s！" % [monster.monster.name, action.name])
@@ -327,11 +336,11 @@ extra: AbilityExtra = null) -> void:
 		
 		for target: BattleMonster in target_list: # 対象にダメージをあたえる
 			var damage_array = damage_calc(action, monster, target)
+			damage = damage_array[0]
 			dialog_text = [] # 初期化
-			var text: Array[String] = target.hp_setter(-damage_array[0], true)
-			for t: String in text: # Array[String]から要素を抜き出す
-				t += "\n%s" % damage_array[1] # ダメージ相性のテキストを追加
-				dialog_text.append(t)
+			var text: String = target.hp_setter(-damage, true)
+			text += "\n%s" % damage_array[1] # ダメージ相性のテキストを追加
+			dialog_text.append(text)
 			await dialog.text_setter(0, true, dialog_text)
 	
 			if target.monster.HP <= 0: # 死亡時処理
@@ -340,7 +349,7 @@ extra: AbilityExtra = null) -> void:
 	# 全ての特殊能力について順番に処理
 	for i in len(action.ability):
 		if action.ability[i].timing == Ability.Timing.後:
-			await execute_ability(monster, action.ability[i], index)
+			await execute_ability(monster, action.ability[i], index, damage)
 	
 	# AbilityExtraによって発動した技ならばそのまま元の処理に戻り、そうでないならターン終了
 	if extra == null:
@@ -367,8 +376,10 @@ func action_checker(monster: BattleMonster, action: Action) -> bool:
 
 ## 特殊効果[param ability]を発動する関数[br]
 ## [param monster]はその技を発動したモンスター[br]
-## [param index]でどの敵が対象かを割り出す[code]target_setting[/code]関数を呼び出す
-func execute_ability(monster: BattleMonster, ability: Ability, index: int) -> void:
+## [param index]でどの敵が対象かを割り出す[code]target_setting[/code]関数を呼び出す[br]
+## 後で発動するabilityの場合は、[param damage]を利用することがある。デフォルトは0
+func execute_ability(monster: BattleMonster, ability: Ability, index: int, 
+damage: int = 0) -> void:
 	if randi() % 100 + 1 > ability.chance: # 確率範囲外ならその効果の処理スキップ
 		return
 	
@@ -421,22 +432,28 @@ func execute_ability(monster: BattleMonster, ability: Ability, index: int) -> vo
 				AbilityHealing.AmountType.MAG:
 					heal = monster.monster.MAG * ability.amount
 				
+				AbilityHealing.AmountType.吸収:
+					heal = damage * ability.amount
+				
 				_:
 					print("不明な列挙型AbilityHealing -> AmountType。0を返します。")
 					heal = 0
 			
-			var dialog_text: Array[String] ## hp, mp, spdのsetter関数の返り値
+			var dialog_text: String = "" ## 表示するテキスト
+			if ability.battle_log_message != "":
+				dialog_text = ability.battle_log_message
+			
 			match ability.status:
 				AbilityHealing.Status.HP:
-					dialog_text = target.hp_setter(heal, true)
+					dialog_text += target.hp_setter(heal, true)
 				
 				AbilityHealing.Status.MP:
-					dialog_text = target.mp_setter(heal, true)
+					dialog_text += target.mp_setter(heal, true)
 				
 				AbilityHealing.Status.SPD:
 					pass # TODO 未実装
 			
-			await dialog.text_setter(0, true, dialog_text)
+			await dialog.text_setter(0, true, [dialog_text])
 		
 		elif ability is AbilityExtra: # 連続攻撃
 			await command_selected(monster, ability.action, index, ability)
@@ -452,14 +469,14 @@ func item_selected(player: bool, monster: BattleMonster, item: Item, index: int)
 		match item.id:
 			1: # ライフポーション
 				await item_animation(item, target)
-				var text: Array[String] = target.hp_setter( # 最終的には小数点切り捨て
+				var text: String = target.hp_setter( # 最終的には小数点切り捨て
 					target.monster.maxHP * (item.get_power(item.get_level()) / 100.0), true)
-				await dialog.text_setter(0, true, text)
+				await dialog.text_setter(0, true, [text])
 			2: # マナポーション
 				await item_animation(item, target)
-				var text: Array[String] = target.mp_setter( # 最終的には小数点切り捨て
+				var text: String = target.mp_setter( # 最終的には小数点切り捨て
 					target.monster.maxMP * (item.get_power(item.get_level()) / 100.0), true)
-				await dialog.text_setter(0, true, text)
+				await dialog.text_setter(0, true, [text])
 	
 	turn_end(monster)
 

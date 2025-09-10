@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://clrecptvyfroj"]
+[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://clrecptvyfroj"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_qo7kq"]
 [ext_resource type="Resource" uid="uid://didcsw0ku7aos" path="res://action/ギガダークネス.tres" id="2_apqof"]
 [ext_resource type="Texture2D" uid="uid://b42xwq1yfuvsh" path="res://image/monster/キングゴースト.PNG" id="3_a27pn"]
+[ext_resource type="Resource" uid="uid://1n04af2tg4k8" path="res://action/霊魂吸収.tres" id="3_ihhas"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_wbs3u"]
 [ext_resource type="Resource" uid="uid://cie7fwul7ew3q" path="res://element/無属性.tres" id="4_ihhas"]
 [ext_resource type="Resource" uid="uid://du8c5g5eab01" path="res://element/闇属性.tres" id="5_sqbbu"]
@@ -28,7 +29,7 @@ skill1_name = Array[String]([])
 skill1_id = Array[int]([])
 skill2_name = Array[String]([])
 skill2_id = Array[int]([])
-actions = Array[ExtResource("1_qo7kq")]([ExtResource("2_apqof")])
+actions = Array[ExtResource("1_qo7kq")]([ExtResource("2_apqof"), ExtResource("3_ihhas")])
 coin = 10
 description = "少し攻撃・素早さ偏重なステータスを持つ。"
 flavor_text = Array[String](["キングゴースト は

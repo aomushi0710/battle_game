@@ -11,6 +11,12 @@ enum Trigger { ## 特殊効果の発動条件(複数選択可)
 	接触
 }
 
+enum PlaceHolder {
+	なし, 
+	自分, 
+	対象
+}
+
 @export var name: String ## 特殊効果の名前
 @export_multiline var bbcode_name: String ## 特殊効果の名前(BBcode有り)
 @export var target: Global.Target ## 特殊効果の対象
@@ -22,3 +28,4 @@ enum Trigger { ## 特殊効果の発動条件(複数選択可)
 @export var trigger: Array[Trigger] ## 特殊効果の発動条件(複数選択可)
 @export_multiline var description: String ## 特殊効果の説明文(バトル中の表示は全角13文字が3行まで)
 @export_multiline var battle_log_message: String ## バトル中に特殊効果が発動された時、ログに表示される文章(全角21文字が3行まで)
+@export var placeholder: PlaceHolder = PlaceHolder.なし

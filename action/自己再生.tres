@@ -20,6 +20,7 @@ timing = 2
 trigger = Array[ExtResource("3_siil7")]([])
 description = "[color=coral]HP[/color]を50回復する。"
 battle_log_message = ""
+placeholder = 0
 metadata/_custom_type_script = "uid://bywhlx527vv7b"
 
 [resource]

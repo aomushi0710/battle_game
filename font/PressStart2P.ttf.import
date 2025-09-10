@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://b2cvy5t2fy5pr"
-path="res://.godot/imported/Nosutaru-dotMPlusH-10-Regular.ttf-d44262b76e559f4a00861bfc98f86bdc.fontdata"
+uid="uid://b6205dup8y7a4"
+path="res://.godot/imported/PressStart2P.ttf-cad79397f9c82196cf40c1adeecb3145.fontdata"
 
 [deps]
 
-source_file="res://Nosutaru-dotMPlusH-10-Regular.ttf"
-dest_files=["res://.godot/imported/Nosutaru-dotMPlusH-10-Regular.ttf-d44262b76e559f4a00861bfc98f86bdc.fontdata"]
+source_file="res://font/PressStart2P.ttf"
+dest_files=["res://.godot/imported/PressStart2P.ttf-cad79397f9c82196cf40c1adeecb3145.fontdata"]
 
 [params]
 
@@ -22,7 +22,7 @@ msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
 hinting=1
-subpixel_positioning=1
+subpixel_positioning=4
 keep_rounding_remainders=true
 oversampling=0.0
 Fallbacks=null

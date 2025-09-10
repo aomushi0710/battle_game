@@ -63,7 +63,7 @@ second_form_act: Array, third_form_act: Array, chan_list: Array) -> void:
 	$SPD.value = 0
 	$SPD.monster = monster
 	
-	$name/element.selected(monster)
+	$name/element.monster = monster
 	$name/name.text = "[b][i]%s[/i][/b]" % monster.name
 	self.texture_normal = monster.image
 	# 進化技、中間進化技の置換
@@ -167,9 +167,9 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 ## 進化技を引数にして、そのIDにあった進化処理を施す
 func evolution(id: int) -> Array[String]:
 	var pre_monster = monster
-	if id == 10001: # 中間進化
+	if id == 10001: # 進化Ⅰ
 		monster = monster_dict[1]
-	elif id == 10002: # 進化
+	elif id == 10002: # 進化Ⅱ
 		monster = monster_dict[2]
 	if player == true:
 		Global.deck1.monster[index] = monster
@@ -270,22 +270,22 @@ func effect_icon_blink() -> void:
 			$effect.blink_stop() # エフェクトがないのにtweenが存在し、点滅している時
 
 ## MP変動処理関数(setter)[br]n:数値 text true:能動的でダイアログ表示 false:受動的でダイアログ非表示
-func mp_setter(n: int, text: bool) -> Array[String]:
+func mp_setter(n: int, text: bool) -> String:
 	var original_n: int = n # マイナスになるため補正されたが、元の数値を利用したい時
 	
 	if n > 0: # mpが回復した時、水色でアニメーション再生
 		if monster.MP >= monster.maxMP: # 既にMPが最大値の時
 			if text == true: # 技の効果やアイテムの使用時など何らかの反応が得たい時
-				return ["[color=yellow]しかし、%s の" % monster.name + \
-				"[color=aqua]MP[/color]は\n減っていなかった...[/color]"]
+				return "[color=yellow]しかし、%s の" % monster.name + \
+				"[color=aqua]MP[/color]は\n減っていなかった...[/color]"
 			else:
-				return []
+				return ""
 		elif monster.MP + n >= monster.maxMP: # 回復するとMPが最大値を越えてしまう時
 			n = monster.maxMP - monster.MP
 		damage_effect(n, 2)
 	else: # MPを削られた時、dark_redでアニメーション再生
 		if monster.MP <= 0: # 何らかの原因で死亡時
-			return []
+			return ""
 		damage_effect(-n, 3)
 		if monster.MP <= -n: # 残りMPを越えるダメージを受けた時
 			n = -monster.MP # MPがマイナスにならないように補正
@@ -297,40 +297,39 @@ func mp_setter(n: int, text: bool) -> Array[String]:
 	tween.tween_property($MP, "value", monster.MP, 0.5)
 	tween.parallel().tween_method(mp_text_update, mp_text, monster.MP, 0.5)
 	
-	var return_text: Array[String] # textを表示する処理
+	var return_text: String # textを表示する処理
 	if text == true: # 能動的にmpが変動した場合？
 		if n > 0: # mpが回復した時、水色でアニメーション再生
-			return_text = [
-			"%s の[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
-			[monster.name, n]]
+			return_text = \
+			"%s の[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % \
+			[monster.name, n]
 		else:
-			return_text = [
-			"%s は [color=aqua]%dMP[/color]を消費した..." % [monster.name, -n]]
+			return_text = \
+			"%s は [color=aqua]%dMP[/color]を消費した..." % [monster.name, -n]
 		return return_text
 	else: # 受動的にmpが変動した場合?
 		if n > 0: # spdゲージがたまって、mpが回復した時
-			return_text = []
+			return_text = ""
 		else: # 相手の技やアイテムなどによってmpを無理やり減らされた時
-			return_text = [
-			"%s は [color=aqua]%dMP[/color]を失った！" % [monster.name, -original_n]]
+			return_text = \
+			"%s は [color=aqua]%dMP[/color]を失った！" % [monster.name, -original_n]
 		return return_text
 
 ## HP変動処理関数(setter)[br]n:数値 text true:ダイアログ表示 false:ダイアログ非表示
-func hp_setter(n: int, text: bool) -> Array[String]:
+func hp_setter(n: int, text: bool) -> String:
 	var original_n: int = n # 元の数値を保存したい時に
 	
 	if n > 0: # hpが回復した)時、緑色でアニメーション再生
 		if monster.HP >= monster.maxHP: # 既にHPが最大値の時
-			return [
-			"[color=yellow]しかし、%s の[color=coral]HP[/color]は\n減っていなかった...[/color]" % 
-			monster.name]
+			return "[color=yellow]しかし、%s の" % monster.name + \
+			"[color=coral]HP[/color]は\n減っていなかった...[/color]"
 		elif monster.HP + n >= monster.maxHP: # 回復するとHPが最大値を越えてしまう時
 			n = monster.maxHP - monster.HP
 		damage_effect(n, 0)
 		$SoundEffects/heal.play()
 	else: # ダメージを受けた時、オレンジ色でアニメーション再生
 		if monster.HP <= 0: # 何らかの原因で死亡時
-			return []
+			return ""
 		damage_effect(-n, 1)
 		$SoundEffects/damage.play()
 		if monster.HP <= -n: # 残りHPを越えるダメージを受けた時
@@ -343,15 +342,15 @@ func hp_setter(n: int, text: bool) -> Array[String]:
 	tween.tween_property($HP, "value", monster.HP, 0.5)
 	tween.parallel().tween_method(hp_text_update, hp_text, monster.HP, 0.5)
 	
-	var return_text: Array[String] # textを表示する処理
+	var return_text: String # textを表示する処理
 	if text == true:
 		if n > 0: # hpが回復した時、緑色でアニメーション再生
-			return_text = [
-			"%s の[color=coral]HP[/color]が[color=green]%d[/color]回復した！" % 
-			[monster.name, n]]
+			return_text = \
+			"%s の[color=coral]HP[/color]が[color=green]%d[/color]回復した！" % \
+			[monster.name, n]
 		else:
-			return_text = [
-			"%s は[color=orange]%d[/color]ダメージを受けた！" % [monster.name, -original_n]]
+			return_text = "%s は[color=orange]%d[/color]ダメージを受けた！" % \
+			[monster.name, -original_n]
 	return return_text
 
 ## hp_setterからhp_textの変化アニメーション用 

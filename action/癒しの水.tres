@@ -16,10 +16,11 @@ name = "HP回復"
 bbcode_name = "[color=yellow_green]HP回復[/color]"
 target = 5
 chance = 100
-is_after = true
+timing = 2
 trigger = Array[ExtResource("3_byhpq")]([])
 description = "[color=dodger_blue]MAG[/color]の100%分だけ[color=coral]HP[/color]を回復する"
 battle_log_message = ""
+placeholder = 0
 metadata/_custom_type_script = "uid://bywhlx527vv7b"
 
 [resource]

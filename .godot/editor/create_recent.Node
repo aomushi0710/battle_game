@@ -1,9 +1,9 @@
+RichTextLabel
 Button
 Control
 TextureRect
 Panel
 VBoxContainer
-RichTextLabel
 HBoxContainer
 AudioStreamPlayer
 ScrollContainer
@@ -12,4 +12,3 @@ Window
 AudioStreamPlayer2D
 ColorRect
 TabContainer
-Path2D
