@@ -1,4 +1,4 @@
-res://ability_description.tscn
+res://メインシーン.tscn
 res://theme/dialog_theme.tres
 res://theme/default_font_50.tres
 res://theme/action_button.tres
@@ -8,8 +8,6 @@ res://キャラセレクト.gd
 res://clear_font.tres
 res://battle_buttons.gd
 res://theme/battle_tabcontainer.tres
-res://ability_description.gd
-res://メインシーン.tscn
 res://デッキセレクト.tscn
 res://デッキセーブデータ.tscn
 res://キャラ選択.tscn
@@ -17,6 +15,7 @@ res://shop.tscn
 res://shop_item.tscn
 res://特性・技セレクト.tscn
 res://技セレクト.tscn
+res://ability_description.tscn
 res://accept_dialog.tscn
 res://新バトル.tscn
 res://tutorial.tscn
@@ -27,23 +26,5 @@ res://transition_flash.tscn
 res://SE_menu.tscn
 res://SE_battle.tscn
 res://action_button.tscn
-res://Global.gd
-res://select.gd
-res://resource/monster.gd
-res://action/自己再生.tres
-res://monster/カカシスライム.tres
-res://action/ギガダークネス.tres
-res://monster/キングゴースト.tres
-res://action/ギガシャイニング.tres
-res://monster/キングスライム.tres
-res://action/メガウィンド.tres
-res://monster/クルネ.tres
-res://action/ギガウィンド.tres
-res://monster/クルネード.tres
-res://new_battle.gd
-res://deck_select.gd
-res://deck.gd
-res://バトル終了.gd
 res://バトル.tscn
-res://battle_monster.gd
-res://element_icon.gd
+res://select.gd

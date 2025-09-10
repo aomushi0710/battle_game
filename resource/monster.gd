@@ -69,3 +69,18 @@ static func _static_init() -> void:
 	for key in Form:
 		var value = Form[key]
 		form_names[value] = key
+
+## モンスターの全ステータスをまとめたリストを返す関数[br]
+## [code][maxHP, maxMP, supplyMP, SPD, ATK, DEF, MAG, RES][/code]
+func get_status_list() -> Array[int]:
+	var status_list: Array[int] = [
+		maxHP, 
+		maxMP, 
+		supplyMP, 
+		SPD, 
+		ATK, 
+		DEF, 
+		MAG, 
+		RES
+	]
+	return status_list

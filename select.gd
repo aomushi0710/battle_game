@@ -36,6 +36,7 @@ var monster_id = Global.selected_monster
 var monster_dict ## 現在選択中のモンスターの辞書
 var monster: Monster ## 現在選択中のモンスター
 var next_form: Monster.Form ## 次に表示されるモンスターの形態
+var all_status_list: Array = []
 var actions: Array[Action] = [null, null, null, null] ## 選ばれた技
 var chances: Array[int] = [0, 0, 0, 0] ## 選ばれた技の出現確率
 var check_provability = [] # 出現率0%弾き出し用
@@ -79,6 +80,11 @@ enum CameraMode{
 func _ready() -> void:
 	monster_dict = Global.monster_data[monster_id].duplicate() # 初期化
 	camera.offset = Vector2(960, 540)
+	
+	# 全ての形態のステータスをリストに登録
+	for i in len(monster_dict):
+		all_status_list.append(monster_dict[i].get_status_list())
+	
 	# モンスターを表示
 	monster_previw(Monster.Form.第一形態)
 	
@@ -171,16 +177,7 @@ func monster_previw(form: Monster.Form) -> void:
 
 ## ステータス棒グラフ更新関数
 func bar_chart_update() -> void:
-	var status_list = [ ## 表示したいモンスターのステータス一覧
-		monster.maxHP, 
-		monster.maxMP, 
-		monster.supplyMP, 
-		monster.SPD, 
-		monster.ATK, 
-		monster.DEF, 
-		monster.MAG, 
-		monster.RES
-		]
+	var status_list = monster.get_status_list() ## 表示したいモンスターのステータス一覧
 	var status_index: int = 0 ## status_listのindex指定用
 	for child in status.get_child(0).get_children():
 		for c in child.get_children():
@@ -188,15 +185,72 @@ func bar_chart_update() -> void:
 				c.text = STATUS_BAR_TEXT[status_index]
 				c.text = c.text % status_list[status_index]
 			elif c is TextureRect: # バー生成
-				# TODO 長さの表現は修正の余地あり
-				c.custom_minimum_size.x = 0
-				var tween: Tween
-				tween = get_tree().create_tween().bind_node(c)\
-				.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
-				tween.tween_property(c, "custom_minimum_size:x", 
-				status_list[status_index], 1)
-				tween.tween_callback(func(): evolution_button.disabled = false)
+				if c.name == "bar": # 元からあるbarだけ処理
+					# TODO 長さの表現は修正の余地あり
+					match monster.form:
+						# バーが0から伸びていくアニメーション
+						Monster.Form.第一形態:
+							c.custom_minimum_size.x = 0
+							bar_chart_animation(c, status_list[status_index])
+						
+						# 第二形態で増えた分だけバーの色を変えて伸ばすアニメーション
+						Monster.Form.第二形態:
+							# 既に第一形態のバーは表示されている
+							c.custom_minimum_size.x = \
+							all_status_list[Monster.Form.第一形態][status_index]
+							
+							## 第二形態で増えたステータスを表すバー
+							var new_bar = bar_chart_bar_duplicate(c, 0)
+							child.add_child(new_bar)
+							
+							bar_chart_animation(new_bar, 
+							all_status_list[Monster.Form.第二形態][status_index] - 
+							all_status_list[Monster.Form.第一形態][status_index])
+						
+						# 第三形態で増えた分だけ
+						Monster.Form.第三形態:
+							# 既に第一形態のバーは表示されている
+							c.custom_minimum_size.x = \
+							all_status_list[Monster.Form.第一形態][status_index]
+							
+							## 第二形態で増えたステータスを表すバー
+							var new_bar = bar_chart_bar_duplicate(c, 
+							all_status_list[Monster.Form.第二形態][status_index] - 
+							all_status_list[Monster.Form.第一形態][status_index])
+							child.add_child(new_bar)
+							
+							# 新たに第三形態のバーを色を変更して生成
+							new_bar = bar_chart_bar_duplicate(new_bar, 0)
+							child.add_child(new_bar)
+							
+							bar_chart_animation(new_bar, 
+							all_status_list[Monster.Form.第三形態][status_index] - 
+							all_status_list[Monster.Form.第二形態][status_index])
+				else: # 増えたbarは消す
+					c.queue_free()
 		status_index += 1
+
+## 棒グラフに用いる[param bar]ノードのサイズ[param size_x]及び色を変更して複製された、
+##新たなbarを返す関数
+func bar_chart_bar_duplicate(bar: TextureRect, size_x: int) -> TextureRect:
+	var new_bar = bar.duplicate()
+	new_bar.custom_minimum_size.x = size_x
+	new_bar.texture = new_bar.texture.duplicate(true)
+	var gradient: Gradient = new_bar.texture.gradient
+	var original_color := gradient.colors[1]
+	original_color.v -= 0.25
+	gradient.colors = [Color.WHITE, original_color]
+	return new_bar
+
+## 棒グラフの指定した[param bar]ノードを伸ばしたい量[param final_val]まで
+##アニメーションさせる関数。[br]
+## またアニメーション終了後に、進化プレビューボタンを押せる状態に戻します。
+func bar_chart_animation(bar: TextureRect, final_val: int) -> void:
+	var tween: Tween
+	tween = get_tree().create_tween().bind_node(bar)\
+	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(bar, "custom_minimum_size:x", final_val, 1)
+	tween.tween_callback(func(): evolution_button.disabled = false)
 
 ## 選択中の技出現確率円グラフ更新関数
 func pie_chart_update() -> void:
