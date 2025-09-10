@@ -1,3 +1,4 @@
+ConfirmationDialog
 RichTextLabel
 Button
 Control
@@ -11,4 +12,3 @@ AcceptDialog
 Window
 AudioStreamPlayer2D
 ColorRect
-TabContainer

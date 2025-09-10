@@ -1,5 +1,8 @@
 extends Node2D
 
+@onready var accept_dialog = $AcceptDialog
+@onready var confirmation_dialog = $ConfirmationDialog
+
 func _ready() -> void:
 	randomize()
 	Global.deck_creator(Global.enemy_deck)
@@ -15,15 +18,15 @@ func _on_button_pressed():
 func _on_debug_button_up():
 	get_tree().change_scene_to_file(Global.debug_scene)
 
-# セーブデータ削除確認画面表示
+## セーブデータ削除確認画面表示
 func _on_reset_button_up() -> void:
-	$confirm_message.title = "セーブデータ削除"
-	$confirm_message.dialog_text = \
-	"本当にセーブデータを削除しますか？\n削除したデータは二度と復元できません！"
-	$confirm_message.popup_centered()
+	confirmation_dialog.panel_color = Color.RED
+	confirmation_dialog.display_dialog(
+		"本当にセーブデータを削除しますか？\n削除したデータは二度と復元できません！", 
+		"セーブデータ削除")
 
-# セーブデータ削除
-func _on_confirm_message_confirmed() -> void:
+## セーブデータ削除
+func _on_confirmation_dialog_confirmed() -> void:
 	var path: String ## セーブデータファイルパス
 	if Global.VERSION_BETA == true:
 		path = "user://savedata_beta.txt" # β版専用

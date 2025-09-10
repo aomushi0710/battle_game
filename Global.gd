@@ -547,10 +547,10 @@ func load_game() -> void:
 			print("ERROR:シーンが存在しません")
 			return
 		# メッセージ表示
-		scene.get_node("error_message").title = "新規セーブデータ作成"
-		scene.get_node("error_message").dialog_text = \
-		"セーブデータが存在しません！\n新たなセーブデータを作成しました。"
-		scene.get_node("error_message").popup_centered()
+		scene.get_node("AcceptDialog").display_dialog(
+			"セーブデータが存在しません！\n新たなセーブデータを作成しました。", 
+			"新規セーブデータ作成"
+		)
 		
 	# 現在のバージョン以降のデータの場合、オートセーブを切り、既存データの上書きされるのを防ぐ
 	elif save_data["version"] > VERSION:

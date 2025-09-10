@@ -43,3 +43,8 @@ res://theme/nosutaru_theme.tres
 res://action/自己再生.tres
 res://action/癒しの水.tres
 res://resource/Ability/ability.gd
+res://accept_dialog.gd
+res://Global.gd
+res://メインシーン.gd
+res://confirmation_dialog.gd
+res://confirmation_dialog.tscn

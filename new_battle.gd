@@ -441,7 +441,7 @@ damage: int = 0) -> void:
 			
 			var dialog_text: String = "" ## 表示するテキスト
 			if ability.battle_log_message != "":
-				dialog_text = ability.battle_log_message
+				dialog_text = ability.battle_log_message + "\n"
 			
 			match ability.status:
 				AbilityHealing.Status.HP:
