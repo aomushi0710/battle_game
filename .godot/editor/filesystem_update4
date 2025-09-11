@@ -48,3 +48,9 @@ res://Global.gd
 res://メインシーン.gd
 res://confirmation_dialog.gd
 res://confirmation_dialog.tscn
+res://デッキセーブデータ.gd
+res://deck_select.gd
+res://デッキスロット.tscn
+res://shop.gd
+res://特性・技セレクト.gd
+res://background.gd

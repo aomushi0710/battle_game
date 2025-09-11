@@ -120,20 +120,22 @@ func battle_start_animation() -> void:
 			button.disabled = true
 	
 	tween = get_tree().create_tween().bind_node(self)
-	tween.tween_property($"../fade", "color:a", 0, 1)
-	tween.tween_interval(1)
+	tween.tween_property($"../fade", "color:a", 0, 0.5)
+	tween.tween_interval(0.5)
 	tween.tween_callback(func(): 
 		$"../fade".hide()
 		$"../battlestart".modulate.a = 1
 		$"../battlestart".show())
 	tween.tween_property($"../battlestart", "scale", Vector2(1.2, 1.2), 0.4)
 	tween.tween_property($"../battlestart", "scale", Vector2(1.0, 1.0), 0.1)
-	tween.tween_interval(0.5)
-	tween.tween_property($"../battlestart", "modulate:a", 0, 0.5)
+	tween.tween_interval(0.25)
+	tween.tween_property($"../battlestart", "modulate:a", 0, 0.25)
+	tween.parallel().tween_property($"../battlestart", "scale", 
+	Vector2(1.2, 1.2), 0.25)
 	tween.tween_callback(func(): 
 		$"../battlestart".scale = Vector2(0, 0)
 		$"../battlestart".hide())
-	tween.tween_interval(0.5)
+	tween.tween_interval(0.25)
 	tween.tween_property($button/escape, "modulate:a", 1, 0.5)
 	tween.parallel().tween_property($"button/戻る", "modulate:a", 1, 0.5)
 	tween.parallel().tween_property($button/dialogtab, "modulate:a", 1, 0.5)

@@ -1,5 +1,7 @@
 extends Control
 
+@onready var accept_dialog := $AcceptDialog
+@onready var confirmation_dialog := $ConfirmationDialog
 const item_scene = preload("res://shop_item.tscn")
 var coin_tween: Tween
 var selected_item
@@ -71,29 +73,28 @@ func _on_inventory_button_up() -> void:
 
 func _on_buy_button_up() -> void:
 	if Global.coin < selected_item.price: # コインがたりない
-		$error_message.title = "コイン不足"
-		$error_message.dialog_text = "コインが足りません！"
-		$error_message.popup_centered()
+		accept_dialog.display_dialog(
+			"コインが足りません！\nバトルでコインを集めましょう！", "コイン不足")
 	else:
-		$confirm_message.title = "購入確認"
-		$confirm_message.dialog_text = "%s Lv.%dを購入しますか？" % \
-		[selected_item.name, selected_item.level]
-		$confirm_message.ok_button_text = "購入！"
-		$confirm_message.cancel_button_text = "キャンセル"
-		$confirm_message.popup_centered()
-		
+		confirmation_dialog.confirmed.connect(
+			func(): _on_confirm_message_confirmed(), CONNECT_ONE_SHOT)
+		confirmation_dialog.display_dialog("%s Lv.%dを購入しますか？" % 
+		[selected_item.name, selected_item.level], "購入確認")
+
 
 ## 購入確認ボタンで購入ボタンを押した時
 func _on_confirm_message_confirmed() -> void:
 	Global.coin -= selected_item.price # アイテム情報もセーブするので、ここではセーブしない
+	
 	if selected_item.item.id not in Global.inv.item: # 未所持の時
 		Global.inv.item[selected_item.item.id] = 1
 	else:
 		Global.inv.item[selected_item.item.id] += 1
+	
 	Global.save_game()
-	$error_message.title = "購入成功！"
-	$error_message.dialog_text = "%s Lv.%dを手に入れた！" % \
-	[selected_item.name, selected_item.level]
-	$error_message.popup_centered()
+	
+	accept_dialog.display_dialog("%s Lv.%dを手に入れた！" % 
+	[selected_item.name, selected_item.level], "購入完了")
+	
 	update(-selected_item.price)
 	

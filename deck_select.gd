@@ -1,6 +1,7 @@
 extends Control
 
-@onready var accept_dialog = $"../../AcceptDialog"
+@onready var accept_dialog := $"../AcceptDialog"
+@onready var confirmation_dialog := $"../ConfirmationDialog"
 var first_texture = load("res://image/1st.PNG")
 var second_texture = load("res://image/2nd.PNG")
 var third_texture = load("res://image/3rd.PNG")
@@ -18,7 +19,7 @@ func _on_first_button_up():
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
 		Global.selected_monster = Global.deck1.monster[0].id
-		get_tree().change_scene_to_file(Global.new_select_scene)
+		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_second_button_up():
 	Global.now_picking = 1
@@ -26,7 +27,7 @@ func _on_second_button_up():
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
 		Global.selected_monster = Global.deck1.monster[1].id
-		get_tree().change_scene_to_file(Global.new_select_scene)
+		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_third_button_up():
 	Global.now_picking = 2
@@ -34,7 +35,7 @@ func _on_third_button_up():
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
 		Global.selected_monster = Global.deck1.monster[2].id
-		get_tree().change_scene_to_file(Global.new_select_scene)
+		get_tree().change_scene_to_file(Global.select_scene)
 
 
 func _on_デッキセレクト_tree_entered():
@@ -108,15 +109,18 @@ func _on_load_button_up() -> void:
 
 
 func _on_reset_button_up() -> void:
-	$"../確認メッセージ".dialog_text = "現在選択中のデッキデータをリセットしようとしています。\n\
-	よろしいですか？\n※セーブデータは削除されません。"
-	$"../確認メッセージ".popup_centered()
+	confirmation_dialog.confirmed.connect(
+		func(): _on_確認メッセージ_confirmed(), CONNECT_ONE_SHOT)
+	confirmation_dialog.display_dialog(
+		"現在選択中のデッキデータをリセットしようとしています。\nよろしいですか？\n" + 
+		"※セーブデータは削除されません。", "リセット確認")
 
 
 func _on_確認メッセージ_confirmed() -> void:
 	Global.deck_name = ""
 	Global.deck1 = Deck.new()
 	_on_デッキセレクト_tree_entered()
+	accept_dialog.display_dialog("デッキデータをリセットしました。", "リセット完了")
 
 
 func _on_new_button_up() -> void:
@@ -128,7 +132,7 @@ func _on_new_button_up() -> void:
 	Global.deck1.evolution_check() # 自分のデッキに対してチェック
 	Global.enemy_deck.evolution_check()
 	tween = get_tree().create_tween().bind_node($"../../fade")
-	tween.tween_property($"../../fade", "color:a", 1, 1)
+	tween.tween_property($"../../fade", "color:a", 1, 0.5)
 	tween.tween_callback(func(): get_tree().change_scene_to_file(Global.new_battle_scene))
 
 ## チュートリアルの準備と遷移
@@ -158,7 +162,7 @@ func _on_tutorial_button_up() -> void:
 	Global.enemy_deck.evolution_check()
 	
 	tween = get_tree().create_tween().bind_node($"../../fade")
-	tween.tween_property($"../../fade", "color:a", 1, 1)
+	tween.tween_property($"../../fade", "color:a", 1, 0.5)
 	tween.tween_callback(func(): get_tree().change_scene_to_file(Global.tutorial_scene))
 
 

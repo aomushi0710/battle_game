@@ -1,5 +1,8 @@
 extends Control
 
+@onready var accept_dialog := $AcceptDialog
+@onready var confirmation_dialog := $ConfirmationDialog
+
 var monster_data = Global.monster_data
 var action_data = Global.action_data
 var deck: Deck = Global.deck1
@@ -28,10 +31,10 @@ func _on_戻る_button_up() -> void:
 
 func save_file(slot: int) -> void:
 	if Global.deck1.monster.size() < 3 or null in Global.deck1.monster:
-		$"エラーメッセージ".title = "⚠️ERROR⚠️"
-		$"エラーメッセージ".dialog_text = "デッキをセーブするには、全ての枠を埋めてください！"
-		$"エラーメッセージ".popup_centered()
+		accept_dialog.display_dialog(
+			"デッキをセーブするには、全ての枠を埋めてください！")
 		return
+	
 	# 技のlist of listを技のIDのlist of listに変換
 	var action_id: Array[Array] = [[],[],[]] # 技のIDに変換されたもの
 	for index in range(3): # 全てのモンスターに対して
@@ -66,42 +69,35 @@ func save_file(slot: int) -> void:
 	
 	save_game(slot, deck_data)
 	setting()
+	accept_dialog.display_dialog("デッキのセーブが完了しました！", "✅セーブ完了✅")
 
 
 func load_file(slot: int) -> void:
 	var deck_data = load_game(slot)
 	
 	if deck_data == {}:
-		$エラーメッセージ.title = "⚠️ERROR⚠️"
-		$エラーメッセージ.dialog_text = "セーブデータが存在しません"
-		$エラーメッセージ.popup_centered()
+		accept_dialog.display_dialog("セーブデータが存在しません")
 	# β版で正式版、正式版でβ版のデータをロードしようとした時
 	elif deck_data["beta"] != Global.VERSION_BETA:
 		if Global.VERSION_BETA == true: # β版
-			$エラーメッセージ.title = "⚠️ERROR⚠️"
-			$エラーメッセージ.dialog_text = "βバージョンで保存されたデータではないためロードできません。"
-			$エラーメッセージ.popup_centered()
+			accept_dialog.display_dialog(
+				"βバージョンで保存されたデータではないためロードできません。")
 		else: # 正式リリース版
-			$エラーメッセージ.title = "⚠️ERROR⚠️"
-			$エラーメッセージ.dialog_text = "βバージョンで保存されたデータはロードできません"
-			$エラーメッセージ.popup_centered()
+			accept_dialog.display_dialog(
+				"βバージョンで保存されたデータはロードできません")
 		return
 	elif deck_data["version"] > Global.VERSION: # 現在のバージョン以降のデータの場合
-		$エラーメッセージ.title = "⚠️ERROR⚠️"
-		$エラーメッセージ.dialog_text = "現在のバージョン ver \
-		%.1f 以降に作成されたデータのため、\nロードできません。" % Global.VERSION
-		$エラーメッセージ.popup_centered()
+		accept_dialog.display_dialog(
+			"現在のバージョン ver %.1f " % Global.VERSION + 
+			"以降に作成されたデータのため、\nロードできません。")
 		return
 	elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.2: # ver3.0~
-		$"エラーメッセージ".title = "過去バージョンのデッキ"
-		$エラーメッセージ.dialog_text = "過去のバージョンで保存されたデータをロードしました。\n" + \
-		"ロードされたデータを再度セーブするとデータのバージョンも更新されます。\n\n" + \
-		"⚠️一度更新したバージョンは元に戻せません⚠️"
-		$エラーメッセージ.popup_centered()
+		accept_dialog.display_dialog(
+			"過去のバージョンで保存されたデータをロードしました。\n" + 
+			"ロードされたデータを再度セーブするとデータのバージョンも更新されます。\n" + 
+			"[color=yellow]⚠️一度更新したバージョンは元に戻せません⚠️[/color]", "")
 	else:
-		$"エラーメッセージ".title = "✅ロード完了✅"
-		$"エラーメッセージ".dialog_text = "デッキのロードが完了しました！"
-		$"エラーメッセージ".popup_centered()
+		accept_dialog.display_dialog("デッキのロードが完了しました！", "✅ロード完了✅")
 	# TODO 過去のバージョンのデータだった場合、互換性があるかチェックし、
 	# データのバージョンを更新する処理を実装する必要あり。
 	
@@ -124,11 +120,18 @@ func load_file(slot: int) -> void:
 
 
 func reset_file(slot: int) -> void:
-	$確認メッセージ.dialog_text = \
-	"デッキスロット%dのデータを削除しようとしています。\nよろしいですか？" % slot
-	$確認メッセージ.confirmed.connect(func():_on_確認メッセージ_confirmed(slot))
-	$確認メッセージ.popup_centered()
+	confirmation_dialog.confirmed.connect(
+		func():_on_確認メッセージ_confirmed(slot), CONNECT_ONE_SHOT)
+	confirmation_dialog.display_dialog(
+		"デッキスロット%dのデータを削除しようとしています。\nよろしいですか？" % slot, 
+		"⚠️削除確認⚠️")
 
+
+func _on_確認メッセージ_confirmed(slot: int) -> void:
+	delete_save(slot)
+	setting()
+	accept_dialog.display_dialog(
+		"デッキスロット%dのデータを削除しました。" % slot, "削除完了")
 
 # 暗号化及び複合化を行う関数 data:平文または暗号のデータ key:暗号化キー
 func xor_encrypt(data: PackedByteArray, key: String) -> PackedByteArray:
@@ -201,10 +204,6 @@ func delete_save(slot: int) -> void:
 	else:
 		print("ERROR:セーブデータが存在しません: %s" % path)
 
-
-func _on_確認メッセージ_confirmed(slot: int) -> void:
-	delete_save(slot)
-	setting()
 
 func setting() -> void:
 	for i in range($VBoxContainer.get_child_count()): # 全てのデッキスロットに対して

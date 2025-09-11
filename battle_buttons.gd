@@ -2,6 +2,7 @@ extends Control
 
 @onready var battle_node := $".."
 @onready var action_container := $action
+@onready var confirmation_dialog := $"../../ConfirmationDialog"
 const MONSTER_NAME_LIMIT: int = 8 ## statusに表示する上での、モンスターの名前の上限文字数
 var now_showing: int ## 現在表示中のボタンメニュー[br]0:main 1:action 2:item 3:status 4:target 5:monsters
 var now_player: bool ## true:現在playerの情報を表示 false:現在enemyの情報を表示
@@ -455,13 +456,15 @@ func target_button_setting() -> void:
 
 
 func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げられないバトル用の処理なども作る
+	confirmation_dialog.confirmed.connect(
+		func(): battle_finished(), CONNECT_ONE_SHOT)
 	if $"../".tutorial_mode == true:
-		$"../確認メッセージ".title = "チュートリアル終了"
-		$"../確認メッセージ".dialog_text = "チュートリアルを終わりますか？\nチュートリアルはいつでもプレイ可能です。"
+		confirmation_dialog.display_dialog("チュートリアルを終わりますか？\n" + 
+		"チュートリアルはいつでもプレイ可能です。", "チュートリアル終了")
 	else:
-		$"../確認メッセージ".title = "バトル終了"
-		$"../確認メッセージ".dialog_text = "バトルに敗北したことになりますが、本当に逃げますか？"
-	$"../確認メッセージ".popup_centered()
+		confirmation_dialog.display_dialog("バトルに敗北したことになりますが、" + 
+		"本当に逃げますか？\n[color=red]コインやアイテムも獲得できません！[/color]", 
+		"バトル終了")
 
 
 func battle_finished() -> void: # バトル終了初期化処理
@@ -492,8 +495,6 @@ func battle_finished() -> void: # バトル終了初期化処理
 		Global.enemy_deck.effect[i].clear()
 	Global.deck_creator(Global.enemy_deck) # 敵デッキ生成
 	Global.battle_stage = Global.Stage.PLAIN # とりあえず草原ステージ
-	await $dialogtab.battle_finished()
-	await $"../../background".battle_finished()
 	get_tree().change_scene_to_file(Global.deck_scene)
 
 

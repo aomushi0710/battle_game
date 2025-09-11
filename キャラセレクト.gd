@@ -80,4 +80,4 @@ func status(i: int) -> void: # マウスを合わせたモンスターのステ�
 
 func button_up(i: int) -> void: # ボタンが押されたらそのIDのモンスターのセレクトページへ
 	Global.selected_monster = i
-	get_tree().change_scene_to_file(Global.new_select_scene)
+	get_tree().change_scene_to_file(Global.select_scene)

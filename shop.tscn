@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://ctd6pgdgdo86l"]
+[gd_scene load_steps=6 format=3 uid="uid://ctd6pgdgdo86l"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_viryw"]
 [ext_resource type="Script" uid="uid://dvghle1vntn6w" path="res://shop.gd" id="2_e7rdd"]
 [ext_resource type="Script" uid="uid://cor4ln7h2d7oe" path="res://coin_text.gd" id="3_blqjs"]
+[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="4_6lah5"]
+[ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="5_gmb2m"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -141,11 +143,10 @@ text = "[center][b]アイテム名 Lv.0[/b][/center]
 表示されます！"
 vertical_alignment = 1
 
-[node name="error_message" type="AcceptDialog" parent="Control"]
+[node name="AcceptDialog" parent="Control" instance=ExtResource("4_6lah5")]
 
-[node name="confirm_message" type="ConfirmationDialog" parent="Control"]
+[node name="ConfirmationDialog" parent="Control" instance=ExtResource("5_gmb2m")]
 
 [connection signal="button_up" from="Control/inventory" to="Control" method="_on_inventory_button_up"]
 [connection signal="button_up" from="Control/戻る" to="Control" method="_on_戻る_button_up"]
 [connection signal="button_up" from="Control/buy" to="Control" method="_on_buy_button_up"]
-[connection signal="confirmed" from="Control/confirm_message" to="Control" method="_on_confirm_message_confirmed"]

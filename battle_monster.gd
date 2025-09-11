@@ -19,7 +19,6 @@ var death: bool = false
 var text_setter_callback: Callable ## dialogのtext_setter
 var chance_range: Array[int] ## 抽選に用いる範囲
 var picked_action: Array[Action] ## 抽選され選ばれた技の配列
-@onready var popup_position: Vector2i = $effect_detail.position
 
 signal monster_ready ## モンスターが行動可能になった時発行されます
 

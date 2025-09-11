@@ -28,8 +28,3 @@ func animation() -> void:
 	tween.finished.connect(func(): animation())
 	tween.tween_property(animation_right, "position:x", 1920, 30)
 	tween.parallel().tween_property(animation_left, "position:x", 0, 30)
-
-
-func battle_finished() -> void: # バトル終了
-	if tween and tween.is_running():
-		tween.kill()

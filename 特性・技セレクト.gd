@@ -260,4 +260,4 @@ func _on_進化技_draw(): # 最終形態の呼び出しは、1回進化でも2�
 
 
 func _on_button_button_up() -> void:
-	get_tree().change_scene_to_file(Global.new_select_scene)
+	get_tree().change_scene_to_file(Global.select_scene)

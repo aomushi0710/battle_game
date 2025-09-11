@@ -7,9 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://image/3rd.PNG" id="4_qklf7"]
 [ext_resource type="Script" uid="uid://tw743jfyh7c1" path="res://cpu_strategy.gd" id="5_c4lle"]
 [ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help_button.gd" id="5_jtnis"]
-[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_0twro"]
 [ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="7_cgg8v"]
 [ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="10_c8d0p"]
+[ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="11_c8d0p"]
 
 [sub_resource type="Theme" id="Theme_3nbs8"]
 default_font_size = 35
@@ -78,15 +78,6 @@ mouse_default_cursor_shape = 2
 button_mask = 3
 texture_normal = ExtResource("2_34w54")
 texture_hover = ExtResource("2_34w54")
-
-[node name="詳細" type="RichTextLabel" parent="Control/デッキ1/first"]
-visible = false
-layout_mode = 0
-offset_top = 250.0
-offset_right = 250.0
-offset_bottom = 1250.0
-scale = Vector2(2, 2)
-bbcode_enabled = true
 
 [node name="second" type="TextureButton" parent="Control/デッキ1"]
 layout_mode = 0
@@ -178,12 +169,6 @@ offset_bottom = 3.0
 theme = ExtResource("7_cgg8v")
 text = " 
  CPUの挙動"
-
-[node name="確認メッセージ" type="ConfirmationDialog" parent="Control"]
-auto_translate_mode = 1
-title = "⚠️デッキデータリセット⚠️"
-initial_position = 2
-theme = ExtResource("7_0twro")
 
 [node name="battle" type="Button" parent="Control"]
 visible = false
@@ -374,6 +359,11 @@ offset_bottom = 610.5
 theme = SubResource("Theme_cgg8v")
 text = "🛒ショップ"
 
+[node name="AcceptDialog" parent="Control" instance=ExtResource("10_c8d0p")]
+size = Vector2i(128, 186)
+
+[node name="ConfirmationDialog" parent="Control" instance=ExtResource("11_c8d0p")]
+
 [node name="fade" type="ColorRect" parent="."]
 offset_right = 1920.0
 offset_bottom = 1080.0
@@ -381,12 +371,8 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
 
-[node name="AcceptDialog" parent="." instance=ExtResource("10_c8d0p")]
-size = Vector2i(128, 186)
-
 [connection signal="tree_entered" from="." to="Control/デッキ1" method="_on_デッキセレクト_tree_entered"]
 [connection signal="button_up" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_button_up"]
-[connection signal="focus_entered" from="Control/デッキ1/first" to="Control/デッキ1" method="_on_first_focus_entered"]
 [connection signal="button_up" from="Control/デッキ1/second" to="Control/デッキ1" method="_on_second_button_up"]
 [connection signal="button_up" from="Control/デッキ1/third" to="Control/デッキ1" method="_on_third_button_up"]
 [connection signal="button_up" from="Control/デッキ1/save" to="Control/デッキ1" method="_on_save_button_up"]
@@ -394,7 +380,6 @@ size = Vector2i(128, 186)
 [connection signal="button_up" from="Control/デッキ1/reset" to="Control/デッキ1" method="_on_reset_button_up"]
 [connection signal="button_up" from="Control/デッキ1/おまかせ" to="Control/デッキ1" method="_on_button_button_up"]
 [connection signal="item_selected" from="Control/cpu_strategy" to="Control/デッキ1" method="_on_cpu_strategy_item_selected"]
-[connection signal="confirmed" from="Control/確認メッセージ" to="Control/デッキ1" method="_on_確認メッセージ_confirmed"]
 [connection signal="button_up" from="Control/battle" to="Control/デッキ1" method="_on_test_button_up"]
 [connection signal="button_up" from="Control/戻る" to="Control/デッキ1" method="_on_戻る_button_up"]
 [connection signal="toggled" from="Control/help" to="Control/help" method="_on_toggled"]
