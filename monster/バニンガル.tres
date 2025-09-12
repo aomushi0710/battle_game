@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=7 format=3 uid="uid://c0f46o1bsjw30"]
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://c0f46o1bsjw30"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_8tgxw"]
 [ext_resource type="Resource" uid="uid://eejuk7khv00r" path="res://action/ギガフレイム.tres" id="2_8tgxw"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_0kdg5"]
+[ext_resource type="Resource" uid="uid://cq0p1isl1cpli" path="res://action/エクスプロージョン.tres" id="3_lj33t"]
 [ext_resource type="Texture2D" uid="uid://dgxy0av1yv7pt" path="res://image/monster/バニンガル.PNG" id="3_pjw64"]
 [ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="4_lj33t"]
 [ext_resource type="Resource" uid="uid://dyfst4wxer3yx" path="res://element/火属性.tres" id="4_vctj5"]
@@ -27,7 +28,7 @@ skill1_name = Array[String]([])
 skill1_id = Array[int]([])
 skill2_name = Array[String]([])
 skill2_id = Array[int]([])
-actions = Array[ExtResource("1_8tgxw")]([ExtResource("2_8tgxw")])
+actions = Array[ExtResource("1_8tgxw")]([ExtResource("2_8tgxw"), ExtResource("3_lj33t")])
 coin = 10
 description = ""
 flavor_text = Array[String](["バニンガル の闘志が燃えている..."])

@@ -1,3 +1,4 @@
+Action
 Theme
 FontFile
 AbilityBuff
@@ -6,7 +7,6 @@ AbilityCritical
 AbilityReduction
 AbilityHealing
 AbilityDebuff
-Action
 Item
 Ability
 Monster

@@ -1,25 +1,23 @@
-[gd_resource type="Resource" script_class="AbilityBuff" load_steps=2 format=3 uid="uid://bbeosy4jqlx0s"]
+[gd_resource type="Resource" script_class="AbilityBuff" load_steps=3 format=3 uid="uid://bbeosy4jqlx0s"]
 
 [ext_resource type="Script" uid="uid://d2box237wyadg" path="res://resource/Ability/AbilityBuff.gd" id="1_iwgus"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://resource/Trigger.gd" id="2_2h8s2"]
 
 [resource]
 script = ExtResource("1_iwgus")
-status = 0
-amount_type = 0
-amount = 0.0
-turn = 0
-category = 0
-buff = 0
-debuff = 0
-healing = 0
-steal = 0
-critical = 0
-additional = 0
-percentage = 0
-evolution = 0
-name = ""
-bbcode_name = ""
-range = 0
-timing = 0
-trigger = 0
+status = 2
+amount = 2.0
+turn = 1
+name = "MAG UP"
+bbcode_name = "[color=dodgerblue]MAG[/color] [color=red]UP[/color]"
+target = 4
+chance = 100
+timing = 2
+trigger = Array[ExtResource("2_2h8s2")]([])
+description = "[color=dodger_blue]MAG[/color]を、
+1ターンの間
+2倍に強化する。"
+battle_log_message = "電気エネルギーを溜め込んでいる！
+%s は[color=dodger_blue]MAG[/color]が上がった！"
+placeholder = 0
 metadata/_custom_type_script = "uid://d2box237wyadg"
