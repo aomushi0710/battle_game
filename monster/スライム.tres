@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=13 format=3 uid="uid://br3qcigs0mtjj"]
+[gd_resource type="Resource" script_class="Monster" load_steps=12 format=3 uid="uid://br3qcigs0mtjj"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_08lmk"]
 [ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_noxkx"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="2_pfvqp"]
 [ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="2_xp38l"]
-[ext_resource type="Resource" uid="uid://bfnq6ko6acnpf" path="res://action/スタンプ.tres" id="3_m668r"]
 [ext_resource type="Resource" uid="uid://wrxn60f1ot7c" path="res://action/水しぶき.tres" id="4_rqmtx"]
 [ext_resource type="Resource" uid="uid://261705w1prvy" path="res://action/光線.tres" id="5_yx1ex"]
 [ext_resource type="Resource" uid="uid://cwy7h38kxvyy7" path="res://action/自己再生.tres" id="6_bckvf"]
@@ -33,7 +32,7 @@ skill1_name = Array[String]([])
 skill1_id = Array[int]([])
 skill2_name = Array[String]([])
 skill2_id = Array[int]([])
-actions = Array[ExtResource("1_08lmk")]([ExtResource("2_noxkx"), ExtResource("3_m668r"), ExtResource("4_rqmtx"), ExtResource("5_yx1ex"), ExtResource("6_bckvf"), ExtResource("7_ls7ai"), ExtResource("8_1i4rw")])
+actions = Array[ExtResource("1_08lmk")]([ExtResource("2_noxkx"), ExtResource("4_rqmtx"), ExtResource("5_yx1ex"), ExtResource("6_bckvf"), ExtResource("7_ls7ai"), ExtResource("8_1i4rw")])
 coin = 10
 description = "最も一般的なモンスター。DEFに少し偏った能力値を持つ。"
 flavor_text = Array[String](["スライム は体をプルプルさせている..."])

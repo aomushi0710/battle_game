@@ -91,7 +91,7 @@ func load_file(slot: int) -> void:
 			"現在のバージョン ver %.1f " % Global.VERSION + 
 			"以降に作成されたデータのため、\nロードできません。")
 		return
-	elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.2: # ver3.0~
+	elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.4: # ver3.0~
 		accept_dialog.display_dialog(
 			"過去のバージョンで保存されたデータをロードしました。\n" + 
 			"ロードされたデータを再度セーブするとデータのバージョンも更新されます。\n" + 

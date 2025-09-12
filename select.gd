@@ -16,6 +16,7 @@ const STATUS_BAR_TEXT: Array[String] = [
 @onready var background := $"../background"
 @onready var camera := $"../Camera2D"
 @onready var accept_dialog = $"../AcceptDialog"
+@onready var confirmation_dialog = $"../ConfirmationDialog"
 @onready var back_button := $"../CanvasLayer/Control/戻る"
 @onready var confirm_button := $"../CanvasLayer/Control/決定"
 @onready var help_mask := $"../CanvasLayer/Control/Panel/mask"
@@ -452,8 +453,17 @@ func _on_戻る_button_up():
 	se.click.play()
 	match camera_mode:
 		CameraMode.MAIN: # キャラ選択に戻す
-			reset()
-			get_tree().change_scene_to_file(Global.chara_scene)
+			confirmation_dialog.confirmed.connect(func(): 
+				if not is_inside_tree():
+					return
+				reset()
+				get_tree().change_scene_to_file(Global.chara_scene), 
+				CONNECT_ONE_SHOT)
+			confirmation_dialog.display_dialog(
+				"変更した内容は保存されていません！\n[color=yellow]" + 
+				"内容を保存するには、キャンセルボタンでこの画面を閉じた後、\n" + 
+				"右下にある決定ボタンを押してください。\n[/color]前の画面に戻りますか？", 
+				"未保存のデータ")
 		CameraMode.ACTION: # 画面を戻す
 			camera_mode = CameraMode.MAIN
 
@@ -470,14 +480,17 @@ func _on_決定_button_up():
 				return
 			
 			if len(monster_dict) == 3: # 2回進化モンスター
-				for evol_action in monster_dict[2].actions: # 全ての進化技をループ
-					for middle_evol_action in monster_dict[1].actions: # 全ての中間進化技をループ
-						# 進化技は選択されているが、中間進化技が選択されていない場合に警告メッセージ
-						if evol_action in actions and \
-						middle_evol_action not in actions:
-							accept_dialog.display_dialog(
-								"中間進化技が選択されていません！\nこのモンスターは進化が2回必要です")
-							return
+				var second_form_action: Array[Action] = monster_dict[1].actions
+				var third_form_action: Array[Action] = monster_dict[2].actions
+				
+				if (not Global.arrays_overlap(second_form_action, actions) 
+					and Global.arrays_overlap(third_form_action, actions)):
+					accept_dialog.display_dialog(
+						"第三形態の技は登録されていますが、\n" + 
+						"第二形態の技が登録されていません！\n" + 
+						"このモンスターは進化が2回必要です")
+					return
+			
 			#elif selected_skill == 0: #スキル実装後に実装
 				#$エラーメッセージ.dialog_text = "スキルが選択されていません！"
 				#$エラーメッセージ.popup_centered()

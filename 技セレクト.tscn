@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=72 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bgtiu2klk0bm3" path="res://image/spinbox_up.png" id="12_4lobs"]
 [ext_resource type="PackedScene" uid="uid://yl6fo6eqi2u0" path="res://SE_menu.tscn" id="12_ilscs"]
 [ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="13_3py80"]
+[ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="14_4lobs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lobs"]
 bg_color = Color(0, 0, 0, 1)
@@ -1129,6 +1130,8 @@ metadata/_edit_lock_ = true
 [node name="SoundEffects" parent="." instance=ExtResource("12_ilscs")]
 
 [node name="AcceptDialog" parent="." instance=ExtResource("13_3py80")]
+
+[node name="ConfirmationDialog" parent="." instance=ExtResource("14_4lobs")]
 
 [connection signal="button_up" from="CanvasLayer/Control/戻る" to="セレクト" method="_on_戻る_button_up"]
 [connection signal="button_up" from="CanvasLayer/Control/決定" to="セレクト" method="_on_決定_button_up"]

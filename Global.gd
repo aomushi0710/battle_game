@@ -1,8 +1,8 @@
 extends Node2D
 
 # バージョン管理 定数
-const VERSION_TEXT: String = "ver 4.2.0(β)" ## バージョン
-const VERSION: float = 4.2 ## 比較可能バージョン セーブデータ整合性チェック用
+const VERSION_TEXT: String = "ver 4.4.0(β)" ## バージョン
+const VERSION: float = 4.4 ## 比較可能バージョン セーブデータ整合性チェック用
 const VERSION_BETA: bool = true ## true:ベータ版 false:正式リリース版
 
 var monster_data = {}
@@ -135,6 +135,14 @@ func strip_bbcode(text: String) -> String:
 	var regex = RegEx.new()
 	regex.compile("\\[.*?\\]")
 	return regex.sub(text, "", true)
+
+## 2つの配列を比較し、共通する要素が見つかれば[code]true[/code]を、
+##見つからなければ[code]false[/code]を返す関数
+func arrays_overlap(array1: Array, array2: Array) -> bool:
+	for i in array1:
+		if array2.has(i):
+			return true
+	return false
 
 ## モンスターのステータス表示を生成する関数
 func status_text(monster: Monster) -> String:

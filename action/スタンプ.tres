@@ -33,6 +33,7 @@ timing = 2
 trigger = Array[ExtResource("6_cqbmj")]([])
 description = "スタンプの衝撃波で、敵全体を攻撃する。"
 battle_log_message = "さらに衝撃波が敵を襲う！"
+placeholder = 0
 metadata/_custom_type_script = "uid://bkfsnbhetj7ha"
 
 [resource]

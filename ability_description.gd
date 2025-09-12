@@ -135,6 +135,10 @@ func _ready() -> void:
 			AbilityHealing.AmountType.定数:
 				amount_text = str(int(ability.amount))
 			
+			AbilityHealing.AmountType.吸収:
+				amount_text = "[color=red]ダメージ[/color]の%d%%" % (ability.amount * 100)
+				space_length -= 5 # 全角の数だけ追加で減らす
+			
 			AbilityHealing.AmountType.MAG:
 				amount_text = "[color=dodger_blue]MAG[/color]の%d%%" % (ability.amount * 100)
 				space_length -= 1 # 全角の数だけ追加で減らす
@@ -213,7 +217,6 @@ func _ready() -> void:
 	
 	else:
 		gradient.colors = [Color.BLACK, Color.BLACK]
-		power_label.text = "[center][color=red]ERROR![/color][/center]"
 	
 	fit_name_label_size(ability.bbcode_name)
 	name_label.text = "[b]%s[/b]" % ability.bbcode_name
