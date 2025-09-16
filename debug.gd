@@ -1,7 +1,6 @@
 extends Control
 
 func _ready():
-	$ColorRect4/id.max_value = float(len(Global.monster_data) - 1)
 	
 	var butto = Global.action_button.instantiate()
 	butto.action = Global.action_data[1]

@@ -13,8 +13,7 @@ max_level = 10
 power = 50
 power_scale = 1
 target = 5
-description = "飲むと生命力がみなぎる
-ポーション。
+description = "飲むと体力がみなぎるポーション。
 [color=coral]HP[/color]を[color=yellow]%d%%[/color]だけ回復する。"
 battle_description = "
 味方モンスター1体の[color=coral]HP[/color]を[color=green]%d%%回復[/color]する。"

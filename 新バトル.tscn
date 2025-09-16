@@ -39,7 +39,7 @@ default_font_size = 240
 
 [sub_resource type="Theme" id="Theme_tc6cq"]
 default_font = ExtResource("11_a0jlr")
-default_font_size = 140
+default_font_size = 125
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v355k"]
 bg_color = Color(0, 0, 0, 0)
@@ -387,6 +387,7 @@ color = Color(0, 0, 0, 0)
 [node name="SoundEffects" parent="." instance=ExtResource("8_tc6cq")]
 
 [node name="battlestart" type="RichTextLabel" parent="."]
+visible = false
 offset_top = 131.0
 offset_right = 1920.0
 offset_bottom = 401.0
@@ -718,8 +719,10 @@ text = "[color=aqua][b]⇀ x0.5[/b][/color]"
 [node name="SoundEffects2" parent="." instance=ExtResource("21_pcnpl")]
 
 [node name="AcceptDialog" parent="." instance=ExtResource("24_4eqbm")]
+process_mode = 3
 
 [node name="ConfirmationDialog" parent="." instance=ExtResource("25_u0d87")]
+process_mode = 3
 
 [connection signal="tree_entered" from="background" to="background" method="_on_tree_entered"]
 [connection signal="button_up" from="battle/button/change" to="battle" method="_on_change_button_up"]

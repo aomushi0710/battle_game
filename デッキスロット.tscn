@@ -18,7 +18,7 @@ layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
 offset_right = 486.0
-offset_bottom = 113.0
+offset_bottom = 115.0
 bbcode_enabled = true
 text = "[u][b]デッキスロット１[/b][/u]"
 
@@ -56,7 +56,7 @@ texture_normal = ExtResource("3_dkjvr")
 [node name="version" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 1259.0
-offset_top = 209.0
+offset_top = 203.0
 offset_right = 1503.0
 offset_bottom = 253.0
 theme = ExtResource("6_yn7uq")

@@ -22,6 +22,7 @@ description = "味方単体の[color=violet]RES[/color]を、
 5ターンの間
 1.5倍に強化する。"
 battle_log_message = "%s は[color=violet]RES[/color]が上がった！"
+placeholder = 0
 metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]

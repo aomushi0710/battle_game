@@ -16,7 +16,7 @@ layout_mode = 2
 texture_normal = ExtResource("2_0whoj")
 
 [node name="price" type="RichTextLabel" parent="."]
-custom_minimum_size = Vector2(0, 73)
+custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 bbcode_enabled = true
 text = "[img=50]res://image/coin.PNG[/img] [color=gold]100[/color]"

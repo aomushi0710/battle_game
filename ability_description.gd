@@ -4,7 +4,6 @@ extends Panel
 @onready var name_label := $name
 @onready var target_label := $target
 @onready var chance_label := $chance
-@onready var power_label := $power
 @onready var ability_effect := $AbilityEffect ## AbilityEffectでのみ表示
 @onready var ability_buff := $AbilityBuff ## AbilityBUff及びAbilityDebuffでのみ表示
 @onready var ability_healing := $AbilityHealing ## AbilityHealing及びAbilityReductionでのみ表示

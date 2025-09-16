@@ -22,6 +22,7 @@ description = "敵単体の[color=dodger_blue]MAG[/color]を、
 5ターンの間
 2/3倍に弱体化する。"
 battle_log_message = "%s は[color=dodger_blue]MAG[/color]が下がった！"
+placeholder = 0
 metadata/_custom_type_script = "uid://b4gbl34tandgs"
 
 [resource]

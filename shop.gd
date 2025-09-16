@@ -22,9 +22,11 @@ func update(paid: int) -> void:
 	if selected_item == null: # 選ばれているアイテムがなければ
 		$buy.disabled = true
 		$dialog/margin/descriptions/description1/text.text = \
-		"[center][b]アイテム名 Lv.0[/b][/center]\n\n現在所持しているアイテムの\n能力が表示されます！"
+		"[center][b]アイテム名 Lv.0[/b][/center][font_size=20]\n\n[/font_size]" + \
+		"[font_size=40]現在所持しているアイテムの\n能力が表示されます！[/font_size]"
 		$dialog/margin/descriptions/description2/text.text = \
-		"[center][b]アイテム名 Lv.0[/b][/center]\n\nレベルアップ後の能力が\n表示されます！"
+		"[center][b]アイテム名 Lv.0[/b][/center][font_size=20]\n\n[/font_size]" + \
+		"[font_size=40]レベルアップ後の能力が\n表示されます！[/font_size]"
 	else: # あれば続けて表示する
 		item_button_up(selected_item)
 	
@@ -44,21 +46,29 @@ func item_button_up(shop_item) -> void:
 		$dialog/margin/descriptions/description1/text.text = "[center]未所持[/center]"
 		description = item.get_description(level + 1)
 		$dialog/margin/descriptions/description2/text.text = \
-		"[center][b]%s Lv.%d[/b][/center]\n\n%s" % [item.name, level + 1, description]
+		"[center][b]%s Lv.%d[/b][/center]" % [item.name, level + 1] + \
+		"[font_size=20]\n\n[/font_size][font_size=40]%s[/font_size]" % \
+		description
 	else:
 		if level < item.max_level: # 所持しているが最大レベルでない時
 			$buy.disabled = false
 			description = item.get_description(level)
 			$dialog/margin/descriptions/description1/text.text = \
-			"[center][b]%s Lv.%d[/b][/center]\n\n%s" % [item.name, level, description]
+			"[center][b]%s Lv.%d[/b][/center]" % [item.name, level] + \
+			"[font_size=20]\n\n[/font_size][font_size=40]%s[/font_size]" % \
+			description
 			description = item.get_description(level + 1)
 			$dialog/margin/descriptions/description2/text.text = \
-			"[center][b]%s Lv.%d[/b][/center]\n\n%s" % [item.name, level + 1, description]
+			"[center][b]%s Lv.%d[/b][/center]" % [item.name, level + 1] + \
+			"[font_size=20]\n\n[/font_size][font_size=40]%s[/font_size]" % \
+			description
 		else: # 最大レベルに達している時
 			$buy.disabled = true
 			description = item.get_description(item.max_level)
 			$dialog/margin/descriptions/description1/text.text = \
-			"[center][b]%s Lv.%d[/b][/center]\n\n%s" % [item.name, item.max_level, description]
+			"[center][b]%s Lv.%d[/b][/center]" % [item.name, item.max_level] + \
+			"[font_size=20]\n\n[/font_size][font_size=40]%s[/font_size]" % \
+			description
 			$dialog/margin/descriptions/description2/text.text = \
 			"[center]レベル上限に達しています！[/center]"
 

@@ -937,24 +937,26 @@ clip_contents = false
 layout_mode = 2
 offset_left = 20.0
 offset_right = 228.0
-offset_bottom = 59.0
+offset_bottom = 61.0
 theme = SubResource("Theme_3py80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ltw0u")
 bbcode_enabled = true
 text = "[color=red]Power[/color]:9999"
+scroll_active = false
 metadata/help_text = "技の威力。"
 
 [node name="mp" type="RichTextLabel" parent="セレクト/action_description"]
 clip_contents = false
 layout_mode = 0
 offset_left = 20.0
-offset_top = 71.0
+offset_top = 73.0
 offset_right = 228.0
-offset_bottom = 130.0
+offset_bottom = 134.0
 theme = SubResource("Theme_ltw0u")
 theme_override_styles/normal = SubResource("StyleBoxFlat_4ce10")
 bbcode_enabled = true
 text = "[color=aqua]MP   [/color]:9999"
+scroll_active = false
 metadata/help_text = "技を発動する時に消費するMPの量。"
 
 [node name="type" type="RichTextLabel" parent="セレクト/action_description"]
@@ -962,30 +964,32 @@ clip_contents = false
 layout_mode = 2
 offset_left = 238.0
 offset_right = 547.0
-offset_bottom = 59.0
+offset_bottom = 61.0
 theme = SubResource("Theme_3py80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oeulo")
 bbcode_enabled = true
 text = "分類:[color=red]物理[/color]"
+scroll_active = false
 
 [node name="target" type="RichTextLabel" parent="セレクト/action_description"]
 clip_contents = false
 layout_mode = 2
 offset_left = 238.0
-offset_top = 71.0
+offset_top = 73.0
 offset_right = 547.0
-offset_bottom = 130.0
+offset_bottom = 134.0
 theme = SubResource("Theme_3py80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_4fy06")
 bbcode_enabled = true
 text = "[color=yellow]対象[/color]:敵味方全体"
+scroll_active = false
 
 [node name="description" type="RichTextLabel" parent="セレクト/action_description"]
 clip_contents = false
 layout_mode = 0
 offset_left = 597.0
 offset_right = 758.0
-offset_bottom = 130.0
+offset_bottom = 132.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_u2vx1")
 
 [node name="ability" type="ScrollContainer" parent="セレクト/action_description"]

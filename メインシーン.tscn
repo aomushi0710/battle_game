@@ -128,9 +128,9 @@ text = "debug"
 [node name="version" type="RichTextLabel" parent="."]
 z_index = -1
 offset_left = 973.0
-offset_top = 611.875
+offset_top = 606.0
 offset_right = 1130.0
-offset_bottom = 641.875
+offset_bottom = 642.0
 theme = ExtResource("4_lf3g1")
 bbcode_enabled = true
 text = "[i]β.ver.X.X.X[/i] "

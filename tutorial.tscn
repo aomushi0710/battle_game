@@ -36,12 +36,12 @@ text = "終わる"
 text = "[color=yellow][b][color=green]Tutorial[/color] Start![/b][/color]"
 
 [node name="arrow_mark" type="RichTextLabel" parent="Node2D"]
-offset_left = 881.0
+offset_left = 875.0
 offset_top = 133.0
-offset_right = 1031.0
-offset_bottom = 283.0
+offset_right = 1050.0
+offset_bottom = 308.0
 rotation = 3.14159
-pivot_offset = Vector2(75, 75)
+pivot_offset = Vector2(87.5, 87.5)
 theme = SubResource("Theme_hu44a")
 theme_override_constants/outline_size = 30
 bbcode_enabled = true
@@ -63,6 +63,8 @@ text = "[b][i][color=red]バトル一時停止中...[/color]
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="cutin_ended" from="Node2D/battle" to="Node2D/battle" method="_on_cutin_ended"]
+[connection signal="player_ready" from="Node2D/battle" to="Node2D/battle" method="_on_player_ready"]
 [connection signal="player_or_enemy_button_pressed" from="Node2D/battle/button" to="Node2D/battle" method="_on_button_player_or_enemy_button_pressed"]
 [connection signal="button_up" from="Node2D/battle/button/main/Action" to="Node2D/battle" method="_on_action_button_up"]
 [connection signal="button_up" from="Node2D/battle/button/main/Status" to="Node2D/battle" method="_on_status_button_up"]

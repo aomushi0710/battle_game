@@ -42,13 +42,13 @@ func arrow_mark_setter(size_: int, color: String, direction: float, pos: Vector2
 	arrow_mark.show()
 	
 	arrow_tween = get_tree().create_tween().bind_node(arrow_mark).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	arrow_tween.tween_property(arrow_mark, "size:y", size_, 1)
+	arrow_tween.tween_property(arrow_mark, "size:y", size_ * 1.6, 1)
 	await arrow_tween.finished
 	arrow_tween = null
 	arrow_tween = get_tree().create_tween().bind_node(arrow_mark).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	arrow_tween.set_loops()
-	arrow_tween.tween_property(arrow_mark, "size:y", size_ * 1.5, 0.5)
-	arrow_tween.tween_property(arrow_mark, "size:y", size_, 0.5)
+	arrow_tween.tween_property(arrow_mark, "size:y", size_ * 1.3, 0.5)
+	arrow_tween.tween_property(arrow_mark, "size:y", size_ * 1.6, 0.5)
 
 ## 矢印マークの削除
 func arrow_mark_hide() -> void:
