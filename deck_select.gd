@@ -1,5 +1,9 @@
 extends Control
 
+@onready var deck_name = $name.text:
+	set(name):
+		deck_name = name
+		Global.deck_name = name
 @onready var accept_dialog := $"../AcceptDialog"
 @onready var confirmation_dialog := $"../ConfirmationDialog"
 var first_texture = load("res://image/1st.PNG")
@@ -77,6 +81,7 @@ func _on_test_button_up():
 
 
 func _on_button_button_up(): # 選択可能なモンスター、技からランダムにチームを編成します。
+	deck_name = ""
 	Global.deck_creator(Global.deck1)
 	for i in range(3):
 		if Global.deck1.monster[i] != null:
@@ -98,7 +103,6 @@ func _on_cpu_strategy_item_selected(index): # cpu戦略設定
 
 
 func _on_save_button_up() -> void:
-	Global.deck_name = $name.text
 	Global.save_mode = true
 	get_tree().change_scene_to_file(Global.deck_save_scene)
 
@@ -110,14 +114,14 @@ func _on_load_button_up() -> void:
 
 func _on_reset_button_up() -> void:
 	confirmation_dialog.confirmed.connect(
-		func(): _on_確認メッセージ_confirmed(), CONNECT_ONE_SHOT)
+		_on_確認メッセージ_confirmed, CONNECT_ONE_SHOT)
 	confirmation_dialog.display_dialog(
 		"現在選択中のデッキデータをリセットしようとしています。\nよろしいですか？\n" + 
 		"※セーブデータは削除されません。", "リセット確認")
 
 
 func _on_確認メッセージ_confirmed() -> void:
-	Global.deck_name = ""
+	deck_name = ""
 	Global.deck1 = Deck.new()
 	_on_デッキセレクト_tree_entered()
 	accept_dialog.display_dialog("デッキデータをリセットしました。", "リセット完了")

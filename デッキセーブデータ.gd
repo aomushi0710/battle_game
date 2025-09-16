@@ -121,7 +121,7 @@ func load_file(slot: int) -> void:
 
 func reset_file(slot: int) -> void:
 	confirmation_dialog.confirmed.connect(
-		func():_on_確認メッセージ_confirmed(slot), CONNECT_ONE_SHOT)
+		Callable(self, "_on_確認メッセージ_confirmed").bind(slot), CONNECT_ONE_SHOT)
 	confirmation_dialog.display_dialog(
 		"デッキスロット%dのデータを削除しようとしています。\nよろしいですか？" % slot, 
 		"⚠️削除確認⚠️")

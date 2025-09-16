@@ -195,7 +195,6 @@ func monster_ready(player: bool) -> void:
 		var action: Action = enemy_monster.picked_action[button_index]
 		var action_index: int = enemy_target_select(action)
 		
-		print("monster_ready(): action_index", action_index)
 		command_selected(enemy_monster, action, action_index)
 		enemy_monster.picked_action.remove_at(button_index)
 
@@ -238,15 +237,11 @@ func random_index(player: bool) -> int:
 	
 	while true:
 		index = randi() % 3
-		print("random_index:", index)
 		if player == true and death_list[index] == false:
-			print("end")
 			break
 		elif player == false and death_list[index + 3] == false:
-			print("end")
 			break
 	
-	print(index)
 	return index
 
 ## モンスターを引数として、そのモンスターが行動可能になった時に表示されるテキストを返す関数
@@ -311,7 +306,6 @@ func command_selected(monster: BattleMonster, action: Action, index: int,
 extra: AbilityExtra = null) -> void:
 	dialog.set_tab_disabled(1, true)
 	dialog.set_tab_disabled(2, true)
-	print("command_selected(): index:", index)
 	
 	# 相手全滅
 	if Global.e1_death == true and Global.e2_death == true and Global.e3_death == true:
@@ -404,8 +398,6 @@ damage: int = 0) -> void:
 		return
 	
 	var target_list := target_setting(monster.player, ability, index)
-	for i in target_list:
-		print("execute_ability(): target_list:", i.monster.name)
 	
 	for target: BattleMonster in target_list: # 全ての対象について順番に処理
 		if ability is AbilityEffect: # 状態異常 TODO 未実装
@@ -678,7 +670,6 @@ func target_setting(player: bool, resource: Resource, index: int)\
 			
 			Global.Target.味方単体:
 				target_list.append(enemy_deck[index])
-				print("target_setting(): index:", index)
 			
 			Global.Target.味方全体:
 				for mon: BattleMonster in enemy_deck:

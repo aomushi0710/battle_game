@@ -453,12 +453,9 @@ func _on_戻る_button_up():
 	se.click.play()
 	match camera_mode:
 		CameraMode.MAIN: # キャラ選択に戻す
-			confirmation_dialog.confirmed.connect(func(): 
-				if not is_inside_tree():
-					return
-				reset()
-				get_tree().change_scene_to_file(Global.chara_scene), 
-				CONNECT_ONE_SHOT)
+			confirmation_dialog.confirmed.connect(
+				Callable(get_tree(), "change_scene_to_file")
+				.bind(Global.chara_scene), CONNECT_ONE_SHOT)
 			confirmation_dialog.display_dialog(
 				"変更した内容は保存されていません！\n[color=yellow]" + 
 				"内容を保存するには、キャンセルボタンでこの画面を閉じた後、\n" + 
@@ -510,7 +507,6 @@ func _on_決定_button_up():
 			Global.deck1.chance[Global.now_picking] = chances.filter(
 				func(x): return x != 0)
 			#Global.deck1.skill[Global.now_picking] = selected_skill
-			reset()
 			get_tree().change_scene_to_file(Global.deck_scene)
 		CameraMode.ACTION:
 			if selected_action in actions: # 既存の技を選択中の時
@@ -540,12 +536,6 @@ func _on_決定_button_up():
 
 func _on_スキルボタン_item_selected(index: int): # オプションボタンで選んだパターンを登録
 	selected_skill = index + 1
-
-
-func reset():
-	actions = [null, null, null, null]
-	chances = [0, 0, 0, 0]
-	selected_skill = 0
 
 ## slider及びspinboxの値が変更された時に、反映させる関数
 func _on_chance_value_changed(value: int) -> void:

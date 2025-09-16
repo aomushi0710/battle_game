@@ -87,7 +87,7 @@ func _on_buy_button_up() -> void:
 			"コインが足りません！\nバトルでコインを集めましょう！", "コイン不足")
 	else:
 		confirmation_dialog.confirmed.connect(
-			func(): _on_confirm_message_confirmed(), CONNECT_ONE_SHOT)
+			_on_confirm_message_confirmed, CONNECT_ONE_SHOT)
 		confirmation_dialog.display_dialog("%s Lv.%dを購入しますか？" % 
 		[selected_item.name, selected_item.level], "購入確認")
 

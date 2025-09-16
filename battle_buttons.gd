@@ -457,7 +457,7 @@ func target_button_setting() -> void:
 
 func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げられないバトル用の処理なども作る
 	confirmation_dialog.confirmed.connect(
-		func(): battle_finished(), CONNECT_ONE_SHOT)
+		battle_finished, CONNECT_ONE_SHOT)
 	if $"../".tutorial_mode == true:
 		confirmation_dialog.display_dialog("チュートリアルを終わりますか？\n" + 
 		"チュートリアルはいつでもプレイ可能です。", "チュートリアル終了")

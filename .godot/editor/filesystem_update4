@@ -41,3 +41,7 @@ res://action/アタックブレイク.tres
 res://action/マジックブレイク.tres
 res://action/ディフェンスブレイク.tres
 res://action/レジストブレイク.tres
+res://shop.gd
+res://デッキセーブデータ.gd
+res://select.gd
+res://deck_select.gd
