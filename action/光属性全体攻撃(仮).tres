@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_625cx")
-id = 42
+id = 43
 name = "光属性全体攻撃(仮)"
 element = Array[ExtResource("2_a3se6")]([ExtResource("3_ewd1h")])
 max_chance = 10

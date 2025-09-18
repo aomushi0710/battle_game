@@ -45,3 +45,12 @@ res://shop.gd
 res://デッキセーブデータ.gd
 res://select.gd
 res://deck_select.gd
+res://deck.gd
+res://element/火属性.tres
+res://action/ギガダークネス.tres
+res://action/オーシャンウェーブ.tres
+res://action/ライトニングボルト.tres
+res://action/アースクエイク.tres
+res://action/風属性全体攻撃(仮).tres
+res://action/ダイヤモンドダスト.tres
+res://action/光属性全体攻撃(仮).tres

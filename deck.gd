@@ -30,6 +30,24 @@ func evolution_check() -> void:
 					if act in third_form.actions:
 						third_form_action[i].append(act)
 
+## バトル終了時に呼び出され、置き換えられた進化技を元に戻す関数[br]
+## 第一形態に戻す・エフェクトを空にする・
+func battle_finished() -> void:
+	monster = [monster_dict[0][0], monster_dict[1][0], monster_dict[2][0]]
+	effect = [{}, {}, {}]
+	
+	for i in range(3):
+		for j: int in len(action[i]):
+			var second := 0 ## second_form_action用index
+			var third := 0 ## third_form_action用index
+			match action[i][j].id:
+				10001: # 進化Ⅰが残っている場合
+					action[i][j] = second_form_action[i][second]
+					second += 1
+				10002: # 進化Ⅱが残っている場合
+					action[i][j] = third_form_action[i][third]
+					third += 1
+
 # カスタムクラスのduplicate
 func duplicate() -> Deck:
 	var deck = Deck.new()

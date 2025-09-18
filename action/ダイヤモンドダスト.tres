@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("4_ifser")
-id = 41
+id = 42
 name = "ダイヤモンドダスト"
 element = Array[ExtResource("2_kuyix")]([ExtResource("3_36dnq")])
 max_chance = 10

@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_d2gxs")
-id = 37
+id = 38
 name = "オーシャンウェーブ"
 element = Array[ExtResource("2_bgnb0")]([ExtResource("3_vgw5l")])
 max_chance = 10

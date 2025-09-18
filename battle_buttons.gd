@@ -475,24 +475,10 @@ func battle_finished() -> void: # バトル終了初期化処理
 	Global.e2_death = false
 	Global.e3_death = false
 	get_tree().paused = false
-	for i in range(3):
-		Global.deck1.monster[i] = Global.deck1.monster_dict[i][0]
-		Global.deck1.effect[i].clear()
-		
-		for j: int in len(Global.deck1.action[i]):
-			var second := 0 ## second_form_action用index
-			var third := 0 ## third_form_action用index
-			match Global.deck1.action[i][j].id:
-				10001: # 進化Ⅰが残っている場合
-					Global.deck1.action[i][j] = Global.deck1.second_form_action[i][second]
-					second += 1
-				10002: # 進化Ⅱが残っている場合
-					Global.deck1.action[i][j] = Global.deck1.third_form_action[i][third]
-					third += 1
 	
-	for i in range(3):
-		Global.enemy_deck.monster[i] = Global.enemy_deck.monster_dict[i][0]
-		Global.enemy_deck.effect[i].clear()
+	Global.deck1.battle_finished()
+	Global.enemy_deck.battle_finished()
+	
 	Global.deck_creator(Global.enemy_deck) # 敵デッキ生成
 	Global.battle_stage = Global.Stage.PLAIN # とりあえず草原ステージ
 	get_tree().change_scene_to_file(Global.deck_scene)
