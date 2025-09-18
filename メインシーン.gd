@@ -7,7 +7,11 @@ func _ready() -> void:
 	randomize()
 	Global.deck_creator(Global.enemy_deck)
 	Global.battle_stage = Global.Stage.PLAIN # 草原しかないのでとりあえず
-	$version.text = "[i]%s [/i]" % Global.VERSION_TEXT
+	var version_text: String = ""
+	if Global.VERSION_BETA:
+		version_text += "β "
+	$version.text = version_text + "[i]ver.%s[/i]" % \
+	ProjectSettings.get_setting("application/config/version")
 
 
 func _on_button_pressed():

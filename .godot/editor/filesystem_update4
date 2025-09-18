@@ -54,3 +54,6 @@ res://action/アースクエイク.tres
 res://action/風属性全体攻撃(仮).tres
 res://action/ダイヤモンドダスト.tres
 res://action/光属性全体攻撃(仮).tres
+res://Global.gd
+res://メインシーン.gd
+res://デッキスロット.gd

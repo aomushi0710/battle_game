@@ -1,9 +1,8 @@
 extends Node2D
 
-# バージョン管理 定数
-const VERSION_TEXT: String = "ver 4.4.0(β)" ## バージョン
-const VERSION: float = 4.4 ## 比較可能バージョン セーブデータ整合性チェック用
-const VERSION_BETA: bool = true ## true:ベータ版 false:正式リリース版
+## 現在のバージョンがβ版であるかどうかを表す定数[br]
+## [code]true[/code]はベータ版、[code]false[/code]は正式リリース版であることを示す
+const VERSION_BETA: bool = true
 
 var monster_data = {}
 var action_data = {}
@@ -142,6 +141,26 @@ func arrays_overlap(array1: Array, array2: Array) -> bool:
 	for i in array1:
 		if array2.has(i):
 			return true
+	return false
+
+## 比較されるバージョン[param version1]と比較したいバージョン[param version2]を、[br]
+## 引数として入力し、[param version1]の方が古い場合は[code]true[/code]、[br]
+## [param version1]の方が新しい、または同一バージョンの場合は[code]false[/code]を返す関数
+## [br][br][param version2]のデフォルト値は、現在バージョンを取得する関数を呼んでいる
+func is_version_older(version1: String, version2: String = 
+ProjectSettings.get_setting("application/config/version")) -> bool:
+	var num1_array = version1.split(".") ## version1(比較元)を分割した配列
+	var num2_array = version2.split(".") ## version2(比較先)を分割した配列
+	
+	for i in range(3): # メジャー、マイナー、パッチの順に比較
+		var num1 := int(num1_array[i])
+		var num2 := int(num2_array[i])
+		
+		if num1 < num2:
+			return true
+		elif num1 > num2:
+			return false
+		
 	return false
 
 ## モンスターのステータス表示を生成する関数
@@ -527,7 +546,7 @@ func save_game() -> void:
 		"coin": coin, 
 		"inv": inv, 
 		
-		"version": VERSION,
+		"version": ProjectSettings.get_setting("application/config/version"),
 		"beta": VERSION_BETA
 	}
 	
@@ -543,7 +562,7 @@ func load_game() -> void:
 			"coin": 0, # 所持コイン数
 			"inv": {"item": {}}, 
 			
-			"version": VERSION, # 比較可能バージョン セーブデータ整合性チェック用
+			"version": ProjectSettings.get_setting("application/config/version"),
 			"beta": VERSION_BETA # true:ベータ版 false:正式リリース版
 		}
 		save_game()
@@ -558,19 +577,27 @@ func load_game() -> void:
 			"セーブデータが存在しません！\n新たなセーブデータを作成しました。", 
 			"新規セーブデータ作成"
 		)
-		
+	
+	# ALERT float型でバージョンを管理していた時のデータを変換する
+	# βver4.4.0以下のバージョンのみに適用されるので今後は不要
+	elif save_data["version"] is float:
+		save_data["version"] = ProjectSettings.get_setting("application/config/version")
+	
 	# 現在のバージョン以降のデータの場合、オートセーブを切り、既存データの上書きされるのを防ぐ
-	elif save_data["version"] > VERSION:
+	elif (not is_version_older(save_data["version"]) and 
+	save_data["version"] != 
+	ProjectSettings.get_setting("application/config/version")):
 		auto_save = false # オートセーブを切る
 		save_data = {
 			"coin": 0, # 所持コイン数
 			"inv": {"item": {}}, 
 			
-			"version": VERSION, # 比較可能バージョン セーブデータ整合性チェック用
+			"version": ProjectSettings.get_setting("application/config/version"),
 			"beta": VERSION_BETA # true:ベータ版 false:正式リリース版
 		}
 		$エラーメッセージ.title = "⚠️ERROR⚠️"
-		$エラーメッセージ.dialog_text = "現在のバージョン ver %.1f " % Global.VERSION + \
+		$エラーメッセージ.dialog_text = "現在のバージョン ver %s " % \
+		ProjectSettings.get_setting("application/config/version") + \
 		"\n以降に作成されたデータのため、ロードできません。\n\n仮のセーブデータをロードしました。" + \
 		"\n現在のバージョンでもプレイ可能ですが、進行状況はセーブされません。" + \
 		"\nまた、既存データの破損については一切の責任を負いません！"

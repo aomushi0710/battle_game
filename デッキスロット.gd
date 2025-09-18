@@ -26,17 +26,27 @@ func setting(data: Dictionary) -> void: # デッキスロットUI上に各種デ
 		monster_data[data["third"]["monster"]][0].image
 		
 		var icon = "　"
-		if data["beta"] != Global.VERSION_BETA or data["version"] > Global.VERSION:
+		# β版で正式リリース版、あるいはその逆のデータが保存されている場合
+		# 現在のバージョン以降のデータの場合
+		# βver4.4.0以下のデータの場合 ALERT β版のみ、正式版で削除
+		if data["version"] is float:
 			icon = "❌"
-		elif data["version"] < Global.VERSION:
+		# 型がfloatだとそもそも比較できないので分離
+		elif (data["beta"] != Global.VERSION_BETA or
+			(not Global.is_version_older(data["version"]) and 
+			data["version"] != 
+			ProjectSettings.get_setting("application/config/version"))):
+			icon = "❌"
+		
+		# 現在のバージョン以前のデータの場合
+		elif Global.is_version_older(data["version"]):
 			icon = "⚠️"
 		
 		var beta = ""
 		if data["beta"] == true: # ベータ版の時、(β)を表示
 			beta = "(β)"
 		
-		$version.text = "%s[i]ver %.1f.x%s[/i]" % [icon, data["version"], beta]
-		# TODO バージョン表示ラベルに、バージョン互換性が無いことを通知できるアイコンを用意する
+		$version.text = "%s[i]ver.%s%s[/i]" % [icon, data["version"], beta]
 		$load.disabled = false
 		$reset.disabled = false
 	else:

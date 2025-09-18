@@ -63,7 +63,7 @@ func save_file(slot: int) -> void:
 			"skill": deck.skill[2]
 		},
 		
-		"version": Global.VERSION,
+		"version": ProjectSettings.get_setting("application/config/version"),
 		"beta": Global.VERSION_BETA
 	}
 	
@@ -86,16 +86,30 @@ func load_file(slot: int) -> void:
 			accept_dialog.display_dialog(
 				"βバージョンで保存されたデータはロードできません")
 		return
-	elif deck_data["version"] > Global.VERSION: # 現在のバージョン以降のデータの場合
+	
+	# ALERT βver4.4.0以下のデータはバージョン管理の型が違うので互換性がない
+	# ただしβ版のみのため、正式リリース後は不要
+	elif deck_data["version"] is float:
 		accept_dialog.display_dialog(
-			"現在のバージョン ver %.1f " % Global.VERSION + 
+			"バージョン管理方法の変更に伴い、\n" + 
+			"β ver 4.4.0以下で保存されたデータのためロードできません。")
+		return
+	
+	# 現在のバージョン以降のデータの場合
+	elif (not Global.is_version_older(deck_data["version"]) and 
+	deck_data["version"] != 
+	ProjectSettings.get_setting("application/config/version")):
+		accept_dialog.display_dialog(
+			"現在のバージョン ver %s " % 
+			ProjectSettings.get_setting("application/config/version") + 
 			"以降に作成されたデータのため、\nロードできません。")
 		return
-	elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.4: # ver3.0~
-		accept_dialog.display_dialog(
-			"過去のバージョンで保存されたデータをロードしました。\n" + 
-			"ロードされたデータを再度セーブするとデータのバージョンも更新されます。\n" + 
-			"[color=yellow]⚠️一度更新したバージョンは元に戻せません⚠️[/color]", "")
+	
+	#elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.4: # ver3.0~
+		#accept_dialog.display_dialog(
+			#"過去のバージョンで保存されたデータをロードしました。\n" + 
+			#"ロードされたデータを再度セーブするとデータのバージョンも更新されます。\n" + 
+			#"[color=yellow]⚠️一度更新したバージョンは元に戻せません⚠️[/color]", "")
 	else:
 		accept_dialog.display_dialog("デッキのロードが完了しました！", "✅ロード完了✅")
 	# TODO 過去のバージョンのデータだった場合、互換性があるかチェックし、
