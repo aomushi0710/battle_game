@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=73 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
@@ -422,6 +422,9 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="Theme" id="Theme_kch7d"]
+default_font_size = 30
 
 [node name="Node2D" type="Node2D"]
 
@@ -1102,6 +1105,15 @@ bbcode_enabled = true
 text = "[center]特殊能力が表示されます!
 [hint=特殊効果を発生させる対象が表示されます]対象:[color=yellow]――――[/color][/hint] [hint=特殊効果の発生確率]確率:[color=green]---%[/color][/hint][/center]"
 
+[node name="random" type="Button" parent="セレクト"]
+layout_mode = 0
+offset_left = 874.0
+offset_top = 465.0
+offset_right = 1039.0
+offset_bottom = 513.0
+theme = SubResource("Theme_kch7d")
+text = "🔄️おまかせ"
+
 [node name="background" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -1147,3 +1159,4 @@ metadata/_edit_lock_ = true
 [connection signal="value_changed" from="セレクト/action_select/chance" to="セレクト" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="セレクト/action_select/SpinBox" to="セレクト" method="_on_chance_value_changed"]
 [connection signal="tab_changed" from="セレクト/action_list" to="セレクト" method="monster_previw"]
+[connection signal="button_up" from="セレクト/random" to="セレクト" method="_on_random_button_up"]

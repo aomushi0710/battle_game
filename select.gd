@@ -562,3 +562,10 @@ func _on_chance_value_changed(value: int) -> void:
 ## ボタンが押された時に、次の形態(もしくは第一形態)で[code]monster_preview[/code]関数を呼ぶ関数
 func _on_evolution_button_up() -> void:
 	monster_previw(next_form)
+
+## おまかせボタンが押された時
+func _on_random_button_up() -> void:
+	monster.random_action_selector(actions, chances)
+	actions.resize(4)
+	chances.resize(4)
+	pie_chart_update()

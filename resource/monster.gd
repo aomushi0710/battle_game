@@ -70,6 +70,76 @@ static func _static_init() -> void:
 		var value = Form[key]
 		form_names[value] = key
 
+## [param actions]に第二形態の技が入っていないにもかかわらず第三形態の技が入っているなど、
+##間の進化形態をスキップしている場合に[code]true[/code]を返す関数
+func is_evolution_skipped(actions: Array[Action]) -> bool:
+	var monster_dict = Global.monster_data[id]
+	
+	if len(monster_dict) < 3: # 第三形態以上を持たないものはチェック不要
+		return false
+	else:
+		for i in range(len(monster_dict) - 1, 1, -1):
+			if (Global.arrays_overlap(monster_dict[i].actions, actions) and
+			not Global.arrays_overlap(monster_dict[i - 1].actions, actions)):
+				return true
+	
+	return false
+
+## [param action_array]に技を、[param chance_array]にその技の出現確率を、
+##ランダムで登録する関数
+func random_action_selector(action_array: Array[Action], 
+chance_array: Array[int]) -> void:
+	# 選択可能な技をactionsに複製
+	var actions: Array[Action]
+	for key in Global.monster_data[id]: # 全ての形態でループ
+		for action: Action in Global.monster_data[id][key].actions:
+			actions.append(action)
+	
+	var selected_actions: Array[Action] ## ランダムに選ばれた技
+	
+	while true: # ランダムな技4つを選ぶ
+		actions.shuffle()
+		selected_actions = actions.slice(0, 4)
+		
+		## [code]selected_actions[/code]の最大出現率の合計
+		var total_max_chance = 0
+		for action in selected_actions:
+			total_max_chance += action.max_chance
+		
+		if total_max_chance >= 100 and not is_evolution_skipped(selected_actions):
+			break
+	
+	# 候補となった技に対して、その技の最大出現率から振り分け可能な残り確率を算出し、
+	# 残り確率が多い技ほど、選ばれやすい
+	var chance: Dictionary = {} ## [code]key[/code]Action [code]value[/code]int
+	for action in selected_actions:
+		chance[action] = 0
+	
+	for i in range(100): # 100%分の確率を振り分ける
+		var available_actions: Array[Action] = []
+		var total_weight: int = 0 ## 全ての技の残り確率の合計
+		for action in selected_actions:
+			if action.max_chance - chance[action] > 0:
+				available_actions.append(action)
+				total_weight += action.max_chance - chance[action]
+		
+		var n = randi() % total_weight
+		var action: Action
+		for act in available_actions:
+			var weight = act.max_chance - chance[act]
+			if n < weight:
+				action = act
+				break
+			n -= weight
+		chance[action] += 1
+	
+	# 初期化して結果を格納する
+	action_array.clear()
+	chance_array.clear()
+	for action in selected_actions:
+		action_array.append(action)
+		chance_array.append(chance[action])
+
 ## モンスターの全ステータスをまとめたリストを返す関数[br]
 ## [code][maxHP, maxMP, supplyMP, SPD, ATK, DEF, MAG, RES][/code]
 func get_status_list() -> Array[int]:

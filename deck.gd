@@ -30,6 +30,8 @@ func evolution_check() -> void:
 					if act in third_form.actions:
 						third_form_action[i].append(act)
 
+
+
 ## バトル終了時に呼び出され、置き換えられた進化技を元に戻す関数[br]
 ## 第一形態に戻す・エフェクトを空にする・
 func battle_finished() -> void:
