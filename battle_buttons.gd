@@ -24,7 +24,7 @@ signal back
 func _ready() -> void: # 初期値
 	$"戻る".disabled = true
 	now_showing = 0
-	$change.texture_normal = Global.deck1.monster[0].image
+	$change.texture_normal = Global.deck1.monster[0].monster.image
 	
 	# item生成
 	# TODO 今後、デッキに3つまでアイテムを設定できるようにする。その3つのアイテムについて繰り返す
@@ -268,7 +268,7 @@ func show_monsters_button(player: bool) -> void:
 	else:
 		deck = Global.enemy_deck
 	for i in range(3):
-		$target.get_child(i).texture_normal = deck.monster[i].image
+		$target.get_child(i).texture_normal = deck.monster[i].monster.image
 	$target.show()
 	tween = get_tree().create_tween().bind_node($target)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
@@ -401,12 +401,12 @@ func target_button_setting() -> void:
 					if death_list[i] == true:
 						$target.get_child(i).texture_normal = load("res://image/お墓.PNG")
 					
-					elif Global.enemy_deck.monster[i] == null:
+					elif Global.enemy_deck.monster[i].monster == null:
 						$target.get_child(i).texture_normal = load("res://image/null.PNG")
 					
 					else:
 						$target.get_child(i).texture_normal = \
-						Global.enemy_deck.monster[i].image
+						Global.enemy_deck.monster[i].monster.image
 						disable = false
 					# 近接の時、場にいないモンスターは暗くし、押せなくする
 					if (target == Global.Target.近接 and
@@ -423,12 +423,12 @@ func target_button_setting() -> void:
 					if death_list[i + 3] == true:
 						$target.get_child(i).texture_normal = load("res://image/お墓.PNG")
 					
-					elif Global.deck1.monster[i] == null:
+					elif Global.deck1.monster[i].monster == null:
 						$target.get_child(i).texture_normal = load("res://image/null.PNG")
 					
 					else:
 						$target.get_child(i).texture_normal = \
-						Global.deck1.monster[i].image
+						Global.deck1.monster[i].monster.image
 						disable = false
 					# 近接の時、場にいないモンスターは暗くし、押せなくする
 					if (target == Global.Target.自分 and
@@ -479,7 +479,7 @@ func battle_finished() -> void: # バトル終了初期化処理
 	Global.deck1.battle_finished()
 	Global.enemy_deck.battle_finished()
 	
-	Global.deck_creator(Global.enemy_deck) # 敵デッキ生成
+	Global.enemy_deck.deck_creator() # 敵デッキ生成
 	Global.battle_stage = Global.Stage.PLAIN # とりあえず草原ステージ
 	get_tree().change_scene_to_file(Global.deck_scene)
 
@@ -554,9 +554,9 @@ func item_target_button_up(i: int) -> void:
 func status_dialog(i: int) -> void:
 	var mon: Monster
 	if now_player == true:
-		mon = Global.deck1.monster[i]
+		mon = Global.deck1.monster[i].monster
 	else:
-		mon = Global.enemy_deck.monster[i]
+		mon = Global.enemy_deck.monster[i].monster
 	
 	# チュートリアル中は、ページ送りを待つ
 	if $"../".tutorial_mode == true:

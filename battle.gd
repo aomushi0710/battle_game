@@ -165,7 +165,7 @@ func _on_buttle_command(action: Action, monster: Monster, boolian: bool, index: 
 	defense_effect = defense_deck.effect[target].keys()
 	enemy = defense_deck.monster[target]
 	# 第1形態から最終形態にスキップしないように
-	if len(offense_deck.monster_dict[index]) == 3 \
+	if len(offense_deck.evolution_forms[index]) == 3 \
 	and monster.form == 0 and action.id == 10002:
 		$"../log_window/log".text += "[color=yellow]%s" % aiteno + \
 		"%s はまだ最終形態には進化できない！[/color]\n" % monster.name

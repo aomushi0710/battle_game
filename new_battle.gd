@@ -29,8 +29,7 @@ func _ready() -> void:
 		for i: int in len(deck.monster):
 			var monster: BattleMonster = monster_scene.instantiate()
 			monster.index = i
-			monster.setup(deck.monster_dict[i], deck.monster[i], deck.action[i], 
-			deck.second_form_action[i], deck.third_form_action[i], deck.chance[i])
+			monster.setup(deck.monster[i])
 			monster.text_setter_callback = Callable(dialog, "text_setter")
 			match deck:
 				Global.deck1:
@@ -281,7 +280,8 @@ func _on_change_button_up() -> void:
 				player_next_index = 0
 		if player_deck[player_next_index].death == false:
 			break
-	$button/change.texture_normal = Global.deck1.monster[player_next_index].image
+	$button/change.texture_normal = \
+	Global.deck1.monster[player_next_index].monster.image
 	if player_monster.index != player_next_index:
 		changed.emit()
 
@@ -290,7 +290,8 @@ func monster_button_up(i: int) -> void:
 	if player_deck[i].death == false: # 生きてたら
 		player_next_index = i
 		if player_monster.index != player_next_index:
-			$button/change.texture_normal = Global.deck1.monster[player_next_index].image
+			$button/change.texture_normal = \
+			Global.deck1.monster[player_next_index].monster.image
 			changed.emit()
 
 ## buttonスクリプト接続用関数
@@ -373,7 +374,7 @@ extra: AbilityExtra = null) -> void:
 ## 発動可能な技の場合[code]true[/code]を返し、発動不可な技の場合[code]false[/code]を返す。
 func action_checker(monster: BattleMonster, action: Action) -> bool:
 	# 第1形態から最終形態にスキップするのを防止
-	if len(monster.monster_dict) == 3 \
+	if len(monster.evolution_forms) == 3 \
 	and monster.monster.form == Monster.Form.第一形態 and action.id == 10002:
 		await dialog.text_setter(0, true, [
 		"[color=yellow]%s はまだ最終形態には進化できない！[/color]\n先に第2形態に進化してください！" % 

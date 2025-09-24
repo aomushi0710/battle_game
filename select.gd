@@ -34,7 +34,7 @@ var selected_action: Action ## 現在選択中の技
 var selected_skill = 0 # 選ばれたスキルパターン
 var now_select_action = 0 # 現在指定されている技
 var monster_id = Global.selected_monster
-var monster_dict ## 現在選択中のモンスターの辞書
+var evolution_forms: Array[Monster] ## 現在選択中のモンスターの全形態が登録されている配列
 var monster: Monster ## 現在選択中のモンスター
 var next_form: Monster.Form ## 次に表示されるモンスターの形態
 var all_status_list: Array = []
@@ -79,23 +79,21 @@ enum CameraMode{
 }
 
 func _ready() -> void:
-	monster_dict = Global.monster_data[monster_id].duplicate() # 初期化
+	evolution_forms = Global.monster_data[monster_id].duplicate() # 初期化
 	camera.offset = Vector2(960, 540)
 	
 	# 全ての形態のステータスをリストに登録
-	for i in len(monster_dict):
-		all_status_list.append(monster_dict[i].get_status_list())
+	for i in len(evolution_forms):
+		all_status_list.append(evolution_forms[i].get_status_list())
 	
 	# モンスターを表示
 	monster_previw(Monster.Form.第一形態)
 	
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
-	if Global.deck1.monster[Global.now_picking] != null:
-		if Global.deck1.monster[Global.now_picking].id == monster_id:
-			for i in len(Global.deck1.action[Global.now_picking]):
-				# 以下、追加部分
-				actions[i] = Global.deck1.action[Global.now_picking][i]
-				chances[i] = Global.deck1.chance[Global.now_picking][i]
+	if (Global.deck1.monster[Global.now_picking].monster != null and 
+		Global.deck1.monster[Global.now_picking].monster.id == monster_id):
+		actions = Global.deck1.monster[Global.now_picking].action
+		chances = Global.deck1.monster[Global.now_picking].chance
 	
 	# 円グラフ生成
 	pie_chart = load("res://pie_chart.tscn").instantiate()
@@ -160,7 +158,7 @@ func monster_previw(form: Monster.Form) -> void:
 	# 棒グラフのアニメーションが終わるまで押せなくする
 	evolution_button.disabled = true
 	
-	monster = monster_dict[form]
+	monster = evolution_forms[form]
 	
 	monster_node.texture = monster.image
 	monster_node.get_child(0).get_child(0).monster = monster
@@ -171,7 +169,7 @@ func monster_previw(form: Monster.Form) -> void:
 	
 	@warning_ignore("int_as_enum_without_cast")
 	next_form = monster.form + 1 # 1つ次の形態を代入しているのでintで足している
-	if next_form >= len(monster_dict): # 存在しない形態を表示しないように
+	if next_form >= len(evolution_forms): # 存在しない形態を表示しないように
 		next_form = monster.Form.第一形態 # 第一形態に戻してループさせる
 	
 	evolution_button.text = "%sのステータスを表示" % monster.form_names[next_form]
@@ -293,12 +291,12 @@ func pie_chart_update() -> void:
 
 ## 全ての形態に関して、技をそれぞれのコンテナにボタン化して追加する関数
 func setting_action_button() -> void:
-	if len(monster_dict) <= 2: # 第三形態がない時
+	if len(evolution_forms) <= 2: # 第三形態がない時
 		action_list.set_tab_disabled(2, true)
-		if len(monster_dict) == 1: # 第二形態もない時
+		if len(evolution_forms) == 1: # 第二形態もない時
 			action_list.set_tab_disabled(1, true)
 	
-	for mon: Monster in monster_dict.values():
+	for mon: Monster in evolution_forms:
 		## 技が追加されるコンテナ(TabContainer -> ScrollContainer -> VboxContainer)
 		var container = action_list.get_child(mon.form).get_child(0)
 		for act: Action in mon.actions:
@@ -476,12 +474,8 @@ func _on_決定_button_up():
 				accept_dialog.display_dialog("出現率の合計が100%ではありません！")
 				return
 			
-			if len(monster_dict) == 3: # 2回進化モンスター
-				var second_form_action: Array[Action] = monster_dict[1].actions
-				var third_form_action: Array[Action] = monster_dict[2].actions
-				
-				if (not Global.arrays_overlap(second_form_action, actions) 
-					and Global.arrays_overlap(third_form_action, actions)):
+			if len(evolution_forms) == 3: # 2回進化モンスター
+				if monster.is_evolution_skipped(actions):
 					accept_dialog.display_dialog(
 						"第三形態の技は登録されていますが、\n" + 
 						"第二形態の技が登録されていません！\n" + 
@@ -497,17 +491,19 @@ func _on_決定_button_up():
 				if chances[i] == 0:
 					actions[i] = null
 			
-			Global.deck1.monster_dict[Global.now_picking] = monster_dict
-			Global.deck1.monster[Global.now_picking] = \
-			Global.deck1.monster_dict[Global.now_picking][0].duplicate()
+			Global.deck1.monster[Global.now_picking].evolution_forms = \
+			evolution_forms
+			Global.deck1.monster[Global.now_picking].monster = \
+			evolution_forms[0].duplicate()
 			# nullは消す
-			Global.deck1.action[Global.now_picking] = actions.filter(
-				func(x): return x != null)
+			Global.deck1.monster[Global.now_picking].action = \
+			actions.filter(func(x): return x != null)
 			# 0は消す
-			Global.deck1.chance[Global.now_picking] = chances.filter(
-				func(x): return x != 0)
-			#Global.deck1.skill[Global.now_picking] = selected_skill
+			Global.deck1.monster[Global.now_picking].chance = \
+			chances.filter(func(x): return x != 0)
+			#Global.deck1.monster[Global.now_picking].skill = selected_skill
 			get_tree().change_scene_to_file(Global.deck_scene)
+		
 		CameraMode.ACTION:
 			if selected_action in actions: # 既存の技を選択中の時
 				accept_dialog.display_dialog("既に登録されている技です！\n\n" + 

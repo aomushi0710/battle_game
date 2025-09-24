@@ -8,7 +8,7 @@ var parent: Node ## 常にbattleノードを参照するように調整される
 var player: bool ## true:味方 false:敵
 var index: int
 var field: bool ## モンスターが場に出ている時[code]true[/code]
-var monster_dict ## モンスターの全形態を格納する辞書
+var evolution_forms: Array[Monster] ## モンスターの全形態を格納する配列
 var monster: Monster ## モンスターの現在の状態 INFO バトル中に更新される場合あり
 var action_list: Array ## 設定された技を格納する配列
 var second_form_action: Array ## 設定された中間進化技を格納する配列
@@ -37,15 +37,14 @@ func parent_getter() -> void:
 		parent = parent.get_parent()
 
 # バトル開始時セットアップ
-func setup(dict: Dictionary, mon: Monster, act_list: Array, 
-second_form_act: Array, third_form_act: Array, chan_list: Array) -> void:
+func setup(deck_monster: DeckMonster) -> void:
 	# 引数から全て代入
-	monster_dict = dict
-	monster = mon
-	action_list = act_list
-	second_form_action = second_form_act
-	third_form_action = third_form_act
-	chance_list = chan_list
+	evolution_forms = deck_monster.evolution_forms
+	monster = deck_monster.monster
+	action_list = deck_monster.action
+	second_form_action = deck_monster.second_form_action
+	third_form_action = deck_monster.third_form_action
+	chance_list = deck_monster.chance
 	# 初期値を設定
 	monster.HP = monster.maxHP
 	monster.MP = monster.maxMP / 5
@@ -66,17 +65,17 @@ second_form_act: Array, third_form_act: Array, chan_list: Array) -> void:
 	$name/name.text = "[b][i]%s[/i][/b]" % monster.name
 	self.texture_normal = monster.image
 	# 進化技、中間進化技の置換
-	if second_form_act.is_empty() == false: # 進化技が存在する場合
+	if not second_form_action.is_empty(): # 進化技が存在する場合
 		for i in len(action_list):
-			if action_list[i] in second_form_act: # その技が進化技だった時
+			if action_list[i] in second_form_action: # その技が進化技だった時
 				action_list[i] = Global.action_data[10001].duplicate() # 進化Ⅰに置き換える
-				action_list[i].mp = monster_dict[Monster.Form.第二形態].cost # MP設定
+				action_list[i].mp = evolution_forms[Monster.Form.第二形態].cost # MP設定
 		
-		if third_form_act.is_empty() == false:
+		if not third_form_action.is_empty():
 			for i in len(action_list):
-				if action_list[i] in third_form_act:
+				if action_list[i] in third_form_action:
 					action_list[i] = Global.action_data[10002].duplicate()
-					action_list[i].mp = monster_dict[Monster.Form.第三形態].cost
+					action_list[i].mp = evolution_forms[Monster.Form.第三形態].cost
 	# chance_range 生成
 	var sum_range = 0
 	for i in len(chance_list):
@@ -167,13 +166,15 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 func evolution(id: int) -> Array[String]:
 	var pre_monster = monster
 	if id == 10001: # 進化Ⅰ
-		monster = monster_dict[1]
+		monster = evolution_forms[Monster.Form.第二形態]
 	elif id == 10002: # 進化Ⅱ
-		monster = monster_dict[2]
+		monster = evolution_forms[Monster.Form.第三形態]
+	
 	if player == true:
-		Global.deck1.monster[index] = monster
+		Global.deck1.monster[index].monster = monster
 	else:
-		Global.enemy_deck.monster[index] = monster
+		Global.enemy_deck.monster[index].monster = monster
+		
 	# hpを引き継ぐ時、進化で伸びたmaxHPの差だけ回復する
 	monster.HP = pre_monster.HP
 	hp_setter(monster.maxHP - pre_monster.maxHP, false)

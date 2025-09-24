@@ -12,14 +12,11 @@ func _on_戻る_button_up():
 
 func _on_node_2d_tree_entered() -> void:
 	# モンスターの数だけボタンを生成する関数
-	for i in range(1, len(monster_data) - 1): # monster_data[i]:Dictionary[Monster]型
+	for i in range(1, len(monster_data) - 1): # monster_data[i]: Array[Monster]
 		var button := TextureButton.new()
 		button.texture_normal = monster_data[i][0].image
-		## モンスターの各形態情報が入った辞書のkeyのみのリスト
-		var monster_keys: Array = monster_data[i].keys()
-		monster_keys.sort()
 		# ホバー状態の時、最後の形態の姿を表示させる
-		button.texture_hover = monster_data[i][monster_keys[-1]].image
+		button.texture_hover = monster_data[i][-1].image
 		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		button.mouse_entered.connect(func():status(i))
 		button.button_up.connect(func():button_up(i))
@@ -33,20 +30,21 @@ func _on_node_2d_tree_entered() -> void:
 				container.add_child(button) # 登録
 				break
 	
-	for mon in Global.deck1.monster: # 3体のモンスターを順番に処理
-		if mon != null:
+	for monster in Global.deck1.monster: # 3体のモンスターを順番に処理
+		if monster.monster != null:
 			# モンスターが居ない位置のキャラセレクトをしている時
 			# デッキに居るモンスターを選択不可に
-			if Global.deck1.monster[Global.now_picking] == null:
-				var id = mon.id
+			if Global.deck1.monster[Global.now_picking].monster == null:
+				var id = monster.monster.id
 				var j = (id - 1) / HCONTAINER_LIMIT # 行指定
 				var i = id - HCONTAINER_LIMIT * j - 1 # 列指定
 				$VBoxContainer.get_child(j).get_child(i).disabled = true
-				$VBoxContainer.get_child(j).get_child(i).modulate = Color(50, 50, 50)
+				$VBoxContainer.get_child(j).get_child(i).modulate = Color(0.5, 0.5, 0.5)
 			else: # すでにモンスターが居る位置のキャラセレクトをしている時
 				# その位置以外のデッキに居るモンスターを選択不可に
-				if mon.id != Global.deck1.monster[Global.now_picking].id:
-					var id = mon.id
+				if (monster.monster.id != 
+					Global.deck1.monster[Global.now_picking].monster.id):
+					var id = monster.monster.id
 					var j = (id - 1) / HCONTAINER_LIMIT # 行指定
 					var i = id - HCONTAINER_LIMIT * j - 1 # 列指定
 					$VBoxContainer.get_child(j).get_child(i).disabled = true
@@ -59,12 +57,8 @@ func status(i: int) -> void: # マウスを合わせたモンスターのステ�
 	now_monster_id = i
 	for label in statcontainer.get_children(): # 初期化
 		label.queue_free()
-	## モンスターの各形態情報が入った辞書のkeyのみのリスト
-	var monster_keys: Array = monster_data[i].keys()
-	monster_keys.sort()
 	
-	for key in monster_keys:
-		var monster: Monster = monster_data[i][key]
+	for monster in monster_data[i]:
 		var evolution_text := RichTextLabel.new() # 進化形態のみ追加テキスト
 		evolution_text.bbcode_enabled = true
 		evolution_text.fit_content = true

@@ -5,7 +5,7 @@ extends Node2D
 
 func _ready() -> void:
 	randomize()
-	Global.deck_creator(Global.enemy_deck)
+	Global.enemy_deck.deck_creator()
 	Global.battle_stage = Global.Stage.PLAIN # 草原しかないのでとりあえず
 	var version_text: String = ""
 	if Global.VERSION_BETA:

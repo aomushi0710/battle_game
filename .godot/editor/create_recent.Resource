@@ -1,3 +1,5 @@
+Deck
+DeckMonster
 Action
 Theme
 FontFile
@@ -11,4 +13,3 @@ Item
 Ability
 Monster
 Element
-Resource

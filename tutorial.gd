@@ -5,7 +5,6 @@ extends Node2D
 @onready var button_node: Control = $Node2D/battle/button
 @onready var dialog_node: TabContainer = $Node2D/battle/button/dialogtab
 
-var monster_data = Global.monster_data
 var action_data = Global.action_data
 
 func _ready() -> void:

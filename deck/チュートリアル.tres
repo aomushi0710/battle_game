@@ -1,0 +1,100 @@
+[gd_resource type="Resource" script_class="Deck" load_steps=17 format=3 uid="uid://bri0s2ex6jd61"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_7xm2m"]
+[ext_resource type="Script" uid="uid://dfmkbeq2byy01" path="res://deck.gd" id="1_oqpqk"]
+[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_rdfci"]
+[ext_resource type="Resource" uid="uid://qcde2e3i3cco" path="res://monster/カカシスライム/カカシスライム.tres" id="3_tc4p4"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="4_tgdnh"]
+[ext_resource type="Script" uid="uid://caxcvll0814us" path="res://resource/DeckMonster.gd" id="5_wk4pc"]
+[ext_resource type="Resource" uid="uid://cwy7h38kxvyy7" path="res://action/自己再生.tres" id="6_twc26"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="7_kfs45"]
+[ext_resource type="Resource" uid="uid://cie7fwul7ew3q" path="res://element/無属性.tres" id="8_eiybn"]
+
+[sub_resource type="Resource" id="Resource_hmh1l"]
+script = ExtResource("5_wk4pc")
+monster_dict = {}
+monster = ExtResource("3_tc4p4")
+action = Array[ExtResource("1_7xm2m")]([ExtResource("2_rdfci")])
+chance = Array[int]([100])
+skill = 0
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n3cpj"]
+load_path = "res://.godot/imported/カカシスライム.PNG-faa47935e4bd09dae8b719c90249aefd.ctex"
+
+[sub_resource type="Resource" id="Resource_qecno"]
+script = ExtResource("4_tgdnh")
+id = 0
+name = "カカシスライム"
+form = 0
+image = SubResource("CompressedTexture2D_n3cpj")
+element = Array[ExtResource("7_kfs45")]([ExtResource("8_eiybn")])
+cost = 0
+maxHP = 999
+maxMP = 0
+supplyMP = 0
+ATK = 0
+DEF = 100
+MAG = 0
+RES = 100
+SPD = 0
+skill1_name = Array[String]([])
+skill1_id = Array[int]([])
+skill2_name = Array[String]([])
+skill2_id = Array[int]([])
+actions = Array[ExtResource("1_7xm2m")]([ExtResource("6_twc26")])
+coin = 0
+description = ""
+flavor_text = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_it7cy"]
+script = ExtResource("5_wk4pc")
+monster_dict = {}
+monster = SubResource("Resource_qecno")
+action = Array[ExtResource("1_7xm2m")]([ExtResource("2_rdfci")])
+chance = Array[int]([100])
+skill = 0
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rra5i"]
+load_path = "res://.godot/imported/カカシスライム.PNG-faa47935e4bd09dae8b719c90249aefd.ctex"
+
+[sub_resource type="Resource" id="Resource_jqv1v"]
+script = ExtResource("4_tgdnh")
+id = 0
+name = "カカシスライム"
+form = 0
+image = SubResource("CompressedTexture2D_rra5i")
+element = Array[ExtResource("7_kfs45")]([ExtResource("8_eiybn")])
+cost = 0
+maxHP = 999
+maxMP = 0
+supplyMP = 0
+ATK = 0
+DEF = 100
+MAG = 0
+RES = 100
+SPD = 0
+skill1_name = Array[String]([])
+skill1_id = Array[int]([])
+skill2_name = Array[String]([])
+skill2_id = Array[int]([])
+actions = Array[ExtResource("1_7xm2m")]([ExtResource("6_twc26")])
+coin = 0
+description = ""
+flavor_text = Array[String]([])
+
+[sub_resource type="Resource" id="Resource_uxumm"]
+script = ExtResource("5_wk4pc")
+monster_dict = {}
+monster = SubResource("Resource_jqv1v")
+action = Array[ExtResource("1_7xm2m")]([ExtResource("2_rdfci")])
+chance = Array[int]([100])
+skill = 0
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[resource]
+script = ExtResource("1_oqpqk")
+monster = Array[Object]([SubResource("Resource_hmh1l"), SubResource("Resource_it7cy"), SubResource("Resource_uxumm")])
+name = ""
+metadata/_custom_type_script = "uid://dfmkbeq2byy01"

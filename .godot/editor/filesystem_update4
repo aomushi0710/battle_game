@@ -58,3 +58,10 @@ res://Global.gd
 res://メインシーン.gd
 res://デッキスロット.gd
 res://resource/monster.gd
+res://resource/DeckMonster.gd
+res://battle_monster.gd
+res://deck/チュートリアル.tres
+res://action/自己再生.tres
+res://monster/カカシスライム.tres
+res://battle.gd
+res://tutorial.gd

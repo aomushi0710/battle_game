@@ -15,60 +15,57 @@ var detail = ""
 # 押したボタンの場所のモンスターを選択
 func _on_first_button_up():
 	Global.now_picking = 0
-	if Global.deck1.monster[0] == null:
+	if Global.deck1.monster[0].monster == null:
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
-		Global.selected_monster = Global.deck1.monster[0].id
+		Global.selected_monster = Global.deck1.monster[0].monster.id
 		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_second_button_up():
 	Global.now_picking = 1
-	if Global.deck1.monster[1] == null:
+	if Global.deck1.monster[1].monster == null:
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
-		Global.selected_monster = Global.deck1.monster[1].id
+		Global.selected_monster = Global.deck1.monster[1].monster.id
 		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_third_button_up():
 	Global.now_picking = 2
-	if Global.deck1.monster[2] == null:
+	if Global.deck1.monster[2].monster == null:
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
-		Global.selected_monster = Global.deck1.monster[2].id
+		Global.selected_monster = Global.deck1.monster[2].monster.id
 		get_tree().change_scene_to_file(Global.select_scene)
 
 
 func _on_デッキセレクト_tree_entered():
 	$"../../fade".color.a = 0
-	$name.text = Global.deck_name
+	$name.text = Global.deck1.name
 	for i in range(3):
-		var monster = Global.deck1.monster[i]
-		if Global.deck1.monster[i] != null:
-			match i:
-				0:
-					$first.texture_normal = monster.image
-				1:
-					$second.texture_normal = monster.image
-				2:
-					$third.texture_normal = monster.image
+		## TextureButtonの繰り返し用配列
+		var buttons = [$first, $second, $third]
+		## Textureの繰り返し用配列
+		var textures = [first_texture, second_texture, third_texture]
+		## TextureButtonの繰り返し用配列 敵デッキ用
+		var enemy_buttons = [
+			$"../enemy/monster/first", 
+			$"../enemy/monster/second", 
+			$"../enemy/monster/third"
+		]
+		
+		if Global.deck1.monster[i].monster != null:
+			buttons[i].texture_normal = Global.deck1.monster[i].monster.image
 		else:
-			match i:
-				0:
-					$first.texture_normal = first_texture
-				1:
-					$second.texture_normal = second_texture
-				2:
-					$third.texture_normal = third_texture
+			buttons[i].texture_normal = textures[i]
 	
-	$"../enemy/monster/first".texture_normal = Global.enemy_deck.monster[0].image
-	$"../enemy/monster/second".texture_normal = Global.enemy_deck.monster[1].image
-	$"../enemy/monster/third".texture_normal = Global.enemy_deck.monster[2].image
+		enemy_buttons[i].texture_normal = Global.enemy_deck.monster[i].monster.image
+	
 	Global.now_picking = 3
 
 
 func _on_test_button_up():
 	for i in range(3):
-		if Global.deck1.monster[i] == null:
+		if Global.deck1.monster[i].monster == null:
 			accept_dialog.display_dialog("デッキ内には3体のモンスターを登録してください！")
 			return
 	
@@ -77,16 +74,16 @@ func _on_test_button_up():
 
 
 func _on_button_button_up(): # 選択可能なモンスター、技からランダムにチームを編成します。
-	Global.deck_creator(Global.deck1)
+	Global.deck1.deck_creator()
 	for i in range(3):
-		if Global.deck1.monster[i] != null:
+		if Global.deck1.monster[i].monster != null:
 			match i:
 				0:
-					$first.texture_normal = Global.deck1.monster[i].image
+					$first.texture_normal = Global.deck1.monster[i].monster.image
 				1:
-					$second.texture_normal = Global.deck1.monster[i].image
+					$second.texture_normal = Global.deck1.monster[i].monster.image
 				2:
-					$third.texture_normal = Global.deck1.monster[i].image
+					$third.texture_normal = Global.deck1.monster[i].monster.image
 
 
 func _on_戻る_button_up():
@@ -117,7 +114,6 @@ func _on_reset_button_up() -> void:
 
 
 func _on_確認メッセージ_confirmed() -> void:
-	Global.deck_name = ""
 	Global.deck1 = Deck.new()
 	_on_デッキセレクト_tree_entered()
 	accept_dialog.display_dialog("デッキデータをリセットしました。", "リセット完了")
@@ -125,7 +121,7 @@ func _on_確認メッセージ_confirmed() -> void:
 
 func _on_new_button_up() -> void:
 	for i in range(3):
-		if Global.deck1.monster[i] == null:
+		if Global.deck1.monster[i].monster == null:
 			accept_dialog.display_dialog("デッキ内には3体のモンスターを登録してください！")
 			return
 	
@@ -139,27 +135,39 @@ func _on_new_button_up() -> void:
 func _on_tutorial_button_up() -> void:
 	Global.current_deck = Global.deck1.duplicate() # 避難
 	# 味方チュートリアルデッキ構築
-	Global.deck1.monster_dict = [monster_data[1], monster_data[2], monster_data[3]]
-	#Global.deck1.skill = [0, 0, 0]
-	for i in range(3):
-		Global.deck1.monster[i] = Global.deck1.monster_dict[i][0].duplicate()
-	Global.deck1.action = [
-		# スライム＠体当たり:50%, 自己再生:30%, DEFエンハンス:10%, ATKブレイク:10%
-		[action_data[1], action_data[4], action_data[46], action_data[49]], 
-		# ゴースト＠体当たり:40%, 暗闇:40%, 霊魂吸収:10%, ギガダークネス:10%
-		[action_data[1], action_data[12], action_data[1001], action_data[36]], 
-		# バニン＠火の玉:40%, 暗闇:40%, フレイム:20%
-		[action_data[5], action_data[12], action_data[13]]
-	]
-	Global.deck1.chance = [[50, 30, 10, 10], [40, 40, 10, 10], [40, 40, 20]]
+	## スライム＠体当たり:50%, 自己再生:30%, DEFエンハンス:10%, ATKブレイク:10%
+	var first := DeckMonster.new()
+	## ゴースト＠体当たり:40%, 暗闇:40%, 霊魂吸収:10%, ギガダークネス:10%
+	var second := DeckMonster.new()
+	## バニン＠火の玉:40%, 暗闇:40%, フレイム:20%
+	var third := DeckMonster.new()
+	
+	first.evolution_forms = monster_data[1]
+	first.monster = monster_data[1][0].duplicate()
+	first.action = [action_data[1], action_data[4], action_data[46], action_data[49]]
+	first.chance = [50, 30, 10, 10]
+	
+	second.evolution_forms = monster_data[2]
+	second.monster = monster_data[2][0].duplicate()
+	second.action = [action_data[1], action_data[12], action_data[1001], action_data[36]]
+	second.chance = [40, 40, 10, 10]
+	
+	third.evolution_forms = monster_data[3]
+	third.monster = monster_data[3][0].duplicate()
+	third.action = [action_data[5], action_data[12], action_data[13]]
+	third.chance = [40, 40, 20]
+	
+	Global.deck1.monster = [first, second, third]
 	Global.deck1.evolution_check()
+	
 	# 相手チュートリアルデッキ構築
-	Global.enemy_deck.monster_dict = [monster_data[0], monster_data[0], monster_data[0]]
-	for i in range(3):
-		Global.enemy_deck.monster[i] = Global.enemy_deck.monster_dict[i][0].duplicate()
-	Global.enemy_deck.action = [[action_data[4]], [action_data[4]], [action_data[4]]]
-	Global.enemy_deck.chance = [[100], [100], [100]]
+	## カカシスライム@体当たり:100%
+	Global.enemy_deck = Deck.new()
+	Global.enemy_deck = load("res://deck/チュートリアル.tres").duplicate(true)
+	Global.enemy_deck.evolution_forms_setting()
 	Global.enemy_deck.evolution_check()
+	for monster in Global.enemy_deck.monster:
+		print(monster.monster.name)
 	
 	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 0.5)

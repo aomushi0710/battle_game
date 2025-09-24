@@ -30,37 +30,38 @@ func _on_戻る_button_up() -> void:
 
 
 func save_file(slot: int) -> void:
-	if Global.deck1.monster.size() < 3 or null in Global.deck1.monster:
+	var has_empty_slot = Global.deck1.monster.any(func(m): return m.monster == null)
+	
+	if Global.deck1.monster.size() < 3 or has_empty_slot:
 		accept_dialog.display_dialog(
 			"デッキをセーブするには、全ての枠を埋めてください！")
 		return
 	
-	# 技のlist of listを技のIDのlist of listに変換
-	var action_id: Array[Array] = [[],[],[]] # 技のIDに変換されたもの
-	for index in range(3): # 全てのモンスターに対して
-		for i in len(deck.action[index]): # 全ての技に対して
-			action_id[index].append(deck.action[index][i].id) # idをリストに
+	# 技のArray[Action]を技のIDのArray[int]に変換
+	var action_id: Array[Array] = [[],[],[]] ## 技がIDに変換されたもの
+	for i in range(3): # 全てのモンスターの技のIDのリストを生成
+		action_id[i] = deck.monster[i].action.map(func(act): return act.id)
 	
 	var deck_data := {
-		"name": Global.deck_name,
+		"name": deck.name,
 		
 		"first":{
-			"monster": deck.monster[0].id, # monster -> int
+			"monster": deck.monster[0].monster.id, # monster -> int
 			"action": action_id[0], # Array[Action] -> Array[int]
-			"chance": deck.chance[0], # Array[int]
-			"skill": deck.skill[0] # int
+			"chance": deck.monster[0].chance, # Array[int]
+			"skill": deck.monster[0].skill # int
 		},
 		"second":{
-			"monster": deck.monster[1].id,
+			"monster": deck.monster[1].monster.id,
 			"action": action_id[1],
-			"chance": deck.chance[1],
-			"skill": deck.skill[1]
+			"chance": deck.monster[1].chance,
+			"skill": deck.monster[1].skill
 		},
 		"third":{
-			"monster": deck.monster[2].id,
+			"monster": deck.monster[2].monster.id,
 			"action": action_id[2],
-			"chance": deck.chance[2],
-			"skill": deck.skill[2]
+			"chance": deck.monster[2].chance,
+			"skill": deck.monster[2].skill
 		},
 		
 		"version": ProjectSettings.get_setting("application/config/version"),
@@ -116,19 +117,23 @@ func load_file(slot: int) -> void:
 	# データのバージョンを更新する処理を実装する必要あり。
 	
 	# 復元処理
-	Global.deck_name = deck_data["name"]
-	
 	var index: Array[String] = ["first", "second", "third"]
 	Global.deck1 = Deck.new() # 初期化
 	deck = Global.deck1
+	
+	deck.name = deck_data["name"]
 	for i in range(3):
 		var pos: Dictionary = deck_data[index[i]] # deck_data["first"]など
-		deck.monster_dict[i] = monster_data[pos["monster"]]
-		deck.monster[i] = monster_data[pos["monster"]][0].duplicate() # 未進化状態
-		for act_i in len(pos["action"]): # 全ての技のIDに対して
-			deck.action[i].append(action_data[pos["action"][act_i]])
-		deck.chance[i] = pos["chance"]
-		deck.skill[i] = pos["skill"]
+		
+		var actions: Array[Action] ## セーブデータのidから、復元された技のリスト
+		for id in pos["action"]:
+			actions.append(action_data[id])
+		
+		deck.monster[i].evolution_forms = monster_data[pos["monster"]]
+		deck.monster[i].monster = monster_data[pos["monster"]][0].duplicate() # 未進化状態
+		deck.monster[i].action = actions
+		deck.monster[i].chance = pos["chance"]
+		deck.monster[i].skill = pos["skill"]
 	
 	deck.evolution_check()
 

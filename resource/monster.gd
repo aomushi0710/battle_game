@@ -73,14 +73,14 @@ static func _static_init() -> void:
 ## [param actions]に第二形態の技が入っていないにもかかわらず第三形態の技が入っているなど、
 ##間の進化形態をスキップしている場合に[code]true[/code]を返す関数
 func is_evolution_skipped(actions: Array[Action]) -> bool:
-	var monster_dict = Global.monster_data[id]
+	var evolution_forms = Global.monster_data[id]
 	
-	if len(monster_dict) < 3: # 第三形態以上を持たないものはチェック不要
+	if len(evolution_forms) < 3: # 第三形態以上を持たないものはチェック不要
 		return false
 	else:
-		for i in range(len(monster_dict) - 1, 1, -1):
-			if (Global.arrays_overlap(monster_dict[i].actions, actions) and
-			not Global.arrays_overlap(monster_dict[i - 1].actions, actions)):
+		for i in range(len(evolution_forms) - 1, 1, -1):
+			if (Global.arrays_overlap(evolution_forms[i].actions, actions) and
+			not Global.arrays_overlap(evolution_forms[i - 1].actions, actions)):
 				return true
 	
 	return false
@@ -91,8 +91,8 @@ func random_action_selector(action_array: Array[Action],
 chance_array: Array[int]) -> void:
 	# 選択可能な技をactionsに複製
 	var actions: Array[Action]
-	for key in Global.monster_data[id]: # 全ての形態でループ
-		for action: Action in Global.monster_data[id][key].actions:
+	for monster in Global.monster_data[id]: # 全ての形態でループ
+		for action: Action in monster.actions:
 			actions.append(action)
 	
 	var selected_actions: Array[Action] ## ランダムに選ばれた技

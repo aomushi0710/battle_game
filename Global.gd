@@ -9,55 +9,9 @@ var action_data = {}
 var item_data = {}
 
 func _ready() -> void:
-	var dir = DirAccess.open("res://action/") # actionディレクトリを開く
-	if dir:
-		print("ディレクトリ「action」のロードを開始...")
-		dir.list_dir_begin() # ループ初期化
-		var file := dir.get_next() # 最初のリソース取得
-		
-		while file != "": # リソースがなくなるまで繰り返す
-			var resource = load("res://action/" + file)
-			action_data[resource.id] = resource # リソースのID通りのkeyで辞書に登録
-			print("ロード完了:" + resource.name + " ID:" + str(resource.id))
-			file = dir.get_next() # 次のリソース取得
-		dir.list_dir_end() # ループ終了
-		print("ディレクトリ「action」のロードが完了。\n")
-	else:
-		print("ERROR:ディレクトリ「action」が存在しません")
-	
-	dir = DirAccess.open("res://monster/")
-	if dir:
-		print("ディレクトリ「monster」のロードを開始...")
-		dir.list_dir_begin()
-		var file := dir.get_next() # 最初のリソース取得
-		
-		while file != "": # リソースがなくなるまで繰り返す
-			var resource = load("res://monster/" + file)
-			if resource.id not in monster_data: # 辞書内の辞書が存在しない場合
-				monster_data[resource.id] = {} # モンスターIDごとに辞書生成
-			monster_data[resource.id][resource.form] = resource # モンスターIDと形態がkey
-			print("ロード完了:" + resource.name)
-			file = dir.get_next()
-		dir.list_dir_end()
-		print("ディレクトリ「monster」のロードが完了。\n")
-	else:
-		print("ERROR:ディレクトリ「monster」が存在しません")
-	
-	dir = DirAccess.open("res://item/")
-	if dir:
-		print("ディレクトリ「item」のロードを開始...")
-		dir.list_dir_begin()
-		var file := dir.get_next() # 最初のリソース取得
-		
-		while file != "": # リソースがなくなるまで繰り返す
-			var resource = load("res://item/" + file)
-			item_data[resource.id] = resource
-			print("ロード完了:" + resource.name)
-			file = dir.get_next()
-		dir.list_dir_end()
-		print("ディレクトリ「item」のロードが完了。\n")
-	else:
-		print("ERROR:ディレクトリ「item」が存在しません")
+	directory_load("res://monster/", monster_data, true)
+	directory_load("res://action/", action_data)
+	directory_load("res://item/", item_data)
 	
 	load_game()
 
@@ -79,9 +33,9 @@ const ability_description = preload("res://ability_description.tscn")
 const damage_text = preload("res://damage_text.tscn")
 
 @onready var picked_monster = [0,0,0]
-@onready var deck1 = Deck.new()
-@onready var enemy_deck = Deck.new()
-@onready var current_deck = Deck.new()
+@onready var deck1 := Deck.new()
+@onready var enemy_deck := Deck.new()
+@onready var current_deck := Deck.new()
 @onready var target = 3 ## 現在攻撃対象に選択中のモンスターの位置(0~2:指定indexのモンスターを攻撃 3:未選択)
 @onready var support_target = 3 ## 味方から技を受ける場合の位置(0~2:指定indexのモンスターを攻撃 3:未選択)
 
@@ -128,6 +82,72 @@ enum Stage { ## バトルステージ一覧
 	PLAIN
 }
 @onready var battle_stage: Stage ## バトルステージ
+
+## ディレクトリのパス[param path]を指定して読み込み、[br]
+##辞書[param dict]にIDをキーとしてリソースを格納する関数。[br]
+## [param array_mode]が[code]true[/code]の時、サブディレクトリは[br]
+##それぞれの配列にまとめられてから、格納されます。
+func directory_load(path: String, dict, array_mode: bool = false):
+	var dir := DirAccess.open(path)
+	if dir:
+		print("ディレクトリ「%s」のロードを開始..." % path)
+		dir.list_dir_begin()
+		var file_name: String = dir.get_next() ## ファイル名
+		
+		while file_name != "":
+			if file_name == "." or file_name == "..":
+				file_name = dir.get_next()
+				continue
+			
+			var full_path = path.path_join(file_name) ## rootからのファイルパス
+			
+			if array_mode == false:
+				if dir.current_is_dir():
+					directory_load(full_path, dict)
+				else:
+					var resource = load(full_path)
+					if resource:
+						dict[resource.id] = resource
+			else:
+				if dir.current_is_dir():
+					var monster_list: Array[Monster] ## モンスターの全形態
+					var monster_dict = {} ## データを入れる仮の辞書
+					monster_directory_load(full_path, monster_dict)
+					monster_list.resize(len(monster_dict))
+					for key in monster_dict:
+						monster_list[key] = monster_dict[key]
+					dict[monster_list[0].id] = monster_list
+			
+			file_name = dir.get_next()
+		
+		dir.list_dir_end()
+		print("ディレクトリ「%s」のロードが完了。" % path)
+	else:
+		print("ERROR:ディレクトリ「%s」が存在しません" % path)
+
+
+func monster_directory_load(path: String, dict):
+	var dir := DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name: String = dir.get_next() ## ファイル名
+		
+		while file_name != "":
+			if file_name == "." or file_name == "..":
+				file_name = dir.get_next()
+				continue
+			
+			var full_path = path.path_join(file_name) ## rootからのファイルパス
+			
+			var resource: Monster = load(full_path)
+			if resource:
+				dict[resource.form] = resource
+			
+			file_name = dir.get_next()
+		
+		dir.list_dir_end()
+	else:
+		print("ERROR:ディレクトリ「%s」が存在しません" % path)
 
 ## BBcodeのタグ[]を含む[param text]を平文に戻して返す関数
 func strip_bbcode(text: String) -> String:
@@ -475,56 +495,6 @@ func ability_description_creator(act: Action, index: int, blank: bool) -> Array:
 	
 	return [ability_text, ability_range_text + blank_text, 
 	ability_chance_text, ability_power, ability_color]
-
-## ランダムデッキ生成機
-func deck_creator(deck: Deck) -> void:
-	var monster_id_list: Array[int] = [0] # 選ばれたモンスターのIDを登録と0だけ
-	var monster_id: int = 0
-	for i in range(3): # 全モンスターからランダムに選ぶ。iは0-2が入りモンスターの位置を表す。
-		# Global.enemy_deck[i]["id"] は敵モンスター[i]枠目のモンスターidが入ります
-		while monster_id in monster_id_list: # 被りがでなくなるまで繰り返す
-			# ID-1とID0は対象外、randi()で割った値は0を含むので+1して修正
-			monster_id = randi() % (len(monster_data) - 2) + 1
-		monster_id_list.append(monster_id)
-		
-		deck.monster_dict[i] = monster_data[monster_id]
-		deck.monster[i] = deck.monster_dict[i][0].duplicate() # 第一形態を登録
-		#deck.skill[i] = randi() % 2 # スキルパターンindexを0or1に設定
-		
-		# 選択可能な技をactionsに複製
-		var actions: Array[Action]
-		for form in deck.monster_dict[i]: # 全ての形態でループ
-			for action: Action in deck.monster_dict[i][form].actions:
-				actions.append(action)
-		
-		var sum_chance = 0
-		while sum_chance < 100: # 合計出現率が100%になるまでモンスターの持つ全技からランダムに選ぶ。
-			deck.action[i] = []
-			deck.chance[i] = []
-			sum_chance = 0
-			var copy = actions.duplicate()
-			for act_index in range(4):
-				if sum_chance != 100: # 既に100%ならスキップ
-					# n には全ての選択可能な技のindexが入ります
-					var n = randi() % len(copy)
-					# action_id にはnに入ったindexの位置の技idが入ります
-					var action: Action = copy.pop_at(n)
-					var chance = 0
-					if act_index == 3: # 4つ目の技を設定する時は、ちょうど100%になるように調整される。
-						if action.max_chance >= 100 - sum_chance: # ただし、max_chanceには従う
-							chance = 100 - sum_chance
-						else:
-							break
-					else:
-						# chance にはactionに入った技の出現率が入ります。
-						# もし残りの%よりもmax_chanceが大きければ、100%を超過しないようにする。
-						if 100 - sum_chance >= action.max_chance:
-							chance = randi() % (action.max_chance) + 1 # 1~max_chanceの値が入る
-						else:
-							chance = randi() % (100 - sum_chance) + 1
-					deck.action[i].insert(act_index, action)
-					deck.chance[i].insert(act_index, chance)
-					sum_chance += chance
 
 ## 指定したコイン枚数だけ増減させ、自動でセーブする関数
 func coin_setter(n: int) -> void:
