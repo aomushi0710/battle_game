@@ -15,24 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="13_3py80"]
 [ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="14_4lobs"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lobs"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ltw0u"]
-content_margin_left = 8.0
-
-[sub_resource type="Theme" id="Theme_oeulo"]
-default_font_size = 30
-
 [sub_resource type="Theme" id="Theme_4ce10"]
 default_font_size = 30
 
@@ -187,6 +169,24 @@ gradient = SubResource("Gradient_idr3v")
 width = 1
 height = 49
 fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lobs"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ltw0u"]
+content_margin_left = 8.0
+
+[sub_resource type="Theme" id="Theme_oeulo"]
+default_font_size = 30
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hqx4"]
 border_width_left = 2
@@ -437,6 +437,204 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_14bbj")
 
+[node name="status" type="Control" parent="CanvasLayer/Control"]
+anchors_preset = 0
+
+[node name="status" type="VBoxContainer" parent="CanvasLayer/Control/status"]
+layout_mode = 2
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 512.0
+theme = SubResource("Theme_4ce10")
+theme_override_constants/separation = 10
+
+[node name="HP" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/HP"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_msxfx")
+bbcode_enabled = true
+text = "[color=coral]HP [font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "体力。0になると先頭不能になります。"
+
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/HP"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_epq06")
+metadata/help_text = "体力。0になると先頭不能になります。"
+
+[node name="maxMP" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/maxMP"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_constants/line_separation = -16
+theme_override_styles/normal = SubResource("StyleBoxFlat_crhb1")
+bbcode_enabled = true
+text = "[table=2]
+[cell][font_size=20][color=aqua]MP
+max   [/color][/font_size][/cell]
+[cell][center]:%4d[/center][/cell]"
+vertical_alignment = 1
+metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
+
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/maxMP"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_j08b8")
+metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
+
+[node name="supplyMP" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/supplyMP"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_constants/line_separation = -16
+theme_override_styles/normal = SubResource("StyleBoxFlat_mu04y")
+bbcode_enabled = true
+text = "[table=2]
+[cell][font_size=20][color=aqua]MP
+supply[/color][/font_size][/cell]
+[cell][center]:%4d[/center][/cell]"
+vertical_alignment = 1
+metadata/help_text = "行動可能になった時、回復する魔力の量。"
+
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/supplyMP"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_0c3n4")
+metadata/help_text = "行動可能になった時、回復する魔力の量。"
+
+[node name="SPD" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/SPD"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_spf5i")
+bbcode_enabled = true
+text = "[color=limegreen]SPD[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
+
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/SPD"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_lvrxx")
+metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
+
+[node name="ATK" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/ATK"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_hkjnp")
+bbcode_enabled = true
+text = "[color=orange]ATK[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
+
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/ATK"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_ydts3")
+metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
+
+[node name="DEF" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/DEF"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_bmcow")
+bbcode_enabled = true
+text = "[color=lightblue]DEF[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
+
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/DEF"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_2uk2t")
+metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
+
+[node name="MAG" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/MAG"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_dy60e")
+bbcode_enabled = true
+text = "[color=dodgerblue]MAG[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
+
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/MAG"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_gcshb")
+metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
+
+[node name="RES" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/RES"]
+clip_contents = false
+custom_minimum_size = Vector2(150, 49)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_j0fa8")
+bbcode_enabled = true
+text = "[color=violet]RES[font_size=2]                   [/font_size][/color]:%4d"
+vertical_alignment = 1
+metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
+
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/RES"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = SubResource("GradientTexture2D_mmr34")
+metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
+
+[node name="evolution" type="Button" parent="CanvasLayer/Control/status"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 526.0
+offset_right = 500.0
+offset_bottom = 574.0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 30
+text = "中間進化後のステータスを表示"
+
 [node name="戻る" type="Button" parent="CanvasLayer/Control"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 0
@@ -536,204 +734,6 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 vertical_alignment = 1
-
-[node name="status" type="Control" parent="セレクト"]
-anchors_preset = 0
-
-[node name="status" type="VBoxContainer" parent="セレクト/status"]
-layout_mode = 2
-offset_left = 50.0
-offset_top = 50.0
-offset_right = 400.0
-offset_bottom = 512.0
-theme = SubResource("Theme_4ce10")
-theme_override_constants/separation = 10
-
-[node name="HP" type="HBoxContainer" parent="セレクト/status/status"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="status" type="RichTextLabel" parent="セレクト/status/status/HP"]
-clip_contents = false
-custom_minimum_size = Vector2(150, 49)
-layout_mode = 2
-mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxFlat_msxfx")
-bbcode_enabled = true
-text = "[color=coral]HP [font_size=2]                   [/font_size][/color]:%4d"
-vertical_alignment = 1
-metadata/help_text = "体力。0になると先頭不能になります。"
-
-[node name="bar" type="TextureRect" parent="セレクト/status/status/HP"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_epq06")
-metadata/help_text = "体力。0になると先頭不能になります。"
-
-[node name="maxMP" type="HBoxContainer" parent="セレクト/status/status"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="status" type="RichTextLabel" parent="セレクト/status/status/maxMP"]
-clip_contents = false
-custom_minimum_size = Vector2(150, 49)
-layout_mode = 2
-mouse_filter = 1
-theme_override_constants/line_separation = -16
-theme_override_styles/normal = SubResource("StyleBoxFlat_crhb1")
-bbcode_enabled = true
-text = "[table=2]
-[cell][font_size=20][color=aqua]MP
-max   [/color][/font_size][/cell]
-[cell][center]:%4d[/center][/cell]"
-vertical_alignment = 1
-metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
-
-[node name="bar" type="TextureRect" parent="セレクト/status/status/maxMP"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_j08b8")
-metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
-
-[node name="supplyMP" type="HBoxContainer" parent="セレクト/status/status"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="status" type="RichTextLabel" parent="セレクト/status/status/supplyMP"]
-clip_contents = false
-custom_minimum_size = Vector2(150, 49)
-layout_mode = 2
-mouse_filter = 1
-theme_override_constants/line_separation = -16
-theme_override_styles/normal = SubResource("StyleBoxFlat_mu04y")
-bbcode_enabled = true
-text = "[table=2]
-[cell][font_size=20][color=aqua]MP
-supply[/color][/font_size][/cell]
-[cell][center]:%4d[/center][/cell]"
-vertical_alignment = 1
-metadata/help_text = "行動可能になった時、回復する魔力の量。"
-
-[node name="bar" type="TextureRect" parent="セレクト/status/status/supplyMP"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_0c3n4")
-metadata/help_text = "行動可能になった時、回復する魔力の量。"
-
-[node name="SPD" type="HBoxContainer" parent="セレクト/status/status"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="status" type="RichTextLabel" parent="セレクト/status/status/SPD"]
-clip_contents = false
-custom_minimum_size = Vector2(150, 49)
-layout_mode = 2
-mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxFlat_spf5i")
-bbcode_enabled = true
-text = "[color=limegreen]SPD[font_size=2]                   [/font_size][/color]:%4d"
-vertical_alignment = 1
-metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
-
-[node name="bar" type="TextureRect" parent="セレクト/status/status/SPD"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_lvrxx")
-metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
-
-[node name="ATK" type="HBoxContainer" parent="セレクト/status/status"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="status" type="RichTextLabel" parent="セレクト/status/status/ATK"]
-clip_contents = false
-custom_minimum_size = Vector2(150, 49)
-layout_mode = 2
-mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxFlat_hkjnp")
-bbcode_enabled = true
-text = "[color=orange]ATK[font_size=2]                   [/font_size][/color]:%4d"
-vertical_alignment = 1
-metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
-
-[node name="bar" type="TextureRect" parent="セレクト/status/status/ATK"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_ydts3")
-metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
-
-[node name="DEF" type="HBoxContainer" parent="セレクト/status/status"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="status" type="RichTextLabel" parent="セレクト/status/status/DEF"]
-clip_contents = false
-custom_minimum_size = Vector2(150, 49)
-layout_mode = 2
-mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxFlat_bmcow")
-bbcode_enabled = true
-text = "[color=lightblue]DEF[font_size=2]                   [/font_size][/color]:%4d"
-vertical_alignment = 1
-metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
-
-[node name="bar" type="TextureRect" parent="セレクト/status/status/DEF"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_2uk2t")
-metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
-
-[node name="MAG" type="HBoxContainer" parent="セレクト/status/status"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="status" type="RichTextLabel" parent="セレクト/status/status/MAG"]
-clip_contents = false
-custom_minimum_size = Vector2(150, 49)
-layout_mode = 2
-mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxFlat_dy60e")
-bbcode_enabled = true
-text = "[color=dodgerblue]MAG[font_size=2]                   [/font_size][/color]:%4d"
-vertical_alignment = 1
-metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
-
-[node name="bar" type="TextureRect" parent="セレクト/status/status/MAG"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_gcshb")
-metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
-
-[node name="RES" type="HBoxContainer" parent="セレクト/status/status"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="status" type="RichTextLabel" parent="セレクト/status/status/RES"]
-clip_contents = false
-custom_minimum_size = Vector2(150, 49)
-layout_mode = 2
-mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxFlat_j0fa8")
-bbcode_enabled = true
-text = "[color=violet]RES[font_size=2]                   [/font_size][/color]:%4d"
-vertical_alignment = 1
-metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
-
-[node name="bar" type="TextureRect" parent="セレクト/status/status/RES"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-texture = SubResource("GradientTexture2D_mmr34")
-metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
-
-[node name="evolution" type="Button" parent="セレクト/status"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 526.0
-offset_right = 500.0
-offset_bottom = 574.0
-mouse_default_cursor_shape = 2
-theme_override_font_sizes/font_size = 30
-text = "中間進化後のステータスを表示"
 
 [node name="actions" type="HBoxContainer" parent="セレクト"]
 layout_mode = 0
@@ -857,7 +857,6 @@ text = "❌"
 flat = true
 
 [node name="action_select" type="Control" parent="セレクト"]
-visible = false
 anchors_preset = 0
 offset_left = 1920.0
 offset_right = 1960.0
@@ -905,27 +904,27 @@ select_all_on_focus = true
 [node name="min_chance" type="RichTextLabel" parent="セレクト/action_select"]
 clip_contents = false
 layout_mode = 0
-offset_left = 7.0
+offset_left = 3.0
 offset_top = 123.0
-offset_right = 38.0
+offset_right = 42.0
 offset_bottom = 167.0
 mouse_filter = 2
 theme = SubResource("Theme_w7dfb")
 bbcode_enabled = true
 text = "0%"
-horizontal_alignment = 2
+horizontal_alignment = 1
 
 [node name="max_chance" type="RichTextLabel" parent="セレクト/action_select"]
 layout_mode = 0
-offset_left = 705.0
+offset_left = 710.0
 offset_top = 123.0
-offset_right = 770.0
+offset_right = 779.0
 offset_bottom = 167.0
 mouse_filter = 2
 theme = SubResource("Theme_w7dfb")
 bbcode_enabled = true
 text = "100%"
-horizontal_alignment = 2
+horizontal_alignment = 1
 
 [node name="action_description" type="Control" parent="セレクト"]
 visible = false
@@ -1107,12 +1106,13 @@ text = "[center]特殊能力が表示されます!
 
 [node name="random" type="Button" parent="セレクト"]
 layout_mode = 0
-offset_left = 874.0
-offset_top = 465.0
-offset_right = 1039.0
-offset_bottom = 513.0
+offset_left = 871.0
+offset_top = 889.0
+offset_right = 1049.0
+offset_bottom = 937.0
 theme = SubResource("Theme_kch7d")
 text = "🔄️おまかせ"
+metadata/help_text = "ランダムに技とその出現確率を登録します。"
 
 [node name="background" type="Control" parent="."]
 layout_mode = 3
@@ -1149,14 +1149,14 @@ metadata/_edit_lock_ = true
 
 [node name="ConfirmationDialog" parent="." instance=ExtResource("14_4lobs")]
 
+[connection signal="button_up" from="CanvasLayer/Control/status/evolution" to="セレクト" method="_on_evolution_button_up"]
 [connection signal="button_up" from="CanvasLayer/Control/戻る" to="セレクト" method="_on_戻る_button_up"]
 [connection signal="button_up" from="CanvasLayer/Control/決定" to="セレクト" method="_on_決定_button_up"]
-[connection signal="button_up" from="セレクト/status/evolution" to="セレクト" method="_on_evolution_button_up"]
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete1" to="セレクト" method="delete_button_up" binds= [0]]
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete2" to="セレクト" method="delete_button_up" binds= [1]]
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete3" to="セレクト" method="delete_button_up" binds= [2]]
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete4" to="セレクト" method="delete_button_up" binds= [3]]
 [connection signal="value_changed" from="セレクト/action_select/chance" to="セレクト" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="セレクト/action_select/SpinBox" to="セレクト" method="_on_chance_value_changed"]
-[connection signal="tab_changed" from="セレクト/action_list" to="セレクト" method="monster_previw"]
+[connection signal="tab_changed" from="セレクト/action_list" to="セレクト" method="monster_previw" binds= [true]]
 [connection signal="button_up" from="セレクト/random" to="セレクト" method="_on_random_button_up"]

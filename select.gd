@@ -22,8 +22,8 @@ const STATUS_BAR_TEXT: Array[String] = [
 @onready var help_mask := $"../CanvasLayer/Control/Panel/mask"
 @onready var help_label := $"../CanvasLayer/Control/Panel/mask/help"
 @onready var monster_node := $monster
-@onready var status := $status
-@onready var evolution_button := $status/evolution
+@onready var status := $"../CanvasLayer/Control/status"
+@onready var evolution_button := $"../CanvasLayer/Control/status/evolution"
 @onready var action_select := $action_select
 @onready var slider := $action_select/chance
 @onready var spinbox := $action_select/SpinBox
@@ -54,15 +54,33 @@ var camera_mode: CameraMode = CameraMode.MAIN: ## 現在のカメラ位置
 		camera_tween = get_tree().create_tween().bind_node(camera)
 		match mode:
 			CameraMode.MAIN:
+				# 棒グラフの棒とボタンを表示するアニメーション
+				status.get_child(1).show()
+				for container in status.get_child(0).get_children():
+					for child in container.get_children():
+						if child is TextureRect:
+							child.show()
+				bar_chart_update()
+				
 				background.color_change(Color.GREEN) # 背景カラーチェンジ
 				camera_tween.tween_property(camera, "offset:x", 960, 1)\
 				.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 				confirm_button.text = "決定！"
+			
 			CameraMode.ACTION:
+				# 棒グラフの棒とボタンを隠すアニメーション
+				status.get_child(1).hide()
+				for container in status.get_child(0).get_children():
+					for child in container.get_children():
+						if child is TextureRect:
+							bar_chart_animation(child, 0, func(): child.hide())
+				
 				background.color_change(Color.ORANGE) # 背景カラーチェンジ
 				camera_tween.tween_property(camera, "offset:x", 1750, 1)\
 				.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
+				
 				confirm_button.text = "登録！"
+				
 		await camera_tween.finished
 		# モード切り替え
 		camera_mode = mode
@@ -97,7 +115,7 @@ func _ready() -> void:
 	
 	# 円グラフ生成
 	pie_chart = load("res://pie_chart.tscn").instantiate()
-	pie_chart.position = Vector2(950, 70)
+	pie_chart.position = Vector2(1000, 70)
 	add_child(pie_chart)
 	pie_chart_update()
 	
@@ -153,8 +171,9 @@ func text_animation(label: RichTextLabel, text: String) -> void:
 
 ## モンスターの形態[param form]のプレビュー表示更新関数[br]
 ## この時点で既に、次に呼ばれる形態を予測しておくが、
-## これは[code]next_form[/code]変数が他の関数でも利用されるものであるためである。
-func monster_previw(form: Monster.Form) -> void:
+## これは[code]next_form[/code]変数が他の関数でも利用されるものであるためである。[br]
+## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
+func monster_previw(form: Monster.Form, is_text_only: bool = false) -> void:
 	# 棒グラフのアニメーションが終わるまで押せなくする
 	evolution_button.disabled = true
 	
@@ -165,7 +184,7 @@ func monster_previw(form: Monster.Form) -> void:
 	monster_node.get_child(0).get_child(1).text = (
 		"[b][i]%s[/i][/b]" % monster.name)
 	
-	bar_chart_update()
+	bar_chart_update(is_text_only)
 	
 	@warning_ignore("int_as_enum_without_cast")
 	next_form = monster.form + 1 # 1つ次の形態を代入しているのでintで足している
@@ -174,8 +193,9 @@ func monster_previw(form: Monster.Form) -> void:
 	
 	evolution_button.text = "%sのステータスを表示" % monster.form_names[next_form]
 
-## ステータス棒グラフ更新関数
-func bar_chart_update() -> void:
+## ステータス棒グラフ更新関数[br]
+## ## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
+func bar_chart_update(is_text_only: bool = false) -> void:
 	var status_list = monster.get_status_list() ## 表示したいモンスターのステータス一覧
 	var status_index: int = 0 ## status_listのindex指定用
 	for child in status.get_child(0).get_children():
@@ -183,55 +203,42 @@ func bar_chart_update() -> void:
 			if c is RichTextLabel: # ステータス値表示
 				c.text = STATUS_BAR_TEXT[status_index]
 				c.text = c.text % status_list[status_index]
+			
 			elif c is TextureRect: # バー生成
+				if is_text_only:
+					continue
+				
 				if c.name == "bar": # 元からあるbarだけ処理
 					# TODO 長さの表現は修正の余地あり
-					match monster.form:
-						# バーが0から伸びていくアニメーション
-						Monster.Form.第一形態:
-							c.custom_minimum_size.x = 0
-							bar_chart_animation(c, status_list[status_index])
+					var current_bar: TextureRect = c
+					for i in range(monster.form + 1):
+						var new_bar: TextureRect ## バー本体
+						var bar_length: int ## バーの長さ
+						if i == 0: # 第一形態の時、元のバーのみ処理
+							new_bar = current_bar
+							bar_length = all_status_list[i][status_index]
+							new_bar.custom_minimum_size.x = 0
+						else: # 新たなバーを生成
+							new_bar = bar_chart_bar_duplicate(current_bar)
+							bar_length = all_status_list[i][status_index] - \
+							all_status_list[i - 1][status_index]
+							child.add_child(new_bar)
 						
-						# 第二形態で増えた分だけバーの色を変えて伸ばすアニメーション
-						Monster.Form.第二形態:
-							# 既に第一形態のバーは表示されている
-							c.custom_minimum_size.x = \
-							all_status_list[Monster.Form.第一形態][status_index]
-							
-							## 第二形態で増えたステータスを表すバー
-							var new_bar = bar_chart_bar_duplicate(c, 0)
-							child.add_child(new_bar)
-							
-							bar_chart_animation(new_bar, 
-							all_status_list[Monster.Form.第二形態][status_index] - 
-							all_status_list[Monster.Form.第一形態][status_index])
+						# アニメーションさせる
+						if (camera_mode == CameraMode.ACTION or 
+							i == monster.form):
+							bar_chart_animation(new_bar, bar_length)
+						else: # 他は既にセットされている
+							new_bar.custom_minimum_size.x = bar_length
 						
-						# 第三形態で増えた分だけ
-						Monster.Form.第三形態:
-							# 既に第一形態のバーは表示されている
-							c.custom_minimum_size.x = \
-							all_status_list[Monster.Form.第一形態][status_index]
-							
-							## 第二形態で増えたステータスを表すバー
-							var new_bar = bar_chart_bar_duplicate(c, 
-							all_status_list[Monster.Form.第二形態][status_index] - 
-							all_status_list[Monster.Form.第一形態][status_index])
-							child.add_child(new_bar)
-							
-							# 新たに第三形態のバーを色を変更して生成
-							new_bar = bar_chart_bar_duplicate(new_bar, 0)
-							child.add_child(new_bar)
-							
-							bar_chart_animation(new_bar, 
-							all_status_list[Monster.Form.第三形態][status_index] - 
-							all_status_list[Monster.Form.第二形態][status_index])
+						current_bar = new_bar
 				else: # 増えたbarは消す
 					c.queue_free()
 		status_index += 1
 
 ## 棒グラフに用いる[param bar]ノードのサイズ[param size_x]及び色を変更して複製された、
 ##新たなbarを返す関数
-func bar_chart_bar_duplicate(bar: TextureRect, size_x: int) -> TextureRect:
+func bar_chart_bar_duplicate(bar: TextureRect, size_x: int = 0) -> TextureRect:
 	var new_bar = bar.duplicate()
 	new_bar.custom_minimum_size.x = size_x
 	new_bar.texture = new_bar.texture.duplicate(true)
@@ -243,13 +250,18 @@ func bar_chart_bar_duplicate(bar: TextureRect, size_x: int) -> TextureRect:
 
 ## 棒グラフの指定した[param bar]ノードを伸ばしたい量[param final_val]まで
 ##アニメーションさせる関数。[br]
-## またアニメーション終了後に、進化プレビューボタンを押せる状態に戻します。
-func bar_chart_animation(bar: TextureRect, final_val: int) -> void:
+## またアニメーション終了後に、進化プレビューボタンを押せる状態に戻します。[br]
+## [param callback]引数を受け取ると、アニメーション終了後に呼び出します。
+func bar_chart_animation(bar: TextureRect, final_val: int, 
+callback: Callable = Callable()) -> void:
 	var tween: Tween
 	tween = get_tree().create_tween().bind_node(bar)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(bar, "custom_minimum_size:x", final_val, 1)
 	tween.tween_callback(func(): evolution_button.disabled = false)
+	
+	if callback != Callable():
+		tween.tween_callback(callback)
 
 ## 選択中の技出現確率円グラフ更新関数
 func pie_chart_update() -> void:

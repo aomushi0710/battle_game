@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_7xm2m"]
 [ext_resource type="Script" uid="uid://dfmkbeq2byy01" path="res://deck.gd" id="1_oqpqk"]
 [ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_rdfci"]
-[ext_resource type="Resource" uid="uid://qcde2e3i3cco" path="res://monster/カカシスライム/カカシスライム.tres" id="3_tc4p4"]
+[ext_resource type="Resource" uid="uid://qcde2e3i3cco" path="res://monster/カカシスライム/カカシスライム.tres" id="4_7xm2m"]
 [ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="4_tgdnh"]
 [ext_resource type="Script" uid="uid://caxcvll0814us" path="res://resource/DeckMonster.gd" id="5_wk4pc"]
 [ext_resource type="Resource" uid="uid://cwy7h38kxvyy7" path="res://action/自己再生.tres" id="6_twc26"]
@@ -12,8 +12,8 @@
 
 [sub_resource type="Resource" id="Resource_hmh1l"]
 script = ExtResource("5_wk4pc")
-monster_dict = {}
-monster = ExtResource("3_tc4p4")
+monster = ExtResource("4_7xm2m")
+evolution_forms = Array[ExtResource("4_tgdnh")]([])
 action = Array[ExtResource("1_7xm2m")]([ExtResource("2_rdfci")])
 chance = Array[int]([100])
 skill = 0
@@ -49,8 +49,8 @@ flavor_text = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_it7cy"]
 script = ExtResource("5_wk4pc")
-monster_dict = {}
 monster = SubResource("Resource_qecno")
+evolution_forms = Array[ExtResource("4_tgdnh")]([])
 action = Array[ExtResource("1_7xm2m")]([ExtResource("2_rdfci")])
 chance = Array[int]([100])
 skill = 0
@@ -86,8 +86,8 @@ flavor_text = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_uxumm"]
 script = ExtResource("5_wk4pc")
-monster_dict = {}
 monster = SubResource("Resource_jqv1v")
+evolution_forms = Array[ExtResource("4_tgdnh")]([])
 action = Array[ExtResource("1_7xm2m")]([ExtResource("2_rdfci")])
 chance = Array[int]([100])
 skill = 0

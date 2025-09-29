@@ -166,8 +166,6 @@ func _on_tutorial_button_up() -> void:
 	Global.enemy_deck = load("res://deck/チュートリアル.tres").duplicate(true)
 	Global.enemy_deck.evolution_forms_setting()
 	Global.enemy_deck.evolution_check()
-	for monster in Global.enemy_deck.monster:
-		print(monster.monster.name)
 	
 	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 0.5)
