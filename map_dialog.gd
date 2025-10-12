@@ -1,9 +1,9 @@
-extends Panel
+extends Control
 
-@onready var label := $MarginContainer/HBoxContainer/text
-@onready var texture := $MarginContainer/HBoxContainer/image
-@onready var name_panel := $name
-@onready var name_label := $name/text
+@onready var label := $TextBox/MarginContainer/HBoxContainer/text
+@onready var texture := $TextBox/MarginContainer/HBoxContainer/image
+@onready var name_plate := $NamePlate
+@onready var name_label := $NamePlate/Panel/text
 var text_tween: Tween
 var text_speed: float = 0.04
 
@@ -42,13 +42,12 @@ func display_dialog(data: DialogData) -> void:
 	label.visible_characters = 0
 	label.text = data.text
 	
+	# 名前テキスト処理
 	name_label.text = data.name_text
 	if data.name_text != "":
-		name_panel.show()
-		name_label.show()
+		name_plate.show()
 	else:
-		name_panel.hide()
-		name_label.hide()
+		name_plate.hide()
 	
 	text_tween = get_tree().create_tween().bind_node(label)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # テキストアニメーション再生

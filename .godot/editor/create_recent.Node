@@ -1,3 +1,9 @@
+Control
+TextureRect
+Panel
+Polygon2D
+NinePatchRect
+ReferenceRect
 ColorRect
 CollisionShape2D
 Area2D
@@ -6,10 +12,3 @@ RayCast2D
 TileMapLayer
 VBoxContainer
 MarginContainer
-Panel
-RichTextLabel
-HBoxContainer
-TextureRect
-Control
-MenuButton
-Button

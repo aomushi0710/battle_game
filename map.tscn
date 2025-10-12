@@ -60,8 +60,8 @@ script = ExtResource("2_iw27f")
 visible = false
 
 [node name="dialog" parent="CanvasLayer" instance=ExtResource("4_71pa8")]
-offset_top = 780.0
-offset_bottom = 1080.0
+offset_top = 580.0
+offset_bottom = 580.0
 
 [node name="world" type="Node2D" parent="."]
 

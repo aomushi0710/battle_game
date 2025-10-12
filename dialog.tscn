@@ -1,74 +1,124 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgn0w8f01647u"]
+[gd_scene load_steps=9 format=3 uid="uid://bgn0w8f01647u"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_7voku"]
 [ext_resource type="Script" uid="uid://cbt0mcuwhsnu3" path="res://map_dialog.gd" id="2_5wlj5"]
 [ext_resource type="PackedScene" uid="uid://clhjsmwrxpbqn" path="res://menu_button.tscn" id="3_w7j6r"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5wlj5"]
-bg_color = Color(0, 0, 0, 0.501961)
+[sub_resource type="Gradient" id="Gradient_w7j6r"]
+colors = PackedColorArray(0, 0, 0, 0.784314, 0, 0, 0, 0.501961)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7j6r"]
-bg_color = Color(0, 0, 0, 0.501961)
-corner_radius_top_left = 80
-corner_radius_top_right = 80
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4uc3s"]
+gradient = SubResource("Gradient_w7j6r")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
 
-[node name="dialog" type="Panel"]
-offset_right = 1920.0
-offset_bottom = 300.0
-mouse_filter = 1
+[sub_resource type="Gradient" id="Gradient_rxi5t"]
+offsets = PackedFloat32Array(0.5, 1)
+colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 0.501961)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_37fld"]
+gradient = SubResource("Gradient_rxi5t")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3kgf7"]
+gradient = SubResource("Gradient_rxi5t")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[node name="Dialog" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 theme = ExtResource("1_7voku")
-theme_override_styles/panel = SubResource("StyleBoxFlat_5wlj5")
 script = ExtResource("2_5wlj5")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="TextBox" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="TextBox" type="Polygon2D" parent="TextBox"]
+position = Vector2(100, 100)
+scale = Vector2(13.4375, 9.406)
+texture = SubResource("GradientTexture2D_4uc3s")
+polygon = PackedVector2Array(0, 8, 0, 32, 120, 32, 128, 24, 128, 0, 8, 0)
+uv = PackedVector2Array(0, 8, 0, 64, 56, 64, 64, 56, 64, 0, 8, 0)
+metadata/_edit_lock_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="TextBox"]
 layout_mode = 0
 offset_right = 1920.0
-offset_bottom = 300.0
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 4
+offset_bottom = 500.0
+theme_override_constants/margin_left = 160
+theme_override_constants/margin_top = 140
+theme_override_constants/margin_right = 160
+theme_override_constants/margin_bottom = 140
+metadata/_edit_lock_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TextBox/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
+metadata/_edit_lock_ = true
 
-[node name="image" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+[node name="image" type="TextureRect" parent="TextBox/MarginContainer/HBoxContainer"]
 layout_mode = 2
+metadata/_edit_lock_ = true
 
-[node name="text" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(1900, 0)
+[node name="text" type="RichTextLabel" parent="TextBox/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "ダイアログボックスは全角３８文字まで入る行を４行まで一度に表示できます！！！
+text = "ダイアログボックスは全角３２文字まで入る行を３行まで入れられます
 ２行目
-３行目
-４行目"
+３行目"
+metadata/_edit_lock_ = true
 
-[node name="name" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 100.0
-offset_top = -80.0
-offset_right = 513.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_w7j6r")
+[node name="NamePlate" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 300.0
+offset_top = 60.0
+offset_right = 300.0
+offset_bottom = 60.0
 
-[node name="text" type="RichTextLabel" parent="name"]
+[node name="Left" type="Polygon2D" parent="NamePlate"]
+scale = Vector2(5, 5)
+texture = SubResource("GradientTexture2D_37fld")
+polygon = PackedVector2Array(9.53674e-07, 0, 8, 16, 8, 0)
+uv = PackedVector2Array(9.53674e-07, 0, 1.90735e-06, 64, 1.90735e-06, 0)
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="TextureRect" parent="NamePlate"]
 layout_mode = 0
-offset_right = 414.0
+offset_left = 40.0
+offset_right = 440.0
+offset_bottom = 80.0
+texture = SubResource("GradientTexture2D_3kgf7")
+metadata/_edit_lock_ = true
+
+[node name="text" type="RichTextLabel" parent="NamePlate/Panel"]
+layout_mode = 0
+offset_right = 400.0
 offset_bottom = 80.0
 mouse_filter = 1
 bbcode_enabled = true
 text = "スライム"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="Right" type="Polygon2D" parent="NamePlate"]
+position = Vector2(440, 0)
+scale = Vector2(5, 5)
+texture = SubResource("GradientTexture2D_37fld")
+polygon = PackedVector2Array(9.53674e-07, 0, 8, 16, 0, 16)
+uv = PackedVector2Array(9.53674e-07, 0, 8.00001, 64, 1.90735e-06, 64)
+metadata/_edit_lock_ = true
 
 [node name="buttons" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 1390.0
-offset_top = -530.0
-offset_right = 1890.0
-offset_bottom = -30.0
+offset_left = 1200.0
+offset_top = -433.0
+offset_right = 1700.0
+offset_bottom = 67.0
 theme_override_constants/separation = 20
 alignment = 2
 
@@ -79,10 +129,3 @@ text = "はい"
 [node name="button2" parent="buttons" instance=ExtResource("3_w7j6r")]
 layout_mode = 2
 text = "いいえ"
-
-[node name="Stopper" type="ColorRect" parent="."]
-layout_mode = 0
-offset_top = -780.0
-offset_right = 1920.0
-offset_bottom = 300.0
-color = Color(1, 1, 1, 0)
