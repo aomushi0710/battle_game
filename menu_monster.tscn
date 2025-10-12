@@ -1,0 +1,159 @@
+[gd_scene load_steps=10 format=3 uid="uid://buagaktaatt0n"]
+
+[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_1bmxr"]
+[ext_resource type="Script" uid="uid://dy420ocgqjyil" path="res://menu_monster.gd" id="2_t21r1"]
+[ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://image/1st.PNG" id="3_uxvch"]
+[ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://image/2nd.PNG" id="4_c4pgf"]
+[ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://image/3rd.PNG" id="5_unl4c"]
+[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="9_sac6k"]
+[ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="10_lawf4"]
+
+[sub_resource type="Theme" id="Theme_u0qxs"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_1emw3"]
+default_font_size = 35
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_1bmxr")
+script = ExtResource("2_t21r1")
+
+[node name="デッキ1" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="name" type="LineEdit" parent="デッキ1"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 8.0
+offset_right = 484.0
+offset_bottom = 50.0
+placeholder_text = "デッキ名(最大20文字)"
+max_length = 20
+clear_button_enabled = true
+caret_blink = true
+
+[node name="first" type="TextureButton" parent="デッキ1"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 60.0
+offset_right = 356.0
+offset_bottom = 316.0
+scale = Vector2(0.5, 0.5)
+tooltip_text = "1枠目のモンスターをセッティング"
+mouse_default_cursor_shape = 2
+button_mask = 3
+texture_normal = ExtResource("3_uxvch")
+texture_hover = ExtResource("3_uxvch")
+
+[node name="second" type="TextureButton" parent="デッキ1"]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 60.0
+offset_right = 484.0
+offset_bottom = 316.0
+scale = Vector2(0.5, 0.5)
+tooltip_text = "2枠目のモンスターをセッティング"
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_c4pgf")
+texture_hover = ExtResource("4_c4pgf")
+
+[node name="third" type="TextureButton" parent="デッキ1"]
+layout_mode = 0
+offset_left = 356.0
+offset_top = 60.0
+offset_right = 612.0
+offset_bottom = 316.0
+scale = Vector2(0.5, 0.5)
+tooltip_text = "3枠目のモンスターをセッティング"
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("5_unl4c")
+texture_hover = ExtResource("5_unl4c")
+
+[node name="save" type="Button" parent="デッキ1"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 188.0
+offset_right = 292.0
+offset_bottom = 230.0
+mouse_default_cursor_shape = 2
+text = "✏️セーブ"
+
+[node name="load" type="Button" parent="デッキ1"]
+layout_mode = 0
+offset_left = 292.0
+offset_top = 188.0
+offset_right = 484.0
+offset_bottom = 230.0
+mouse_default_cursor_shape = 2
+text = "📁ロード"
+
+[node name="reset" type="Button" parent="デッキ1"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 292.0
+offset_top = 240.0
+offset_right = 484.0
+offset_bottom = 292.0
+tooltip_text = "デッキに登録されたデータを全てリセットします"
+mouse_default_cursor_shape = 2
+text = "🗑️リセット"
+
+[node name="おまかせ" type="Button" parent="デッキ1"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 240.0
+offset_right = 292.0
+offset_bottom = 292.0
+tooltip_text = "完全にランダムにモンスターと技が選択されます"
+mouse_default_cursor_shape = 2
+text = "🔄️おまかせ"
+
+[node name="戻る" type="Button" parent="."]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 50.0
+offset_top = 600.0
+offset_right = 163.0
+offset_bottom = 648.0
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_u0qxs")
+text = "←戻る"
+
+[node name="tutorial" type="Button" parent="."]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 562.5
+offset_right = 1001.0
+offset_bottom = 610.5
+tooltip_text = "バトル方法を実戦形式で身に着けます！"
+theme = SubResource("Theme_1emw3")
+text = "🔰チュートリアル"
+
+[node name="AcceptDialog" parent="." instance=ExtResource("9_sac6k")]
+size = Vector2i(128, 186)
+
+[node name="ConfirmationDialog" parent="." instance=ExtResource("10_lawf4")]
+
+[node name="fade" type="ColorRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+metadata/_edit_lock_ = true
+
+[connection signal="button_up" from="デッキ1/first" to="デッキ1" method="_on_first_button_up"]
+[connection signal="button_up" from="デッキ1/second" to="デッキ1" method="_on_second_button_up"]
+[connection signal="button_up" from="デッキ1/third" to="デッキ1" method="_on_third_button_up"]
+[connection signal="button_up" from="デッキ1/save" to="デッキ1" method="_on_save_button_up"]
+[connection signal="button_up" from="デッキ1/load" to="デッキ1" method="_on_load_button_up"]
+[connection signal="button_up" from="デッキ1/reset" to="デッキ1" method="_on_reset_button_up"]
+[connection signal="button_up" from="デッキ1/おまかせ" to="デッキ1" method="_on_button_button_up"]
+[connection signal="button_up" from="戻る" to="デッキ1" method="_on_戻る_button_up"]
+[connection signal="button_up" from="tutorial" to="デッキ1" method="_on_tutorial_button_up"]

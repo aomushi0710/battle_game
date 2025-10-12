@@ -16,10 +16,11 @@ name = "RES UP"
 bbcode_name = "[color=violet]RES[/color] [color=red]UP[/color]"
 target = 6
 chance = 100
-is_after = true
+timing = 2
 trigger = Array[ExtResource("3_htxax")]([])
 description = "味方全体の[color=violet]RES[/color]を、\\n3ターンの間\\n1.5倍に強化する。"
 battle_log_message = ""
+placeholder = 0
 metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]

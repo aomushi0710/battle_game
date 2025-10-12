@@ -22,17 +22,26 @@ static var form_names = {} ## Formの値をkey、Formの定数名をvalueとす�
 
 
 @export_category("ステータス")
-@export var maxHP: int
-@export var maxMP: int
-@export var supplyMP: int
-@export var ATK: int
-@export var DEF: int
-@export var MAG: int
-@export var RES: int
-@export var SPD: int
+@export var base_maxHP: int ## maxHPの基礎ステータス
+@export var base_maxMP: int ## maxMPの基礎ステータス
+@export var base_supplyMP: int ## supplyMPの基礎ステータス
+@export var base_SPD: int ## SPDの基礎ステータス
+@export var base_ATK: int ## ATKの基礎ステータス
+@export var base_DEF: int ## DEFの基礎ステータス
+@export var base_MAG: int ## MAGの基礎ステータス
+@export var base_RES: int ## RESの基礎ステータス
 
-var HP: int
-var MP: int
+var maxHP: int ## HPの最大値。現在のHPは別の変数で管理。
+var maxMP: int ## MPの最大値、現在のMPは別の変数で管理。
+var supplyMP: int ## MP自動回復量。基本的に自身のSPDゲージが溜まった時に回復する。
+var SPD: int ## SPDゲージの増加量。
+var ATK: int ## 物理攻撃力。
+var DEF: int ## 物理防御力。
+var MAG: int ## 魔法攻撃力。
+var RES: int ## 魔法防御力。
+
+var HP: int ## HPの現在値
+var MP: int ## MPの現在値
 
 @export_category("スキル")
 
@@ -69,6 +78,11 @@ static func _static_init() -> void:
 	for key in Form:
 		var value = Form[key]
 		form_names[value] = key
+
+
+func status_calculator(multiplier: float) -> void:
+	maxHP = base_maxHP
+	
 
 ## [param actions]に第二形態の技が入っていないにもかかわらず第三形態の技が入っているなど、
 ##間の進化形態をスキップしている場合に[code]true[/code]を返す関数

@@ -24,6 +24,7 @@ description = "自分の[color=light_blue]DEF[/color]を、
 2倍に強化する。"
 battle_log_message = "出現した石の壁に身を隠した...
 %s は[color=light_blue]DEF[/color]が上がった！"
+placeholder = 0
 metadata/_custom_type_script = "uid://d2box237wyadg"
 
 [resource]

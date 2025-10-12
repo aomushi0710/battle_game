@@ -1,8 +1,10 @@
+res://
+res://image/tile
+res://element
 res://deck
 res://resource
 C:/Users/aomus/Documents/Godot Games
 res://action
-res://
 res://image/monster
 res://theme
 res://ability/AbilityBuff
@@ -10,4 +12,3 @@ res://resource/Ability
 res://ability
 res://item
 res://monster
-res://element

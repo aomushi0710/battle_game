@@ -1,10 +1,14 @@
 extends RichTextLabel
 
 var tween: Tween
-var coin: int = Global.coin:
+var coin: int:
 	set(result):
 		coin = result
 		text = "[img=50]res://image/coin.PNG[/img] [color=gold]%d[/color]" % coin
+
+
+func _ready() -> void:
+	coin = Global.coin
 
 ## コイン枚数をアニメーションで変動させる関数 Global.coinとは独立している
 func change(n: int) -> void:

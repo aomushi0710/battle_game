@@ -1,0 +1,113 @@
+[gd_scene load_steps=16 format=4 uid="uid://b6v2nlkh2ak8j"]
+
+[ext_resource type="TileSet" uid="uid://rw4km3kk1k67" path="res://image/tile/terrain.tres" id="1_e0an3"]
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_p5pve"]
+[ext_resource type="Script" uid="uid://c87hdh1wibpae" path="res://map_ui.gd" id="2_iw27f"]
+[ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="2_p5pve"]
+[ext_resource type="PackedScene" uid="uid://bldb4kxsdbr4q" path="res://map_menu.tscn" id="3_71pa8"]
+[ext_resource type="Script" uid="uid://nyb1qpsf3a5a" path="res://player.gd" id="3_urblq"]
+[ext_resource type="PackedScene" uid="uid://bgn0w8f01647u" path="res://dialog.tscn" id="4_71pa8"]
+[ext_resource type="TileSet" uid="uid://bm5qn6qq1ml3b" path="res://image/tile/object.tres" id="6_05x41"]
+[ext_resource type="PackedScene" uid="uid://b5nv63d85qwtt" path="res://signboard.tscn" id="7_oysan"]
+[ext_resource type="Script" uid="uid://c8f5dn7tcqt5t" path="res://resource/DialogData.gd" id="8_sb2pt"]
+
+[sub_resource type="Resource" id="Resource_oysan"]
+script = ExtResource("8_sb2pt")
+id = 0
+text = "壁付きのモニター
+で
+す"
+name_text = ""
+button_text = Array[String]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_sb2pt"]
+script = ExtResource("8_sb2pt")
+id = 0
+text = "これは2ページ目"
+name_text = ""
+button_text = Array[String]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_0t07s"]
+script = ExtResource("8_sb2pt")
+id = 0
+text = "テスト用の浮いてるモニター"
+name_text = ""
+button_text = Array[String]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e0an3"]
+size = Vector2(63.9, 63.9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ooc2g"]
+size = Vector2(64, 64)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ui" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+theme = ExtResource("1_p5pve")
+script = ExtResource("2_iw27f")
+
+[node name="menu" parent="CanvasLayer" instance=ExtResource("3_71pa8")]
+visible = false
+
+[node name="dialog" parent="CanvasLayer" instance=ExtResource("4_71pa8")]
+offset_top = 780.0
+offset_bottom = 1080.0
+
+[node name="world" type="Node2D" parent="."]
+
+[node name="tilemap" type="Node2D" parent="world"]
+
+[node name="terrain" type="TileMapLayer" parent="world/tilemap"]
+tile_map_data = PackedByteArray("AAACAAUADQAAAAAAAAADAAUADQAAAAAAAAADAAQADQAAAAAAAAACAAQADQAAAAAAAAABAAQADQAAAAAAAAABAAUADQAAAAAAAAAAAAUADQAAAAAAAAAAAAQADQAAAAAAAAAAAAMADQAAAAAAAAABAAMADQAAAAAAAAACAAMADQAAAAAAAAADAAMADQAAAAAAAAAEAAMADQAAAAAAAAAEAAQADQAAAAAAAAAEAAUADQAAAAAAAAAAAAEADgAAAAEAAAABAAEADgAAAAEAAAACAAEADgAAAAEAAAADAAEADgAAAAEAAAAEAAEADgAAAAEAAAAAAAIADgAAAAIAAAABAAIADgAAAAIAAAACAAIADgAAAAIAAAADAAIADgAAAAIAAAAEAAIADgAAAAIAAAD//wEADwAAAAAAAAD//wIADwAAAAAAAAD//wMADwAAAAAAAAD//wQADwAAAAAAAAD//wUADwAAAAAAAAAEAAYADQAAAAAAAAADAAYADQAAAAAAAAACAAYADQAAAAAAAAABAAYADQAAAAAAAAAAAAYADQAAAAAAAAAAAAcADQAAAAAAAAABAAcADQAAAAAAAAACAAcADQAAAAAAAAADAAcADQAAAAAAAAAEAAcADQAAAAAAAAAFAAMADQAAAAAAAAAFAAQADQAAAAAAAAAFAAUADQAAAAAAAAAFAAYADQAAAAAAAAAFAAcADQAAAAAAAAAGAAcADQAAAAAAAAAGAAYADQAAAAAAAAAGAAUADQAAAAAAAAAGAAQADQAAAAAAAAAGAAMADQAAAAAAAAAHAAMADQAAAAAAAAAHAAQADQAAAAAAAAAHAAUADQAAAAAAAAAHAAYADQAAAAAAAAAHAAcADQAAAAAAAAAIAAcADQAAAAAAAAAIAAYADQAAAAAAAAAIAAUADQAAAAAAAAAIAAQADQAAAAAAAAAIAAMADQAAAAAAAAAJAAMADQAAAAAAAAAJAAQADQAAAAAAAAAJAAUADQAAAAAAAAAJAAYADQAAAAAAAAAJAAcADQAAAAAAAAAFAAIADQAAAAAAAAAGAAIADQAAAAAAAAAHAAIADQAAAAAAAAAIAAIADQAAAAAAAAAJAAIADQAAAAAAAAAJAAEADQAAAAAAAAAIAAEADQAAAAAAAAAHAAEADQAAAAAAAAAGAAEADQAAAAAAAAAFAAEADQAAAAAAAAAFAAAADQAAAAAAAAAGAAAADQAAAAAAAAAHAAAADQAAAAAAAAAIAAAADQAAAAAAAAAJAAAADQAAAAAAAAAJAP//DQAAAAAAAAAIAP//DQAAAAAAAAAHAP//DQAAAAAAAAAGAP//DQAAAAAAAAAFAP//DQAAAAAAAAAFAP7/DQAAAAAAAAAGAP7/DQAAAAAAAAAHAP7/DQAAAAAAAAAIAP7/DQAAAAAAAAAJAP7/DQAAAAAAAAAFAP3/DgAAAAIAAAAGAP3/DgAAAAIAAAAHAP3/DgAAAAIAAAAIAP3/DgAAAAIAAAAJAP3/DgAAAAIAAAAFAPz/DgAAAAEAAAAGAPz/DgAAAAEAAAAHAPz/DgAAAAEAAAAIAPz/DgAAAAEAAAAJAPz/DgAAAAEAAAAJAPv/DgAAAAAAAAAIAPv/DgAAAAAAAAAHAPv/DgAAAAAAAAAGAPv/DgAAAAAAAAAFAPv/DgAAAAAAAAAEAPv/DgAAAAAAAAAEAPz/DgAAAAAAAAAEAP3/DgAAAAAAAAAEAP7/DgAAAAAAAAAEAP//DgAAAAAAAAAEAAAADgAAAAAAAAADAAAADgAAAAAAAAACAAAADgAAAAAAAAABAAAADgAAAAAAAAAAAAAADgAAAAAAAAA=")
+tile_set = ExtResource("1_e0an3")
+
+[node name="object" type="TileMapLayer" parent="world/tilemap"]
+tile_map_data = PackedByteArray("AAAEAAEAAAAAAAAAAAAEAAIAAAAAAAEAAAAGAAIAAAAAAAEAAAAGAAEAAAAAAAAAAAA=")
+tile_set = ExtResource("6_05x41")
+
+[node name="signboards" type="Node2D" parent="world"]
+
+[node name="signboard" parent="world/signboards" instance=ExtResource("7_oysan")]
+position = Vector2(288, 132)
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt")])
+
+[node name="signboard2" parent="world/signboards" instance=ExtResource("7_oysan")]
+position = Vector2(416, 132)
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_0t07s")])
+
+[node name="player" type="CharacterBody2D" parent="world"]
+position = Vector2(32, 288)
+collision_mask = 7
+script = ExtResource("3_urblq")
+
+[node name="texture" type="Sprite2D" parent="world/player"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_p5pve")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/player"]
+shape = SubResource("RectangleShape2D_e0an3")
+one_way_collision_margin = 0.0
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="Camera2D" type="Camera2D" parent="world/player"]
+zoom = Vector2(1.5, 1.5)
+
+[node name="InteractionArea" type="Area2D" parent="world/player"]
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/player/InteractionArea"]
+shape = SubResource("RectangleShape2D_ooc2g")
+debug_color = Color(1, 1, 0, 0.419608)
+
+[connection signal="dialog_closed" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_closed"]
+[connection signal="dialog_opened" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_opened"]

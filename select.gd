@@ -19,8 +19,7 @@ const STATUS_BAR_TEXT: Array[String] = [
 @onready var confirmation_dialog = $"../ConfirmationDialog"
 @onready var back_button := $"../CanvasLayer/Control/戻る"
 @onready var confirm_button := $"../CanvasLayer/Control/決定"
-@onready var help_mask := $"../CanvasLayer/Control/Panel/mask"
-@onready var help_label := $"../CanvasLayer/Control/Panel/mask/help"
+@onready var help_label := $"../CanvasLayer/Control/Panel"
 @onready var monster_node := $monster
 @onready var status := $"../CanvasLayer/Control/status"
 @onready var evolution_button := $"../CanvasLayer/Control/status/evolution"
@@ -130,44 +129,7 @@ func _ready() -> void:
 	"第三形態に進化したモンスターが、発動できる技の一覧です。この技を登録すると、" + 
 	"バトル中に同じ確率で「進化Ⅱ」が現れ、進化することでこの技が発動できるようになります。")
 	
-	connect_hover_signal($"..")
-
-## help_textデータを持つ全てのノード[param node]にシグナルを接続する再起関数
-func connect_hover_signal(node: Node) -> void:
-	if node is Control and node.has_meta("help_text"):
-		node.mouse_entered.connect(func(): 
-			var text: String = "[i]%s[/i]" % node.get_meta("help_text")
-			text_animation(help_label, text.replace("\n", "")))
-	
-	elif node is TabContainer: # TabBarにおけるメタデータの設定はやり方が違うので
-			node.tab_clicked.connect(func(index):
-				var text: String = "[i]%s[/i]" % node.get_tab_metadata(index)
-				text_animation(help_label, text.replace("\n", "")))
-	
-	for child in node.get_children():
-		connect_hover_signal(child)
-
-## [param label]に表示される[param text]を少しずつ表示させるアニメーションを再生する関数
-func text_animation(label: RichTextLabel, text: String) -> void:
-	# アニメーション中なら中断
-	if text_tween and text_tween.is_running():
-		text_tween.kill()
-	
-	label.text = text
-	label.size.x = label.get_content_width()
-	label.position.x = 0
-	# 文字が枠をはみ出す時
-	if label.get_content_width() > help_mask.size.x:
-		label.text += "　　" # 前後を空白で区切る
-		var final_val: int = -label.get_content_width() # 1ループ分の移動先
-		var duration: float = -final_val * text_speed * 0.1
-		label.text += text # ループ後に元の文字が戻ってくるように追加
-		label.size.x = label.get_content_width() # 画面外に消えるのを防止
-		
-		text_tween = get_tree().create_tween().bind_node(label).set_loops()
-		text_tween.tween_interval(2)
-		text_tween.tween_property(label, "position:x", final_val, duration)
-		text_tween.tween_callback(func(): label.position.x = 0)
+	help_label.connect_hover_signal($"..")
 
 ## モンスターの形態[param form]のプレビュー表示更新関数[br]
 ## この時点で既に、次に呼ばれる形態を予測しておくが、
@@ -196,7 +158,7 @@ func monster_previw(form: Monster.Form, is_text_only: bool = false) -> void:
 ## ステータス棒グラフ更新関数[br]
 ## ## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
 func bar_chart_update(is_text_only: bool = false) -> void:
-	var status_list = monster.get_status_list() ## 表示したいモンスターのステータス一覧
+	var status_list = all_status_list[monster.form] ## 表示したいモンスターのステータス一覧
 	var status_index: int = 0 ## status_listのindex指定用
 	for child in status.get_child(0).get_children():
 		for c in child.get_children():
@@ -298,7 +260,7 @@ func pie_chart_update() -> void:
 			$actions/delete_buttons.get_child(i).mouse_default_cursor_shape = \
 			CursorShape.CURSOR_POINTING_HAND
 			button.set_meta("help_text", "現在登録されている技。クリックで登録画面に移動します。")
-		connect_hover_signal(button)
+		help_label.connect_hover_signal(button)
 		$actions/action_buttons.add_child(button)
 
 ## 全ての形態に関して、技をそれぞれのコンテナにボタン化して追加する関数
@@ -351,7 +313,7 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 	button.action = act
 	button.mouse_default_cursor_shape = Control.CURSOR_ARROW # カーソルも戻す
 	button.set_meta("help_text", act.description)
-	connect_hover_signal(button)
+	help_label.connect_hover_signal(button)
 	action_select.add_child(button)
 	
 	if extra == true: # 確率表記を隠し、sliderとspinboxを操作不能に
@@ -450,7 +412,7 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 		description.set_meta("help_text", ability.description)
 		container.add_child(description)
 	
-	connect_hover_signal(action_description)
+	help_label.connect_hover_signal(action_description)
 
 ## 技削除ボタンの処理
 func delete_button_up(i: int) -> void:

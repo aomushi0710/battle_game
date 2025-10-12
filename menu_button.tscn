@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://clhjsmwrxpbqn"]
+
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_cpvkq"]
+[ext_resource type="Script" uid="uid://broabntq1mfoy" path="res://menu_button.gd" id="2_0jsjh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4amfo"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cpvkq"]
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4tde"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 1, 0, 0.5)
+shadow_size = 10
+
+[node name="button" type="Button"]
+offset_left = 79.0
+offset_top = 54.0
+offset_right = 586.0
+offset_bottom = 136.0
+theme = ExtResource("1_cpvkq")
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_4amfo")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_cpvkq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n4tde")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4amfo")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4amfo")
+text = "デッキセレクト"
+script = ExtResource("2_0jsjh")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

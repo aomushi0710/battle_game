@@ -19,6 +19,7 @@ timing = 0
 trigger = Array[ExtResource("3_qdvql")]([])
 description = "20%の確率でダメージが2倍になる。"
 battle_log_message = "[color=dark_orange]攻撃が急所に当たった！[/color]"
+placeholder = 0
 metadata/_custom_type_script = "uid://ci443rtyfhsyi"
 
 [resource]

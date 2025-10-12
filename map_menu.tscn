@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://bldb4kxsdbr4q"]
+
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_kjvt6"]
+[ext_resource type="PackedScene" uid="uid://clhjsmwrxpbqn" path="res://menu_button.tscn" id="2_jxnfv"]
+[ext_resource type="Script" uid="uid://bcok45812k4sh" path="res://menu_button_panel.gd" id="2_qdv60"]
+[ext_resource type="PackedScene" uid="uid://cfupbo6yh6d2c" path="res://scrolling_label.tscn" id="2_r5awk"]
+[ext_resource type="Script" uid="uid://cor4ln7h2d7oe" path="res://coin_text.gd" id="4_qdv60"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qdv60"]
+bg_color = Color(0, 0, 0, 0.501961)
+skew = Vector2(0.25, 0)
+
+[node name="menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_kjvt6")
+
+[node name="panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -136.0
+offset_right = 585.0
+offset_bottom = 1080.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qdv60")
+script = ExtResource("2_qdv60")
+start_position = Vector2(350, 30)
+separation = Vector2(-30, 120)
+
+[node name="button" parent="panel" instance=ExtResource("2_jxnfv")]
+layout_mode = 2
+offset_left = 350.0
+offset_top = 30.0
+offset_right = 790.0
+offset_bottom = 107.0
+text = "モンスター"
+
+[node name="button2" parent="panel" instance=ExtResource("2_jxnfv")]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 150.0
+offset_right = 760.0
+offset_bottom = 232.0
+text = "ショップ"
+
+[node name="button3" parent="panel" instance=ExtResource("2_jxnfv")]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 270.0
+offset_right = 730.0
+offset_bottom = 352.0
+text = "バッグ"
+
+[node name="button4" parent="panel" instance=ExtResource("2_jxnfv")]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 390.0
+offset_right = 700.0
+offset_bottom = 472.0
+
+[node name="coin" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 888.0
+offset_right = 361.0
+offset_bottom = 954.0
+bbcode_enabled = true
+text = "[img=50]res://image/coin.PNG[/img] [color=gold]100[/color]"
+scroll_active = false
+script = ExtResource("4_qdv60")
+
+[node name="scrolling_label" parent="." instance=ExtResource("2_r5awk")]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 970.0
+offset_right = 1891.0
+offset_bottom = 1051.0
