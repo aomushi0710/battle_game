@@ -1,5 +1,6 @@
 extends Control
 
+@onready var hboxcontainer := $TextBox/MarginContainer/HBoxContainer
 @onready var label := $TextBox/MarginContainer/HBoxContainer/Text
 @onready var texture := $TextBox/MarginContainer/HBoxContainer/Image
 @onready var name_plate := $NamePlate
@@ -59,6 +60,13 @@ func display_dialog(data: DialogData) -> void:
 		name_plate.show()
 	else:
 		name_plate.hide()
+	
+	# 画像表示処理
+	texture.texture = data.image
+	if data.image != null:
+		hboxcontainer.add_theme_constant_override("separation", 55)
+	else:
+		hboxcontainer.add_theme_constant_override("separation", 0)
 	
 	text_tween = get_tree().create_tween().bind_node(label)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # テキストアニメーション再生

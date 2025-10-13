@@ -36,8 +36,8 @@ script = ExtResource("2_5wlj5")
 anchors_preset = 0
 
 [node name="TextBox" type="Polygon2D" parent="TextBox"]
-position = Vector2(100, 100)
-scale = Vector2(13.4375, 9.406)
+position = Vector2(50, 50)
+scale = Vector2(14.2188, 9.406)
 texture = SubResource("GradientTexture2D_4uc3s")
 polygon = PackedVector2Array(0, 8, 0, 32, 120, 32, 128, 24, 128, 0, 8, 0)
 uv = PackedVector2Array(0, 8, 0, 64, 56, 64, 64, 56, 64, 0, 8, 0)
@@ -46,12 +46,11 @@ metadata/_edit_lock_ = true
 [node name="MarginContainer" type="MarginContainer" parent="TextBox"]
 layout_mode = 0
 offset_right = 1920.0
-offset_bottom = 500.0
-theme_override_constants/margin_left = 160
-theme_override_constants/margin_top = 140
-theme_override_constants/margin_right = 160
-theme_override_constants/margin_bottom = 140
-metadata/_edit_lock_ = true
+offset_bottom = 400.0
+theme_override_constants/margin_left = 110
+theme_override_constants/margin_top = 90
+theme_override_constants/margin_right = 110
+theme_override_constants/margin_bottom = 90
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextBox/MarginContainer"]
 layout_mode = 2
@@ -60,6 +59,7 @@ metadata/_edit_lock_ = true
 
 [node name="Image" type="TextureRect" parent="TextBox/MarginContainer/HBoxContainer"]
 layout_mode = 2
+expand_mode = 2
 metadata/_edit_lock_ = true
 
 [node name="Text" type="RichTextLabel" parent="TextBox/MarginContainer/HBoxContainer"]
@@ -67,7 +67,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "ダイアログボックスは全角３２文字まで入る行を３行まで入れられます
+text = "ダイアログボックスは全角３４文字まで入る行を３行まで入れられます！！
 ２行目
 ３行目"
 autowrap_mode = 0
@@ -75,10 +75,10 @@ metadata/_edit_lock_ = true
 
 [node name="NamePlate" type="Control" parent="."]
 anchors_preset = 0
-offset_left = 300.0
-offset_top = 60.0
-offset_right = 300.0
-offset_bottom = 60.0
+offset_left = 200.0
+offset_top = 10.0
+offset_right = 200.0
+offset_bottom = 10.0
 
 [node name="Left" type="Polygon2D" parent="NamePlate"]
 scale = Vector2(5, 5)
@@ -118,9 +118,9 @@ metadata/_edit_lock_ = true
 [node name="buttons" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 1200.0
-offset_top = -433.0
+offset_top = -470.0
 offset_right = 1700.0
-offset_bottom = 67.0
+offset_bottom = 30.0
 theme_override_constants/separation = 20
 alignment = 2
 

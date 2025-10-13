@@ -14,19 +14,20 @@
 [sub_resource type="Resource" id="Resource_oysan"]
 script = ExtResource("8_sb2pt")
 id = 0
-text = "壁付きのモニター
-で
-す"
-name_text = "ながああああああああい"
-name_color = Color(0, 0, 1, 1)
+text = "↑こんな感じのネームプレートも表示可能
+画像ありならよりキャラクターが喋ってる感じに
+"
+name_text = "スライム"
+name_color = Color(0, 1, 1, 1)
+image = ExtResource("2_p5pve")
 button_text = Array[String]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="Resource" id="Resource_sb2pt"]
 script = ExtResource("8_sb2pt")
 id = 0
-text = "これは2ページ目"
-name_text = "あ"
+text = "指定がなければどちらも外せる"
+name_text = ""
 name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
