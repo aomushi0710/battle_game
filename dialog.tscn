@@ -14,7 +14,7 @@ fill_to = Vector2(0, 0)
 
 [sub_resource type="Gradient" id="Gradient_rxi5t"]
 offsets = PackedFloat32Array(0.5, 1)
-colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 0.501961)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0.501961)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_37fld"]
 gradient = SubResource("Gradient_rxi5t")
@@ -58,11 +58,11 @@ layout_mode = 2
 theme_override_constants/separation = 0
 metadata/_edit_lock_ = true
 
-[node name="image" type="TextureRect" parent="TextBox/MarginContainer/HBoxContainer"]
+[node name="Image" type="TextureRect" parent="TextBox/MarginContainer/HBoxContainer"]
 layout_mode = 2
 metadata/_edit_lock_ = true
 
-[node name="text" type="RichTextLabel" parent="TextBox/MarginContainer/HBoxContainer"]
+[node name="Text" type="RichTextLabel" parent="TextBox/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
@@ -70,6 +70,7 @@ bbcode_enabled = true
 text = "ダイアログボックスは全角３２文字まで入る行を３行まで入れられます
 ２行目
 ３行目"
+autowrap_mode = 0
 metadata/_edit_lock_ = true
 
 [node name="NamePlate" type="Control" parent="."]
@@ -94,13 +95,14 @@ offset_bottom = 80.0
 texture = SubResource("GradientTexture2D_3kgf7")
 metadata/_edit_lock_ = true
 
-[node name="text" type="RichTextLabel" parent="NamePlate/Panel"]
+[node name="Text" type="RichTextLabel" parent="NamePlate/Panel"]
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 80.0
 mouse_filter = 1
 bbcode_enabled = true
 text = "スライム"
+autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true

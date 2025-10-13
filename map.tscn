@@ -17,7 +17,8 @@ id = 0
 text = "壁付きのモニター
 で
 す"
-name_text = ""
+name_text = "ながああああああああい"
+name_color = Color(0, 0, 1, 1)
 button_text = Array[String]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
@@ -25,7 +26,8 @@ metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 script = ExtResource("8_sb2pt")
 id = 0
 text = "これは2ページ目"
-name_text = ""
+name_text = "あ"
+name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
@@ -34,6 +36,7 @@ script = ExtResource("8_sb2pt")
 id = 0
 text = "テスト用の浮いてるモニター"
 name_text = ""
+name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 

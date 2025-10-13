@@ -1,9 +1,11 @@
 extends Control
 
-@onready var label := $TextBox/MarginContainer/HBoxContainer/text
-@onready var texture := $TextBox/MarginContainer/HBoxContainer/image
+@onready var label := $TextBox/MarginContainer/HBoxContainer/Text
+@onready var texture := $TextBox/MarginContainer/HBoxContainer/Image
 @onready var name_plate := $NamePlate
-@onready var name_label := $NamePlate/Panel/text
+@onready var name_panel := $NamePlate/Panel
+@onready var name_label := $NamePlate/Panel/Text
+@onready var name_plate_right := $NamePlate/Right
 var text_tween: Tween
 var text_speed: float = 0.04
 
@@ -45,6 +47,15 @@ func display_dialog(data: DialogData) -> void:
 	# 名前テキスト処理
 	name_label.text = data.name_text
 	if data.name_text != "":
+		## 文字数に応じたネームプレートの長さ
+		var plate_size: int = name_label.get_content_width() + 200
+		# 各種サイズ変更
+		name_label.size.x = plate_size
+		name_panel.size.x = plate_size
+		name_plate_right.position.x = plate_size + name_panel.position.x
+		# 色変更
+		name_panel.texture.gradient.colors[0] = data.name_color
+		
 		name_plate.show()
 	else:
 		name_plate.hide()
