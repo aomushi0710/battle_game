@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://bldb4kxsdbr4q"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_kjvt6"]
-[ext_resource type="PackedScene" uid="uid://clhjsmwrxpbqn" path="res://menu_button.tscn" id="2_jxnfv"]
 [ext_resource type="Script" uid="uid://bcok45812k4sh" path="res://menu_button_panel.gd" id="2_qdv60"]
 [ext_resource type="PackedScene" uid="uid://cfupbo6yh6d2c" path="res://scrolling_label.tscn" id="2_r5awk"]
+[ext_resource type="PackedScene" uid="uid://0n1ixjrprqj2" path="res://game_button.tscn" id="3_qdv60"]
 [ext_resource type="Script" uid="uid://cor4ln7h2d7oe" path="res://coin_text.gd" id="4_qdv60"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qdv60"]
@@ -25,35 +25,35 @@ script = ExtResource("2_qdv60")
 start_position = Vector2(350, 30)
 separation = Vector2(-30, 120)
 
-[node name="button" parent="panel" instance=ExtResource("2_jxnfv")]
-layout_mode = 2
+[node name="button" parent="panel" instance=ExtResource("3_qdv60")]
+layout_mode = 0
 offset_left = 350.0
 offset_top = 30.0
-offset_right = 790.0
-offset_bottom = 107.0
+offset_right = 750.0
+offset_bottom = 112.0
 text = "モンスター"
 
-[node name="button2" parent="panel" instance=ExtResource("2_jxnfv")]
+[node name="button2" parent="panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 320.0
 offset_top = 150.0
-offset_right = 760.0
+offset_right = 720.0
 offset_bottom = 232.0
 text = "ショップ"
 
-[node name="button3" parent="panel" instance=ExtResource("2_jxnfv")]
+[node name="button3" parent="panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 290.0
 offset_top = 270.0
-offset_right = 730.0
+offset_right = 690.0
 offset_bottom = 352.0
-text = "バッグ"
+text = "セーブ"
 
-[node name="button4" parent="panel" instance=ExtResource("2_jxnfv")]
+[node name="button4" parent="panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 260.0
 offset_top = 390.0
-offset_right = 700.0
+offset_right = 660.0
 offset_bottom = 472.0
 
 [node name="coin" type="RichTextLabel" parent="."]

@@ -142,6 +142,7 @@ size = Vector2i(128, 186)
 [node name="ConfirmationDialog" parent="." instance=ExtResource("10_lawf4")]
 
 [node name="fade" type="ColorRect" parent="."]
+layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2

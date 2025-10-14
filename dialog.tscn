@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgn0w8f01647u"]
+[gd_scene load_steps=8 format=3 uid="uid://bgn0w8f01647u"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_7voku"]
 [ext_resource type="Script" uid="uid://cbt0mcuwhsnu3" path="res://map_dialog.gd" id="2_5wlj5"]
-[ext_resource type="PackedScene" uid="uid://clhjsmwrxpbqn" path="res://menu_button.tscn" id="3_w7j6r"]
 
 [sub_resource type="Gradient" id="Gradient_w7j6r"]
 colors = PackedColorArray(0, 0, 0, 0.784314, 0, 0, 0, 0.501961)
@@ -115,19 +114,11 @@ polygon = PackedVector2Array(9.53674e-07, 0, 8, 16, 0, 16)
 uv = PackedVector2Array(9.53674e-07, 0, 8.00001, 64, 1.90735e-06, 64)
 metadata/_edit_lock_ = true
 
-[node name="buttons" type="VBoxContainer" parent="."]
+[node name="Buttons" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 1200.0
 offset_top = -470.0
-offset_right = 1700.0
+offset_right = 1800.0
 offset_bottom = 30.0
 theme_override_constants/separation = 20
 alignment = 2
-
-[node name="button" parent="buttons" instance=ExtResource("3_w7j6r")]
-layout_mode = 2
-text = "はい"
-
-[node name="button2" parent="buttons" instance=ExtResource("3_w7j6r")]
-layout_mode = 2
-text = "いいえ"

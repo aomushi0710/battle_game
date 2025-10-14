@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://b6v2nlkh2ak8j"]
+[gd_scene load_steps=18 format=4 uid="uid://b6v2nlkh2ak8j"]
 
 [ext_resource type="TileSet" uid="uid://rw4km3kk1k67" path="res://image/tile/terrain.tres" id="1_e0an3"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_p5pve"]
@@ -13,7 +13,8 @@
 
 [sub_resource type="Resource" id="Resource_oysan"]
 script = ExtResource("8_sb2pt")
-id = 0
+redirect_id = 1
+flag_list = Array[int]([])
 text = "↑こんな感じのネームプレートも表示可能
 画像ありならよりキャラクターが喋ってる感じに
 "
@@ -21,24 +22,51 @@ name_text = "スライム"
 name_color = Color(0, 1, 1, 1)
 image = ExtResource("2_p5pve")
 button_text = Array[String]([])
+button_redirect_id = Array[int]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="Resource" id="Resource_sb2pt"]
 script = ExtResource("8_sb2pt")
-id = 0
+redirect_id = -1
+flag_list = Array[int]([])
 text = "指定がなければどちらも外せる"
 name_text = ""
 name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
+button_redirect_id = Array[int]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="Resource" id="Resource_0t07s"]
 script = ExtResource("8_sb2pt")
-id = 0
-text = "テスト用の浮いてるモニター"
+redirect_id = -1
+flag_list = Array[int]([])
+text = "君は世界を救ってくれるか？"
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String](["はい", "いいえ"])
+button_redirect_id = Array[int]([2, 1])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_ooc2g"]
+script = ExtResource("8_sb2pt")
+redirect_id = 0
+flag_list = Array[int]([])
+text = "残念ながら君に拒否権はない"
 name_text = ""
 name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_2wwcf"]
+script = ExtResource("8_sb2pt")
+redirect_id = -1
+flag_list = Array[int]([])
+text = "そう言ってくれると嬉しいよ"
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e0an3"]
@@ -64,8 +92,8 @@ script = ExtResource("2_iw27f")
 visible = false
 
 [node name="dialog" parent="CanvasLayer" instance=ExtResource("4_71pa8")]
-offset_top = 580.0
-offset_bottom = 580.0
+offset_top = 680.0
+offset_bottom = 680.0
 
 [node name="world" type="Node2D" parent="."]
 
@@ -87,7 +115,7 @@ dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), Sub
 
 [node name="signboard2" parent="world/signboards" instance=ExtResource("7_oysan")]
 position = Vector2(416, 132)
-dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_0t07s")])
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_0t07s"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
 
 [node name="player" type="CharacterBody2D" parent="world"]
 position = Vector2(32, 288)

@@ -1,3 +1,4 @@
+DialogData
 TileSet
 Element
 Deck
@@ -12,4 +13,3 @@ AbilityReduction
 AbilityHealing
 AbilityDebuff
 Item
-Ability

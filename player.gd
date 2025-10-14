@@ -58,10 +58,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if is_dialog_active: # 既にダイアログが開かれているなら何もしない
 					return
 				
-				dialog.dialog_open()
-				for data: DialogData in signboard.dialog_datas:
-					await dialog.display_dialog(data)
-				dialog.dialog_close()
+				await dialog.dialog_manager(signboard.dialog_datas)
 
 # アイテムを取得する処理
 func pickup():

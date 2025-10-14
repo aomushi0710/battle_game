@@ -1,13 +1,13 @@
 @tool
 extends Button
 
-var style: StyleBoxFlat = get_theme_stylebox("hover")
+var style: StyleBoxFlat = get_theme_stylebox("focus")
 var tween: Tween
 @export var color: Color = Color.YELLOW: ## ボタンの文字と影の色
 	set(value):
 		color = value
 		
-		add_theme_color_override("font_hover_color", value)
+		add_theme_color_override("font_focus_color", value)
 		
 		## 色だけを変えた新しいStyleBoxFlat
 		var new_style: StyleBoxFlat = style.duplicate()
@@ -15,11 +15,13 @@ var tween: Tween
 		value.a = 0.5
 		new_style.shadow_color = value
 		
-		add_theme_stylebox_override("hover", new_style)
-		style = get_theme_stylebox("hover") # リロード
+		add_theme_stylebox_override("focus", new_style)
+		style = get_theme_stylebox("focus") # リロード
 
 ## フォーカス表示
 func _on_mouse_entered() -> void:
+	self.call_deferred("grab_focus") # マウスカーソルが当たったボタンにフォーカスを移す
+	
 	tween = create_tween().bind_node(self)
 	tween.set_loops()
 	tween.tween_property(style, "shadow_size", 30, 0.5)\
