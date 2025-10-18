@@ -117,7 +117,7 @@ func text_change_next() -> void:
 			paging.emit()
 
 ## Enterキーが押された時、ページ変更ボタンか押された時と同様に振る舞う
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		text_change_next()
 

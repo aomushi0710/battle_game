@@ -9,5 +9,5 @@ func _ready() -> void:
 	var item: Item = Global.item_data[id] ## アイテム
 	$Control/texture.texture_normal = item.image
 	$name.text = item.name
-	$level.text = "Lv.%d" % Global.inv.item[id]
+	$level.text = "Lv.%d" % Global.save_data.item[id]
 	

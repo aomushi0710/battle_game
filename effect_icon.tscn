@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://4xqdwf0b1t14"]
+[gd_scene load_steps=5 format=3 uid="uid://4xqdwf0b1t14"]
 
 [ext_resource type="Texture2D" uid="uid://n0y7pkv1xysj" path="res://image/element/バフ技.PNG" id="1_yfs5u"]
 [ext_resource type="Script" uid="uid://dm11csrfq3x6u" path="res://effect_icon.gd" id="2_gw70f"]
-[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="3_3lcfl"]
 
 [sub_resource type="Theme" id="Theme_p8ish"]
 default_font_size = 110
@@ -33,7 +32,5 @@ bbcode_enabled = true
 text = "[i][b]9[/b][/i]"
 scroll_active = false
 horizontal_alignment = 2
-
-[node name="AcceptDialog" parent="." instance=ExtResource("3_3lcfl")]
 
 [connection signal="button_up" from="." to="." method="_on_button_up"]

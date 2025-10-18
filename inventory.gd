@@ -3,9 +3,9 @@ extends TabContainer
 const ITEM_SCENE = preload("res://inventory_item.tscn")
 
 func _ready() -> void:
-	if Global.inv.item == {}:
+	if Global.save_data.item == {}:
 		return
-	var sorted_keys = Global.inv.item.keys()
+	var sorted_keys = Global.save_data.item.keys()
 	sorted_keys.sort()
 	for key: int in sorted_keys:
 		var item := ITEM_SCENE.instantiate()

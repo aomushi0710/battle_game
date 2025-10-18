@@ -2,7 +2,6 @@ extends Control
 
 @onready var battle_node := $".."
 @onready var action_container := $action
-@onready var confirmation_dialog := $"../../ConfirmationDialog"
 const MONSTER_NAME_LIMIT: int = 8 ## statusに表示する上での、モンスターの名前の上限文字数
 var now_showing: int ## 現在表示中のボタンメニュー[br]0:main 1:action 2:item 3:status 4:target 5:monsters
 var now_player: bool ## true:現在playerの情報を表示 false:現在enemyの情報を表示
@@ -29,7 +28,7 @@ func _ready() -> void: # 初期値
 	# item生成
 	# TODO 今後、デッキに3つまでアイテムを設定できるようにする。その3つのアイテムについて繰り返す
 	var pos: float = 0 ## 変動するposition.xカウンタ
-	for key in Global.inv.item:
+	for key in Global.save_data.item:
 		var button := ItemButton.new()
 		button.disabled = true
 		button.position.x = pos
@@ -456,15 +455,22 @@ func target_button_setting() -> void:
 
 
 func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げられないバトル用の処理なども作る
-	confirmation_dialog.confirmed.connect(
-		battle_finished, CONNECT_ONE_SHOT)
+	ConfirmationDialogManager.confirmed.connect(
+			battle_finished, 
+			CONNECT_ONE_SHOT
+	)
 	if $"../".tutorial_mode == true:
-		confirmation_dialog.display_dialog("チュートリアルを終わりますか？\n" + 
-		"チュートリアルはいつでもプレイ可能です。", "チュートリアル終了")
+		ConfirmationDialogManager.display_dialog(
+				"チュートリアルを終わりますか？\n" + 
+				"チュートリアルはいつでもプレイ可能です。", 
+				"チュートリアル終了"
+		)
 	else:
-		confirmation_dialog.display_dialog("バトルに敗北したことになりますが、" + 
-		"本当に逃げますか？\n[color=red]コインやアイテムも獲得できません！[/color]", 
-		"バトル終了")
+		ConfirmationDialogManager.display_dialog(
+				"バトルに敗北したことになりますが、本当に逃げますか？\n" + 
+				"[color=red]コインやアイテムも獲得できません！[/color]", 
+				"バトル終了"
+		)
 
 
 func battle_finished() -> void: # バトル終了初期化処理

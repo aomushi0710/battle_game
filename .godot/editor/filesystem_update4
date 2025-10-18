@@ -35,3 +35,17 @@ res://SE_menu.tscn
 res://SE_battle.tscn
 res://action_button.tscn
 res://signboard.tscn
+res://メインシーン.gd
+res://deck_select.gd
+res://coin_text.gd
+res://shop.gd
+res://shop_item.gd
+res://inventory.gd
+res://inventory_item.gd
+res://resource/item.gd
+res://effect_icon.gd
+res://menu_monster.gd
+res://デッキセーブデータ.gd
+res://accept_dialog.tscn
+res://confirmation_dialog.tscn
+res://dialogtab.gd

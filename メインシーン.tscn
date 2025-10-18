@@ -1,31 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://36mc0q6q01ow"]
+[gd_scene load_steps=6 format=3 uid="uid://36mc0q6q01ow"]
 
 [ext_resource type="Script" uid="uid://cpvp8wu65fblw" path="res://メインシーン.gd" id="1_0gvvv"]
-[ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help_button.gd" id="2_05cje"]
-[ext_resource type="FontFile" uid="uid://b2cvy5t2fy5pr" path="res://font/Nosutaru-dotMPlusH-10-Regular.ttf" id="2_lf3g1"]
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="2_m5oqv"]
 [ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="4_lf3g1"]
-[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="6_6g3bf"]
-[ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="7_8u85v"]
 
 [sub_resource type="Theme" id="Theme_6g3bf"]
 default_font_size = 35
 
 [sub_resource type="Theme" id="Theme_lf3g1"]
-default_font_size = 35
-
-[sub_resource type="Theme" id="Theme_8u85v"]
-default_font_size = 25
-
-[sub_resource type="Theme" id="Theme_0c3is"]
-default_font_size = 30
-
-[sub_resource type="Theme" id="Theme_4elko"]
-default_font = ExtResource("2_lf3g1")
-default_font_size = 35
-
-[sub_resource type="Theme" id="Theme_c728d"]
-default_font = ExtResource("2_lf3g1")
 default_font_size = 35
 
 [node name="メインシーン" type="Node2D"]
@@ -68,58 +50,6 @@ text = "↑ここを押してセッティング！
 
 [color=red]一部のテキスト・ボタンはカーソルを合わせて少し待つとヒントが表示されます！[/color]"
 
-[node name="help" type="Button" parent="."]
-process_mode = 3
-offset_left = 1100.0
-offset_top = 10.0
-offset_right = 1148.0
-offset_bottom = 58.0
-mouse_default_cursor_shape = 2
-theme = SubResource("Theme_8u85v")
-toggle_mode = true
-text = "?"
-script = ExtResource("2_05cje")
-
-[node name="ColorRect" type="ColorRect" parent="help"]
-visible = false
-layout_mode = 0
-offset_left = -1050.0
-offset_bottom = 650.0
-color = Color(0, 0.494118, 0.494118, 1)
-
-[node name="help_label" type="RichTextLabel" parent="help/ColorRect"]
-layout_mode = 2
-offset_right = 1050.0
-offset_bottom = 650.0
-theme = SubResource("Theme_0c3is")
-bbcode_enabled = true
-text = "このようにヘルプメッセージが表示されます！
-
-[color=yellow]このヘルプメッセージは再度右上の　　ボタンを押すと閉じることができます[/color]
-
-・　　　　　　　　　  [color=yellow]ボタン[/color]
-　　このボタンが押されると、デッキセレクト画面に移動します！"
-
-[node name="Button" type="Button" parent="help/ColorRect"]
-layout_mode = 2
-offset_left = 30.0
-offset_top = 125.0
-offset_right = 318.0
-offset_bottom = 173.0
-theme = SubResource("Theme_4elko")
-text = "コンピューター戦"
-
-[node name="help_help" type="Button" parent="help/ColorRect"]
-process_mode = 3
-layout_mode = 0
-offset_left = 480.0
-offset_top = 60.0
-offset_right = 528.0
-offset_bottom = 108.0
-theme = SubResource("Theme_c728d")
-toggle_mode = true
-text = "?"
-
 [node name="debug" type="Button" parent="."]
 offset_right = 8.0
 offset_bottom = 8.0
@@ -146,12 +76,6 @@ theme = ExtResource("2_m5oqv")
 bbcode_enabled = true
 text = "[i](C) 2025 aomushi0710[i]"
 
-[node name="AcceptDialog" parent="." instance=ExtResource("6_6g3bf")]
-
-[node name="ConfirmationDialog" parent="." instance=ExtResource("7_8u85v")]
-
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="button_up" from="reset" to="." method="_on_reset_button_up"]
-[connection signal="toggled" from="help" to="help" method="_on_toggled"]
 [connection signal="button_up" from="debug" to="." method="_on_debug_button_up"]
-[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]

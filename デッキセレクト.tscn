@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d4g4bh4y0vc2f"]
+[gd_scene load_steps=18 format=3 uid="uid://d4g4bh4y0vc2f"]
 
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_cpkem"]
 [ext_resource type="Script" uid="uid://sb20jo78m6dl" path="res://deck_select.gd" id="1_dgsv0"]
@@ -8,8 +8,6 @@
 [ext_resource type="Script" uid="uid://tw743jfyh7c1" path="res://cpu_strategy.gd" id="5_c4lle"]
 [ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help_button.gd" id="5_jtnis"]
 [ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="7_cgg8v"]
-[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="10_c8d0p"]
-[ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="11_c8d0p"]
 
 [sub_resource type="Theme" id="Theme_3nbs8"]
 default_font_size = 35
@@ -358,11 +356,6 @@ offset_right = 446.75
 offset_bottom = 610.5
 theme = SubResource("Theme_cgg8v")
 text = "🛒ショップ"
-
-[node name="AcceptDialog" parent="Control" instance=ExtResource("10_c8d0p")]
-size = Vector2i(128, 186)
-
-[node name="ConfirmationDialog" parent="Control" instance=ExtResource("11_c8d0p")]
 
 [node name="fade" type="ColorRect" parent="."]
 offset_right = 1920.0

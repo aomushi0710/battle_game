@@ -1,7 +1,5 @@
 extends Control
 
-@onready var accept_dialog := $AcceptDialog
-@onready var confirmation_dialog := $ConfirmationDialog
 const item_scene = preload("res://shop_item.tscn")
 var coin_tween: Tween
 var selected_item
@@ -41,9 +39,10 @@ func item_button_up(shop_item) -> void:
 	var level: int = item.get_level()
 	var description: String
 	$dialog/texture.texture = item.image
-	if item.id not in Global.inv.item: # 未所持の時
+	if item.id not in Global.save_data.item: # 未所持の時
 		$buy.disabled = false
-		$dialog/margin/descriptions/description1/text.text = "[center]未所持[/center]"
+		$dialog/margin/descriptions/description1/text.text = \
+		"[center]未所持[/center]"
 		description = item.get_description(level + 1)
 		$dialog/margin/descriptions/description2/text.text = \
 		"[center][b]%s Lv.%d[/b][/center]" % [item.name, level + 1] + \
@@ -82,29 +81,37 @@ func _on_inventory_button_up() -> void:
 
 
 func _on_buy_button_up() -> void:
-	if Global.coin < selected_item.price: # コインがたりない
-		accept_dialog.display_dialog(
+	if Global.save_data.coin < selected_item.price: # コインがたりない
+		AcceptDialogManager.display_dialog(
 			"コインが足りません！\nバトルでコインを集めましょう！", "コイン不足")
 	else:
-		confirmation_dialog.confirmed.connect(
-			_on_confirm_message_confirmed, CONNECT_ONE_SHOT)
-		confirmation_dialog.display_dialog("%s Lv.%dを購入しますか？" % 
-		[selected_item.name, selected_item.level], "購入確認")
+		ConfirmationDialogManager.confirmed.connect(
+				_on_confirm_message_confirmed, 
+				CONNECT_ONE_SHOT
+		)
+		ConfirmationDialogManager.display_dialog(
+				"%s Lv.%dを購入しますか？" % 
+				[selected_item.name, selected_item.level], 
+				"購入確認"
+		)
 
 
 ## 購入確認ボタンで購入ボタンを押した時
 func _on_confirm_message_confirmed() -> void:
-	Global.coin -= selected_item.price # アイテム情報もセーブするので、ここではセーブしない
+	# アイテム情報もセーブするので、ここではセーブしない
+	Global.save_data.coin -= selected_item.price
 	
-	if selected_item.item.id not in Global.inv.item: # 未所持の時
-		Global.inv.item[selected_item.item.id] = 1
+	if selected_item.item.id not in Global.save_data.item: # 未所持の時
+		Global.save_data.item[selected_item.item.id] = 1
 	else:
-		Global.inv.item[selected_item.item.id] += 1
+		Global.save_data.item[selected_item.item.id] += 1
 	
 	Global.save_game()
 	
-	accept_dialog.display_dialog("%s Lv.%dを手に入れた！" % 
-	[selected_item.name, selected_item.level], "購入完了")
+	AcceptDialogManager.display_dialog(
+			"%s Lv.%dを手に入れた！" % [selected_item.name, selected_item.level], 
+			"購入完了"
+	)
 	
 	update(-selected_item.price)
 	

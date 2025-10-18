@@ -1,7 +1,6 @@
 extends TextureButton
 
 @onready var turn_label := $turn
-@onready var dialog := $AcceptDialog
 @onready var parent: BattleMonster = $"../.."
 
 var effect: MonsterEffect
@@ -27,4 +26,4 @@ func _ready() -> void:
 
 ## ボタンが押された時、エフェクト説明文を出す関数
 func _on_button_up() -> void:
-	dialog.display_dialog(effect.description, effect.effect.name)
+	AcceptDialogManager.display_dialog(effect.description, effect.effect.name)

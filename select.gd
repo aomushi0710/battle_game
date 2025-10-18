@@ -15,8 +15,6 @@ const STATUS_BAR_TEXT: Array[String] = [
 @onready var se := $"../SoundEffects"
 @onready var background := $"../background"
 @onready var camera := $"../Camera2D"
-@onready var accept_dialog = $"../AcceptDialog"
-@onready var confirmation_dialog = $"../ConfirmationDialog"
 @onready var back_button := $"../CanvasLayer/Control/戻る"
 @onready var confirm_button := $"../CanvasLayer/Control/決定"
 @onready var help_label := $"../CanvasLayer/Control/Panel"
@@ -437,14 +435,17 @@ func _on_戻る_button_up():
 	se.click.play()
 	match camera_mode:
 		CameraMode.MAIN: # キャラ選択に戻す
-			confirmation_dialog.confirmed.connect(
-				Callable(get_tree(), "change_scene_to_file")
-				.bind(Global.chara_scene), CONNECT_ONE_SHOT)
-			confirmation_dialog.display_dialog(
-				"変更した内容は保存されていません！\n[color=yellow]" + 
-				"内容を保存するには、キャンセルボタンでこの画面を閉じた後、\n" + 
-				"右下にある決定ボタンを押してください。\n[/color]前の画面に戻りますか？", 
-				"未保存のデータ")
+			ConfirmationDialogManager.confirmed.connect(
+					Callable(get_tree(), "change_scene_to_file")
+					.bind(Global.chara_scene), CONNECT_ONE_SHOT
+			)
+			ConfirmationDialogManager.display_dialog(
+					"変更した内容は保存されていません！\n[color=yellow]" + 
+					"内容を保存するには、キャンセルボタンでこの画面を閉じた後、\n" + 
+					"右下にある決定ボタンを押してください。\n" + 
+					"[/color]前の画面に戻りますか？", 
+					"未保存のデータ"
+			)
 		CameraMode.ACTION: # 画面を戻す
 			camera_mode = CameraMode.MAIN
 
@@ -457,15 +458,17 @@ func _on_決定_button_up():
 			for i: int in chances:
 				sum_chance += i
 			if sum_chance != 100:
-				accept_dialog.display_dialog("出現率の合計が100%ではありません！")
+				AcceptDialogManager.display_dialog(
+						"出現率の合計が100%ではありません！")
 				return
 			
 			if len(evolution_forms) == 3: # 2回進化モンスター
 				if monster.is_evolution_skipped(actions):
-					accept_dialog.display_dialog(
-						"第三形態の技は登録されていますが、\n" + 
-						"第二形態の技が登録されていません！\n" + 
-						"このモンスターは進化が2回必要です")
+					AcceptDialogManager.display_dialog(
+							"第三形態の技は登録されていますが、\n" + 
+							"第二形態の技が登録されていません！\n" + 
+							"このモンスターは進化が2回必要です"
+					)
 					return
 			
 			#elif selected_skill == 0: #スキル実装後に実装
@@ -492,20 +495,25 @@ func _on_決定_button_up():
 		
 		CameraMode.ACTION:
 			if selected_action in actions: # 既存の技を選択中の時
-				accept_dialog.display_dialog("既に登録されている技です！\n\n" + 
-				"───妙だな、\"今\"このボタンが押されるなんて。\n" + 
-				"こんなこともあろうかと、対策を施していて正解だった。")
+				AcceptDialogManager.display_dialog(
+						"既に登録されている技です！\n\n" + 
+						"───妙だな、\"今\"このボタンが押されるなんて。\n" + 
+						"こんなこともあろうかと、対策を施していて正解だった。"
+				)
 				return
 			if null not in actions: # 空きスペース(null)がない時
-				accept_dialog.display_dialog(
-					"技は4個までしか登録できません！\n既に登録されている技を削除してください！")
+				AcceptDialogManager.display_dialog(
+						"技は4個までしか登録できません！\n" + 
+						"既に登録されている技を削除してください！"
+				)
 				return
 			# 元々選択されている技の出現率に、登録したい技の出現率を足す計算
 			var sum_chance = 0
 			for i: int in chances:
 				sum_chance += i
 			if sum_chance + slider.value > 100:
-				accept_dialog.display_dialog("技の出現率の合計が100%を越えてしまいます！")
+				AcceptDialogManager.display_dialog(
+						"技の出現率の合計が100%を越えてしまいます！")
 				return
 			
 			confirm_button.disabled = true
@@ -532,7 +540,8 @@ func _on_chance_value_changed(value: int) -> void:
 		sum_chance += value
 		
 		if sum_chance > 100: # 100%を越える場合、元の値に差し戻し
-			accept_dialog.display_dialog("技の出現率の合計が100%を越えてしまいます！")
+			AcceptDialogManager.display_dialog(
+					"技の出現率の合計が100%を越えてしまいます！")
 			value = previous_value # 元の値に戻す
 		else:
 			chances[index] = value # 技一覧の確率と円グラフを更新

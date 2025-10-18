@@ -1,12 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://buagaktaatt0n"]
+[gd_scene load_steps=8 format=3 uid="uid://buagaktaatt0n"]
 
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_1bmxr"]
 [ext_resource type="Script" uid="uid://dy420ocgqjyil" path="res://menu_monster.gd" id="2_t21r1"]
 [ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://image/1st.PNG" id="3_uxvch"]
 [ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://image/2nd.PNG" id="4_c4pgf"]
 [ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://image/3rd.PNG" id="5_unl4c"]
-[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="9_sac6k"]
-[ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="10_lawf4"]
 
 [sub_resource type="Theme" id="Theme_u0qxs"]
 default_font_size = 35
@@ -135,11 +133,6 @@ offset_bottom = 610.5
 tooltip_text = "バトル方法を実戦形式で身に着けます！"
 theme = SubResource("Theme_1emw3")
 text = "🔰チュートリアル"
-
-[node name="AcceptDialog" parent="." instance=ExtResource("9_sac6k")]
-size = Vector2i(128, 186)
-
-[node name="ConfirmationDialog" parent="." instance=ExtResource("10_lawf4")]
 
 [node name="fade" type="ColorRect" parent="."]
 layout_mode = 0

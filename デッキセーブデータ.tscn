@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckwkfg1gmev8b"]
+[gd_scene load_steps=3 format=3 uid="uid://ckwkfg1gmev8b"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_e8mes"]
 [ext_resource type="Script" uid="uid://b7a2osxjuhyxo" path="res://デッキセーブデータ.gd" id="2_f0prp"]
-[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="4_abaqv"]
-[ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="5_dtapg"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -37,10 +35,6 @@ offset_top = 1000.0
 offset_right = 178.0
 offset_bottom = 1064.0
 text = "←戻る"
-
-[node name="AcceptDialog" parent="Control" instance=ExtResource("4_abaqv")]
-
-[node name="ConfirmationDialog" parent="Control" instance=ExtResource("5_dtapg")]
 
 [connection signal="tree_entered" from="Control" to="Control" method="_on_tree_entered"]
 [connection signal="button_up" from="Control/戻る" to="Control" method="_on_戻る_button_up"]

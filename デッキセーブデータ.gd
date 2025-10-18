@@ -1,8 +1,5 @@
 extends Control
 
-@onready var accept_dialog := $AcceptDialog
-@onready var confirmation_dialog := $ConfirmationDialog
-
 var monster_data = Global.monster_data
 var action_data = Global.action_data
 var deck: Deck = Global.deck1
@@ -33,8 +30,8 @@ func save_file(slot: int) -> void:
 	var has_empty_slot = Global.deck1.monster.any(func(m): return m.monster == null)
 	
 	if Global.deck1.monster.size() < 3 or has_empty_slot:
-		accept_dialog.display_dialog(
-			"デッキをセーブするには、全ての枠を埋めてください！")
+		AcceptDialogManager.display_dialog(
+				"デッキをセーブするには、全ての枠を埋めてください！")
 		return
 	
 	# 技のArray[Action]を技のIDのArray[int]に変換
@@ -70,40 +67,45 @@ func save_file(slot: int) -> void:
 	
 	save_game(slot, deck_data)
 	setting()
-	accept_dialog.display_dialog("デッキのセーブが完了しました！", "✅セーブ完了✅")
+	AcceptDialogManager.display_dialog(
+			"デッキのセーブが完了しました！", 
+			"✅セーブ完了✅"
+	)
 
 
 func load_file(slot: int) -> void:
 	var deck_data = load_game(slot)
 	
 	if deck_data == {}:
-		accept_dialog.display_dialog("セーブデータが存在しません")
+		AcceptDialogManager.display_dialog("セーブデータが存在しません")
 	# β版で正式版、正式版でβ版のデータをロードしようとした時
 	elif deck_data["beta"] != Global.VERSION_BETA:
 		if Global.VERSION_BETA == true: # β版
-			accept_dialog.display_dialog(
-				"βバージョンで保存されたデータではないためロードできません。")
+			AcceptDialogManager.display_dialog(
+					"βバージョンで保存されたデータではないためロードできません。")
 		else: # 正式リリース版
-			accept_dialog.display_dialog(
-				"βバージョンで保存されたデータはロードできません")
+			AcceptDialogManager.display_dialog(
+					"βバージョンで保存されたデータはロードできません")
 		return
 	
 	# ALERT βver4.4.0以下のデータはバージョン管理の型が違うので互換性がない
 	# ただしβ版のみのため、正式リリース後は不要
 	elif deck_data["version"] is float:
-		accept_dialog.display_dialog(
-			"バージョン管理方法の変更に伴い、\n" + 
-			"β ver 4.4.0以下で保存されたデータのためロードできません。")
+		AcceptDialogManager.display_dialog(
+				"バージョン管理方法の変更に伴い、\n" + 
+				"β ver 4.4.0以下で保存されたデータのためロードできません。"
+		)
 		return
 	
 	# 現在のバージョン以降のデータの場合
 	elif (not Global.is_version_older(deck_data["version"]) and 
 	deck_data["version"] != 
 	ProjectSettings.get_setting("application/config/version")):
-		accept_dialog.display_dialog(
-			"現在のバージョン ver %s " % 
-			ProjectSettings.get_setting("application/config/version") + 
-			"以降に作成されたデータのため、\nロードできません。")
+		AcceptDialogManager.display_dialog(
+				"現在のバージョン ver %s " % 
+				ProjectSettings.get_setting("application/config/version") + 
+				"以降に作成されたデータのため、\nロードできません。"
+		)
 		return
 	
 	#elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.4: # ver3.0~
@@ -112,7 +114,10 @@ func load_file(slot: int) -> void:
 			#"ロードされたデータを再度セーブするとデータのバージョンも更新されます。\n" + 
 			#"[color=yellow]⚠️一度更新したバージョンは元に戻せません⚠️[/color]", "")
 	else:
-		accept_dialog.display_dialog("デッキのロードが完了しました！", "✅ロード完了✅")
+		AcceptDialogManager.display_dialog(
+				"デッキのロードが完了しました！", 
+				"✅ロード完了✅"
+		)
 	# TODO 過去のバージョンのデータだった場合、互換性があるかチェックし、
 	# データのバージョンを更新する処理を実装する必要あり。
 	
@@ -139,18 +144,23 @@ func load_file(slot: int) -> void:
 
 
 func reset_file(slot: int) -> void:
-	confirmation_dialog.confirmed.connect(
-		Callable(self, "_on_確認メッセージ_confirmed").bind(slot), CONNECT_ONE_SHOT)
-	confirmation_dialog.display_dialog(
-		"デッキスロット%dのデータを削除しようとしています。\nよろしいですか？" % slot, 
-		"⚠️削除確認⚠️")
+	ConfirmationDialogManager.confirmed.connect(
+			Callable(self, "_on_確認メッセージ_confirmed").bind(slot), 
+			CONNECT_ONE_SHOT
+	)
+	ConfirmationDialogManager.display_dialog(
+			"デッキスロット%dのデータを削除しようとしています。\nよろしいですか？" % slot, 
+			"⚠️削除確認⚠️"
+	)
 
 
 func _on_確認メッセージ_confirmed(slot: int) -> void:
 	delete_save(slot)
 	setting()
-	accept_dialog.display_dialog(
-		"デッキスロット%dのデータを削除しました。" % slot, "削除完了")
+	AcceptDialogManager.display_dialog(
+			"デッキスロット%dのデータを削除しました。" % slot, 
+			"削除完了"
+	)
 
 # 暗号化及び複合化を行う関数 data:平文または暗号のデータ key:暗号化キー
 func xor_encrypt(data: PackedByteArray, key: String) -> PackedByteArray:

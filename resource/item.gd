@@ -24,8 +24,8 @@ extends Resource
 
 ## インベントリを確認し、レベルを返す関数
 func get_level() -> int:
-	if id in Global.inv.item: # 所持しているならレベルを返す
-		return Global.inv.item[id]
+	if id in Global.save_data.item: # 所持しているならレベルを返す
+		return Global.save_data.item[id]
 	else: # アイテムを未所持なら仮で0を返す
 		return 0
 

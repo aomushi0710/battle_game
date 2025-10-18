@@ -1,7 +1,5 @@
 extends Control
 
-@onready var accept_dialog := $"../AcceptDialog"
-@onready var confirmation_dialog := $"../ConfirmationDialog"
 var first_texture = load("res://image/1st.PNG")
 var second_texture = load("res://image/2nd.PNG")
 var third_texture = load("res://image/3rd.PNG")
@@ -86,17 +84,24 @@ func _on_load_button_up() -> void:
 
 
 func _on_reset_button_up() -> void:
-	confirmation_dialog.confirmed.connect(
-		_on_確認メッセージ_confirmed, CONNECT_ONE_SHOT)
-	confirmation_dialog.display_dialog(
-		"現在選択中のデッキデータをリセットしようとしています。\nよろしいですか？\n" + 
-		"※セーブデータは削除されません。", "リセット確認")
+	ConfirmationDialogManager.confirmed.connect(
+			_on_確認メッセージ_confirmed, 
+			CONNECT_ONE_SHOT
+	)
+	ConfirmationDialogManager.display_dialog(
+			"現在選択中のデッキデータをリセットしようとしています。\nよろしいですか？\n" + 
+			"※セーブデータは削除されません。", 
+			"リセット確認"
+	)
 
 
 func _on_確認メッセージ_confirmed() -> void:
 	Global.deck1 = Deck.new()
 	update_deck_visuals()
-	accept_dialog.display_dialog("デッキデータをリセットしました。", "リセット完了")
+	AcceptDialogManager.display_dialog(
+			"デッキデータをリセットしました。", 
+			"リセット完了"
+	)
 
 ## チュートリアルの準備と遷移
 func _on_tutorial_button_up() -> void:

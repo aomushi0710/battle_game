@@ -27,11 +27,13 @@ const tutorial_scene = "res://tutorial.tscn"
 const shop_scene = "res://shop.tscn"
 
 const game_button = preload("res://game_button.tscn")
-const accept_dialog = preload("res://accept_dialog.tscn")
 const inventory_scene = preload("res://inventory.tscn")
 const action_button = preload("res://action_button.tscn")
 const ability_description = preload("res://ability_description.tscn")
 const damage_text = preload("res://damage_text.tscn")
+
+const save_data_path: String = "user://savedata.sav"
+const save_data_path_beta: String = "user://savedata_beta.sav"
 
 @onready var picked_monster = [0,0,0]
 @onready var deck1 := Deck.new()
@@ -500,7 +502,7 @@ func ability_description_creator(act: Action, index: int, blank: bool) -> Array:
 
 ## 指定したコイン枚数だけ増減させ、自動でセーブする関数
 func coin_setter(n: int) -> void:
-	Global.coin += n
+	save_data.coin += n
 	save_game()
 
 # 暗号化及び複合化を行う関数 data:平文または暗号のデータ key:暗号化キー
@@ -529,9 +531,10 @@ func load_game() -> void:
 			print("ERROR:シーンが存在しません")
 			return
 		
-		scene.get_node("AcceptDialog").display_dialog(
-			"セーブデータが存在しません！\n新たなセーブデータを作成しました。", 
-			"新規セーブデータ作成")
+		AcceptDialogManager.display_dialog(
+				"セーブデータが存在しません！\n新たなセーブデータを作成しました。", 
+				"新規セーブデータ作成"
+		)
 	
 	# 現在のバージョン以降のデータの場合、オートセーブを切り、既存データの上書きされるのを防ぐ
 	elif (not is_version_older(dict["version"]) and 
@@ -556,9 +559,9 @@ func load_game() -> void:
 func save_file(data: Dictionary, key: String = "I'm watching you") -> void:
 	var path: String ## セーブデータファイルパス
 	if VERSION_BETA == true:
-		path = "user://savedata_beta.sav" # β版専用
+		path = save_data_path_beta
 	else:
-		path = "user://savedata.sav"
+		path = save_data_path
 
 	var buffer := PackedByteArray()
 	buffer = var_to_bytes(data)
@@ -576,9 +579,9 @@ func save_file(data: Dictionary, key: String = "I'm watching you") -> void:
 func load_file(key: String = "I'm watching you") -> Dictionary:
 	var path: String ## セーブデータファイルパス
 	if VERSION_BETA == true:
-		path = "user://savedata_beta.sav" # β版専用
+		path = save_data_path_beta
 	else:
-		path = "user://savedata.sav"
+		path = save_data_path
 	
 	var result ## セーブデータの返り値
 	if not FileAccess.file_exists(path):

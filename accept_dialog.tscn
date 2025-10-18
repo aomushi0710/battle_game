@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://qkv8n7uu4fif" path="res://accept_dialog.gd" id="2_kisey"]
 
 [node name="AcceptDialog" type="AcceptDialog"]
+process_mode = 3
 transparent_bg = true
 title = "⚠️ERROR⚠️"
 position = Vector2i(0, 60)

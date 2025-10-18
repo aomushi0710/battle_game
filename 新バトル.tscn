@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bhqk4iva02mmc"]
+[gd_scene load_steps=32 format=3 uid="uid://bhqk4iva02mmc"]
 
 [ext_resource type="Script" uid="uid://b775il0q1wk0u" path="res://background.gd" id="1_jjjva"]
 [ext_resource type="Script" uid="uid://buahejbbay077" path="res://new_battle.gd" id="2_arwha"]
@@ -22,8 +22,6 @@
 [ext_resource type="Texture2D" uid="uid://821l3uelc2s1" path="res://image/element/闇属性.PNG" id="19_mshfu"]
 [ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="20_4all5"]
 [ext_resource type="PackedScene" uid="uid://yl6fo6eqi2u0" path="res://SE_menu.tscn" id="21_pcnpl"]
-[ext_resource type="PackedScene" uid="uid://cgoobrjfwh0hw" path="res://accept_dialog.tscn" id="24_4eqbm"]
-[ext_resource type="PackedScene" uid="uid://bq51ycniii6bc" path="res://confirmation_dialog.tscn" id="25_u0d87"]
 
 [sub_resource type="Theme" id="Theme_jjjva"]
 default_font_size = 40
@@ -717,12 +715,6 @@ bbcode_enabled = true
 text = "[color=aqua][b]⇀ x0.5[/b][/color]"
 
 [node name="SoundEffects2" parent="." instance=ExtResource("21_pcnpl")]
-
-[node name="AcceptDialog" parent="." instance=ExtResource("24_4eqbm")]
-process_mode = 3
-
-[node name="ConfirmationDialog" parent="." instance=ExtResource("25_u0d87")]
-process_mode = 3
 
 [connection signal="tree_entered" from="background" to="background" method="_on_tree_entered"]
 [connection signal="button_up" from="battle/button/change" to="battle" method="_on_change_button_up"]

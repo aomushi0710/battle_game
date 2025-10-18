@@ -1,8 +1,5 @@
 extends Node2D
 
-@onready var accept_dialog = $AcceptDialog
-@onready var confirmation_dialog = $ConfirmationDialog
-
 func _ready() -> void:
 	randomize()
 	Global.enemy_deck.deck_creator()
@@ -12,7 +9,13 @@ func _ready() -> void:
 		version_text += "β "
 	$version.text = version_text + "[i]ver.%s[/i]" % \
 	ProjectSettings.get_setting("application/config/version")
+	
+	ConfirmationDialogManager.confirmed.connect(_on_confirmed)
 
+
+func _exit_tree() -> void:
+	ConfirmationDialogManager.confirmed.disconnect(_on_confirmed)
+	
 
 func _on_button_pressed():
 	# 定義したシーンに切り替え
@@ -24,18 +27,18 @@ func _on_debug_button_up():
 
 ## セーブデータ削除確認画面表示
 func _on_reset_button_up() -> void:
-	confirmation_dialog.panel_color = Color.RED
-	confirmation_dialog.display_dialog(
+	ConfirmationDialogManager.panel_color = Color.RED
+	ConfirmationDialogManager.display_dialog(
 		"本当にセーブデータを削除しますか？\n削除したデータは二度と復元できません！", 
 		"セーブデータ削除")
 
 ## セーブデータ削除
-func _on_confirmation_dialog_confirmed() -> void:
+func _on_confirmed() -> void:
 	var path: String ## セーブデータファイルパス
 	if Global.VERSION_BETA == true:
-		path = "user://savedata_beta.txt" # β版専用
+		path = Global.save_data_path_beta
 	else:
-		path = "user://savedata.txt"
+		path = Global.save_data_path
 	
 	if FileAccess.file_exists(path):
 		var err := DirAccess.remove_absolute(path)
