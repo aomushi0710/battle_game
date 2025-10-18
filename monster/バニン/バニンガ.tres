@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_5o57m"]
 [ext_resource type="Texture2D" uid="uid://cajk2ibkm7po3" path="res://image/monster/バニンガ.PNG" id="3_kkbs2"]
 [ext_resource type="Resource" uid="uid://dyfst4wxer3yx" path="res://element/火属性.tres" id="4_lq5mw"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="7_2dwo8"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="7_2dwo8"]
 
 [resource]
 script = ExtResource("7_2dwo8")

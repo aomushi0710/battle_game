@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_yvemm"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_k2nch"]
 [ext_resource type="Resource" uid="uid://b558mwty0ww2l" path="res://action/メガスプラッシュ.tres" id="2_wmqt7"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_mcel7"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="3_mcel7"]
 [ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://element/水属性.tres" id="4_bqtux"]
 [ext_resource type="Texture2D" uid="uid://c56rn7eeejcjq" path="res://image/monster/プラシュ.PNG" id="5_4rt3k"]
 

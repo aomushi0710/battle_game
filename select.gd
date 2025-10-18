@@ -23,6 +23,7 @@ const STATUS_BAR_TEXT: Array[String] = [
 @onready var monster_node := $monster
 @onready var status := $"../CanvasLayer/Control/status"
 @onready var evolution_button := $"../CanvasLayer/Control/status/evolution"
+@onready var level_spinbox := $"../CanvasLayer/Control/status/Level"
 @onready var action_select := $action_select
 @onready var slider := $action_select/chance
 @onready var spinbox := $action_select/SpinBox
@@ -30,8 +31,8 @@ const STATUS_BAR_TEXT: Array[String] = [
 @onready var action_list := $action_list
 var text_speed: float = 0.05 ## テキストアニメーションの1文字あたりの再生速度
 var selected_action: Action ## 現在選択中の技
-var selected_skill = 0 # 選ばれたスキルパターン
-var now_select_action = 0 # 現在指定されている技
+var selected_skill = 0 ## 選ばれたスキルパターン
+var now_select_action = 0 ## 現在指定されている技
 var monster_id = Global.selected_monster
 var evolution_forms: Array[Monster] ## 現在選択中のモンスターの全形態が登録されている配列
 var monster: Monster ## 現在選択中のモンスター
@@ -39,7 +40,7 @@ var next_form: Monster.Form ## 次に表示されるモンスターの形態
 var all_status_list: Array = []
 var actions: Array[Action] = [null, null, null, null] ## 選ばれた技
 var chances: Array[int] = [0, 0, 0, 0] ## 選ばれた技の出現確率
-var check_provability = [] # 出現率0%弾き出し用
+var check_provability = [] ## 出現率0%弾き出し用
 var pie_chart
 var text_tween: Tween
 var camera_tween: Tween
@@ -90,6 +91,14 @@ var camera_mode: CameraMode = CameraMode.MAIN: ## 現在のカメラ位置
 		if mode == CameraMode.ACTION and selected_action in actions: # 既に選ばれた技を選んだ時
 			confirm_button.disabled = true # 再登録を不可に上書き
 
+var level: int: ## プレビュー時のモンスターレベル
+	set(value):
+		level = value
+		if camera_mode == CameraMode.MAIN:
+			monster_previw(monster.form)
+		else:
+			monster_previw(monster.form, true)
+
 enum CameraMode{
 	MAIN, ## 真ん中の画面
 	ACTION, ## 右の技選択画面
@@ -98,6 +107,8 @@ enum CameraMode{
 func _ready() -> void:
 	evolution_forms = Global.monster_data[monster_id].duplicate() # 初期化
 	camera.offset = Vector2(960, 540)
+	level_spinbox.value = Global.save
+	level = level_spinbox.value
 	
 	# 全ての形態のステータスをリストに登録
 	for i in len(evolution_forms):
@@ -158,6 +169,7 @@ func monster_previw(form: Monster.Form, is_text_only: bool = false) -> void:
 ## ステータス棒グラフ更新関数[br]
 ## ## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
 func bar_chart_update(is_text_only: bool = false) -> void:
+	monster.status_calculator(level)
 	var status_list = all_status_list[monster.form] ## 表示したいモンスターのステータス一覧
 	var status_index: int = 0 ## status_listのindex指定用
 	for child in status.get_child(0).get_children():
@@ -539,3 +551,8 @@ func _on_random_button_up() -> void:
 	actions.resize(4)
 	chances.resize(4)
 	pie_chart_update()
+
+## レベル設定のspinbox[param level_spinbox]の[member Range.value]が変更された時、
+##[param level]の値を更新する
+func _on_level_value_changed(value: float) -> void:
+	level = value

@@ -2,6 +2,10 @@ class_name DialogData
 extends Resource
 ## ダイアログに表示するデータがまとめて保存されているリソース
 
+## ダイアログに表示される本文[br]全角34文字が3行まで
+@export_multiline var text: String = ""
+
+@export_category("フラグ関連")
 ## このデータが読まれた後に表示したいデータのindex[br]-1でダイアログ表示を終了[br]
 ## ボタン入力を待つ([member DialoData.button_text]プロパティが空でない)場合は、
 ##[member DialoData.button_redirect_id]プロパティを用いるため、
@@ -11,8 +15,7 @@ extends Resource
 ##入っていなければスキップされる。[br]条件管理用のフラグの配列。[br]
 ## 空の場合は無条件に読まれます。
 @export var flag_list: Array[int] = []
-## ダイアログに表示される本文[br]全角34文字が3行まで
-@export_multiline var text: String = ""
+
 
 @export_category("ネームプレート")
 @export var name_text: String = "" ## 名前などの、ダイアログ上部に表示されるテキスト

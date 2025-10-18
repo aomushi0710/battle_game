@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_gmdy6"]
 [ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_iw7v5"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="2_vrikr"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="2_vrikr"]
 [ext_resource type="Resource" uid="uid://bw3o7ijy2ovf8" path="res://action/ひっかく.tres" id="3_fi0p3"]
 [ext_resource type="Resource" uid="uid://bd3i42l4ygpkm" path="res://action/火の玉.tres" id="4_m62fw"]
 [ext_resource type="Resource" uid="uid://ulhc0khdjd2k" path="res://action/暗闇.tres" id="5_xacad"]

@@ -48,6 +48,7 @@ const damage_text = preload("res://damage_text.tscn")
 @onready var save_mode := true ## true:デッキセーブ時 false:デッキロード時
 
 @onready var auto_save: bool = true ## true:オートセーブ false:セーブされない
+@onready var save_data: SaveData
 @onready var coin: int ## 所持コイン数
 @onready var inv = {"item": {}} ## 所持アイテム一覧 item:バトルアイテム
 
@@ -513,89 +514,57 @@ func xor_encrypt(data: PackedByteArray, key: String) -> PackedByteArray:
 
 
 func save_game() -> void:
-	var save_data := {
-		"coin": coin, 
-		"inv": inv, 
-		
-		"version": ProjectSettings.get_setting("application/config/version"),
-		"beta": VERSION_BETA
-	}
-	
-	save_file(save_data)
+	save_file(save_data.to_dictionary())
 
 
 func load_game() -> void:
-	var save_data = load_file()
-	# セーブデータが存在しない時
-	if save_data == {}:
-		# 新規セーブデータ作成
-		save_data = {
-			"coin": 0, # 所持コイン数
-			"inv": {"item": {}}, 
-			
-			"version": ProjectSettings.get_setting("application/config/version"),
-			"beta": VERSION_BETA # true:ベータ版 false:正式リリース版
-		}
+	var dict := load_file()
+	# セーブデータが存在しない時、新規セーブデータ作成
+	if dict == {}:
+		save_data = SaveData.new()
 		save_game()
 		
-		# 現在シーン取得
 		var scene = get_tree().current_scene
 		if not scene:
 			print("ERROR:シーンが存在しません")
 			return
-		# メッセージ表示
+		
 		scene.get_node("AcceptDialog").display_dialog(
 			"セーブデータが存在しません！\n新たなセーブデータを作成しました。", 
-			"新規セーブデータ作成"
-		)
-	
-	# ALERT float型でバージョンを管理していた時のデータを変換する
-	# βver4.4.0以下のバージョンのみに適用されるので今後は不要
-	elif save_data["version"] is float:
-		save_data["version"] = ProjectSettings.get_setting("application/config/version")
+			"新規セーブデータ作成")
 	
 	# 現在のバージョン以降のデータの場合、オートセーブを切り、既存データの上書きされるのを防ぐ
-	elif (not is_version_older(save_data["version"]) and 
-	save_data["version"] != 
+	elif (not is_version_older(dict["version"]) and 
+	dict["version"] != 
 	ProjectSettings.get_setting("application/config/version")):
 		auto_save = false # オートセーブを切る
-		save_data = {
-			"coin": 0, # 所持コイン数
-			"inv": {"item": {}}, 
-			
-			"version": ProjectSettings.get_setting("application/config/version"),
-			"beta": VERSION_BETA # true:ベータ版 false:正式リリース版
-		}
-		$エラーメッセージ.title = "⚠️ERROR⚠️"
-		$エラーメッセージ.dialog_text = "現在のバージョン ver %s " % \
+		save_data = SaveData.new()
+		
+		$AcceptDialog.title = "⚠️ERROR⚠️"
+		$AcceptDialog.dialog_text = "現在のバージョン ver %s " % \
 		ProjectSettings.get_setting("application/config/version") + \
 		"\n以降に作成されたデータのため、ロードできません。\n\n仮のセーブデータをロードしました。" + \
 		"\n現在のバージョンでもプレイ可能ですが、進行状況はセーブされません。" + \
 		"\nまた、既存データの破損については一切の責任を負いません！"
-		$エラーメッセージ.popup_centered()
+		$AcceptDialog.popup_centered()
 	# TODO 過去のバージョンのデータだった場合、互換性があるかチェックし、
 	# データのバージョンを更新する処理を実装する必要あり。
-	
-	# 復元処理
-	coin = save_data.coin
-	inv = save_data.inv
+	else:
+		save_data = SaveData.from_dictionary(dict)
 
 ## ファイルをセーブする関数
 func save_file(data: Dictionary, key: String = "I'm watching you") -> void:
 	var path: String ## セーブデータファイルパス
 	if VERSION_BETA == true:
-		path = "user://savedata_beta.txt" # β版専用
+		path = "user://savedata_beta.sav" # β版専用
 	else:
-		path = "user://savedata.txt"
+		path = "user://savedata.sav"
 
-	# 1. データを PackedByteArray に直列化
 	var buffer := PackedByteArray()
 	buffer = var_to_bytes(data)
 
-	# 2. XOR 暗号化
 	var encrypted := xor_encrypt(buffer, key)
 
-	# 3. ファイル保存
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	if file:
 		file.store_buffer(encrypted)
@@ -603,20 +572,19 @@ func save_file(data: Dictionary, key: String = "I'm watching you") -> void:
 	else:
 		print("ERROR:セーブ先のファイルが存在しません")
 
-## ファイルをロードする関数
+## ファイルをロードしてセーブデータの辞書形式を返す関数
 func load_file(key: String = "I'm watching you") -> Dictionary:
 	var path: String ## セーブデータファイルパス
 	if VERSION_BETA == true:
-		path = "user://savedata_beta.txt" # β版専用
+		path = "user://savedata_beta.sav" # β版専用
 	else:
-		path = "user://savedata.txt"
+		path = "user://savedata.sav"
 	
 	var result ## セーブデータの返り値
 	if not FileAccess.file_exists(path):
 		print("ALERT:セーブデータが存在しません\nALERT:新たにセーブデータを作成します")
 		return {}
 
-	# 1. ファイル読み込み
 	var file := FileAccess.open(path, FileAccess.READ)
 	if not file:
 		print("ERROR:セーブファイルが開けません")
@@ -624,10 +592,8 @@ func load_file(key: String = "I'm watching you") -> Dictionary:
 	var encrypted := file.get_buffer(file.get_length())
 	file.close()
 
-	# 2. XOR 復号
 	var decrypted := xor_encrypt(encrypted, key)
 
-	# 3. デシリアライズして Dictionary に戻す
 	result = bytes_to_var(decrypted)
 	if typeof(result) != TYPE_DICTIONARY:
 		print("ERROR:セーブデータが破損しています！")

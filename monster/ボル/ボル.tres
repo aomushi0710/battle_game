@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_grnmg"]
 [ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_krghb"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_s6uvj"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_dvukf"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="3_dvukf"]
 [ext_resource type="Resource" uid="uid://c1le41ddrlk3w" path="res://action/静電気.tres" id="3_pwoxo"]
 [ext_resource type="Resource" uid="uid://261705w1prvy" path="res://action/光線.tres" id="4_krghb"]
 [ext_resource type="Resource" uid="uid://0xo5oj552l24" path="res://action/サンダー.tres" id="5_7qb4c"]

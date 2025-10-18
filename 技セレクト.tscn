@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=71 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="3_250y8"]
 [ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="4_3py80"]
 [ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="5_4lobs"]
-[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://theme/default_font_20.tres" id="7_ltw0u"]
 [ext_resource type="Script" uid="uid://c800gq5mf7cft" path="res://select_background.gd" id="10_250y8"]
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://image/null.PNG" id="10_ilscs"]
 [ext_resource type="Texture2D" uid="uid://dtb8010gbtf6j" path="res://image/spinbox_down.png" id="11_3py80"]
@@ -171,6 +170,34 @@ width = 1
 height = 49
 fill_to = Vector2(0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3py80"]
+content_margin_left = 4.0
+bg_color = Color(0.5, 0.5, 0.5, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+expand_margin_right = 4.0
+
+[sub_resource type="Theme" id="Theme_4lobs"]
+default_font_size = 38
+LineEdit/styles/normal = SubResource("StyleBoxFlat_3py80")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7dfb"]
+border_width_right = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsdkd"]
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kch7d"]
+border_width_top = 1
+border_width_right = 1
+border_color = Color(1, 1, 1, 1)
+
 [sub_resource type="Theme" id="Theme_oeulo"]
 default_font_size = 30
 
@@ -236,33 +263,6 @@ height = 8
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ilscs"]
 color = Color(1, 1, 1, 1)
 thickness = 8
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3py80"]
-bg_color = Color(0.5, 0.5, 0.5, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 1)
-expand_margin_right = 4.0
-
-[sub_resource type="Theme" id="Theme_4lobs"]
-default_font_size = 38
-LineEdit/styles/normal = SubResource("StyleBoxFlat_3py80")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7dfb"]
-border_width_right = 1
-border_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsdkd"]
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kch7d"]
-border_width_top = 1
-border_width_right = 1
-border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Theme" id="Theme_w7dfb"]
 default_font_size = 30
@@ -621,6 +621,34 @@ mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 30
 text = "中間進化後のステータスを表示"
 
+[node name="Level" type="SpinBox" parent="CanvasLayer/Control/status"]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 611.0
+offset_right = 198.0
+offset_bottom = 675.0
+mouse_default_cursor_shape = 1
+theme = SubResource("Theme_4lobs")
+theme_override_colors/up_icon_modulate = Color(1, 0, 0, 1)
+theme_override_colors/down_icon_modulate = Color(0, 1, 1, 1)
+theme_override_constants/field_and_buttons_separation = 4
+theme_override_constants/buttons_vertical_separation = 10
+theme_override_icons/up_disabled = ExtResource("10_ilscs")
+theme_override_icons/down = ExtResource("11_3py80")
+theme_override_icons/down_disabled = ExtResource("10_ilscs")
+theme_override_icons/up = ExtResource("12_4lobs")
+theme_override_styles/up_down_buttons_separator = SubResource("StyleBoxFlat_w7dfb")
+theme_override_styles/down_background_disabled = SubResource("StyleBoxFlat_jsdkd")
+theme_override_styles/down_background = SubResource("StyleBoxFlat_jsdkd")
+theme_override_styles/up_background_disabled = SubResource("StyleBoxFlat_kch7d")
+theme_override_styles/up_background = SubResource("StyleBoxFlat_kch7d")
+min_value = 1.0
+value = 99.0
+alignment = 3
+update_on_text_changed = true
+prefix = "Lv"
+select_all_on_focus = true
+
 [node name="戻る" type="Button" parent="CanvasLayer/Control"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 0
@@ -641,7 +669,7 @@ offset_bottom = 1051.0
 mouse_default_cursor_shape = 2
 text = "決定！"
 
-[node name="Panel" parent="CanvasLayer/Control" instance=ExtResource("2_ltw0u")]
+[node name="ScrollingLabel" parent="CanvasLayer/Control" instance=ExtResource("2_ltw0u")]
 layout_mode = 0
 offset_left = 233.0
 offset_top = 970.0
@@ -846,7 +874,7 @@ ticks_on_borders = true
 layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
-offset_right = 151.0
+offset_right = 160.0
 offset_bottom = 84.0
 mouse_default_cursor_shape = 1
 theme = SubResource("Theme_4lobs")
@@ -1037,40 +1065,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="description_ui" type="ColorRect" parent="セレクト"]
-layout_mode = 0
-offset_left = 1364.0
-offset_top = -728.0
-offset_right = 1614.0
-offset_bottom = -113.0
-theme = ExtResource("7_ltw0u")
-color = Color(0, 0.25098, 0, 0.501961)
-
-[node name="description" type="RichTextLabel" parent="セレクト/description_ui"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 250.0
-offset_right = 245.0
-offset_bottom = 615.0
-bbcode_enabled = true
-text = "技の説明が表示されます!"
-
-[node name="ability" type="ColorRect" parent="セレクト/description_ui"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 150.0
-offset_right = 245.0
-offset_bottom = 225.0
-color = Color(0, 0, 0, 0.501961)
-
-[node name="ability_text" type="RichTextLabel" parent="セレクト/description_ui/ability"]
-layout_mode = 1
-offset_right = 240.0
-offset_bottom = 75.0
-bbcode_enabled = true
-text = "[center]特殊能力が表示されます!
-[hint=特殊効果を発生させる対象が表示されます]対象:[color=yellow]――――[/color][/hint] [hint=特殊効果の発生確率]確率:[color=green]---%[/color][/hint][/center]"
-
 [node name="random" type="Button" parent="セレクト"]
 layout_mode = 0
 offset_left = 871.0
@@ -1117,6 +1111,7 @@ metadata/_edit_lock_ = true
 [node name="ConfirmationDialog" parent="." instance=ExtResource("14_4lobs")]
 
 [connection signal="button_up" from="CanvasLayer/Control/status/evolution" to="セレクト" method="_on_evolution_button_up"]
+[connection signal="value_changed" from="CanvasLayer/Control/status/Level" to="セレクト" method="_on_level_value_changed"]
 [connection signal="button_up" from="CanvasLayer/Control/戻る" to="セレクト" method="_on_戻る_button_up"]
 [connection signal="button_up" from="CanvasLayer/Control/決定" to="セレクト" method="_on_決定_button_up"]
 [connection signal="button_up" from="セレクト/actions/delete_buttons/delete1" to="セレクト" method="delete_button_up" binds= [0]]

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_00v00"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_74gba"]
 [ext_resource type="Resource" uid="uid://dogy88uqwb6ri" path="res://action/ギガアイス.tres" id="2_otau8"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_44xvv"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="3_44xvv"]
 [ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://element/氷属性.tres" id="4_11kf7"]
 [ext_resource type="Texture2D" uid="uid://cai52uvpjx18j" path="res://image/monster/スノフレク.PNG" id="5_0wct6"]
 

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_w7nov"]
 [ext_resource type="Resource" uid="uid://hxfacfccogbn" path="res://action/ギガストーン.tres" id="2_g8e0v"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_wta47"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_wi555"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="3_wi555"]
 [ext_resource type="Resource" uid="uid://bsmtumwsut2ll" path="res://element/土属性.tres" id="4_y5sni"]
 [ext_resource type="Texture2D" uid="uid://cd7kvc0heu381" path="res://image/monster/メテロック.PNG" id="5_ct7ik"]
 

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_0ybx4"]
 [ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_5xn1d"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_soov2"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_bvtkd"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="3_bvtkd"]
 [ext_resource type="Resource" uid="uid://xnyvwesn5hxx" path="res://action/落石.tres" id="3_wafis"]
 [ext_resource type="Resource" uid="uid://dsl5pgriahipa" path="res://action/つむじ風.tres" id="4_5xn1d"]
 [ext_resource type="Resource" uid="uid://dydn714wywgpq" path="res://action/ストーン.tres" id="5_fo26y"]

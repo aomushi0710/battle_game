@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_wbs3u"]
 [ext_resource type="Resource" uid="uid://cie7fwul7ew3q" path="res://element/無属性.tres" id="4_ihhas"]
 [ext_resource type="Resource" uid="uid://du8c5g5eab01" path="res://element/闇属性.tres" id="5_sqbbu"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="10_e7eik"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="10_e7eik"]
 
 [resource]
 script = ExtResource("10_e7eik")

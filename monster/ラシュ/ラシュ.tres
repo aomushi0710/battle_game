@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_magjb"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_xxjjv"]
 [ext_resource type="Resource" uid="uid://wrxn60f1ot7c" path="res://action/水しぶき.tres" id="3_2qthg"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_kq3su"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="3_kq3su"]
 [ext_resource type="Resource" uid="uid://l5scpwjq6m7w" path="res://action/スプラッシュ.tres" id="4_1j4li"]
 [ext_resource type="Resource" uid="uid://b3bo5h7oxgsjd" path="res://action/あられ.tres" id="4_5n012"]
 [ext_resource type="Resource" uid="uid://0sm1taom5kmr" path="res://action/癒しの水.tres" id="5_2qthg"]

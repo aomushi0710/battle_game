@@ -79,10 +79,18 @@ static func _static_init() -> void:
 		var value = Form[key]
 		form_names[value] = key
 
-
-func status_calculator(multiplier: float) -> void:
-	maxHP = base_maxHP
-	
+## レベル[param lv]を引数として、ステータスを算出する関数
+func status_calculator(lv: int) -> void:
+	var start_multiplier: float = 0.9 ## 
+	var growth_per_level: float = 0.1 ## レベルアップで上昇するステータス倍率
+	maxHP = base_maxHP * (start_multiplier + growth_per_level * lv)
+	maxMP = base_maxMP
+	supplyMP = base_supplyMP
+	SPD = base_SPD * (0.99 + 0.01 * lv)
+	ATK = base_ATK * (start_multiplier + growth_per_level * lv)
+	DEF = base_DEF * (start_multiplier + growth_per_level * lv)
+	MAG = base_MAG * (start_multiplier + growth_per_level * lv)
+	RES = base_RES * (start_multiplier + growth_per_level * lv)
 
 ## [param actions]に第二形態の技が入っていないにもかかわらず第三形態の技が入っているなど、
 ##間の進化形態をスキップしている場合に[code]true[/code]を返す関数

@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://c00etq8tg4ydp" path="res://action/メガサンダー.tres" id="2_8aebr"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_8yta2"]
 [ext_resource type="Resource" uid="uid://bn556avudt7ia" path="res://action/電力チャージ.tres" id="3_1ceda"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_gvu8b"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="3_gvu8b"]
 [ext_resource type="Resource" uid="uid://3bjg4wfbnyh6" path="res://element/雷属性.tres" id="4_1ceda"]
 [ext_resource type="Texture2D" uid="uid://dnoghgqe7ukra" path="res://image/monster/リボル.PNG" id="5_5bhkj"]
 

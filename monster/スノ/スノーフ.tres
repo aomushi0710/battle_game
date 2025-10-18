@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_oor7a"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_5x6qr"]
 [ext_resource type="Resource" uid="uid://ccmh0v2pdmioe" path="res://action/メガアイス.tres" id="2_mna0e"]
-[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/monster.gd" id="3_husep"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="3_husep"]
 [ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://element/氷属性.tres" id="4_vabuf"]
 [ext_resource type="Texture2D" uid="uid://0duqtna0h2tw" path="res://image/monster/スノーフ.PNG" id="5_mij4h"]
 

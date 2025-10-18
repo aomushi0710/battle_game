@@ -1,4 +1,4 @@
-res://map_menu.tscn
+res://技セレクト.tscn
 res://theme/default_font_50.tres
 res://theme/dialog_theme.tres
 res://theme/action_button.tres
@@ -10,6 +10,9 @@ res://image/tile/object.tres
 res://clear_font.tres
 res://battle_buttons.gd
 res://theme/battle_tabcontainer.tres
+res://Global.gd
+res://resource/SaveData.gd
+res://select.gd
 res://メインシーン.tscn
 res://デッキセレクト.tscn
 res://デッキセーブデータ.tscn
@@ -17,9 +20,9 @@ res://デッキスロット.tscn
 res://キャラ選択.tscn
 res://shop.tscn
 res://shop_item.tscn
-res://技セレクト.tscn
 res://map.tscn
 res://dialog.tscn
+res://map_menu.tscn
 res://menu_monster.tscn
 res://game_button.tscn
 res://新バトル.tscn
@@ -32,6 +35,3 @@ res://SE_menu.tscn
 res://SE_battle.tscn
 res://action_button.tscn
 res://signboard.tscn
-res://map_dialog.gd
-res://player.gd
-res://resource/DialogData.gd
