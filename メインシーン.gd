@@ -2,7 +2,7 @@ extends Node2D
 
 func _ready() -> void:
 	randomize()
-	Global.enemy_deck.deck_creator(false, 99)
+	Global.enemy_deck.deck_creator(false, [1, 2, 3], 10, 10)
 	Global.battle_stage = Global.Stage.PLAIN # 草原しかないのでとりあえず
 	var version_text: String = ""
 	if Global.VERSION_BETA:

@@ -4,8 +4,12 @@ extends Node2D
 ## [code]true[/code]はベータ版、[code]false[/code]は正式リリース版であることを示す
 const VERSION_BETA: bool = true
 
+## [code]key[/code]モンスターのID[int][br]
+## [code]value[/code][enum Monster.Form]をindexとして持つ[Array][lb][Monster][rb]
 var monster_data = {}
+## [code]key[/code]技のID[int][br][code]value[/code]技リソース[Action] 
 var action_data = {}
+## [code]key[/code]アイテムのID[int][br][code]value[/code]アイテムリソース[Item]
 var item_data = {}
 
 var autoload_scene_array: Array[PackedScene] = [

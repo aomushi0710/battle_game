@@ -28,27 +28,45 @@ func evolution_check() -> void:
 					if act in third_form.actions:
 						mon.third_form_action.append(act)
 
-## ランダムデッキ生成機
-func deck_creator(is_player: bool = true, level: int = 1) -> void:
-	var monster_id_list: Array[int] = [0] # 選ばれたモンスターのIDを登録と0だけ
-	var monster_id: int = 0
-	for mon in monster: # 全モンスターからランダムに選ぶ。iは0-2が入りモンスターの位置を表す。
-		# Global.enemy_deck[i]["id"] は敵モンスター[i]枠目のモンスターidが入ります
-		while monster_id in monster_id_list: # 被りがでなくなるまで繰り返す
-			# ID-1とID0は対象外、randi()で割った値は0を含むので+1して修正
-			monster_id = randi() % (len(Global.monster_data) - 2) + 1
-		monster_id_list.append(monster_id)
+## ランダムデッキ生成関数[br]
+## プレイヤーのデッキを生成時([code]if is_player[/code])、
+##セーブデータから使用可能なモンスターとそのレベルを読み込んで編成します。[br]
+## そうでなければ、敵のデッキを[param id_table]内のIDを持つモンスターからランダムに選び、
+##レベルを[param min_level]～[param max_level]に設定して編成します。[br]
+## [param id_table]が空の場合は全てのモンスターからランダムに選ばれる
+func deck_creator(
+		is_player: bool = true,
+		id_table: Array[int] = [],
+		min_level: int = 1, 
+		max_level: int = 1, 
+) -> void:
+	## 実際にランダム選択の候補となるモンスターIDの一覧。[br]
+	## ALERT [code]keys()[/code]や[code]fillter()[/code]を利用するので、
+	##型は[Array]とし、[Array][lb][int][rb]のようなネストができない。
+	var candidate_ids: Array[int]
+	if is_player:
+		candidate_ids = Global.save_data.monster_levels.keys()
+	else:
+		candidate_ids = id_table.duplicate()
+		if candidate_ids.is_empty():
+			candidate_ids = Global.monster_data.keys().filter(func(i): return i > 0)
+	
+	if len(candidate_ids) < 3:
+		push_error("デッキに必要なモンスター数が不足しています！")
+		return
+	
+	for mon in monster: # 3枠全てに対して
+		var id = candidate_ids.pick_random()
+		candidate_ids.erase(id)
 		
-		mon.evolution_forms = Global.monster_data[monster_id]
-		mon.monster = Global.monster_data[monster_id][0].duplicate()
-		
+		mon.evolution_forms = Global.monster_data[id]
+		mon.monster = Global.monster_data[id][0].duplicate()
 		if is_player:
-			mon.level = Global.save_data.monster_levels[monster_id]
+			mon.level = Global.save_data.monster_levels[id]
 		else:
-			mon.level = level
+			mon.level = randi_range(min_level, max_level)
 		
-		mon.monster.random_action_selector(
-			mon.action, mon.chance)
+		mon.monster.random_action_selector(mon.action, mon.chance)
 
 ## バトル終了時に呼び出され、置き換えられた進化技を元に戻す関数[br]
 ## 第一形態に戻す・エフェクトを空にする・

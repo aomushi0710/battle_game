@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Deck" load_steps=17 format=3 uid="uid://bri0s2ex6jd61"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_7xm2m"]
-[ext_resource type="Script" uid="uid://dfmkbeq2byy01" path="res://deck.gd" id="1_oqpqk"]
+[ext_resource type="Script" uid="uid://dfmkbeq2byy01" path="res://resource/deck.gd" id="1_oqpqk"]
 [ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_rdfci"]
 [ext_resource type="Resource" uid="uid://qcde2e3i3cco" path="res://monster/カカシスライム/カカシスライム.tres" id="4_7xm2m"]
 [ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/Monster.gd" id="4_tgdnh"]

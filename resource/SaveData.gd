@@ -5,7 +5,16 @@ extends Resource
 var coin: int = 0 ## 所持コイン数
 ## モンスターのレベル[br]
 ## [code]key[/code]モンスターのID[code]value[/code]モンスターのレベル
-var monster_levels: Dictionary[int, int] = {}
+var monster_levels: Dictionary[int, int] = {
+	1: 1, 
+	2: 1, 
+	3: 1, 
+	4: 1, 
+	5: 1, 
+	6: 1, 
+	7: 1, 
+	8: 1, 
+}
 ## 所持バトルアイテム[br]
 ## [code]key[/code]バトルアイテムのID[code]value[/code]バトルアイテムのレベル
 var item: Dictionary[int, int] = {}
