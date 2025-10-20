@@ -2,20 +2,14 @@ extends Node2D
 
 func _ready() -> void:
 	randomize()
-	Global.enemy_deck.deck_creator()
+	Global.enemy_deck.deck_creator(false, 99)
 	Global.battle_stage = Global.Stage.PLAIN # 草原しかないのでとりあえず
 	var version_text: String = ""
 	if Global.VERSION_BETA:
 		version_text += "β "
 	$version.text = version_text + "[i]ver.%s[/i]" % \
 	ProjectSettings.get_setting("application/config/version")
-	
-	ConfirmationDialogManager.confirmed.connect(_on_confirmed)
 
-
-func _exit_tree() -> void:
-	ConfirmationDialogManager.confirmed.disconnect(_on_confirmed)
-	
 
 func _on_button_pressed():
 	# 定義したシーンに切り替え
@@ -27,8 +21,13 @@ func _on_debug_button_up():
 
 ## セーブデータ削除確認画面表示
 func _on_reset_button_up() -> void:
-	ConfirmationDialogManager.panel_color = Color.RED
-	ConfirmationDialogManager.display_dialog(
+	var test = Global.confirmation_dialog
+	print(test)
+	Global.confirmation_dialog.on_confirm_callable = self._on_confirmed
+	var test2 = test.on_confirm_callable
+	print(test2)
+	Global.confirmation_dialog.panel_color = Color.RED
+	Global.confirmation_dialog.display_dialog(
 		"本当にセーブデータを削除しますか？\n削除したデータは二度と復元できません！", 
 		"セーブデータ削除")
 

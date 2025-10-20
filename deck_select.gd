@@ -64,7 +64,7 @@ func _on_デッキセレクト_tree_entered():
 func _on_test_button_up():
 	for i in range(3):
 		if Global.deck1.monster[i].monster == null:
-			AcceptDialogManager.display_dialog(
+			Global.accept_dialog.display_dialog(
 					"デッキ内には3体のモンスターを登録してください！")
 			return
 	
@@ -105,17 +105,16 @@ func _on_load_button_up() -> void:
 
 
 func _on_reset_button_up() -> void:
-	ConfirmationDialogManager.confirmed.connect(
-		_on_確認メッセージ_confirmed, CONNECT_ONE_SHOT)
-	ConfirmationDialogManager.display_dialog(
+	Global.confirmation_dialog.on_confirm_callable = self._on_confirmed
+	Global.confirmation_dialog.display_dialog(
 		"現在選択中のデッキデータをリセットしようとしています。\nよろしいですか？\n" + 
 		"※セーブデータは削除されません。", "リセット確認")
 
 
-func _on_確認メッセージ_confirmed() -> void:
+func _on_confirmed() -> void:
 	Global.deck1 = Deck.new()
 	_on_デッキセレクト_tree_entered()
-	AcceptDialogManager.display_dialog(
+	Global.accept_dialog.display_dialog(
 			"デッキデータをリセットしました。", 
 			"リセット完了"
 	)
@@ -124,7 +123,7 @@ func _on_確認メッセージ_confirmed() -> void:
 func _on_new_button_up() -> void:
 	for i in range(3):
 		if Global.deck1.monster[i].monster == null:
-			AcceptDialogManager.display_dialog(
+			Global.accept_dialog.display_dialog(
 					"デッキ内には3体のモンスターを登録してください！")
 			return
 	
@@ -145,16 +144,19 @@ func _on_tutorial_button_up() -> void:
 	## バニン＠火の玉:40%, 暗闇:40%, フレイム:20%
 	var third := DeckMonster.new()
 	
+	first.level = 1
 	first.evolution_forms = monster_data[1]
 	first.monster = monster_data[1][0].duplicate()
 	first.action = [action_data[1], action_data[4], action_data[46], action_data[49]]
 	first.chance = [50, 30, 10, 10]
 	
+	second.level = 1
 	second.evolution_forms = monster_data[2]
 	second.monster = monster_data[2][0].duplicate()
 	second.action = [action_data[1], action_data[12], action_data[1001], action_data[36]]
 	second.chance = [40, 40, 10, 10]
 	
+	third.level = 1
 	third.evolution_forms = monster_data[3]
 	third.monster = monster_data[3][0].duplicate()
 	third.action = [action_data[5], action_data[12], action_data[13]]

@@ -12,6 +12,7 @@
 
 [sub_resource type="Resource" id="Resource_hmh1l"]
 script = ExtResource("5_wk4pc")
+level = 1
 monster = ExtResource("4_7xm2m")
 evolution_forms = Array[ExtResource("4_tgdnh")]([])
 action = Array[ExtResource("1_7xm2m")]([ExtResource("2_rdfci")])
@@ -30,14 +31,14 @@ form = 0
 image = SubResource("CompressedTexture2D_n3cpj")
 element = Array[ExtResource("7_kfs45")]([ExtResource("8_eiybn")])
 cost = 0
-maxHP = 999
-maxMP = 0
-supplyMP = 0
-ATK = 0
-DEF = 100
-MAG = 0
-RES = 100
-SPD = 0
+base_maxHP = 0
+base_maxMP = 0
+base_supplyMP = 0
+base_SPD = 0
+base_ATK = 0
+base_DEF = 0
+base_MAG = 0
+base_RES = 0
 skill1_name = Array[String]([])
 skill1_id = Array[int]([])
 skill2_name = Array[String]([])
@@ -49,6 +50,7 @@ flavor_text = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_it7cy"]
 script = ExtResource("5_wk4pc")
+level = 1
 monster = SubResource("Resource_qecno")
 evolution_forms = Array[ExtResource("4_tgdnh")]([])
 action = Array[ExtResource("1_7xm2m")]([ExtResource("2_rdfci")])
@@ -67,14 +69,14 @@ form = 0
 image = SubResource("CompressedTexture2D_rra5i")
 element = Array[ExtResource("7_kfs45")]([ExtResource("8_eiybn")])
 cost = 0
-maxHP = 999
-maxMP = 0
-supplyMP = 0
-ATK = 0
-DEF = 100
-MAG = 0
-RES = 100
-SPD = 0
+base_maxHP = 0
+base_maxMP = 0
+base_supplyMP = 0
+base_SPD = 0
+base_ATK = 0
+base_DEF = 0
+base_MAG = 0
+base_RES = 0
 skill1_name = Array[String]([])
 skill1_id = Array[int]([])
 skill2_name = Array[String]([])
@@ -86,6 +88,7 @@ flavor_text = Array[String]([])
 
 [sub_resource type="Resource" id="Resource_uxumm"]
 script = ExtResource("5_wk4pc")
+level = 1
 monster = SubResource("Resource_jqv1v")
 evolution_forms = Array[ExtResource("4_tgdnh")]([])
 action = Array[ExtResource("1_7xm2m")]([ExtResource("2_rdfci")])

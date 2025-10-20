@@ -455,18 +455,15 @@ func target_button_setting() -> void:
 
 
 func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げられないバトル用の処理なども作る
-	ConfirmationDialogManager.confirmed.connect(
-			battle_finished, 
-			CONNECT_ONE_SHOT
-	)
+	Global.confirmation_dialog.on_confirm_callable = self.battle_finished
 	if $"../".tutorial_mode == true:
-		ConfirmationDialogManager.display_dialog(
+		Global.confirmation_dialog.display_dialog(
 				"チュートリアルを終わりますか？\n" + 
 				"チュートリアルはいつでもプレイ可能です。", 
 				"チュートリアル終了"
 		)
 	else:
-		ConfirmationDialogManager.display_dialog(
+		Global.confirmation_dialog.display_dialog(
 				"バトルに敗北したことになりますが、本当に逃げますか？\n" + 
 				"[color=red]コインやアイテムも獲得できません！[/color]", 
 				"バトル終了"
@@ -474,6 +471,7 @@ func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げら�
 
 
 func battle_finished() -> void: # バトル終了初期化処理
+	print("battle_finished")
 	Global.p1_death = false
 	Global.p2_death = false
 	Global.p3_death = false
@@ -485,7 +483,7 @@ func battle_finished() -> void: # バトル終了初期化処理
 	Global.deck1.battle_finished()
 	Global.enemy_deck.battle_finished()
 	
-	Global.enemy_deck.deck_creator() # 敵デッキ生成
+	Global.enemy_deck.deck_creator(false) # 敵デッキ生成
 	Global.battle_stage = Global.Stage.PLAIN # とりあえず草原ステージ
 	get_tree().change_scene_to_file(Global.deck_scene)
 

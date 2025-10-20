@@ -30,7 +30,7 @@ func save_file(slot: int) -> void:
 	var has_empty_slot = Global.deck1.monster.any(func(m): return m.monster == null)
 	
 	if Global.deck1.monster.size() < 3 or has_empty_slot:
-		AcceptDialogManager.display_dialog(
+		Global.accept_dialog.display_dialog(
 				"デッキをセーブするには、全ての枠を埋めてください！")
 		return
 	
@@ -67,7 +67,7 @@ func save_file(slot: int) -> void:
 	
 	save_game(slot, deck_data)
 	setting()
-	AcceptDialogManager.display_dialog(
+	Global.accept_dialog.display_dialog(
 			"デッキのセーブが完了しました！", 
 			"✅セーブ完了✅"
 	)
@@ -77,21 +77,21 @@ func load_file(slot: int) -> void:
 	var deck_data = load_game(slot)
 	
 	if deck_data == {}:
-		AcceptDialogManager.display_dialog("セーブデータが存在しません")
+		Global.accept_dialog.display_dialog("セーブデータが存在しません")
 	# β版で正式版、正式版でβ版のデータをロードしようとした時
 	elif deck_data["beta"] != Global.VERSION_BETA:
 		if Global.VERSION_BETA == true: # β版
-			AcceptDialogManager.display_dialog(
+			Global.accept_dialog.display_dialog(
 					"βバージョンで保存されたデータではないためロードできません。")
 		else: # 正式リリース版
-			AcceptDialogManager.display_dialog(
+			Global.accept_dialog.display_dialog(
 					"βバージョンで保存されたデータはロードできません")
 		return
 	
 	# ALERT βver4.4.0以下のデータはバージョン管理の型が違うので互換性がない
 	# ただしβ版のみのため、正式リリース後は不要
 	elif deck_data["version"] is float:
-		AcceptDialogManager.display_dialog(
+		Global.accept_dialog.display_dialog(
 				"バージョン管理方法の変更に伴い、\n" + 
 				"β ver 4.4.0以下で保存されたデータのためロードできません。"
 		)
@@ -101,7 +101,7 @@ func load_file(slot: int) -> void:
 	elif (not Global.is_version_older(deck_data["version"]) and 
 	deck_data["version"] != 
 	ProjectSettings.get_setting("application/config/version")):
-		AcceptDialogManager.display_dialog(
+		Global.accept_dialog.display_dialog(
 				"現在のバージョン ver %s " % 
 				ProjectSettings.get_setting("application/config/version") + 
 				"以降に作成されたデータのため、\nロードできません。"
@@ -114,7 +114,7 @@ func load_file(slot: int) -> void:
 			#"ロードされたデータを再度セーブするとデータのバージョンも更新されます。\n" + 
 			#"[color=yellow]⚠️一度更新したバージョンは元に戻せません⚠️[/color]", "")
 	else:
-		AcceptDialogManager.display_dialog(
+		Global.accept_dialog.display_dialog(
 				"デッキのロードが完了しました！", 
 				"✅ロード完了✅"
 		)
@@ -144,20 +144,18 @@ func load_file(slot: int) -> void:
 
 
 func reset_file(slot: int) -> void:
-	ConfirmationDialogManager.confirmed.connect(
-			Callable(self, "_on_確認メッセージ_confirmed").bind(slot), 
-			CONNECT_ONE_SHOT
-	)
-	ConfirmationDialogManager.display_dialog(
+	Global.confirmation_dialog.on_confirm_callable = \
+	self._on_confirmed.bind(slot)
+	Global.confirmation_dialog.display_dialog(
 			"デッキスロット%dのデータを削除しようとしています。\nよろしいですか？" % slot, 
 			"⚠️削除確認⚠️"
 	)
 
 
-func _on_確認メッセージ_confirmed(slot: int) -> void:
+func _on_confirmed(slot: int) -> void:
 	delete_save(slot)
 	setting()
-	AcceptDialogManager.display_dialog(
+	Global.accept_dialog.display_dialog(
 			"デッキスロット%dのデータを削除しました。" % slot, 
 			"削除完了"
 	)

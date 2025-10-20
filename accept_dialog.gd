@@ -1,3 +1,4 @@
+class_name AcceptDialogManager
 extends AcceptDialog
 
 @onready var label := $text ## メッセージ表示領域に重ねられたrichtextlabel

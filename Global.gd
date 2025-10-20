@@ -8,7 +8,21 @@ var monster_data = {}
 var action_data = {}
 var item_data = {}
 
+var autoload_scene_array: Array[PackedScene] = [
+	preload("res://accept_dialog.tscn"), 
+	preload("res://confirmation_dialog.tscn"), 
+]
+var accept_dialog: AcceptDialogManager
+var confirmation_dialog: ConfirmationDialogManager
+
 func _ready() -> void:
+	for i in len(autoload_scene_array):
+		var instance = autoload_scene_array[i].instantiate()
+		add_child(instance)
+	
+	accept_dialog = get_child(0)
+	confirmation_dialog = get_child(1)
+	
 	directory_load("res://monster/", monster_data, true)
 	directory_load("res://action/", action_data)
 	directory_load("res://item/", item_data)
@@ -531,7 +545,7 @@ func load_game() -> void:
 			print("ERROR:シーンが存在しません")
 			return
 		
-		AcceptDialogManager.display_dialog(
+		Global.accept_dialog.display_dialog(
 				"セーブデータが存在しません！\n新たなセーブデータを作成しました。", 
 				"新規セーブデータ作成"
 		)

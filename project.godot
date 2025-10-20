@@ -20,8 +20,6 @@ config/icon="uid://cioi83ubpqfrg"
 
 [autoload]
 
-AcceptDialogManager="*res://accept_dialog.tscn"
-ConfirmationDialogManager="*res://confirmation_dialog.tscn"
 Global="*res://Global.gd"
 
 [debug]

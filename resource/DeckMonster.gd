@@ -1,6 +1,7 @@
 class_name  DeckMonster
 extends Resource
 
+@export var level: int ## モンスターのレベル
 @export var monster: Monster ## モンスターの現在の形態
 @export var evolution_forms: Array[Monster] ## モンスターの全形態が登録されている配列
 @export var action: Array[Action] ## 登録済みの技

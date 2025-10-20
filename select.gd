@@ -17,7 +17,7 @@ const STATUS_BAR_TEXT: Array[String] = [
 @onready var camera := $"../Camera2D"
 @onready var back_button := $"../CanvasLayer/Control/戻る"
 @onready var confirm_button := $"../CanvasLayer/Control/決定"
-@onready var help_label := $"../CanvasLayer/Control/Panel"
+@onready var help_label := $"../CanvasLayer/Control/ScrollingLabel"
 @onready var monster_node := $monster
 @onready var status := $"../CanvasLayer/Control/status"
 @onready var evolution_button := $"../CanvasLayer/Control/status/evolution"
@@ -92,6 +92,12 @@ var camera_mode: CameraMode = CameraMode.MAIN: ## 現在のカメラ位置
 var level: int: ## プレビュー時のモンスターレベル
 	set(value):
 		level = value
+		# 全ての形態のステータスを更新してリストに登録
+		all_status_list.clear()
+		for i in len(evolution_forms):
+			evolution_forms[i].status_calculator(level)
+			all_status_list.append(evolution_forms[i].get_status_list())
+		
 		if camera_mode == CameraMode.MAIN:
 			monster_previw(monster.form)
 		else:
@@ -103,15 +109,15 @@ enum CameraMode{
 }
 
 func _ready() -> void:
-	evolution_forms = Global.monster_data[monster_id].duplicate() # 初期化
 	camera.offset = Vector2(960, 540)
-	level_spinbox.value = Global.save
-	level = level_spinbox.value
 	
-	# 全ての形態のステータスをリストに登録
-	for i in len(evolution_forms):
-		all_status_list.append(evolution_forms[i].get_status_list())
-	
+	evolution_forms = Global.monster_data[monster_id].duplicate() # 初期化
+	monster = evolution_forms[Monster.Form.第一形態]
+	# セーブデータ読み込み
+	if monster_id in Global.save_data.monster_levels:
+		level_spinbox.value = Global.save_data.monster_levels[monster_id]
+	else:
+		level_spinbox.value = 1
 	# モンスターを表示
 	monster_previw(Monster.Form.第一形態)
 	
@@ -167,7 +173,6 @@ func monster_previw(form: Monster.Form, is_text_only: bool = false) -> void:
 ## ステータス棒グラフ更新関数[br]
 ## ## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
 func bar_chart_update(is_text_only: bool = false) -> void:
-	monster.status_calculator(level)
 	var status_list = all_status_list[monster.form] ## 表示したいモンスターのステータス一覧
 	var status_index: int = 0 ## status_listのindex指定用
 	for child in status.get_child(0).get_children():
@@ -435,11 +440,11 @@ func _on_戻る_button_up():
 	se.click.play()
 	match camera_mode:
 		CameraMode.MAIN: # キャラ選択に戻す
-			ConfirmationDialogManager.confirmed.connect(
-					Callable(get_tree(), "change_scene_to_file")
-					.bind(Global.chara_scene), CONNECT_ONE_SHOT
-			)
-			ConfirmationDialogManager.display_dialog(
+			Global.confirmation_dialog.on_confirm_callable = Callable(
+					get_tree(), 
+					"change_scene_to_file"
+			).bind(Global.chara_scene)
+			Global.confirmation_dialog.display_dialog(
 					"変更した内容は保存されていません！\n[color=yellow]" + 
 					"内容を保存するには、キャンセルボタンでこの画面を閉じた後、\n" + 
 					"右下にある決定ボタンを押してください。\n" + 
@@ -458,13 +463,13 @@ func _on_決定_button_up():
 			for i: int in chances:
 				sum_chance += i
 			if sum_chance != 100:
-				AcceptDialogManager.display_dialog(
+				Global.accept_dialog.display_dialog(
 						"出現率の合計が100%ではありません！")
 				return
 			
 			if len(evolution_forms) == 3: # 2回進化モンスター
 				if monster.is_evolution_skipped(actions):
-					AcceptDialogManager.display_dialog(
+					Global.accept_dialog.display_dialog(
 							"第三形態の技は登録されていますが、\n" + 
 							"第二形態の技が登録されていません！\n" + 
 							"このモンスターは進化が2回必要です"
@@ -480,29 +485,28 @@ func _on_決定_button_up():
 				if chances[i] == 0:
 					actions[i] = null
 			
-			Global.deck1.monster[Global.now_picking].evolution_forms = \
-			evolution_forms
-			Global.deck1.monster[Global.now_picking].monster = \
-			evolution_forms[0].duplicate()
+			var deck_monster: DeckMonster = \
+			Global.deck1.monster[Global.now_picking]
+			deck_monster.level = Global.save_data.monster_levels[monster_id]
+			deck_monster.evolution_forms = evolution_forms
+			deck_monster.monster = evolution_forms[0].duplicate()
 			# nullは消す
-			Global.deck1.monster[Global.now_picking].action = \
-			actions.filter(func(x): return x != null)
+			deck_monster.action = actions.filter(func(x): return x != null)
 			# 0は消す
-			Global.deck1.monster[Global.now_picking].chance = \
-			chances.filter(func(x): return x != 0)
-			#Global.deck1.monster[Global.now_picking].skill = selected_skill
+			deck_monster.chance = chances.filter(func(x): return x != 0)
+			#deck_monster.skill = selected_skill
 			get_tree().change_scene_to_file(Global.deck_scene)
 		
 		CameraMode.ACTION:
 			if selected_action in actions: # 既存の技を選択中の時
-				AcceptDialogManager.display_dialog(
+				Global.accept_dialog.display_dialog(
 						"既に登録されている技です！\n\n" + 
 						"───妙だな、\"今\"このボタンが押されるなんて。\n" + 
 						"こんなこともあろうかと、対策を施していて正解だった。"
 				)
 				return
 			if null not in actions: # 空きスペース(null)がない時
-				AcceptDialogManager.display_dialog(
+				Global.accept_dialog.display_dialog(
 						"技は4個までしか登録できません！\n" + 
 						"既に登録されている技を削除してください！"
 				)
@@ -512,7 +516,7 @@ func _on_決定_button_up():
 			for i: int in chances:
 				sum_chance += i
 			if sum_chance + slider.value > 100:
-				AcceptDialogManager.display_dialog(
+				Global.accept_dialog.display_dialog(
 						"技の出現率の合計が100%を越えてしまいます！")
 				return
 			
@@ -540,7 +544,7 @@ func _on_chance_value_changed(value: int) -> void:
 		sum_chance += value
 		
 		if sum_chance > 100: # 100%を越える場合、元の値に差し戻し
-			AcceptDialogManager.display_dialog(
+			Global.accept_dialog.display_dialog(
 					"技の出現率の合計が100%を越えてしまいます！")
 			value = previous_value # 元の値に戻す
 		else:

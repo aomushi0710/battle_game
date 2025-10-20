@@ -8,6 +8,7 @@ var parent: Node ## 常にbattleノードを参照するように調整される
 var player: bool ## true:味方 false:敵
 var index: int
 var field: bool ## モンスターが場に出ている時[code]true[/code]
+var level: int ## モンスターのレベル
 var evolution_forms: Array[Monster] ## モンスターの全形態を格納する配列
 var monster: Monster ## モンスターの現在の状態 INFO バトル中に更新される場合あり
 var action_list: Array ## 設定された技を格納する配列
@@ -39,12 +40,15 @@ func parent_getter() -> void:
 # バトル開始時セットアップ
 func setup(deck_monster: DeckMonster) -> void:
 	# 引数から全て代入
+	level = deck_monster.level
 	evolution_forms = deck_monster.evolution_forms
 	monster = deck_monster.monster
 	action_list = deck_monster.action
 	second_form_action = deck_monster.second_form_action
 	third_form_action = deck_monster.third_form_action
 	chance_list = deck_monster.chance
+	
+	monster.status_calculator(level)
 	# 初期値を設定
 	monster.HP = monster.maxHP
 	monster.MP = monster.maxMP / 5

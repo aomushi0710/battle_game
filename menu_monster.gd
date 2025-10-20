@@ -84,21 +84,18 @@ func _on_load_button_up() -> void:
 
 
 func _on_reset_button_up() -> void:
-	ConfirmationDialogManager.confirmed.connect(
-			_on_確認メッセージ_confirmed, 
-			CONNECT_ONE_SHOT
-	)
-	ConfirmationDialogManager.display_dialog(
+	Global.confirmation_dialog.on_confirm_callable = self._on_confirmed
+	Global.confirmation_dialog.display_dialog(
 			"現在選択中のデッキデータをリセットしようとしています。\nよろしいですか？\n" + 
 			"※セーブデータは削除されません。", 
 			"リセット確認"
 	)
 
 
-func _on_確認メッセージ_confirmed() -> void:
+func _on_confirmed() -> void:
 	Global.deck1 = Deck.new()
 	update_deck_visuals()
-	AcceptDialogManager.display_dialog(
+	Global.accept_dialog.display_dialog(
 			"デッキデータをリセットしました。", 
 			"リセット完了"
 	)

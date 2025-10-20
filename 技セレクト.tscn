@@ -641,6 +641,7 @@ theme_override_styles/down_background = SubResource("StyleBoxFlat_jsdkd")
 theme_override_styles/up_background_disabled = SubResource("StyleBoxFlat_kch7d")
 theme_override_styles/up_background = SubResource("StyleBoxFlat_kch7d")
 min_value = 1.0
+max_value = 99.0
 value = 99.0
 alignment = 3
 update_on_text_changed = true
@@ -1108,11 +1109,6 @@ metadata/_edit_lock_ = true
 [connection signal="value_changed" from="CanvasLayer/Control/status/Level" to="セレクト" method="_on_level_value_changed"]
 [connection signal="button_up" from="CanvasLayer/Control/戻る" to="セレクト" method="_on_戻る_button_up"]
 [connection signal="button_up" from="CanvasLayer/Control/決定" to="セレクト" method="_on_決定_button_up"]
-[connection signal="button_up" from="セレクト/actions/delete_buttons/delete1" to="セレクト" method="delete_button_up" binds= [0]]
-[connection signal="button_up" from="セレクト/actions/delete_buttons/delete2" to="セレクト" method="delete_button_up" binds= [1]]
-[connection signal="button_up" from="セレクト/actions/delete_buttons/delete3" to="セレクト" method="delete_button_up" binds= [2]]
-[connection signal="button_up" from="セレクト/actions/delete_buttons/delete4" to="セレクト" method="delete_button_up" binds= [3]]
 [connection signal="value_changed" from="セレクト/action_select/chance" to="セレクト" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="セレクト/action_select/SpinBox" to="セレクト" method="_on_chance_value_changed"]
-[connection signal="tab_changed" from="セレクト/action_list" to="セレクト" method="monster_previw" binds= [true]]
 [connection signal="button_up" from="セレクト/random" to="セレクト" method="_on_random_button_up"]

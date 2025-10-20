@@ -26,4 +26,4 @@ func _ready() -> void:
 
 ## ボタンが押された時、エフェクト説明文を出す関数
 func _on_button_up() -> void:
-	AcceptDialogManager.display_dialog(effect.description, effect.effect.name)
+	Global.accept_dialog.display_dialog(effect.description, effect.effect.name)

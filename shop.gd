@@ -82,14 +82,11 @@ func _on_inventory_button_up() -> void:
 
 func _on_buy_button_up() -> void:
 	if Global.save_data.coin < selected_item.price: # コインがたりない
-		AcceptDialogManager.display_dialog(
+		Global.accept_dialog.display_dialog(
 			"コインが足りません！\nバトルでコインを集めましょう！", "コイン不足")
 	else:
-		ConfirmationDialogManager.confirmed.connect(
-				_on_confirm_message_confirmed, 
-				CONNECT_ONE_SHOT
-		)
-		ConfirmationDialogManager.display_dialog(
+		Global.confirmation_dialog.on_confirm_callable = self._on_confirmed
+		Global.confirmation_dialog.display_dialog(
 				"%s Lv.%dを購入しますか？" % 
 				[selected_item.name, selected_item.level], 
 				"購入確認"
@@ -97,7 +94,7 @@ func _on_buy_button_up() -> void:
 
 
 ## 購入確認ボタンで購入ボタンを押した時
-func _on_confirm_message_confirmed() -> void:
+func _on_confirmed() -> void:
 	# アイテム情報もセーブするので、ここではセーブしない
 	Global.save_data.coin -= selected_item.price
 	
@@ -108,7 +105,7 @@ func _on_confirm_message_confirmed() -> void:
 	
 	Global.save_game()
 	
-	AcceptDialogManager.display_dialog(
+	Global.accept_dialog.display_dialog(
 			"%s Lv.%dを手に入れた！" % [selected_item.name, selected_item.level], 
 			"購入完了"
 	)

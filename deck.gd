@@ -29,7 +29,7 @@ func evolution_check() -> void:
 						mon.third_form_action.append(act)
 
 ## ランダムデッキ生成機
-func deck_creator() -> void:
+func deck_creator(is_player: bool = true, level: int = 1) -> void:
 	var monster_id_list: Array[int] = [0] # 選ばれたモンスターのIDを登録と0だけ
 	var monster_id: int = 0
 	for mon in monster: # 全モンスターからランダムに選ぶ。iは0-2が入りモンスターの位置を表す。
@@ -41,6 +41,11 @@ func deck_creator() -> void:
 		
 		mon.evolution_forms = Global.monster_data[monster_id]
 		mon.monster = Global.monster_data[monster_id][0].duplicate()
+		
+		if is_player:
+			mon.level = Global.save_data.monster_levels[monster_id]
+		else:
+			mon.level = level
 		
 		mon.monster.random_action_selector(
 			mon.action, mon.chance)

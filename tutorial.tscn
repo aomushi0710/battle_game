@@ -65,7 +65,6 @@ vertical_alignment = 1
 
 [connection signal="cutin_ended" from="Node2D/battle" to="Node2D/battle" method="_on_cutin_ended"]
 [connection signal="player_ready" from="Node2D/battle" to="Node2D/battle" method="_on_player_ready"]
-[connection signal="player_or_enemy_button_pressed" from="Node2D/battle/button" to="Node2D/battle" method="_on_button_player_or_enemy_button_pressed"]
 [connection signal="button_up" from="Node2D/battle/button/main/Action" to="Node2D/battle" method="_on_action_button_up"]
 [connection signal="button_up" from="Node2D/battle/button/main/Status" to="Node2D/battle" method="_on_status_button_up"]
 
