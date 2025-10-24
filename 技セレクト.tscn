@@ -1,11 +1,13 @@
-[gd_scene load_steps=69 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=74 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
-[ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://select.gd" id="2_1hqx4"]
+[ext_resource type="Script" uid="uid://be1a715dl4m8t" path="res://select.gd" id="2_1hqx4"]
 [ext_resource type="PackedScene" uid="uid://cfupbo6yh6d2c" path="res://scrolling_label.tscn" id="2_ltw0u"]
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="3_250y8"]
 [ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="4_3py80"]
+[ext_resource type="PackedScene" uid="uid://0n1ixjrprqj2" path="res://game_button.tscn" id="5_3py80"]
 [ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="5_4lobs"]
+[ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://monster_setting.gd" id="8_4lobs"]
 [ext_resource type="Script" uid="uid://c800gq5mf7cft" path="res://select_background.gd" id="10_250y8"]
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://image/null.PNG" id="10_ilscs"]
 [ext_resource type="Texture2D" uid="uid://dtb8010gbtf6j" path="res://image/spinbox_down.png" id="11_3py80"]
@@ -195,6 +197,47 @@ border_color = Color(1, 1, 1, 1)
 border_width_top = 1
 border_width_right = 1
 border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lobs"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 0, 0, 0.5)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j08b8"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 1, 0, 0.5)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1jok"]
+content_margin_left = 8.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="Theme" id="Theme_oeulo"]
 default_font_size = 30
@@ -421,10 +464,11 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_14bbj")
 
-[node name="status" type="Control" parent="CanvasLayer/Control"]
+[node name="Status" type="Control" parent="CanvasLayer/Control"]
+visible = false
 anchors_preset = 0
 
-[node name="status" type="VBoxContainer" parent="CanvasLayer/Control/status"]
+[node name="status" type="VBoxContainer" parent="CanvasLayer/Control/Status"]
 layout_mode = 2
 offset_left = 50.0
 offset_top = 50.0
@@ -433,11 +477,11 @@ offset_bottom = 512.0
 theme = SubResource("Theme_4ce10")
 theme_override_constants/separation = 10
 
-[node name="HP" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+[node name="HP" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/HP"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/HP"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -448,17 +492,17 @@ text = "[color=coral]HP [font_size=2]                   [/font_size][/color]:%4d
 vertical_alignment = 1
 metadata/help_text = "体力。0になると先頭不能になります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/HP"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/HP"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_epq06")
 metadata/help_text = "体力。0になると先頭不能になります。"
 
-[node name="maxMP" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+[node name="maxMP" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/maxMP"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/maxMP"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -473,17 +517,17 @@ max   [/color][/font_size][/cell]
 vertical_alignment = 1
 metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/maxMP"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/maxMP"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_j08b8")
 metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
 
-[node name="supplyMP" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+[node name="supplyMP" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/supplyMP"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/supplyMP"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -498,17 +542,17 @@ supply[/color][/font_size][/cell]
 vertical_alignment = 1
 metadata/help_text = "行動可能になった時、回復する魔力の量。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/supplyMP"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/supplyMP"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_0c3n4")
 metadata/help_text = "行動可能になった時、回復する魔力の量。"
 
-[node name="SPD" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+[node name="SPD" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/SPD"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/SPD"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -519,17 +563,17 @@ text = "[color=limegreen]SPD[font_size=2]                   [/font_size][/color]
 vertical_alignment = 1
 metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/SPD"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/SPD"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_lvrxx")
 metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
 
-[node name="ATK" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+[node name="ATK" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/ATK"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/ATK"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -540,17 +584,17 @@ text = "[color=orange]ATK[font_size=2]                   [/font_size][/color]:%4
 vertical_alignment = 1
 metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/ATK"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/ATK"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_ydts3")
 metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
 
-[node name="DEF" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+[node name="DEF" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/DEF"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/DEF"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -561,17 +605,17 @@ text = "[color=lightblue]DEF[font_size=2]                   [/font_size][/color]
 vertical_alignment = 1
 metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/DEF"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/DEF"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_2uk2t")
 metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
 
-[node name="MAG" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+[node name="MAG" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/MAG"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/MAG"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -582,17 +626,17 @@ text = "[color=dodgerblue]MAG[font_size=2]                   [/font_size][/color
 vertical_alignment = 1
 metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/MAG"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/MAG"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_gcshb")
 metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
 
-[node name="RES" type="HBoxContainer" parent="CanvasLayer/Control/status/status"]
+[node name="RES" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/status/status/RES"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/RES"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -603,13 +647,13 @@ text = "[color=violet]RES[font_size=2]                   [/font_size][/color]:%4
 vertical_alignment = 1
 metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/status/status/RES"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/RES"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_mmr34")
 metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
 
-[node name="evolution" type="Button" parent="CanvasLayer/Control/status"]
+[node name="Evolution" type="Button" parent="CanvasLayer/Control/Status"]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 526.0
@@ -619,7 +663,7 @@ mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 30
 text = "中間進化後のステータスを表示"
 
-[node name="Level" type="SpinBox" parent="CanvasLayer/Control/status"]
+[node name="Level" type="SpinBox" parent="CanvasLayer/Control/Status"]
 layout_mode = 0
 offset_left = 59.0
 offset_top = 611.0
@@ -648,25 +692,27 @@ update_on_text_changed = true
 prefix = "Lv"
 select_all_on_focus = true
 
-[node name="戻る" type="Button" parent="CanvasLayer/Control"]
-modulate = Color(1, 0, 0, 1)
+[node name="Back" parent="CanvasLayer/Control" instance=ExtResource("5_3py80")]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 970.0
-offset_right = 198.0
-offset_bottom = 1051.0
-mouse_default_cursor_shape = 2
+offset_left = 16.0
+offset_top = 972.0
+offset_right = 216.0
+offset_bottom = 1049.0
+theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_4lobs")
 text = "←戻る"
+color = Color(1, 0, 0, 1)
+metadata/help_text = ""
 
-[node name="決定" type="Button" parent="CanvasLayer/Control"]
-modulate = Color(1, 1, 0, 1)
+[node name="Confirm" parent="CanvasLayer/Control" instance=ExtResource("5_3py80")]
 layout_mode = 0
-offset_left = 1712.0
-offset_top = 970.0
-offset_right = 1870.0
-offset_bottom = 1051.0
-mouse_default_cursor_shape = 2
-text = "決定！"
+offset_left = 1707.0
+offset_top = 972.0
+offset_right = 1907.0
+offset_bottom = 1049.0
+theme_override_styles/focus = SubResource("StyleBoxFlat_j08b8")
+text = "決定"
+metadata/help_text = ""
 
 [node name="ScrollingLabel" parent="CanvasLayer/Control" instance=ExtResource("2_ltw0u")]
 layout_mode = 0
@@ -674,25 +720,78 @@ offset_left = 233.0
 offset_top = 970.0
 offset_right = 1691.0
 offset_bottom = 1051.0
+metadata/help_text = "ボタンにカーソルを合わせるとヘルプテキストが表示されます。"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(960, 540)
 
-[node name="セレクト" type="Control" parent="."]
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_14bbj")
+script = ExtResource("2_1hqx4")
+
+[node name="PartyMenu" type="Control" parent="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Party" type="VBoxContainer" parent="Control/PartyMenu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LineEdit" type="LineEdit" parent="Control/PartyMenu/Party"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_e1jok")
+placeholder_text = "デッキ名を入力"
+
+[node name="Textures" type="HBoxContainer" parent="Control/PartyMenu/Party"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/PartyMenu/Party/Textures"]
+layout_mode = 2
+texture = ExtResource("4_3py80")
+
+[node name="TextureRect2" type="TextureRect" parent="Control/PartyMenu/Party/Textures"]
+layout_mode = 2
+texture = ExtResource("4_3py80")
+
+[node name="TextureRect3" type="TextureRect" parent="Control/PartyMenu/Party/Textures"]
+layout_mode = 2
+texture = ExtResource("4_3py80")
+
+[node name="Levels" type="HBoxContainer" parent="Control/PartyMenu/Party"]
+layout_mode = 2
+
+[node name="MonsterSelect" type="Control" parent="Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MonsterSetting" type="Control" parent="Control"]
+visible = false
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_14bbj")
-script = ExtResource("2_1hqx4")
+script = ExtResource("8_4lobs")
 
-[node name="monster" type="TextureRect" parent="セレクト"]
+[node name="monster" type="TextureRect" parent="Control/MonsterSetting"]
 layout_mode = 0
 offset_left = 832.0
 offset_top = 600.0
@@ -701,7 +800,7 @@ offset_bottom = 856.0
 pivot_offset = Vector2(128, 128)
 texture = ExtResource("3_250y8")
 
-[node name="name" type="HBoxContainer" parent="セレクト/monster"]
+[node name="name" type="HBoxContainer" parent="Control/MonsterSetting/monster"]
 clip_contents = true
 layout_direction = 2
 layout_mode = 0
@@ -712,13 +811,13 @@ offset_bottom = -6.0
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="element" type="TextureRect" parent="セレクト/monster/name"]
+[node name="element" type="TextureRect" parent="Control/MonsterSetting/monster/name"]
 layout_mode = 2
 texture = ExtResource("4_3py80")
 expand_mode = 2
 script = ExtResource("5_4lobs")
 
-[node name="name" type="RichTextLabel" parent="セレクト/monster/name"]
+[node name="name" type="RichTextLabel" parent="Control/MonsterSetting/monster/name"]
 clip_contents = false
 layout_mode = 2
 theme = SubResource("Theme_oeulo")
@@ -729,7 +828,7 @@ scroll_active = false
 autowrap_mode = 0
 vertical_alignment = 1
 
-[node name="actions" type="HBoxContainer" parent="セレクト"]
+[node name="actions" type="HBoxContainer" parent="Control/MonsterSetting"]
 layout_mode = 0
 offset_left = 1135.0
 offset_top = 588.0
@@ -737,16 +836,16 @@ offset_right = 1911.0
 offset_bottom = 901.0
 theme_override_constants/separation = 20
 
-[node name="chart_colors" type="VBoxContainer" parent="セレクト/actions"]
+[node name="chart_colors" type="VBoxContainer" parent="Control/MonsterSetting/actions"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="chart_color1" type="Panel" parent="セレクト/actions/chart_colors"]
+[node name="chart_color1" type="Panel" parent="Control/MonsterSetting/actions/chart_colors"]
 custom_minimum_size = Vector2(86, 63)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_1hqx4")
 
-[node name="chance" type="RichTextLabel" parent="セレクト/actions/chart_colors/chart_color1"]
+[node name="chance" type="RichTextLabel" parent="Control/MonsterSetting/actions/chart_colors/chart_color1"]
 clip_contents = false
 layout_mode = 1
 offset_right = 80.0
@@ -758,12 +857,12 @@ scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="chart_color2" type="Panel" parent="セレクト/actions/chart_colors"]
+[node name="chart_color2" type="Panel" parent="Control/MonsterSetting/actions/chart_colors"]
 custom_minimum_size = Vector2(86, 63)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_250y8")
 
-[node name="chance" type="RichTextLabel" parent="セレクト/actions/chart_colors/chart_color2"]
+[node name="chance" type="RichTextLabel" parent="Control/MonsterSetting/actions/chart_colors/chart_color2"]
 clip_contents = false
 layout_mode = 0
 offset_right = 80.0
@@ -775,12 +874,12 @@ scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="chart_color3" type="Panel" parent="セレクト/actions/chart_colors"]
+[node name="chart_color3" type="Panel" parent="Control/MonsterSetting/actions/chart_colors"]
 custom_minimum_size = Vector2(86, 63)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ilscs")
 
-[node name="chance" type="RichTextLabel" parent="セレクト/actions/chart_colors/chart_color3"]
+[node name="chance" type="RichTextLabel" parent="Control/MonsterSetting/actions/chart_colors/chart_color3"]
 clip_contents = false
 layout_mode = 0
 offset_right = 80.0
@@ -792,12 +891,12 @@ scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="chart_color4" type="Panel" parent="セレクト/actions/chart_colors"]
+[node name="chart_color4" type="Panel" parent="Control/MonsterSetting/actions/chart_colors"]
 custom_minimum_size = Vector2(86, 63)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dughh")
 
-[node name="chance" type="RichTextLabel" parent="セレクト/actions/chart_colors/chart_color4"]
+[node name="chance" type="RichTextLabel" parent="Control/MonsterSetting/actions/chart_colors/chart_color4"]
 clip_contents = false
 layout_mode = 0
 offset_right = 80.0
@@ -809,16 +908,16 @@ scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="action_buttons" type="VBoxContainer" parent="セレクト/actions"]
+[node name="action_buttons" type="VBoxContainer" parent="Control/MonsterSetting/actions"]
 custom_minimum_size = Vector2(590, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="delete_buttons" type="VBoxContainer" parent="セレクト/actions"]
+[node name="delete_buttons" type="VBoxContainer" parent="Control/MonsterSetting/actions"]
 layout_mode = 2
 theme_override_constants/separation = 19
 
-[node name="delete1" type="Button" parent="セレクト/actions/delete_buttons"]
+[node name="delete1" type="Button" parent="Control/MonsterSetting/actions/delete_buttons"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -826,7 +925,7 @@ theme = SubResource("Theme_ilscs")
 text = "❌"
 flat = true
 
-[node name="delete2" type="Button" parent="セレクト/actions/delete_buttons"]
+[node name="delete2" type="Button" parent="Control/MonsterSetting/actions/delete_buttons"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -834,7 +933,7 @@ theme = SubResource("Theme_ilscs")
 text = "❌"
 flat = true
 
-[node name="delete3" type="Button" parent="セレクト/actions/delete_buttons"]
+[node name="delete3" type="Button" parent="Control/MonsterSetting/actions/delete_buttons"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -842,7 +941,7 @@ theme = SubResource("Theme_ilscs")
 text = "❌"
 flat = true
 
-[node name="delete4" type="Button" parent="セレクト/actions/delete_buttons"]
+[node name="delete4" type="Button" parent="Control/MonsterSetting/actions/delete_buttons"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -850,13 +949,13 @@ theme = SubResource("Theme_ilscs")
 text = "❌"
 flat = true
 
-[node name="action_select" type="Control" parent="セレクト"]
+[node name="action_select" type="Control" parent="Control/MonsterSetting"]
 anchors_preset = 0
 offset_left = 1920.0
 offset_right = 1960.0
 offset_bottom = 40.0
 
-[node name="chance" type="HSlider" parent="セレクト/action_select"]
+[node name="chance" type="HSlider" parent="Control/MonsterSetting/action_select"]
 layout_mode = 0
 offset_left = 22.0
 offset_top = 100.0
@@ -869,7 +968,7 @@ theme_override_icons/tick = SubResource("GradientTexture2D_250y8")
 theme_override_styles/slider = SubResource("StyleBoxLine_ilscs")
 ticks_on_borders = true
 
-[node name="SpinBox" type="SpinBox" parent="セレクト/action_select"]
+[node name="SpinBox" type="SpinBox" parent="Control/MonsterSetting/action_select"]
 layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
@@ -895,7 +994,7 @@ update_on_text_changed = true
 suffix = "%"
 select_all_on_focus = true
 
-[node name="min_chance" type="RichTextLabel" parent="セレクト/action_select"]
+[node name="min_chance" type="RichTextLabel" parent="Control/MonsterSetting/action_select"]
 clip_contents = false
 layout_mode = 0
 offset_left = 3.0
@@ -908,7 +1007,7 @@ bbcode_enabled = true
 text = "0%"
 horizontal_alignment = 1
 
-[node name="max_chance" type="RichTextLabel" parent="セレクト/action_select"]
+[node name="max_chance" type="RichTextLabel" parent="Control/MonsterSetting/action_select"]
 layout_mode = 0
 offset_left = 710.0
 offset_top = 123.0
@@ -920,7 +1019,7 @@ bbcode_enabled = true
 text = "100%"
 horizontal_alignment = 1
 
-[node name="action_description" type="Control" parent="セレクト"]
+[node name="action_description" type="Control" parent="Control/MonsterSetting"]
 visible = false
 anchors_preset = 0
 offset_left = 1920.0
@@ -928,7 +1027,7 @@ offset_top = 200.0
 offset_right = 2710.0
 offset_bottom = 578.0
 
-[node name="power" type="RichTextLabel" parent="セレクト/action_description"]
+[node name="power" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 2
 offset_left = 20.0
@@ -941,7 +1040,7 @@ text = "[color=red]Power[/color]:9999"
 scroll_active = false
 metadata/help_text = "技の威力。"
 
-[node name="mp" type="RichTextLabel" parent="セレクト/action_description"]
+[node name="mp" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 0
 offset_left = 20.0
@@ -955,7 +1054,7 @@ text = "[color=aqua]MP   [/color]:9999"
 scroll_active = false
 metadata/help_text = "技を発動する時に消費するMPの量。"
 
-[node name="type" type="RichTextLabel" parent="セレクト/action_description"]
+[node name="type" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 2
 offset_left = 238.0
@@ -967,7 +1066,7 @@ bbcode_enabled = true
 text = "分類:[color=red]物理[/color]"
 scroll_active = false
 
-[node name="target" type="RichTextLabel" parent="セレクト/action_description"]
+[node name="target" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 2
 offset_left = 238.0
@@ -980,7 +1079,7 @@ bbcode_enabled = true
 text = "[color=yellow]対象[/color]:敵味方全体"
 scroll_active = false
 
-[node name="description" type="RichTextLabel" parent="セレクト/action_description"]
+[node name="description" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 0
 offset_left = 597.0
@@ -988,7 +1087,7 @@ offset_right = 758.0
 offset_bottom = 132.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_u2vx1")
 
-[node name="ability" type="ScrollContainer" parent="セレクト/action_description"]
+[node name="ability" type="ScrollContainer" parent="Control/MonsterSetting/action_description"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 160.0
@@ -996,12 +1095,12 @@ offset_right = 763.0
 offset_bottom = 360.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_l4b1a")
 
-[node name="container" type="HBoxContainer" parent="セレクト/action_description/ability"]
+[node name="container" type="HBoxContainer" parent="Control/MonsterSetting/action_description/ability"]
 z_index = 1
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="ability_text" type="RichTextLabel" parent="セレクト/action_description"]
+[node name="ability_text" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 160.0
@@ -1015,7 +1114,7 @@ text = "特殊効果"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="action_list" type="TabContainer" parent="セレクト"]
+[node name="action_list" type="TabContainer" parent="Control/MonsterSetting"]
 layout_mode = 0
 offset_left = 1934.0
 offset_top = 588.0
@@ -1032,39 +1131,39 @@ theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_tlog8")
 tab_alignment = 1
 current_tab = 0
 
-[node name="第一形態" type="ScrollContainer" parent="セレクト/action_list"]
+[node name="第一形態" type="ScrollContainer" parent="Control/MonsterSetting/action_list"]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="container" type="VBoxContainer" parent="セレクト/action_list/第一形態"]
+[node name="container" type="VBoxContainer" parent="Control/MonsterSetting/action_list/第一形態"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="第二形態" type="ScrollContainer" parent="セレクト/action_list"]
+[node name="第二形態" type="ScrollContainer" parent="Control/MonsterSetting/action_list"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="container" type="VBoxContainer" parent="セレクト/action_list/第二形態"]
+[node name="container" type="VBoxContainer" parent="Control/MonsterSetting/action_list/第二形態"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="第三形態" type="ScrollContainer" parent="セレクト/action_list"]
+[node name="第三形態" type="ScrollContainer" parent="Control/MonsterSetting/action_list"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="container" type="VBoxContainer" parent="セレクト/action_list/第三形態"]
+[node name="container" type="VBoxContainer" parent="Control/MonsterSetting/action_list/第三形態"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="random" type="Button" parent="セレクト"]
+[node name="random" type="Button" parent="Control/MonsterSetting"]
 layout_mode = 0
 offset_left = 871.0
 offset_top = 889.0
@@ -1105,10 +1204,10 @@ metadata/_edit_lock_ = true
 
 [node name="SoundEffects" parent="." instance=ExtResource("12_ilscs")]
 
-[connection signal="button_up" from="CanvasLayer/Control/status/evolution" to="セレクト" method="_on_evolution_button_up"]
-[connection signal="value_changed" from="CanvasLayer/Control/status/Level" to="セレクト" method="_on_level_value_changed"]
-[connection signal="button_up" from="CanvasLayer/Control/戻る" to="セレクト" method="_on_戻る_button_up"]
-[connection signal="button_up" from="CanvasLayer/Control/決定" to="セレクト" method="_on_決定_button_up"]
-[connection signal="value_changed" from="セレクト/action_select/chance" to="セレクト" method="_on_chance_value_changed"]
-[connection signal="value_changed" from="セレクト/action_select/SpinBox" to="セレクト" method="_on_chance_value_changed"]
-[connection signal="button_up" from="セレクト/random" to="セレクト" method="_on_random_button_up"]
+[connection signal="button_up" from="CanvasLayer/Control/Status/Evolution" to="Control/MonsterSetting" method="_on_evolution_button_up"]
+[connection signal="value_changed" from="CanvasLayer/Control/Status/Level" to="Control/MonsterSetting" method="_on_level_value_changed"]
+[connection signal="button_up" from="CanvasLayer/Control/Back" to="Control/MonsterSetting" method="_on_back_button_up"]
+[connection signal="button_up" from="CanvasLayer/Control/Confirm" to="Control/MonsterSetting" method="_on_confirm_button_up"]
+[connection signal="value_changed" from="Control/MonsterSetting/action_select/chance" to="Control/MonsterSetting" method="_on_chance_value_changed"]
+[connection signal="value_changed" from="Control/MonsterSetting/action_select/SpinBox" to="Control/MonsterSetting" method="_on_chance_value_changed"]
+[connection signal="button_up" from="Control/MonsterSetting/random" to="Control/MonsterSetting" method="_on_random_button_up"]

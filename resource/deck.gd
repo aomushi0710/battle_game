@@ -43,7 +43,7 @@ func deck_creator(
 	## 実際にランダム選択の候補となるモンスターIDの一覧。[br]
 	## ALERT [code]keys()[/code]や[code]fillter()[/code]を利用するので、
 	##型は[Array]とし、[Array][lb][int][rb]のようなネストができない。
-	var candidate_ids: Array[int]
+	var candidate_ids: Array
 	if is_player:
 		candidate_ids = Global.save_data.monster_levels.keys()
 	else:

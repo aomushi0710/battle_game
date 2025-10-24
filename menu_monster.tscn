@@ -1,16 +1,28 @@
-[gd_scene load_steps=8 format=3 uid="uid://buagaktaatt0n"]
+[gd_scene load_steps=9 format=3 uid="uid://buagaktaatt0n"]
 
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="1_1bmxr"]
 [ext_resource type="Script" uid="uid://dy420ocgqjyil" path="res://menu_monster.gd" id="2_t21r1"]
 [ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://image/1st.PNG" id="3_uxvch"]
 [ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://image/2nd.PNG" id="4_c4pgf"]
 [ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://image/3rd.PNG" id="5_unl4c"]
-
-[sub_resource type="Theme" id="Theme_u0qxs"]
-default_font_size = 35
+[ext_resource type="PackedScene" uid="uid://0n1ixjrprqj2" path="res://game_button.tscn" id="6_ks4b3"]
 
 [sub_resource type="Theme" id="Theme_1emw3"]
 default_font_size = 35
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ks4b3"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 0, 0, 0.5)
+shadow_size = 10
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -23,8 +35,10 @@ script = ExtResource("2_t21r1")
 [node name="デッキ1" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 16.0
+offset_top = -335.0
+offset_right = 56.0
+offset_bottom = -295.0
 
 [node name="name" type="LineEdit" parent="デッキ1"]
 layout_mode = 0
@@ -113,23 +127,12 @@ tooltip_text = "完全にランダムにモンスターと技が選択されま�
 mouse_default_cursor_shape = 2
 text = "🔄️おまかせ"
 
-[node name="戻る" type="Button" parent="."]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 0
-offset_left = 50.0
-offset_top = 600.0
-offset_right = 163.0
-offset_bottom = 648.0
-mouse_default_cursor_shape = 2
-theme = SubResource("Theme_u0qxs")
-text = "←戻る"
-
 [node name="tutorial" type="Button" parent="."]
 layout_mode = 0
-offset_left = 700.0
-offset_top = 562.5
-offset_right = 1001.0
-offset_bottom = 610.5
+offset_left = 633.0
+offset_top = -173.0
+offset_right = 934.0
+offset_bottom = -113.0
 tooltip_text = "バトル方法を実戦形式で身に着けます！"
 theme = SubResource("Theme_1emw3")
 text = "🔰チュートリアル"
@@ -142,6 +145,17 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0)
 metadata/_edit_lock_ = true
 
+[node name="back" parent="." instance=ExtResource("6_ks4b3")]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 953.0
+offset_right = 341.0
+offset_bottom = 1030.0
+theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_ks4b3")
+text = "←戻る"
+color = Color(1, 0, 0, 1)
+
 [connection signal="button_up" from="デッキ1/first" to="デッキ1" method="_on_first_button_up"]
 [connection signal="button_up" from="デッキ1/second" to="デッキ1" method="_on_second_button_up"]
 [connection signal="button_up" from="デッキ1/third" to="デッキ1" method="_on_third_button_up"]
@@ -149,5 +163,5 @@ metadata/_edit_lock_ = true
 [connection signal="button_up" from="デッキ1/load" to="デッキ1" method="_on_load_button_up"]
 [connection signal="button_up" from="デッキ1/reset" to="デッキ1" method="_on_reset_button_up"]
 [connection signal="button_up" from="デッキ1/おまかせ" to="デッキ1" method="_on_button_button_up"]
-[connection signal="button_up" from="戻る" to="デッキ1" method="_on_戻る_button_up"]
 [connection signal="button_up" from="tutorial" to="デッキ1" method="_on_tutorial_button_up"]
+[connection signal="button_up" from="back" to="." method="_on_back_button_up"]

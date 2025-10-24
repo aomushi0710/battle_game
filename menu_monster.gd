@@ -9,6 +9,11 @@ var tween: Tween
 var act_name = ""
 var detail = ""
 
+@onready var deck_name := $"デッキ1/name"
+@onready var first_button := $"デッキ1/first"
+@onready var second_button := $"デッキ1/second"
+@onready var third_button := $"デッキ1/third"
+@onready var fade := $fade
 
 # 押したボタンの場所のモンスターを選択
 func _on_first_button_up():
@@ -37,15 +42,15 @@ func _on_third_button_up():
 
 
 func _ready() -> void:
-	$"../../fade".color.a = 0
+	fade.color.a = 0
 	Global.now_picking = 3
 
 
 func update_deck_visuals() -> void:
-	$name.text = Global.deck1.name
+	deck_name.text = Global.deck1.name
 	for i in range(3):
 		## TextureButtonの繰り返し用配列
-		var buttons = [$first, $second, $third]
+		var buttons = [first_button, second_button, third_button]
 		## Textureの繰り返し用配列
 		var textures = [first_texture, second_texture, third_texture]
 		
@@ -61,19 +66,19 @@ func _on_button_button_up(): # 選択可能なモンスター、技からラン�
 		if Global.deck1.monster[i].monster != null:
 			match i:
 				0:
-					$first.texture_normal = Global.deck1.monster[i].monster.image
+					first_button.texture_normal = Global.deck1.monster[i].monster.image
 				1:
-					$second.texture_normal = Global.deck1.monster[i].monster.image
+					second_button.texture_normal = Global.deck1.monster[i].monster.image
 				2:
-					$third.texture_normal = Global.deck1.monster[i].monster.image
+					third_button.texture_normal = Global.deck1.monster[i].monster.image
 
 
-func _on_戻る_button_up():
+func _on_back_button_up():
 	get_tree().change_scene_to_file(Global.main_scene)
 
 
 func _on_save_button_up() -> void:
-	Global.deck_name = $name.text
+	Global.deck_name = deck_name.text
 	Global.save_mode = true
 	get_tree().change_scene_to_file(Global.deck_save_scene)
 
@@ -136,6 +141,6 @@ func _on_tutorial_button_up() -> void:
 	Global.enemy_deck.evolution_forms_setting()
 	Global.enemy_deck.evolution_check()
 	
-	tween = get_tree().create_tween().bind_node($"../../fade")
-	tween.tween_property($"../../fade", "color:a", 1, 0.5)
+	tween = get_tree().create_tween().bind_node(fade)
+	tween.tween_property(fade, "color:a", 1, 0.5)
 	tween.tween_callback(func(): get_tree().change_scene_to_file(Global.tutorial_scene))

@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://bvbgk42kbwv54"]
+
+[ext_resource type="Script" uid="uid://6ovnoynvhb68" path="res://monster_icon.gd" id="1_25t02"]
+[ext_resource type="Resource" uid="uid://clrecptvyfroj" path="res://monster/ゴースト/キングゴースト.tres" id="2_25t02"]
+[ext_resource type="Shader" uid="uid://bx8jcjvaqr1cb" path="res://shader/Monster.gdshader" id="3_fhgf3"]
+[ext_resource type="Texture2D" uid="uid://b42xwq1yfuvsh" path="res://image/monster/キングゴースト.PNG" id="4_4yvrk"]
+[ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="5_fhgf3"]
+
+[sub_resource type="Gradient" id="Gradient_8oavd"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.5, 0.5, 0.5, 1, 1, 1, 1, 1, 0.5, 0.5, 0.5, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5e0w7"]
+gradient = SubResource("Gradient_8oavd")
+width = 75
+height = 75
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_25t02"]
+offsets = PackedFloat32Array(0.25, 0.75)
+colors = PackedColorArray(0.984314, 0.984314, 0.984314, 1, 0.85098, 0.650196, 0.97647, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4yvrk"]
+gradient = SubResource("Gradient_25t02")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4dpjf"]
+shader = ExtResource("3_fhgf3")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_width = 5.0
+
+[node name="MonsterIcon" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 22.0
+offset_top = 22.0
+offset_right = 22.0
+offset_bottom = 22.0
+script = ExtResource("1_25t02")
+monster = ExtResource("2_25t02")
+
+[node name="Frame" type="Polygon2D" parent="."]
+position = Vector2(-22, -22)
+scale = Vector2(4, 4)
+color = Color(0.961452, 0.961452, 0.961452, 1)
+texture = SubResource("GradientTexture2D_5e0w7")
+invert_border = 5.5
+polygon = PackedVector2Array(1.09301e-07, 4, -2.38419e-07, 71, 4, 75, 71, 75, 75, 71, 75, 4, 71, -3.733e-08, 4, 3.30033e-08)
+uv = PackedVector2Array(1.09301e-07, 4, -2.38419e-07, 71, 4, 75, 71, 75, 75, 71, 75, 4, 71, -3.733e-08, 4, 3.30033e-08)
+
+[node name="BackGround" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+texture = SubResource("GradientTexture2D_4yvrk")
+
+[node name="MonsterImage" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_4dpjf")
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+texture = ExtResource("4_4yvrk")
+stretch_mode = 2
+
+[node name="ElementFrame" type="Polygon2D" parent="."]
+position = Vector2(-22, -22)
+scale = Vector2(4, 4)
+color = Color(0.961452, 0.961452, 0.961452, 1)
+texture = SubResource("GradientTexture2D_5e0w7")
+polygon = PackedVector2Array(0, 4, 0, 13, 4, 17, 13, 17, 17, 13, 17, 4, 13, 0, 4, 0)
+uv = PackedVector2Array(0, 4, 0, 13, 4, 17, 13, 17, 17, 13, 17, 4, 13, 0, 4, 0)
+
+[node name="ElementIcon" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.982956)
+layout_mode = 0
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 42.0
+offset_bottom = 42.0
+texture = ExtResource("5_fhgf3")
+expand_mode = 1
