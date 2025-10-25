@@ -1,14 +1,14 @@
 extends TextureProgressBar
 
 var index = 0
-var monster_dict: Dictionary = Global.deck1.monster_dict[index]
-var monster: Monster = Global.deck1.monster[index]
+var monster_dict: Dictionary = Global.player_deck.monster_dict[index]
+var monster: Monster = Global.player_deck.monster[index]
 var dmg_text = preload("res://damage_text.tscn")
 
 signal death
 
 func _on_tree_entered():
-	monster = Global.deck1.monster[index]
+	monster = Global.player_deck.monster[index]
 	$".".max_value = monster.maxHP
 	$".".value = monster.HP
 	text_update()

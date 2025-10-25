@@ -48,7 +48,7 @@ enum Mode {
 	ACTION, ## 技セレクト画面(右側の技出現確率設定画面)
 }
 
-var mode: Mode = Mode.STATUS: ## 現在のカメラ位置
+var mode: Mode = Mode.DECK: ## 現在のカメラ位置
 	set(next_mode): ## 対応する画面遷移を行ってからモード変更
 		await ready
 		# 全てのボタンを使用不可に
@@ -66,9 +66,12 @@ var mode: Mode = Mode.STATUS: ## 現在のカメラ位置
 		camera_tween = get_tree().create_tween().bind_node(camera)
 		match next_mode:
 			Mode.DECK:
-				status.hide()
+				party_menu.on_mode_entered()
 			
 			Mode.STATUS:
+				# ACTIONとSTATUSからの遷移時は呼ばない
+				if mode != Mode.ACTION or Mode.STATUS:
+					monster_setting.on_mode_entered()
 				
 				# 棒グラフの棒とボタンを表示するアニメーション
 				status.get_child(1).show()
@@ -82,6 +85,8 @@ var mode: Mode = Mode.STATUS: ## 現在のカメラ位置
 				camera_tween.tween_property(camera, "offset:x", 960, 1)\
 				.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 				confirm_button.text = "決定"
+				
+				await camera_tween.finished
 			
 			Mode.ACTION:
 				# 棒グラフの棒とボタンを隠すアニメーション
@@ -100,7 +105,9 @@ var mode: Mode = Mode.STATUS: ## 現在のカメラ位置
 				.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 				confirm_button.text = "登録"
 				
-		await camera_tween.finished
+				await camera_tween.finished
+		
+		# キャンバスレイヤーのヘルプテキスト再設定
 		confirm_button.set_meta("help_text", CONFIRM_BUTTON_HELP_TEXT[next_mode])
 		back_button.set_meta("help_text", BACK_BUTTON_HELP_TEXT[next_mode])
 		help_label.connect_hover_signal(confirm_button)
@@ -121,6 +128,7 @@ var mode: Mode = Mode.STATUS: ## 現在のカメラ位置
 
 
 func _ready() -> void:
+	mode = Mode.DECK
 	help_label.connect_hover_signal($"..")
 
 ## 戻るボタンの処理
@@ -175,7 +183,7 @@ func _on_confirm_button_up():
 					monster_setting.actions[i] = null
 			
 			var deck_monster: DeckMonster = \
-			Global.deck1.monster[Global.now_picking]
+			Global.player_deck.monster[Global.now_picking]
 			deck_monster.level = \
 			Global.save_data.monster_levels[monster_setting.monster_id]
 			deck_monster.evolution_forms = monster_setting.evolution_forms

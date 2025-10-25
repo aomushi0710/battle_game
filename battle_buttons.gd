@@ -23,7 +23,7 @@ signal back
 func _ready() -> void: # 初期値
 	$"戻る".disabled = true
 	now_showing = 0
-	$change.texture_normal = Global.deck1.monster[0].monster.image
+	$change.texture_normal = Global.player_deck.monster[0].monster.image
 	
 	# item生成
 	# TODO 今後、デッキに3つまでアイテムを設定できるようにする。その3つのアイテムについて繰り返す
@@ -263,7 +263,7 @@ func show_monsters_button(player: bool) -> void:
 	now_player = player
 	var deck: Deck
 	if player == true:
-		deck = Global.deck1
+		deck = Global.player_deck
 	else:
 		deck = Global.enemy_deck
 	for i in range(3):
@@ -422,12 +422,12 @@ func target_button_setting() -> void:
 					if death_list[i + 3] == true:
 						$target.get_child(i).texture_normal = load("res://image/お墓.PNG")
 					
-					elif Global.deck1.monster[i].monster == null:
+					elif Global.player_deck.monster[i].monster == null:
 						$target.get_child(i).texture_normal = load("res://image/null.PNG")
 					
 					else:
 						$target.get_child(i).texture_normal = \
-						Global.deck1.monster[i].monster.image
+						Global.player_deck.monster[i].monster.image
 						disable = false
 					# 近接の時、場にいないモンスターは暗くし、押せなくする
 					if (target == Global.Target.自分 and
@@ -480,7 +480,7 @@ func battle_finished() -> void: # バトル終了初期化処理
 	Global.e3_death = false
 	get_tree().paused = false
 	
-	Global.deck1.battle_finished()
+	Global.player_deck.battle_finished()
 	Global.enemy_deck.battle_finished()
 	
 	Global.enemy_deck.deck_creator(false) # 敵デッキ生成
@@ -558,7 +558,7 @@ func item_target_button_up(i: int) -> void:
 func status_dialog(i: int) -> void:
 	var mon: Monster
 	if now_player == true:
-		mon = Global.deck1.monster[i].monster
+		mon = Global.player_deck.monster[i].monster
 	else:
 		mon = Global.enemy_deck.monster[i].monster
 	

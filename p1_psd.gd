@@ -7,9 +7,9 @@ extends TextureProgressBar
 @onready var buttle_script = get_node("/root/Node2D/buttle")
 
 var index = 0 # deckクラス内におけるモンスターの位置
-var monster_dict = Global.deck1.monster_dict[index]
-var monster: Monster = Global.deck1.monster[index]
-var effects = Global.deck1.effect[index] # Dictionary{エフェクト名:ターン数}
+var monster_dict = Global.player_deck.monster_dict[index]
+var monster: Monster = Global.player_deck.monster[index]
+var effects = Global.player_deck.effect[index] # Dictionary{エフェクト名:ターン数}
 var spd = monster.SPD
 
 signal mp
@@ -19,7 +19,7 @@ func _ready() -> void:
 	$".".max_value = float(Global.spd_gauge)
 
 func _process(delta): # ゲージが溜まるまで自動で増加、溜まると停止
-	if effects.keys() != Global.deck1.effect[index].keys(): # エフェクトが更新された時
+	if effects.keys() != Global.player_deck.effect[index].keys(): # エフェクトが更新された時
 		reload() # spdを計算しなおす
 	if $".".value < Global.spd_gauge: # SPDの値ずつ毎秒増加していき、500まで到達するとコマンドリストを表示
 		$".".value += spd * Global.spd_correction * delta
@@ -47,9 +47,9 @@ func _on_コマンド_spd(): # ターン経過処理
 	set_process(true)
 
 func reload() -> void:
-	monster = Global.deck1.monster[index]
+	monster = Global.player_deck.monster[index]
 	spd = monster.SPD
-	for effect: Effect in Global.deck1.effect[index]:
+	for effect: Effect in Global.player_deck.effect[index]:
 			if effect.buff == 5:
 				spd *= effect.power
 			if effect.debuff == 5:

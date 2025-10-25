@@ -7,6 +7,7 @@ var tween: Tween
 	set(value):
 		color = value
 		
+		add_theme_color_override("font_hover_color", value)
 		add_theme_color_override("font_focus_color", value)
 		
 		## 色だけを変えた新しいStyleBoxFlat

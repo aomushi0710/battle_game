@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_msw87"]
 [ext_resource type="Script" uid="uid://broabntq1mfoy" path="res://game_button.gd" id="2_qll7o"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4tde"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qll7o"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
@@ -54,11 +54,11 @@ offset_left = 79.0
 offset_top = 54.0
 offset_right = 586.0
 offset_bottom = 136.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_msw87")
-theme_override_colors/font_hover_pressed_color = Color(1, 1, 0, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_n4tde")
+theme_override_styles/focus = SubResource("StyleBoxFlat_qll7o")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_cpvkq")
 theme_override_styles/hover = SubResource("StyleBoxFlat_msw87")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_4amfo")

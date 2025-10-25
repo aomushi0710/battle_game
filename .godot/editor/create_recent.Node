@@ -1,9 +1,11 @@
-Polygon2D
+RichTextLabel
+HBoxContainer
+TextureButton
 Control
+Polygon2D
 TextureRect
 Panel
 LineEdit
-HBoxContainer
 VBoxContainer
 SpinBox
 NinePatchRect
@@ -11,4 +13,3 @@ ReferenceRect
 ColorRect
 CollisionShape2D
 Area2D
-Node2D

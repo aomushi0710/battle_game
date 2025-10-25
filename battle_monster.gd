@@ -175,7 +175,7 @@ func evolution(id: int) -> Array[String]:
 		monster = evolution_forms[Monster.Form.第三形態]
 	
 	if player == true:
-		Global.deck1.monster[index].monster = monster
+		Global.player_deck.monster[index].monster = monster
 	else:
 		Global.enemy_deck.monster[index].monster = monster
 		

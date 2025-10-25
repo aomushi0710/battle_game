@@ -70,7 +70,7 @@ func select_command(x :int): # x 押されたボタンの技のindex
 	spd.emit()
 
 func evolution(id: int) -> void:
-	monster = Global.deck1.monster[index]
+	monster = Global.player_deck.monster[index]
 	
 	var delete_list = [] # 削除したい技のindexを登録するリスト
 	for i in len(actions):

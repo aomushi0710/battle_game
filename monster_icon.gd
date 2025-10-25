@@ -1,5 +1,5 @@
 @tool
-extends Control
+extends TextureButton
 
 @onready var frame := $Frame
 @onready var element_frame := $ElementFrame

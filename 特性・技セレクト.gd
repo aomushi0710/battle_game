@@ -18,11 +18,11 @@ func _ready() -> void:
 	sum_chance = 0
 	
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
-	if Global.deck1.monster[Global.now_picking] != null:
-		if Global.deck1.monster[Global.now_picking].id == monster_id:
-			for i in len(Global.deck1.action[Global.now_picking]):
-				selected_action[Global.deck1.action[Global.now_picking][i]] = \
-				Global.deck1.chance[Global.now_picking][i] # selected_action生成
+	if Global.player_deck.monster[Global.now_picking] != null:
+		if Global.player_deck.monster[Global.now_picking].id == monster_id:
+			for i in len(Global.player_deck.action[Global.now_picking]):
+				selected_action[Global.player_deck.action[Global.now_picking][i]] = \
+				Global.player_deck.chance[Global.now_picking][i] # selected_action生成
 	ui_update()
 
 
@@ -58,12 +58,12 @@ func _on_決定_button_up():
 		#return
 	
 	var action_list = selected_action.duplicate(true)
-	Global.deck1.monster_dict[Global.now_picking] = monster_data[monster_id]
-	Global.deck1.monster[Global.now_picking] = \
-	Global.deck1.monster_dict[Global.now_picking][0].duplicate()
-	Global.deck1.action[Global.now_picking] = action_list.keys()
-	Global.deck1.chance[Global.now_picking] = action_list.values()
-	#Global.deck1.skill[Global.now_picking] = selected_skill
+	Global.player_deck.monster_dict[Global.now_picking] = monster_data[monster_id]
+	Global.player_deck.monster[Global.now_picking] = \
+	Global.player_deck.monster_dict[Global.now_picking][0].duplicate()
+	Global.player_deck.action[Global.now_picking] = action_list.keys()
+	Global.player_deck.chance[Global.now_picking] = action_list.values()
+	#Global.player_deck.skill[Global.now_picking] = selected_skill
 	reset()
 	get_tree().change_scene_to_file(Global.deck_scene)
 

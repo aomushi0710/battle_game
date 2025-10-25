@@ -19,7 +19,7 @@ func _ready() -> void:
 	$".".max_value = float(Global.spd_gauge)
 
 func _process(delta): # ゲージが溜まるまで自動で増加、溜まると停止
-	if effects.keys() != Global.deck1.effect[index].keys(): # エフェクトが更新された時
+	if effects.keys() != Global.player_deck.effect[index].keys(): # エフェクトが更新された時
 		reload() # spdを計算しなおす
 	if $".".value < Global.spd_gauge: # SPDの値ずつ毎秒増加していき、500まで到達するとコマンドリストを表示
 		$".".value += spd * Global.spd_correction * delta

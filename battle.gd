@@ -1,6 +1,6 @@
 extends Control
 
-var player_deck: Deck = Global.deck1
+var player_deck: Deck = Global.player_deck
 var enemy_deck: Deck = Global.enemy_deck
 enum{none, ATK, DEF, MAG, RES}
 
@@ -498,7 +498,7 @@ func buff_icon(b: bool, i: int) -> void:# バフアイコン表示更新処理 t
 	var debuff_turn: RichTextLabel
 	
 	if b == true:
-		effects = Global.deck1.effect[i]
+		effects = Global.player_deck.effect[i]
 		if i == 0:
 			buff_icon = $player1/p1_icon/バフアイコン
 			buff_turn = $player1/p1_icon/buff_turn

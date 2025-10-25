@@ -30,11 +30,11 @@ func _on_node_2d_tree_entered() -> void:
 				container.add_child(button) # 登録
 				break
 	
-	for monster in Global.deck1.monster: # 3体のモンスターを順番に処理
+	for monster in Global.player_deck.monster: # 3体のモンスターを順番に処理
 		if monster.monster != null:
 			# モンスターが居ない位置のキャラセレクトをしている時
 			# デッキに居るモンスターを選択不可に
-			if Global.deck1.monster[Global.now_picking].monster == null:
+			if Global.player_deck.monster[Global.now_picking].monster == null:
 				var id = monster.monster.id
 				var j = (id - 1) / HCONTAINER_LIMIT # 行指定
 				var i = id - HCONTAINER_LIMIT * j - 1 # 列指定
@@ -43,7 +43,7 @@ func _on_node_2d_tree_entered() -> void:
 			else: # すでにモンスターが居る位置のキャラセレクトをしている時
 				# その位置以外のデッキに居るモンスターを選択不可に
 				if (monster.monster.id != 
-					Global.deck1.monster[Global.now_picking].monster.id):
+					Global.player_deck.monster[Global.now_picking].monster.id):
 					var id = monster.monster.id
 					var j = (id - 1) / HCONTAINER_LIMIT # 行指定
 					var i = id - HCONTAINER_LIMIT * j - 1 # 列指定

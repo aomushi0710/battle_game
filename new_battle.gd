@@ -25,14 +25,14 @@ signal command_ended
 func _ready() -> void:
 	await battle_start_animation()
 	await get_tree().process_frame # 1フレーム待つ
-	for deck: Deck in [Global.deck1, Global.enemy_deck]:
+	for deck: Deck in [Global.player_deck, Global.enemy_deck]:
 		for i: int in len(deck.monster):
 			var monster: BattleMonster = monster_scene.instantiate()
 			monster.index = i
 			monster.setup(deck.monster[i])
 			monster.text_setter_callback = Callable(dialog, "text_setter")
 			match deck:
-				Global.deck1:
+				Global.player_deck:
 					monster.player = true
 					monster.name = "player%d" % (i + 1)
 					if i == 0:
@@ -281,7 +281,7 @@ func _on_change_button_up() -> void:
 		if player_deck[player_next_index].death == false:
 			break
 	$button/change.texture_normal = \
-	Global.deck1.monster[player_next_index].monster.image
+	Global.player_deck.monster[player_next_index].monster.image
 	if player_monster.index != player_next_index:
 		changed.emit()
 
@@ -291,7 +291,7 @@ func monster_button_up(i: int) -> void:
 		player_next_index = i
 		if player_monster.index != player_next_index:
 			$button/change.texture_normal = \
-			Global.deck1.monster[player_next_index].monster.image
+			Global.player_deck.monster[player_next_index].monster.image
 			changed.emit()
 
 ## buttonスクリプト接続用関数

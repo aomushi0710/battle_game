@@ -1,13 +1,13 @@
 extends TextureProgressBar
 
 var index = 2
-var monster_dict = Global.deck1.monster_dict[index]
-var monster: Monster = Global.deck1.monster[index]
+var monster_dict = Global.player_deck.monster_dict[index]
+var monster: Monster = Global.player_deck.monster[index]
 
 signal damage_effect
 
 func _on_tree_entered():
-	monster = Global.deck1.monster[index]
+	monster = Global.player_deck.monster[index]
 	$".".max_value = monster.maxMP
 	$".".value = monster.MP
 	text_update()

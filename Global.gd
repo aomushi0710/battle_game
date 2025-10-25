@@ -54,7 +54,7 @@ const save_data_path: String = "user://savedata.sav"
 const save_data_path_beta: String = "user://savedata_beta.sav"
 
 @onready var picked_monster = [0,0,0]
-@onready var deck1 := Deck.new()
+@onready var player_deck := Deck.new()
 @onready var enemy_deck := Deck.new()
 @onready var current_deck := Deck.new()
 @onready var target = 3 ## 現在攻撃対象に選択中のモンスターの位置(0~2:指定indexのモンスターを攻撃 3:未選択)

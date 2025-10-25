@@ -18,26 +18,26 @@ var detail = ""
 # 押したボタンの場所のモンスターを選択
 func _on_first_button_up():
 	Global.now_picking = 0
-	if Global.deck1.monster[0].monster == null:
+	if Global.player_deck.monster[0].monster == null:
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
-		Global.selected_monster = Global.deck1.monster[0].monster.id
+		Global.selected_monster = Global.player_deck.monster[0].monster.id
 		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_second_button_up():
 	Global.now_picking = 1
-	if Global.deck1.monster[1].monster == null:
+	if Global.player_deck.monster[1].monster == null:
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
-		Global.selected_monster = Global.deck1.monster[1].monster.id
+		Global.selected_monster = Global.player_deck.monster[1].monster.id
 		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_third_button_up():
 	Global.now_picking = 2
-	if Global.deck1.monster[2].monster == null:
+	if Global.player_deck.monster[2].monster == null:
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
-		Global.selected_monster = Global.deck1.monster[2].monster.id
+		Global.selected_monster = Global.player_deck.monster[2].monster.id
 		get_tree().change_scene_to_file(Global.select_scene)
 
 
@@ -47,30 +47,30 @@ func _ready() -> void:
 
 
 func update_deck_visuals() -> void:
-	deck_name.text = Global.deck1.name
+	deck_name.text = Global.player_deck.name
 	for i in range(3):
 		## TextureButtonの繰り返し用配列
 		var buttons = [first_button, second_button, third_button]
 		## Textureの繰り返し用配列
 		var textures = [first_texture, second_texture, third_texture]
 		
-		if Global.deck1.monster[i].monster != null:
-			buttons[i].texture_normal = Global.deck1.monster[i].monster.image
+		if Global.player_deck.monster[i].monster != null:
+			buttons[i].texture_normal = Global.player_deck.monster[i].monster.image
 		else:
 			buttons[i].texture_normal = textures[i]
 
 
 func _on_button_button_up(): # 選択可能なモンスター、技からランダムにチームを編成します。
-	Global.deck1.deck_creator()
+	Global.player_deck.deck_creator()
 	for i in range(3):
-		if Global.deck1.monster[i].monster != null:
+		if Global.player_deck.monster[i].monster != null:
 			match i:
 				0:
-					first_button.texture_normal = Global.deck1.monster[i].monster.image
+					first_button.texture_normal = Global.player_deck.monster[i].monster.image
 				1:
-					second_button.texture_normal = Global.deck1.monster[i].monster.image
+					second_button.texture_normal = Global.player_deck.monster[i].monster.image
 				2:
-					third_button.texture_normal = Global.deck1.monster[i].monster.image
+					third_button.texture_normal = Global.player_deck.monster[i].monster.image
 
 
 func _on_back_button_up():
@@ -98,7 +98,7 @@ func _on_reset_button_up() -> void:
 
 
 func _on_confirmed() -> void:
-	Global.deck1 = Deck.new()
+	Global.player_deck = Deck.new()
 	update_deck_visuals()
 	Global.accept_dialog.display_dialog(
 			"デッキデータをリセットしました。", 
@@ -107,7 +107,7 @@ func _on_confirmed() -> void:
 
 ## チュートリアルの準備と遷移
 func _on_tutorial_button_up() -> void:
-	Global.current_deck = Global.deck1.duplicate() # 避難
+	Global.current_deck = Global.player_deck.duplicate() # 避難
 	# 味方チュートリアルデッキ構築
 	## スライム＠体当たり:50%, 自己再生:30%, DEFエンハンス:10%, ATKブレイク:10%
 	var first := DeckMonster.new()
@@ -131,8 +131,8 @@ func _on_tutorial_button_up() -> void:
 	third.action = [action_data[5], action_data[12], action_data[13]]
 	third.chance = [40, 40, 20]
 	
-	Global.deck1.monster = [first, second, third]
-	Global.deck1.evolution_check()
+	Global.player_deck.monster = [first, second, third]
+	Global.player_deck.evolution_check()
 	
 	# 相手チュートリアルデッキ構築
 	## カカシスライム@体当たり:100%

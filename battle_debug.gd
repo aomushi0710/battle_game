@@ -22,7 +22,7 @@ func _on_enter_button_up() -> void:
 		$log_window/log.text += "\nstart"
 	
 	elif text == "player_deck_action":
-		for actions in Global.deck1.action:
+		for actions in Global.player_deck.action:
 			$log_window/log.text += "\n"
 			for action: Action in actions:
 				$log_window/log.text += action.name + ","

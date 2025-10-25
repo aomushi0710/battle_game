@@ -2,7 +2,7 @@ extends Control
 
 var monster_data = Global.monster_data
 var action_data = Global.action_data
-var deck: Deck = Global.deck1
+var deck: Deck = Global.player_deck
 
 func _on_tree_entered() -> void: # デッキスロットインスタンス生成
 	for i in range(1, 4):
@@ -27,9 +27,9 @@ func _on_戻る_button_up() -> void:
 
 
 func save_file(slot: int) -> void:
-	var has_empty_slot = Global.deck1.monster.any(func(m): return m.monster == null)
+	var has_empty_slot = Global.player_deck.monster.any(func(m): return m.monster == null)
 	
-	if Global.deck1.monster.size() < 3 or has_empty_slot:
+	if Global.player_deck.monster.size() < 3 or has_empty_slot:
 		Global.accept_dialog.display_dialog(
 				"デッキをセーブするには、全ての枠を埋めてください！")
 		return
@@ -123,8 +123,8 @@ func load_file(slot: int) -> void:
 	
 	# 復元処理
 	var index: Array[String] = ["first", "second", "third"]
-	Global.deck1 = Deck.new() # 初期化
-	deck = Global.deck1
+	Global.player_deck = Deck.new() # 初期化
+	deck = Global.player_deck
 	
 	deck.name = deck_data["name"]
 	for i in range(3):

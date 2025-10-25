@@ -2,10 +2,10 @@ extends VBoxContainer
 
 var index = 0 # deckクラス内におけるモンスターの位置
 var select_button = preload("res://技セレクトボタン.tscn")
-var monster_dict = Global.deck1.monster_dict[index]
-var monster: Monster = Global.deck1.monster[index]
-var action = Global.deck1.action[index] # Array[Action]
-var chance = Global.deck1.chance[index] # Array[int]
+var monster_dict = Global.player_deck.monster_dict[index]
+var monster: Monster = Global.player_deck.monster[index]
+var action = Global.player_deck.action[index] # Array[Action]
+var chance = Global.player_deck.chance[index] # Array[int]
 var act_range = [] # 乱数幅格納
 var actions = [] # 現在コマンド選択可能な技を格納 Array[Action]
 
@@ -70,7 +70,7 @@ func select_command(x :int): # x 押されたボタンの技のindex
 	spd.emit()
 
 func evolution(id: int) -> void:
-	monster = Global.deck1.monster[index]
+	monster = Global.player_deck.monster[index]
 	
 	var delete_list = [] # 削除したい技のindexを登録するリスト
 	for i in len(actions):

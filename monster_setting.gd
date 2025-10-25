@@ -61,7 +61,10 @@ func _ready() -> void:
 	status = $"../../CanvasLayer/Control/Status"
 	evolution_button = $"../../CanvasLayer/Control/Status/Evolution"
 	level_spinbox = $"../../CanvasLayer/Control/Status/Level"
-	
+
+
+
+func on_mode_entered() -> void:
 	camera.offset = Vector2(960, 540)
 	
 	evolution_forms = Global.monster_data[monster_id].duplicate() # 初期化
@@ -75,10 +78,10 @@ func _ready() -> void:
 	monster_previw(Monster.Form.第一形態)
 	
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
-	if (Global.deck1.monster[Global.now_picking].monster != null and 
-		Global.deck1.monster[Global.now_picking].monster.id == monster_id):
-		actions = Global.deck1.monster[Global.now_picking].action
-		chances = Global.deck1.monster[Global.now_picking].chance
+	if (Global.player_deck.monster[Global.now_picking].monster != null and 
+		Global.player_deck.monster[Global.now_picking].monster.id == monster_id):
+		actions = Global.player_deck.monster[Global.now_picking].action
+		chances = Global.player_deck.monster[Global.now_picking].chance
 	
 	# 円グラフ生成
 	pie_chart = load("res://pie_chart.tscn").instantiate()

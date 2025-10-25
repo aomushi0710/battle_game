@@ -4,7 +4,7 @@ var slot: int # デッキスロット番号
 
 var monster_data = Global.monster_data
 var action_data = Global.action_data
-var deck: Deck = Global.deck1
+var deck: Deck = Global.player_deck
 
 func _ready() -> void: # セーブ時かロード時かによってボタンを切り替える
 	if Global.save_mode == true:

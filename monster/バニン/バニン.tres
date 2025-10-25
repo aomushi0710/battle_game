@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=10 format=3 uid="uid://b8hekpmdouxe3"]
+[gd_resource type="Resource" script_class="Monster" load_steps=11 format=3 uid="uid://b8hekpmdouxe3"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_hdgl5"]
 [ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_3hkjk"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://ulhc0khdjd2k" path="res://action/暗闇.tres" id="4_kdret"]
 [ext_resource type="Resource" uid="uid://r6qjkc4wye84" path="res://action/マジックエンハンス.tres" id="5_kdret"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="6_ddnl1"]
+[ext_resource type="Texture2D" uid="uid://bd71bnvcpri5s" path="res://image/monster/バニン.PNG" id="6_q77hi"]
 [ext_resource type="Resource" uid="uid://dyfst4wxer3yx" path="res://element/火属性.tres" id="7_kdret"]
 
 [resource]
@@ -15,6 +16,7 @@ script = ExtResource("2_n5xkr")
 id = 3
 name = "バニン"
 form = 0
+image = ExtResource("6_q77hi")
 element = Array[ExtResource("6_ddnl1")]([ExtResource("7_kdret")])
 cost = 0
 base_maxHP = 300

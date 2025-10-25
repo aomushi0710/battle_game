@@ -1,11 +1,11 @@
 extends TextureButton
 
 var index := 2
-var monster_dict: Dictionary = Global.deck1.monster_dict[index]
-var monster: Monster = Global.deck1.monster[index]
-var action: Array = Global.deck1.action[index] # Array[Action]
-var evolution: Array = Global.deck1.evolution[index] # Array[Action]
-var middle_evolution: Array = Global.deck1.middle_evolution[index] # Array[Action]
+var monster_dict: Dictionary = Global.player_deck.monster_dict[index]
+var monster: Monster = Global.player_deck.monster[index]
+var action: Array = Global.player_deck.action[index] # Array[Action]
+var evolution: Array = Global.player_deck.evolution[index] # Array[Action]
+var middle_evolution: Array = Global.player_deck.middle_evolution[index] # Array[Action]
 
 signal randomize_set
 signal reload_hp(hp: int) # 進化時のデータリロード
@@ -63,8 +63,8 @@ func _evolution():
 	var mp = monster.MP
 	var act: int = 0 # 進化技の配列index管理
 	
-	Global.deck1.monster[index] = evolution_monster.duplicate() # 進化
-	monster = Global.deck1.monster[index]
+	Global.player_deck.monster[index] = evolution_monster.duplicate() # 進化
+	monster = Global.player_deck.monster[index]
 	monster.HP = hp # ステータス引き継ぎ
 	monster.MP = mp
 	reload_hp.emit(monster.maxHP - max_hp)
@@ -73,15 +73,15 @@ func _evolution():
 	reload_action.emit(id)
 	ui_setting(evolution_monster) # 既にmonsterの中身が置き換わっているのでmonsterでもいいかも
 	
-	for i: int in len(Global.deck1.action[index]): # 進化技を置き換え
-		if Global.deck1.action[index][i].id == id:
+	for i: int in len(Global.player_deck.action[index]): # 進化技を置き換え
+		if Global.player_deck.action[index][i].id == id:
 			match id:
 				10001:
-					Global.deck1.action[index][i] = \
-					Global.deck1.middle_evolution[index][act]
+					Global.player_deck.action[index][i] = \
+					Global.player_deck.middle_evolution[index][act]
 				10002:
-					Global.deck1.action[index][i] = \
-					Global.deck1.evolution[index][act]
+					Global.player_deck.action[index][i] = \
+					Global.player_deck.evolution[index][act]
 				_:
 					print("ERROR:不明なID")
 			act += 1
