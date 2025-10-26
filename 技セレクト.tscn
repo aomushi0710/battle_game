@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=81 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://be1a715dl4m8t" path="res://select.gd" id="2_1hqx4"]
@@ -9,9 +9,10 @@
 [ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="5_4lobs"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://monster_setting.gd" id="8_4lobs"]
 [ext_resource type="PackedScene" uid="uid://bvbgk42kbwv54" path="res://MonsterIcon.tscn" id="8_ltw0u"]
-[ext_resource type="Script" uid="uid://2fvlrr5uk5bg" path="res://PartyMenu.gd" id="8_w7dfb"]
+[ext_resource type="Script" uid="uid://2fvlrr5uk5bg" path="res://DeckMenu.gd" id="8_w7dfb"]
 [ext_resource type="Script" uid="uid://c800gq5mf7cft" path="res://select_background.gd" id="10_250y8"]
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://image/null.PNG" id="10_ilscs"]
+[ext_resource type="Script" uid="uid://cwut6pj13p4dx" path="res://monster_select.gd" id="10_jsdkd"]
 [ext_resource type="Texture2D" uid="uid://dtb8010gbtf6j" path="res://image/spinbox_down.png" id="11_3py80"]
 [ext_resource type="Texture2D" uid="uid://0sqjwa6h6xno" path="res://image/blackbox.png" id="11_ilscs"]
 [ext_resource type="Texture2D" uid="uid://bgtiu2klk0bm3" path="res://image/spinbox_up.png" id="12_4lobs"]
@@ -269,6 +270,19 @@ corner_radius_bottom_right = 80
 corner_radius_bottom_left = 80
 shadow_color = Color(1, 0, 0.0166664, 0.5)
 shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66jsg"]
+content_margin_left = 8.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="Theme" id="Theme_oeulo"]
 default_font_size = 30
@@ -765,14 +779,14 @@ offset_bottom = 40.0
 theme = ExtResource("1_14bbj")
 script = ExtResource("2_1hqx4")
 
-[node name="PartyMenu" type="Control" parent="Control"]
+[node name="DeckMenu" type="Control" parent="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_w7dfb")
 
-[node name="Party" type="VBoxContainer" parent="Control/PartyMenu"]
+[node name="Deck" type="VBoxContainer" parent="Control/DeckMenu"]
 layout_mode = 0
 offset_left = 510.0
 offset_top = 100.0
@@ -780,32 +794,33 @@ offset_right = 1410.0
 offset_bottom = 573.0
 theme_override_constants/separation = 0
 
-[node name="LineEdit" type="LineEdit" parent="Control/PartyMenu/Party"]
+[node name="LineEdit" type="LineEdit" parent="Control/DeckMenu/Deck"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_e1jok")
 placeholder_text = "デッキ名を入力"
+metadata/help_text = "デッキに名前を入力できます。"
 
-[node name="MonsterIcons" type="HBoxContainer" parent="Control/PartyMenu/Party"]
+[node name="MonsterIcons" type="HBoxContainer" parent="Control/DeckMenu/Deck"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="MonsterIcon" parent="Control/PartyMenu/Party/MonsterIcons" instance=ExtResource("8_ltw0u")]
+[node name="MonsterIcon" parent="Control/DeckMenu/Deck/MonsterIcons" instance=ExtResource("8_ltw0u")]
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 
-[node name="MonsterIcon2" parent="Control/PartyMenu/Party/MonsterIcons" instance=ExtResource("8_ltw0u")]
+[node name="MonsterIcon2" parent="Control/DeckMenu/Deck/MonsterIcons" instance=ExtResource("8_ltw0u")]
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 
-[node name="MonsterIcon3" parent="Control/PartyMenu/Party/MonsterIcons" instance=ExtResource("8_ltw0u")]
+[node name="MonsterIcon3" parent="Control/DeckMenu/Deck/MonsterIcons" instance=ExtResource("8_ltw0u")]
 layout_mode = 2
 
-[node name="Names" type="HBoxContainer" parent="Control/PartyMenu/Party"]
+[node name="Names" type="HBoxContainer" parent="Control/DeckMenu/Deck"]
 layout_mode = 2
 theme = SubResource("Theme_spf5i")
 theme_override_constants/separation = 0
 
-[node name="Name" type="RichTextLabel" parent="Control/PartyMenu/Party/Names"]
+[node name="Name" type="RichTextLabel" parent="Control/DeckMenu/Deck/Names"]
 clip_contents = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
@@ -816,7 +831,7 @@ text = "[i]Lv.1[/i]
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Name2" type="RichTextLabel" parent="Control/PartyMenu/Party/Names"]
+[node name="Name2" type="RichTextLabel" parent="Control/DeckMenu/Deck/Names"]
 clip_contents = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
@@ -827,7 +842,7 @@ text = "[i]Lv.1[/i]
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Name3" type="RichTextLabel" parent="Control/PartyMenu/Party/Names"]
+[node name="Name3" type="RichTextLabel" parent="Control/DeckMenu/Deck/Names"]
 clip_contents = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
@@ -838,31 +853,34 @@ text = "[i]Lv.1[/i]
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Save" parent="Control/PartyMenu" instance=ExtResource("5_3py80")]
+[node name="Save" parent="Control/DeckMenu" instance=ExtResource("5_3py80")]
 layout_mode = 0
 offset_left = 1500.0
 offset_top = 100.0
 offset_right = 1800.0
 offset_bottom = 182.0
 text = "✏️セーブ"
+metadata/help_text = "現在のデッキをセーブする画面に移動します。"
 
-[node name="Load" parent="Control/PartyMenu" instance=ExtResource("5_3py80")]
+[node name="Load" parent="Control/DeckMenu" instance=ExtResource("5_3py80")]
 layout_mode = 0
 offset_left = 1500.0
 offset_top = 230.0
 offset_right = 1800.0
 offset_bottom = 312.0
 text = "📁ロード"
+metadata/help_text = "過去にセーブしたデッキをロードする画面に移動します。"
 
-[node name="AutoFill" parent="Control/PartyMenu" instance=ExtResource("5_3py80")]
+[node name="AutoFill" parent="Control/DeckMenu" instance=ExtResource("5_3py80")]
 layout_mode = 0
 offset_left = 1500.0
 offset_top = 360.0
 offset_right = 1800.0
 offset_bottom = 442.0
 text = "🔄️おまかせ"
+metadata/help_text = "ランダムなモンスターと技でデッキを作成します。"
 
-[node name="Reset" parent="Control/PartyMenu" instance=ExtResource("5_3py80")]
+[node name="Reset" parent="Control/DeckMenu" instance=ExtResource("5_3py80")]
 layout_mode = 0
 offset_left = 1500.0
 offset_top = 490.0
@@ -873,12 +891,35 @@ theme_override_colors/font_focus_color = Color(1, 0, 0.0166664, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_lvrxx")
 text = "🗑️リセット"
 color = Color(1, 0, 0.0166664, 1)
+metadata/help_text = "現在のデッキをリセットします。"
+
+[node name="EvolutionPreview" parent="Control/DeckMenu" instance=ExtResource("5_3py80")]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 230.0
+offset_right = 406.0
+offset_bottom = 312.0
+pivot_offset = Vector2(150, 0)
+text = "第二形態"
+metadata/help_text = "クリックすると、モンスターの進化後の形態をプレビューします。"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/DeckMenu/EvolutionPreview"]
+layout_mode = 0
+offset_left = -63.0
+offset_top = -127.0
+offset_right = 364.0
+offset_bottom = -54.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_66jsg")
+bbcode_enabled = true
+text = "進化プレビュー"
+horizontal_alignment = 1
 
 [node name="MonsterSelect" type="Control" parent="Control"]
 visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("10_jsdkd")
 
 [node name="MonsterSetting" type="Control" parent="Control"]
 visible = false
@@ -1316,10 +1357,11 @@ metadata/_edit_lock_ = true
 [connection signal="value_changed" from="CanvasLayer/Control/Status/Level" to="Control/MonsterSetting" method="_on_level_value_changed"]
 [connection signal="button_up" from="CanvasLayer/Control/Back" to="Control/MonsterSetting" method="_on_back_button_up"]
 [connection signal="button_up" from="CanvasLayer/Control/Confirm" to="Control/MonsterSetting" method="_on_confirm_button_up"]
-[connection signal="button_up" from="Control/PartyMenu/Save" to="Control/PartyMenu" method="_on_save_button_up"]
-[connection signal="button_up" from="Control/PartyMenu/Load" to="Control/PartyMenu" method="_on_load_button_up"]
-[connection signal="button_up" from="Control/PartyMenu/AutoFill" to="Control/PartyMenu" method="_on_auto_fill_button_up"]
-[connection signal="button_up" from="Control/PartyMenu/Reset" to="Control/PartyMenu" method="_on_reset_button_up"]
+[connection signal="button_up" from="Control/DeckMenu/Save" to="Control/DeckMenu" method="_on_save_button_up"]
+[connection signal="button_up" from="Control/DeckMenu/Load" to="Control/DeckMenu" method="_on_load_button_up"]
+[connection signal="button_up" from="Control/DeckMenu/AutoFill" to="Control/DeckMenu" method="_on_auto_fill_button_up"]
+[connection signal="button_up" from="Control/DeckMenu/Reset" to="Control/DeckMenu" method="_on_reset_button_up"]
+[connection signal="button_up" from="Control/DeckMenu/EvolutionPreview" to="Control/DeckMenu" method="_on_evolution_preview_button_up"]
 [connection signal="value_changed" from="Control/MonsterSetting/action_select/chance" to="Control/MonsterSetting" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="Control/MonsterSetting/action_select/SpinBox" to="Control/MonsterSetting" method="_on_chance_value_changed"]
 [connection signal="button_up" from="Control/MonsterSetting/random" to="Control/MonsterSetting" method="_on_random_button_up"]

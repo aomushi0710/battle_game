@@ -1,6 +1,6 @@
 extends Control
 
-@onready var party_menu := $PartyMenu
+@onready var deck_menu := $DeckMenu
 @onready var monster_select := $MonsterSelect
 @onready var monster_setting := $MonsterSetting
 
@@ -19,7 +19,7 @@ var camera_tween: Tween
 
 ## [enum Mode]に対応する[Control]ノードの[NodePath]の辞書
 const MODE_TO_NODEPATH: Dictionary[Mode, NodePath] = {
-	Mode.DECK: "PartyMenu", 
+	Mode.DECK: "DeckMenu", 
 	Mode.MONSTER_SELECT: "MonsterSelect", 
 	Mode.STATUS: "MonsterSetting", 
 	Mode.ACTION: "MonsterSetting", 
@@ -66,7 +66,7 @@ var mode: Mode = Mode.DECK: ## 現在のカメラ位置
 		camera_tween = get_tree().create_tween().bind_node(camera)
 		match next_mode:
 			Mode.DECK:
-				party_menu.on_mode_entered()
+				deck_menu.on_mode_entered()
 			
 			Mode.STATUS:
 				# ACTIONとSTATUSからの遷移時は呼ばない
