@@ -2,10 +2,10 @@ extends Control
 
 const deck_size: int = 3 ## デッキのサイズ
 
+@onready var parent := $".."
 @onready var lineedit := $Deck/LineEdit
 @onready var monster_icons := $Deck/MonsterIcons
 @onready var monster_names := $Deck/Names
-@onready var evolution_preview := $EvolutionPreview ## 進化プレビューボタン
 
 var max_evolution_form: Monster.Form ## デッキのモンスターで最大の進化形態
 ## デッキ編成で現在表示中のモンスターの形態。[br]
@@ -14,11 +14,10 @@ var preview_form: Monster.Form:
 	set(form):
 		preview_form = form
 		update()
-		evolution_preview.text = "%s" % Monster.form_names[form]
 
 
 func on_mode_entered() -> void:
-	preview_form = Monster.Form.第一形態
+	parent._on_option_button_item_selected(Monster.Form.第一形態)
 
 
 func update() -> void:
@@ -46,15 +45,27 @@ func update() -> void:
 		if deck_monster.evolution_forms.size() - 1 > max_evolution_form:
 			max_evolution_form = deck_monster.evolution_forms.size() - 1
 	
+	var preview_button: OptionButton = parent.evolution_preview_button
 	# 全てのモンスターがnullの時
 	if Global.player_deck.monster.all(func(mon): return mon.monster == null):
-		evolution_preview.disabled = true
 		# ALERT [param preview_form]に代入するとsetterによって再びこの関数が呼ばれる
 		# ので、無限ループを防止すること
 		if preview_form != Monster.Form.第一形態:
-			preview_form = Monster.Form.第一形態
+			parent._on_option_button_item_selected(Monster.Form.第一形態)
+		
+		preview_button.disabled = true
 	else:
-		evolution_preview.disabled = false
+		# 足りない形態の分だけ選択肢を追加する
+		for i in range(max_evolution_form + 1):
+			if preview_button.get_selectable_item(true) < i:
+				preview_button.add_item(Monster.form_names[i], i)
+		
+		preview_button.disabled = false
+	
+	## 余分な選択肢を削除する回数
+	var delete_count: int = preview_button.get_item_count() - max_evolution_form - 1
+	for i in max(0, delete_count):
+		preview_button.remove_item(preview_button.get_selectable_item(true))
 
 
 func _on_save_button_up() -> void:
@@ -70,7 +81,7 @@ func _on_load_button_up() -> void:
 
 func _on_auto_fill_button_up() -> void:
 	Global.player_deck.deck_creator()
-	preview_form = Monster.Form.第一形態
+	parent._on_option_button_item_selected(Monster.Form.第一形態)
 
 
 func _on_reset_button_up() -> void:
@@ -82,15 +93,8 @@ func _on_reset_button_up() -> void:
 
 func _on_confirmed() -> void:
 	Global.player_deck = Deck.new()
-	preview_form = Monster.Form.第一形態
+	parent._on_option_button_item_selected(Monster.Form.第一形態)
 	Global.accept_dialog.display_dialog(
 			"デッキデータをリセットしました。", 
 			"リセット完了"
 	)
-
-
-func _on_evolution_preview_button_up() -> void:
-	if preview_form >= max_evolution_form:
-		preview_form = Monster.Form.第一形態
-	else:
-		preview_form += 1

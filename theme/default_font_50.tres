@@ -15,6 +15,7 @@ corner_radius_bottom_left = 10
 [resource]
 default_font_size = 50
 AcceptDialog/font_sizes/title_font_size = 50
+Button/colors/font_color = Color(1, 1, 1, 1)
 Button/constants/outline_size = 10
 Button/styles/normal = SubResource("StyleBoxFlat_n4xhw")
 LineEdit/constants/outline_size = 10

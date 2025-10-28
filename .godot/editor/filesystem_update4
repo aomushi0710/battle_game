@@ -98,3 +98,4 @@ res://デッキセーブデータ.gd
 res://特性・技セレクト.gd
 res://game_button.gd
 res://action/メガフレイム.tres
+res://DeckMenu.gd

@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=84 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://be1a715dl4m8t" path="res://select.gd" id="2_1hqx4"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dnplafxsk8rqw" path="res://image/element/無属性.PNG" id="4_3py80"]
 [ext_resource type="PackedScene" uid="uid://0n1ixjrprqj2" path="res://game_button.tscn" id="5_3py80"]
 [ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="5_4lobs"]
+[ext_resource type="Texture2D" uid="uid://cutputtjhww8a" path="res://image/arrow_down_small.png" id="7_4ce10"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://monster_setting.gd" id="8_4lobs"]
 [ext_resource type="PackedScene" uid="uid://bvbgk42kbwv54" path="res://MonsterIcon.tscn" id="8_ltw0u"]
 [ext_resource type="Script" uid="uid://2fvlrr5uk5bg" path="res://DeckMenu.gd" id="8_w7dfb"]
@@ -229,6 +230,25 @@ corner_radius_bottom_left = 80
 shadow_color = Color(1, 1, 0, 0.5)
 shadow_size = 10
 
+[sub_resource type="Theme" id="Theme_4fy06"]
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_t10s7"]
+default_font_size = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66jsg"]
+content_margin_left = 8.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1jok"]
 content_margin_left = 8.0
 bg_color = Color(0, 0, 0, 1)
@@ -270,19 +290,6 @@ corner_radius_bottom_right = 80
 corner_radius_bottom_left = 80
 shadow_color = Color(1, 0, 0.0166664, 0.5)
 shadow_size = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66jsg"]
-content_margin_left = 8.0
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
 
 [sub_resource type="Theme" id="Theme_oeulo"]
 default_font_size = 30
@@ -768,6 +775,42 @@ offset_right = 1691.0
 offset_bottom = 1051.0
 metadata/help_text = "ボタンにカーソルを合わせるとヘルプテキストが表示されます。"
 
+[node name="EvolutionPreview" type="Control" parent="CanvasLayer/Control"]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 883.0
+offset_right = 615.0
+offset_bottom = 946.0
+metadata/help_text = "指定した形態で、モンスターの情報を表示します。"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Control/EvolutionPreview"]
+layout_mode = 0
+offset_left = 364.0
+offset_right = 599.0
+offset_bottom = 63.0
+theme = SubResource("Theme_4fy06")
+theme_override_constants/arrow_margin = 15
+theme_override_icons/arrow = ExtResource("7_4ce10")
+alignment = 1
+selected = 0
+item_count = 3
+popup/item_0/text = "第一形態"
+popup/item_0/id = 0
+popup/item_1/text = "第二形態"
+popup/item_1/id = 1
+popup/item_2/text = "第三形態"
+popup/item_2/id = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/EvolutionPreview"]
+layout_mode = 0
+offset_right = 366.0
+offset_bottom = 63.0
+theme = SubResource("Theme_t10s7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_66jsg")
+bbcode_enabled = true
+text = "[img=60]res://image/element/進化技.PNG[/img][i]進化プレビュー[/i]"
+horizontal_alignment = 1
+
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(960, 540)
 
@@ -892,27 +935,6 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_lvrxx")
 text = "🗑️リセット"
 color = Color(1, 0, 0.0166664, 1)
 metadata/help_text = "現在のデッキをリセットします。"
-
-[node name="EvolutionPreview" parent="Control/DeckMenu" instance=ExtResource("5_3py80")]
-layout_mode = 0
-offset_left = 106.0
-offset_top = 230.0
-offset_right = 406.0
-offset_bottom = 312.0
-pivot_offset = Vector2(150, 0)
-text = "第二形態"
-metadata/help_text = "クリックすると、モンスターの進化後の形態をプレビューします。"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/DeckMenu/EvolutionPreview"]
-layout_mode = 0
-offset_left = -63.0
-offset_top = -127.0
-offset_right = 364.0
-offset_bottom = -54.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_66jsg")
-bbcode_enabled = true
-text = "進化プレビュー"
-horizontal_alignment = 1
 
 [node name="MonsterSelect" type="Control" parent="Control"]
 visible = false
@@ -1357,11 +1379,11 @@ metadata/_edit_lock_ = true
 [connection signal="value_changed" from="CanvasLayer/Control/Status/Level" to="Control/MonsterSetting" method="_on_level_value_changed"]
 [connection signal="button_up" from="CanvasLayer/Control/Back" to="Control/MonsterSetting" method="_on_back_button_up"]
 [connection signal="button_up" from="CanvasLayer/Control/Confirm" to="Control/MonsterSetting" method="_on_confirm_button_up"]
+[connection signal="item_selected" from="CanvasLayer/Control/EvolutionPreview/OptionButton" to="Control" method="_on_option_button_item_selected"]
 [connection signal="button_up" from="Control/DeckMenu/Save" to="Control/DeckMenu" method="_on_save_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/Load" to="Control/DeckMenu" method="_on_load_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/AutoFill" to="Control/DeckMenu" method="_on_auto_fill_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/Reset" to="Control/DeckMenu" method="_on_reset_button_up"]
-[connection signal="button_up" from="Control/DeckMenu/EvolutionPreview" to="Control/DeckMenu" method="_on_evolution_preview_button_up"]
 [connection signal="value_changed" from="Control/MonsterSetting/action_select/chance" to="Control/MonsterSetting" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="Control/MonsterSetting/action_select/SpinBox" to="Control/MonsterSetting" method="_on_chance_value_changed"]
 [connection signal="button_up" from="Control/MonsterSetting/random" to="Control/MonsterSetting" method="_on_random_button_up"]

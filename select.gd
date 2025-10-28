@@ -13,6 +13,9 @@ extends Control
 @onready var help_label := $"../CanvasLayer/Control/ScrollingLabel"
 @onready var status := $"../CanvasLayer/Control/Status"
 @onready var evolution_button := $"../CanvasLayer/Control/Status/Evolution"
+@onready var evolution_preview := $"../CanvasLayer/Control/EvolutionPreview"
+@onready var evolution_preview_button := \
+$"../CanvasLayer/Control/EvolutionPreview/OptionButton"
 @onready var level_spinbox := $"../CanvasLayer/Control/Status/Level"
 
 var camera_tween: Tween
@@ -226,3 +229,10 @@ func _on_confirm_button_up():
 			monster_setting.actions[index] = monster_setting.selected_action
 			monster_setting.chances[index] = int(monster_setting.slider.value)
 			monster_setting.pie_chart_update()
+
+## 進化プレビューオプションボタンで形態が選択された時の処理
+func _on_option_button_item_selected(index: int) -> void:
+	match mode:
+		Mode.DECK:
+			evolution_preview_button.selected = index
+			deck_menu.preview_form = index
