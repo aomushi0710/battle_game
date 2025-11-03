@@ -1,27 +1,32 @@
 extends Control
 
-@onready var deck_menu := $DeckMenu
-@onready var monster_select := $MonsterSelect
-@onready var monster_setting := $MonsterSetting
+@export_category("モード親ノード")
+@export var parent: Control
 
-@onready var se := $"../SoundEffects"
-@onready var background := $"../background"
-@onready var camera := $"../Camera2D"
-@onready var canvas_layer_ui := $"../CanvasLayer/Control"
-@onready var confirm_button := $"../CanvasLayer/Control/Confirm"
-@onready var back_button := $"../CanvasLayer/Control/Back"
-@onready var help_label := $"../CanvasLayer/Control/ScrollingLabel"
-@onready var status := $"../CanvasLayer/Control/Status"
-@onready var evolution_button := $"../CanvasLayer/Control/Status/Evolution"
-@onready var evolution_preview := $"../CanvasLayer/Control/EvolutionPreview"
-@onready var evolution_preview_button := \
-$"../CanvasLayer/Control/EvolutionPreview/OptionButton"
-@onready var level_spinbox := $"../CanvasLayer/Control/Status/Level"
+@export_category("モードノード")
+@export var deck_menu: Control
+@export var monster_select: Control
+@export var monster_setting: Control
+
+@export_category("CanvasLayer")
+@export var sound_effects: Node2D
+@export var background: Control
+@export var camera: Camera2D
+@export var canvas_layer_ui: Control
+@export var confirm_button: Button
+@export var back_button: Button
+@export var help_label: ScrollingLabel
+@export var status: Control
+@export var evolution_preview: Control
+@export var evolution_preview_button: OptionButton
+@export var level_spinbox: SpinBox
 
 var camera_tween: Tween
+var selected_slot_index: int ## デッキ内で現在編集中のモンスターの位置を示すindex
+var selected_monster: Monster ## 現在選択中の[Monster]
 
 ## [enum Mode]に対応する[Control]ノードの[NodePath]の辞書
-const MODE_TO_NODEPATH: Dictionary[Mode, NodePath] = {
+const MODE_TO_NODEPATH: Dictionary[Mode, String] = {
 	Mode.DECK: "DeckMenu", 
 	Mode.MONSTER_SELECT: "MonsterSelect", 
 	Mode.STATUS: "MonsterSetting", 
@@ -51,29 +56,39 @@ enum Mode {
 	ACTION, ## 技セレクト画面(右側の技出現確率設定画面)
 }
 
-var mode: Mode = Mode.DECK: ## 現在のカメラ位置
+## 現在表示中の画面[br]
+## この変数に代入を行う時は常に親ノードでの
+var mode: Mode = Mode.DECK:
 	set(next_mode): ## 対応する画面遷移を行ってからモード変更
-		await ready
+		if not is_inside_tree() or parent == null:
+			return
+		
 		# 全てのボタンを使用不可に
 		for child in canvas_layer_ui.get_children():
 			if child is Button:
 				child.disabled = true
 		
-		for child in get_children():
-			if child == get_node(MODE_TO_NODEPATH[mode]):
+		for child in parent.get_children():
+			if child.name == MODE_TO_NODEPATH[next_mode]:
 				child.show()
 			else:
 				child.hide()
 		
+		if evolution_preview.visible == false:
+			evolution_preview.show()
+		
 		## カメラ移動アニメーション
-		camera_tween = get_tree().create_tween().bind_node(camera)
+		camera_tween = parent.get_tree().create_tween().bind_node(camera)
 		match next_mode:
 			Mode.DECK:
 				deck_menu.on_mode_entered()
 			
+			Mode.MONSTER_SELECT:
+				pass
+			
 			Mode.STATUS:
 				# ACTIONとSTATUSからの遷移時は呼ばない
-				if mode != Mode.ACTION or Mode.STATUS:
+				if mode != Mode.ACTION and mode != Mode.STATUS:
 					monster_setting.on_mode_entered()
 				
 				# 棒グラフの棒とボタンを表示するアニメーション
@@ -82,7 +97,7 @@ var mode: Mode = Mode.DECK: ## 現在のカメラ位置
 					for child in container.get_children():
 						if child is TextureRect:
 							child.show()
-				monster_setting.monbar_chart_update()
+				monster_setting.bar_chart_update()
 				
 				background.color_change(Color.GREEN) # 背景カラーチェンジ
 				camera_tween.tween_property(camera, "offset:x", 960, 1)\
@@ -103,6 +118,8 @@ var mode: Mode = Mode.DECK: ## 現在のカメラ位置
 									func(): child.hide()
 							)
 				
+				evolution_preview.hide()
+				
 				background.color_change(Color.ORANGE) # 背景カラーチェンジ
 				camera_tween.tween_property(camera, "offset:x", 1750, 1)\
 				.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
@@ -115,7 +132,6 @@ var mode: Mode = Mode.DECK: ## 現在のカメラ位置
 		back_button.set_meta("help_text", BACK_BUTTON_HELP_TEXT[next_mode])
 		help_label.connect_hover_signal(confirm_button)
 		help_label.connect_hover_signal(back_button)
-		
 		
 		# モード切り替え
 		mode = next_mode
@@ -136,13 +152,14 @@ func _ready() -> void:
 
 ## 戻るボタンの処理
 func _on_back_button_up():
-	se.click.play()
+	sound_effects.click.play()
 	match mode:
+		Mode.MONSTER_SELECT:
+			parent.mode = Mode.DECK
+		
 		Mode.STATUS: # キャラ選択に戻す
-			Global.confirmation_dialog.on_confirm_callable = Callable(
-					get_tree(), 
-					"change_scene_to_file"
-			).bind(Global.chara_scene)
+			Global.confirmation_dialog.on_confirm_callable = func():
+				mode = Mode.MONSTER_SELECT
 			Global.confirmation_dialog.display_dialog(
 					"変更した内容は保存されていません！\n[color=yellow]" + 
 					"内容を保存するには、キャンセルボタンでこの画面を閉じた後、\n" + 
@@ -150,12 +167,13 @@ func _on_back_button_up():
 					"[/color]前の画面に戻りますか？", 
 					"未保存のデータ"
 			)
+		
 		Mode.ACTION: # 画面を戻す
 			mode = Mode.STATUS
 
 ## 決定ボタンの処理
 func _on_confirm_button_up():
-	se.click.play()
+	sound_effects.click.play()
 	match mode:
 		Mode.STATUS:
 			var sum_chance = 0 ## 技の出現率の合計
@@ -236,3 +254,6 @@ func _on_option_button_item_selected(index: int) -> void:
 		Mode.DECK:
 			evolution_preview_button.selected = index
 			deck_menu.preview_form = index
+		
+		Mode.STATUS:
+			monster_setting.monster_preview(index)

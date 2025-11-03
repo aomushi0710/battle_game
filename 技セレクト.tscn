@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=85 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://be1a715dl4m8t" path="res://select.gd" id="2_1hqx4"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://0sqjwa6h6xno" path="res://image/blackbox.png" id="11_ilscs"]
 [ext_resource type="Texture2D" uid="uid://bgtiu2klk0bm3" path="res://image/spinbox_up.png" id="12_4lobs"]
 [ext_resource type="PackedScene" uid="uid://yl6fo6eqi2u0" path="res://SE_menu.tscn" id="12_ilscs"]
+[ext_resource type="PackedScene" uid="uid://q1o1wv3x1yij" path="res://pie_chart.tscn" id="16_oeulo"]
 
 [sub_resource type="Theme" id="Theme_4ce10"]
 default_font_size = 30
@@ -509,18 +510,17 @@ default_font_size = 30
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="CanvasLayerUI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_14bbj")
 
-[node name="Status" type="Control" parent="CanvasLayer/Control"]
-visible = false
+[node name="Status" type="Control" parent="CanvasLayer/CanvasLayerUI"]
 anchors_preset = 0
 
-[node name="status" type="VBoxContainer" parent="CanvasLayer/Control/Status"]
+[node name="status" type="VBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status"]
 layout_mode = 2
 offset_left = 50.0
 offset_top = 50.0
@@ -529,11 +529,11 @@ offset_bottom = 512.0
 theme = SubResource("Theme_4ce10")
 theme_override_constants/separation = 10
 
-[node name="HP" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
+[node name="HP" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/HP"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/CanvasLayerUI/Status/status/HP"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -544,17 +544,17 @@ text = "[color=coral]HP [font_size=2]                   [/font_size][/color]:%4d
 vertical_alignment = 1
 metadata/help_text = "体力。0になると先頭不能になります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/HP"]
-custom_minimum_size = Vector2(200, 0)
+[node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/HP"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_epq06")
 metadata/help_text = "体力。0になると先頭不能になります。"
 
-[node name="maxMP" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
+[node name="maxMP" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/maxMP"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/CanvasLayerUI/Status/status/maxMP"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -569,17 +569,17 @@ max   [/color][/font_size][/cell]
 vertical_alignment = 1
 metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/maxMP"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/maxMP"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_j08b8")
 metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
 
-[node name="supplyMP" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
+[node name="supplyMP" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/supplyMP"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/CanvasLayerUI/Status/status/supplyMP"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -594,17 +594,17 @@ supply[/color][/font_size][/cell]
 vertical_alignment = 1
 metadata/help_text = "行動可能になった時、回復する魔力の量。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/supplyMP"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/supplyMP"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_0c3n4")
 metadata/help_text = "行動可能になった時、回復する魔力の量。"
 
-[node name="SPD" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
+[node name="SPD" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/SPD"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/CanvasLayerUI/Status/status/SPD"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -615,17 +615,17 @@ text = "[color=limegreen]SPD[font_size=2]                   [/font_size][/color]
 vertical_alignment = 1
 metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/SPD"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/SPD"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_lvrxx")
 metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
 
-[node name="ATK" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
+[node name="ATK" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/ATK"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/CanvasLayerUI/Status/status/ATK"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -636,17 +636,17 @@ text = "[color=orange]ATK[font_size=2]                   [/font_size][/color]:%4
 vertical_alignment = 1
 metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/ATK"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/ATK"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_ydts3")
 metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
 
-[node name="DEF" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
+[node name="DEF" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/DEF"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/CanvasLayerUI/Status/status/DEF"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -657,17 +657,17 @@ text = "[color=lightblue]DEF[font_size=2]                   [/font_size][/color]
 vertical_alignment = 1
 metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/DEF"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/DEF"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_2uk2t")
 metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
 
-[node name="MAG" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
+[node name="MAG" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/MAG"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/CanvasLayerUI/Status/status/MAG"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -678,17 +678,17 @@ text = "[color=dodgerblue]MAG[font_size=2]                   [/font_size][/color
 vertical_alignment = 1
 metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/MAG"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/MAG"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_gcshb")
 metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
 
-[node name="RES" type="HBoxContainer" parent="CanvasLayer/Control/Status/status"]
+[node name="RES" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/Control/Status/status/RES"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/CanvasLayerUI/Status/status/RES"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -699,28 +699,18 @@ text = "[color=violet]RES[font_size=2]                   [/font_size][/color]:%4
 vertical_alignment = 1
 metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/Control/Status/status/RES"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/RES"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_mmr34")
 metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
 
-[node name="Evolution" type="Button" parent="CanvasLayer/Control/Status"]
+[node name="Level" type="SpinBox" parent="CanvasLayer/CanvasLayerUI/Status"]
 layout_mode = 0
-offset_left = 50.0
-offset_top = 526.0
-offset_right = 500.0
-offset_bottom = 574.0
-mouse_default_cursor_shape = 2
-theme_override_font_sizes/font_size = 30
-text = "中間進化後のステータスを表示"
-
-[node name="Level" type="SpinBox" parent="CanvasLayer/Control/Status"]
-layout_mode = 0
-offset_left = 59.0
-offset_top = 611.0
-offset_right = 198.0
-offset_bottom = 675.0
+offset_left = 46.0
+offset_top = 533.0
+offset_right = 185.0
+offset_bottom = 597.0
 mouse_default_cursor_shape = 1
 theme = SubResource("Theme_4lobs")
 theme_override_colors/up_icon_modulate = Color(1, 0, 0, 1)
@@ -744,7 +734,7 @@ update_on_text_changed = true
 prefix = "Lv"
 select_all_on_focus = true
 
-[node name="Back" parent="CanvasLayer/Control" instance=ExtResource("5_3py80")]
+[node name="Back" parent="CanvasLayer/CanvasLayerUI" instance=ExtResource("5_3py80")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 972.0
@@ -757,7 +747,7 @@ text = "←戻る"
 color = Color(1, 0, 0, 1)
 metadata/help_text = ""
 
-[node name="Confirm" parent="CanvasLayer/Control" instance=ExtResource("5_3py80")]
+[node name="Confirm" parent="CanvasLayer/CanvasLayerUI" instance=ExtResource("5_3py80")]
 layout_mode = 0
 offset_left = 1707.0
 offset_top = 972.0
@@ -767,7 +757,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_j08b8")
 text = "決定"
 metadata/help_text = ""
 
-[node name="ScrollingLabel" parent="CanvasLayer/Control" instance=ExtResource("2_ltw0u")]
+[node name="ScrollingLabel" parent="CanvasLayer/CanvasLayerUI" instance=ExtResource("2_ltw0u")]
 layout_mode = 0
 offset_left = 233.0
 offset_top = 970.0
@@ -775,15 +765,14 @@ offset_right = 1691.0
 offset_bottom = 1051.0
 metadata/help_text = "ボタンにカーソルを合わせるとヘルプテキストが表示されます。"
 
-[node name="EvolutionPreview" type="Control" parent="CanvasLayer/Control"]
+[node name="EvolutionPreview" type="Control" parent="CanvasLayer/CanvasLayerUI"]
 anchors_preset = 0
 offset_left = 16.0
 offset_top = 883.0
 offset_right = 615.0
 offset_bottom = 946.0
-metadata/help_text = "指定した形態で、モンスターの情報を表示します。"
 
-[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Control/EvolutionPreview"]
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/CanvasLayerUI/EvolutionPreview"]
 layout_mode = 0
 offset_left = 364.0
 offset_right = 599.0
@@ -800,8 +789,9 @@ popup/item_1/text = "第二形態"
 popup/item_1/id = 1
 popup/item_2/text = "第三形態"
 popup/item_2/id = 2
+metadata/help_text = "指定した形態で、モンスターの情報を表示します。"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/EvolutionPreview"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CanvasLayerUI/EvolutionPreview"]
 layout_mode = 0
 offset_right = 366.0
 offset_bottom = 63.0
@@ -810,24 +800,59 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_66jsg")
 bbcode_enabled = true
 text = "[img=60]res://image/element/進化技.PNG[/img][i]進化プレビュー[/i]"
 horizontal_alignment = 1
+metadata/help_text = "指定した形態で、モンスターの情報を表示します。"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(960, 540)
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("parent", "deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_14bbj")
 script = ExtResource("2_1hqx4")
+parent = NodePath(".")
+deck_menu = NodePath("DeckMenu")
+monster_select = NodePath("MonsterSelect")
+monster_setting = NodePath("MonsterSetting")
+sound_effects = NodePath("../SoundEffects")
+background = NodePath("../background")
+camera = NodePath("../Camera2D")
+canvas_layer_ui = NodePath("../CanvasLayer/CanvasLayerUI")
+confirm_button = NodePath("../CanvasLayer/CanvasLayerUI/Confirm")
+back_button = NodePath("../CanvasLayer/CanvasLayerUI/Back")
+help_label = NodePath("../CanvasLayer/CanvasLayerUI/ScrollingLabel")
+status = NodePath("../CanvasLayer/CanvasLayerUI/Status")
+evolution_preview = NodePath("../CanvasLayer/CanvasLayerUI/EvolutionPreview")
+evolution_preview_button = NodePath("../CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton")
+level_spinbox = NodePath("../CanvasLayer/CanvasLayerUI/Status/Level")
 
-[node name="DeckMenu" type="Control" parent="Control"]
+[node name="DeckMenu" type="Control" parent="Control" node_paths=PackedStringArray("lineedit", "monster_icons", "monster_names", "parent", "deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_w7dfb")
+lineedit = NodePath("Deck/LineEdit")
+monster_icons = NodePath("Deck/MonsterIcons")
+monster_names = NodePath("Deck/Names")
+parent = NodePath("..")
+deck_menu = NodePath(".")
+monster_select = NodePath("../MonsterSelect")
+monster_setting = NodePath("../MonsterSetting")
+sound_effects = NodePath("../../SoundEffects")
+background = NodePath("../../background")
+camera = NodePath("../../Camera2D")
+canvas_layer_ui = NodePath("../../CanvasLayer/CanvasLayerUI")
+confirm_button = NodePath("../../CanvasLayer/CanvasLayerUI/Confirm")
+back_button = NodePath("../../CanvasLayer/CanvasLayerUI/Back")
+help_label = NodePath("../../CanvasLayer/CanvasLayerUI/ScrollingLabel")
+status = NodePath("../../CanvasLayer/CanvasLayerUI/Status")
+evolution_preview = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview")
+evolution_preview_button = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton")
+level_spinbox = NodePath("../../CanvasLayer/CanvasLayerUI/Status/Level")
 
 [node name="Deck" type="VBoxContainer" parent="Control/DeckMenu"]
 layout_mode = 0
@@ -936,15 +961,35 @@ text = "🗑️リセット"
 color = Color(1, 0, 0.0166664, 1)
 metadata/help_text = "現在のデッキをリセットします。"
 
-[node name="MonsterSelect" type="Control" parent="Control"]
+[node name="MonsterSelect" type="Control" parent="Control" node_paths=PackedStringArray("monster_containers", "parent", "deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
 visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("10_jsdkd")
+monster_containers = NodePath("MonsterContainers")
+parent = NodePath("..")
+deck_menu = NodePath("../DeckMenu")
+monster_select = NodePath(".")
+monster_setting = NodePath("../MonsterSetting")
+sound_effects = NodePath("../../SoundEffects")
+background = NodePath("../../background")
+camera = NodePath("../../Camera2D")
+canvas_layer_ui = NodePath("../../CanvasLayer/CanvasLayerUI")
+confirm_button = NodePath("../../CanvasLayer/CanvasLayerUI/Confirm")
+back_button = NodePath("../../CanvasLayer/CanvasLayerUI/Back")
+help_label = NodePath("../../CanvasLayer/CanvasLayerUI/ScrollingLabel")
+status = NodePath("../../CanvasLayer/CanvasLayerUI/Status")
+evolution_preview = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview")
+evolution_preview_button = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton")
+level_spinbox = NodePath("../../CanvasLayer/CanvasLayerUI/Status/Level")
 
-[node name="MonsterSetting" type="Control" parent="Control"]
-visible = false
+[node name="MonsterContainers" type="VBoxContainer" parent="Control/MonsterSelect"]
+layout_mode = 0
+offset_right = 1820.0
+offset_bottom = 951.0
+
+[node name="MonsterSetting" type="Control" parent="Control" node_paths=PackedStringArray("monster_node", "action_select", "slider", "spinbox", "action_description", "action_list", "pie_chart", "parent", "deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -961,6 +1006,28 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_14bbj")
 script = ExtResource("8_4lobs")
+monster_node = NodePath("monster")
+action_select = NodePath("action_select")
+slider = NodePath("action_select/chance")
+spinbox = NodePath("action_select/SpinBox")
+action_description = NodePath("action_description")
+action_list = NodePath("action_list")
+pie_chart = NodePath("PieChart")
+parent = NodePath("..")
+deck_menu = NodePath("../DeckMenu")
+monster_select = NodePath("../MonsterSelect")
+monster_setting = NodePath(".")
+sound_effects = NodePath("../../SoundEffects")
+background = NodePath("../../background")
+camera = NodePath("../../Camera2D")
+canvas_layer_ui = NodePath("../../CanvasLayer/CanvasLayerUI")
+confirm_button = NodePath("../../CanvasLayer/CanvasLayerUI/Confirm")
+back_button = NodePath("../../CanvasLayer/CanvasLayerUI/Back")
+help_label = NodePath("../../CanvasLayer/CanvasLayerUI/ScrollingLabel")
+status = NodePath("../../CanvasLayer/CanvasLayerUI/Status")
+evolution_preview = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview")
+evolution_preview_button = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton")
+level_spinbox = NodePath("../../CanvasLayer/CanvasLayerUI/Status/Level")
 
 [node name="monster" type="TextureRect" parent="Control/MonsterSetting"]
 layout_mode = 0
@@ -1344,6 +1411,12 @@ theme = SubResource("Theme_kch7d")
 text = "🔄️おまかせ"
 metadata/help_text = "ランダムに技とその出現確率を登録します。"
 
+[node name="PieChart" parent="Control/MonsterSetting" instance=ExtResource("16_oeulo")]
+offset_left = 1000.0
+offset_top = 70.0
+offset_right = 2000.0
+offset_bottom = 520.0
+
 [node name="background" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -1375,15 +1448,18 @@ metadata/_edit_lock_ = true
 
 [node name="SoundEffects" parent="." instance=ExtResource("12_ilscs")]
 
-[connection signal="button_up" from="CanvasLayer/Control/Status/Evolution" to="Control/MonsterSetting" method="_on_evolution_button_up"]
-[connection signal="value_changed" from="CanvasLayer/Control/Status/Level" to="Control/MonsterSetting" method="_on_level_value_changed"]
-[connection signal="button_up" from="CanvasLayer/Control/Back" to="Control/MonsterSetting" method="_on_back_button_up"]
-[connection signal="button_up" from="CanvasLayer/Control/Confirm" to="Control/MonsterSetting" method="_on_confirm_button_up"]
-[connection signal="item_selected" from="CanvasLayer/Control/EvolutionPreview/OptionButton" to="Control" method="_on_option_button_item_selected"]
+[connection signal="value_changed" from="CanvasLayer/CanvasLayerUI/Status/Level" to="Control/MonsterSetting" method="_on_level_value_changed"]
+[connection signal="button_up" from="CanvasLayer/CanvasLayerUI/Back" to="Control" method="_on_back_button_up"]
+[connection signal="button_up" from="CanvasLayer/CanvasLayerUI/Confirm" to="Control" method="_on_confirm_button_up"]
+[connection signal="item_selected" from="CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton" to="Control" method="_on_option_button_item_selected"]
+[connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [0]]
+[connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon2" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [1]]
+[connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon3" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [2]]
 [connection signal="button_up" from="Control/DeckMenu/Save" to="Control/DeckMenu" method="_on_save_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/Load" to="Control/DeckMenu" method="_on_load_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/AutoFill" to="Control/DeckMenu" method="_on_auto_fill_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/Reset" to="Control/DeckMenu" method="_on_reset_button_up"]
 [connection signal="value_changed" from="Control/MonsterSetting/action_select/chance" to="Control/MonsterSetting" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="Control/MonsterSetting/action_select/SpinBox" to="Control/MonsterSetting" method="_on_chance_value_changed"]
+[connection signal="tab_selected" from="Control/MonsterSetting/action_list" to="Control/MonsterSetting" method="_on_action_list_tab_selected"]
 [connection signal="button_up" from="Control/MonsterSetting/random" to="Control/MonsterSetting" method="_on_random_button_up"]

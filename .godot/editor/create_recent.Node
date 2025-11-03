@@ -1,3 +1,4 @@
+VBoxContainer
 Control
 OptionButton
 RichTextLabel
@@ -7,7 +8,6 @@ Polygon2D
 TextureRect
 Panel
 LineEdit
-VBoxContainer
 SpinBox
 NinePatchRect
 ReferenceRect

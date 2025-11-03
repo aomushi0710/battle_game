@@ -5,12 +5,16 @@
 [ext_resource type="Texture2D" uid="uid://ceujxb8ig85e8" path="res://image/1st.PNG" id="2_34w54"]
 [ext_resource type="Texture2D" uid="uid://h2sl3cykcgp0" path="res://image/2nd.PNG" id="3_qs0ub"]
 [ext_resource type="Texture2D" uid="uid://1sir626d64j1" path="res://image/3rd.PNG" id="4_qklf7"]
-[ext_resource type="Script" uid="uid://tw743jfyh7c1" path="res://cpu_strategy.gd" id="5_c4lle"]
 [ext_resource type="Script" uid="uid://brxmv80a8jctl" path="res://help_button.gd" id="5_jtnis"]
 [ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="7_cgg8v"]
 
 [sub_resource type="Theme" id="Theme_3nbs8"]
 default_font_size = 35
+
+[sub_resource type="GDScript" id="GDScript_cpkem"]
+script/source = "extends OptionButton
+
+"
 
 [sub_resource type="Theme" id="Theme_g1t6r"]
 default_font_size = 35
@@ -156,7 +160,7 @@ popup/item_1/text = "効率的"
 popup/item_1/id = 1
 popup/item_2/text = "進化優先"
 popup/item_2/id = 2
-script = ExtResource("5_c4lle")
+script = SubResource("GDScript_cpkem")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Control/cpu_strategy"]
 layout_mode = 0
@@ -372,7 +376,6 @@ metadata/_edit_lock_ = true
 [connection signal="button_up" from="Control/デッキ1/load" to="Control/デッキ1" method="_on_load_button_up"]
 [connection signal="button_up" from="Control/デッキ1/reset" to="Control/デッキ1" method="_on_reset_button_up"]
 [connection signal="button_up" from="Control/デッキ1/おまかせ" to="Control/デッキ1" method="_on_button_button_up"]
-[connection signal="item_selected" from="Control/cpu_strategy" to="Control/デッキ1" method="_on_cpu_strategy_item_selected"]
 [connection signal="button_up" from="Control/battle" to="Control/デッキ1" method="_on_test_button_up"]
 [connection signal="button_up" from="Control/戻る" to="Control/デッキ1" method="_on_戻る_button_up"]
 [connection signal="toggled" from="Control/help" to="Control/help" method="_on_toggled"]

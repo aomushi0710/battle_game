@@ -1,3 +1,4 @@
+class_name PieChart
 extends Control
 
 signal draw_ended ## _draw関数終了後に発行されます

@@ -12,26 +12,24 @@ const STATUS_BAR_TEXT: Array[String] = [
 	"[color=dodgerblue]MAG[font_size=2]                   [/font_size][/color]:%4d", 
 	"[color=violet]RES[font_size=2]                   [/font_size][/color]:%4d"
 	]
-@onready var parent := $".."
-@onready var monster_node := $monster
-@onready var action_select := $action_select
-@onready var slider := $action_select/chance
-@onready var spinbox := $action_select/SpinBox
-@onready var action_description := $action_description
-@onready var action_list := $action_list
+
+@export var monster_node: TextureRect
+@export var action_select: Control
+@export var slider: HSlider
+@export var spinbox: SpinBox
+@export var action_description: Control
+@export var action_list: TabContainer
+@export var pie_chart: PieChart
+
 var text_speed: float = 0.05 ## テキストアニメーションの1文字あたりの再生速度
 var selected_action: Action ## 現在選択中の技
 var selected_skill = 0 ## 選ばれたスキルパターン
 var now_select_action = 0 ## 現在指定されている技
-var monster_id = Global.selected_monster
 var evolution_forms: Array[Monster] ## 現在選択中のモンスターの全形態が登録されている配列
-var monster: Monster ## 現在選択中のモンスター
-var next_form: Monster.Form ## 次に表示されるモンスターの形態
 var all_status_list: Array = []
 var actions: Array[Action] = [null, null, null, null] ## 選ばれた技
 var chances: Array[int] = [0, 0, 0, 0] ## 選ばれた技の出現確率
 var check_provability = [] ## 出現率0%弾き出し用
-var pie_chart
 var text_tween: Tween
 
 var level: int: ## プレビュー時のモンスターレベル
@@ -43,50 +41,43 @@ var level: int: ## プレビュー時のモンスターレベル
 			evolution_forms[i].status_calculator(level)
 			all_status_list.append(evolution_forms[i].get_status_list())
 		
-		if mode == parent.CameraMode.STATUS:
-			monster_previw(monster.form)
+		if parent.mode == Mode.STATUS:
+			monster_preview(selected_monster.form)
 		else:
-			monster_previw(monster.form, true)
-
-
-func _ready() -> void:
-	# 相対パスが変わるので再定義
-	se = $"../../SoundEffects"
-	background = $"../../background"
-	camera = $"../../Camera2D"
-	canvas_layer_ui = $"../../CanvasLayer/Control"
-	confirm_button = $"../../CanvasLayer/Control/Confirm"
-	back_button = $"../../CanvasLayer/Control/Back"
-	help_label = $"../../CanvasLayer/Control/ScrollingLabel"
-	status = $"../../CanvasLayer/Control/Status"
-	evolution_button = $"../../CanvasLayer/Control/Status/Evolution"
-	level_spinbox = $"../../CanvasLayer/Control/Status/Level"
-
+			monster_preview(selected_monster.form, true)
 
 
 func on_mode_entered() -> void:
 	camera.offset = Vector2(960, 540)
 	
-	evolution_forms = Global.monster_data[monster_id].duplicate() # 初期化
-	monster = evolution_forms[Monster.Form.第一形態]
+	# action_listの中身を削除
+	for container in action_list.get_children():
+		for child in container.get_child(0).get_children():
+			child.queue_free()
+	
+	selected_monster = parent.selected_monster
+	evolution_forms = Global.monster_data[selected_monster.id].duplicate() # 初期化
+	
+	# 進化プレビュー選択肢追加
+	evolution_preview_button.clear()
+	for i in len(evolution_forms):
+			evolution_preview_button.add_item(Monster.form_names[i], i)
+	
 	# セーブデータ読み込み
-	if monster_id in Global.save_data.monster_levels:
-		level_spinbox.value = Global.save_data.monster_levels[monster_id]
+	if selected_monster.id in Global.save_data.monster_levels:
+		level_spinbox.value = Global.save_data.monster_levels[selected_monster.id]
 	else:
 		level_spinbox.value = 1
 	# モンスターを表示
-	monster_previw(Monster.Form.第一形態)
+	monster_preview(selected_monster.form)
 	
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
 	if (Global.player_deck.monster[Global.now_picking].monster != null and 
-		Global.player_deck.monster[Global.now_picking].monster.id == monster_id):
+		Global.player_deck.monster[Global.now_picking].monster.id == selected_monster.id):
 		actions = Global.player_deck.monster[Global.now_picking].action
 		chances = Global.player_deck.monster[Global.now_picking].chance
 	
 	# 円グラフ生成
-	pie_chart = load("res://pie_chart.tscn").instantiate()
-	pie_chart.position = Vector2(1000, 70)
-	add_child(pie_chart)
 	pie_chart_update()
 	
 	setting_action_button()
@@ -101,33 +92,27 @@ func on_mode_entered() -> void:
 	"バトル中に同じ確率で「進化Ⅱ」が現れ、進化することでこの技が発動できるようになります。")
 
 ## モンスターの形態[param form]のプレビュー表示更新関数[br]
-## この時点で既に、次に呼ばれる形態を予測しておくが、
-## これは[code]next_form[/code]変数が他の関数でも利用されるものであるためである。[br]
 ## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
-func monster_previw(form: Monster.Form, is_text_only: bool = false) -> void:
+func monster_preview(form: Monster.Form, is_text_only: bool = false) -> void:
+	if evolution_forms.is_empty():
+		return
+	
 	# 棒グラフのアニメーションが終わるまで押せなくする
-	evolution_button.disabled = true
+	evolution_preview_button.disabled = true
 	
-	monster = evolution_forms[form]
+	selected_monster = evolution_forms[form]
 	
-	monster_node.texture = monster.image
-	monster_node.get_child(0).get_child(0).monster = monster
+	monster_node.texture = selected_monster.image
+	monster_node.get_child(0).get_child(0).monster = selected_monster
 	monster_node.get_child(0).get_child(1).text = (
-		"[b][i]%s[/i][/b]" % monster.name)
+		"[b][i]%s[/i][/b]" % selected_monster.name)
 	
 	bar_chart_update(is_text_only)
-	
-	@warning_ignore("int_as_enum_without_cast")
-	next_form = monster.form + 1 # 1つ次の形態を代入しているのでintで足している
-	if next_form >= len(evolution_forms): # 存在しない形態を表示しないように
-		next_form = monster.Form.第一形態 # 第一形態に戻してループさせる
-	
-	evolution_button.text = "%sのステータスを表示" % monster.form_names[next_form]
 
 ## ステータス棒グラフ更新関数[br]
 ## ## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
 func bar_chart_update(is_text_only: bool = false) -> void:
-	var status_list = all_status_list[monster.form] ## 表示したいモンスターのステータス一覧
+	var status_list = all_status_list[selected_monster.form] ## 表示したいモンスターのステータス一覧
 	var status_index: int = 0 ## status_listのindex指定用
 	for child in status.get_child(0).get_children():
 		for c in child.get_children():
@@ -142,7 +127,7 @@ func bar_chart_update(is_text_only: bool = false) -> void:
 				if c.name == "bar": # 元からあるbarだけ処理
 					# TODO 長さの表現は修正の余地あり
 					var current_bar: TextureRect = c
-					for i in range(monster.form + 1):
+					for i in range(selected_monster.form + 1):
 						var new_bar: TextureRect ## バー本体
 						var bar_length: int ## バーの長さ
 						if i == 0: # 第一形態の時、元のバーのみ処理
@@ -156,8 +141,8 @@ func bar_chart_update(is_text_only: bool = false) -> void:
 							child.add_child(new_bar)
 						
 						# アニメーションさせる
-						if (mode == Mode.ACTION or 
-							i == monster.form):
+						if (parent.mode == Mode.ACTION or 
+							i == selected_monster.form):
 							bar_chart_animation(new_bar, bar_length)
 						else: # 他は既にセットされている
 							new_bar.custom_minimum_size.x = bar_length
@@ -189,7 +174,7 @@ callback: Callable = Callable()) -> void:
 	tween = get_tree().create_tween().bind_node(bar)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(bar, "custom_minimum_size:x", final_val, 1)
-	tween.tween_callback(func(): evolution_button.disabled = false)
+	tween.tween_callback(func(): evolution_preview_button.disabled = false)
 	
 	if callback != Callable():
 		tween.tween_callback(callback)
@@ -255,8 +240,8 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 	for child in container.get_children(): # 初期化
 		child.queue_free()
 	
-	if mode != Mode.ACTION: # まだ移動していなければカメラ移動
-		mode = Mode.ACTION
+	if parent.mode != Mode.ACTION: # まだ移動していなければカメラ移動
+		parent.mode = Mode.ACTION
 	
 	if act == null: # nullなら移動だけして中断
 		return
@@ -416,13 +401,9 @@ func _on_chance_value_changed(value: int) -> void:
 	for node in [slider, spinbox]: # sliderとspinboxを更新
 		node.set_value_no_signal(value)
 
-## ボタンが押された時に、次の形態(もしくは第一形態)で[code]monster_preview[/code]関数を呼ぶ関数
-func _on_evolution_button_up() -> void:
-	monster_previw(next_form)
-
 ## おまかせボタンが押された時
 func _on_random_button_up() -> void:
-	monster.random_action_selector(actions, chances)
+	selected_monster.random_action_selector(actions, chances)
 	actions.resize(4)
 	chances.resize(4)
 	pie_chart_update()
@@ -431,3 +412,7 @@ func _on_random_button_up() -> void:
 ##[param level]の値を更新する
 func _on_level_value_changed(value: float) -> void:
 	level = value
+
+
+func _on_action_list_tab_selected(tab: int) -> void:
+	_on_option_button_item_selected(tab)

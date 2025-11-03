@@ -58,7 +58,7 @@ func _on_デッキセレクト_tree_entered():
 	
 		enemy_buttons[i].texture_normal = Global.enemy_deck.monster[i].monster.image
 	
-	Global.now_picking = 3
+	Global.now_picking = -1
 
 
 func _on_test_button_up():

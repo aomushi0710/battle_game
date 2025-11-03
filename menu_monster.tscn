@@ -151,6 +151,7 @@ offset_left = 50.0
 offset_top = 953.0
 offset_right = 341.0
 offset_bottom = 1030.0
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_ks4b3")
 text = "←戻る"

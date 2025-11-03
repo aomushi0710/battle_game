@@ -60,7 +60,7 @@ const save_data_path_beta: String = "user://savedata_beta.sav"
 @onready var target = 3 ## 現在攻撃対象に選択中のモンスターの位置(0~2:指定indexのモンスターを攻撃 3:未選択)
 @onready var support_target = 3 ## 味方から技を受ける場合の位置(0~2:指定indexのモンスターを攻撃 3:未選択)
 
-@onready var now_picking = 3 ## 現在選択中のモンスターの位置　3：未選択 0～2：選択中
+@onready var now_picking = -1 ## 現在選択中のモンスターの位置　-1：未選択 0～2：選択中
 @onready var selected_monster = 0 ## 現在選択中のモンスターID(特性・技セレクトで使用)
 @onready var strategy = 0
 

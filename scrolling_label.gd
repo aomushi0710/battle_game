@@ -1,3 +1,4 @@
+class_name ScrollingLabel
 extends Panel
 
 @onready var mask := $mask

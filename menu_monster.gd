@@ -43,7 +43,7 @@ func _on_third_button_up():
 
 func _ready() -> void:
 	fade.color.a = 0
-	Global.now_picking = 3
+	Global.now_picking = -1
 
 
 func update_deck_visuals() -> void:
