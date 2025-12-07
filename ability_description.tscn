@@ -159,6 +159,7 @@ text = "[color=green]確率[/color]:100%"
 fit_content = true
 
 [node name="AbilityEffect" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 mouse_filter = 2
 
@@ -194,6 +195,7 @@ bbcode_enabled = true
 text = "[color=cornflower_blue]ターン[/color]:99"
 
 [node name="AbilityHealing" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 mouse_filter = 2
 

@@ -1,5 +1,12 @@
-extends "res://select.gd"
+extends Control
 
+## 親の[member MenuMonster.selected_monster]変数に代入させるシグナル。[br]
+## 返り値とするリソース[Monster]は親のsetterで複製されて渡される。
+signal selected_monster_changed(monster: Monster)
+signal connect_hover_signal(node: Node)
+
+## 棒グラフの長さ1px辺りの表せる数値
+const UNIT_SCALE: Array[float]= [20, 0.25, 0.25, 1, 5, 5, 5, 5]
 const STATUS_BAR_TEXT: Array[String] = [
 	"[color=coral]HP [font_size=2]                   [/font_size][/color]:%4d", 
 	"[table=2][cell][font_size=20][color=aqua]MP\nmax   " + 
@@ -13,108 +20,95 @@ const STATUS_BAR_TEXT: Array[String] = [
 	"[color=violet]RES[font_size=2]                   [/font_size][/color]:%4d"
 	]
 
+@export var parent: MenuMonster
+
 @export var monster_node: TextureRect
 @export var action_select: Control
 @export var slider: HSlider
 @export var spinbox: SpinBox
 @export var action_description: Control
-@export var action_list: TabContainer
+@export var action_list: ScrollContainer
 @export var pie_chart: PieChart
 
+@export_category("技説明用")
+@export var power_label: RichTextLabel
+@export var mp_label: RichTextLabel
+@export var type_label: RichTextLabel
+@export var target_label: RichTextLabel
+@export var unlock_condition_label: RichTextLabel
+
 var text_speed: float = 0.05 ## テキストアニメーションの1文字あたりの再生速度
+var selected_monster: Monster ## [member MenuMonster.selected_monster]を参照
 var selected_action: Action ## 現在選択中の技
 var selected_skill = 0 ## 選ばれたスキルパターン
 var now_select_action = 0 ## 現在指定されている技
-var evolution_forms: Array[Monster] ## 現在選択中のモンスターの全形態が登録されている配列
 var all_status_list: Array = []
-var actions: Array[Action] = [null, null, null, null] ## 選ばれた技
-var chances: Array[int] = [0, 0, 0, 0] ## 選ばれた技の出現確率
+var actions: Array[Action] = [] ## モンスターが持つ技
+var chances: Array[int] = [] ## 選ばれた技の出現確率
 var check_provability = [] ## 出現率0%弾き出し用
 var text_tween: Tween
 
-var level: int: ## プレビュー時のモンスターレベル
-	set(value):
-		level = value
-		# 全ての形態のステータスを更新してリストに登録
-		all_status_list.clear()
-		for i in len(evolution_forms):
-			evolution_forms[i].status_calculator(level)
-			all_status_list.append(evolution_forms[i].get_status_list())
-		
-		if parent.mode == Mode.STATUS:
-			monster_preview(selected_monster.form)
-		else:
-			monster_preview(selected_monster.form, true)
-
 
 func on_mode_entered() -> void:
-	camera.offset = Vector2(960, 540)
+	parent.camera.offset = Vector2(960, 540)
 	
 	# action_listの中身を削除
-	for container in action_list.get_children():
-		for child in container.get_child(0).get_children():
-			child.queue_free()
-	
-	selected_monster = parent.selected_monster
-	evolution_forms = Global.monster_data[selected_monster.id].duplicate() # 初期化
+	for child in action_list.get_child(0).get_child(0).get_children():
+		child.queue_free()
 	
 	# 進化プレビュー選択肢追加
-	evolution_preview_button.clear()
-	for i in len(evolution_forms):
-			evolution_preview_button.add_item(Monster.form_names[i], i)
+	parent.evolution_preview_button.clear()
+	for i in len(selected_monster.data.evolution_forms):
+			parent.evolution_preview_button.add_item(Global.form_names[i], i)
 	
 	# セーブデータ読み込み
-	if selected_monster.id in Global.save_data.monster_levels:
-		level_spinbox.value = Global.save_data.monster_levels[selected_monster.id]
+	if selected_monster.data.id in Global.save_data.monster_levels:
+		parent.level_spinbox.value = \
+		Global.save_data.monster_levels[selected_monster.data.id]
 	else:
-		level_spinbox.value = 1
+		parent.level_spinbox.value = 1
 	# モンスターを表示
-	monster_preview(selected_monster.form)
+	monster_preview()
 	
+	actions = selected_monster.action.duplicate()
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
-	if (Global.player_deck.monster[Global.now_picking].monster != null and 
-		Global.player_deck.monster[Global.now_picking].monster.id == selected_monster.id):
-		actions = Global.player_deck.monster[Global.now_picking].action
-		chances = Global.player_deck.monster[Global.now_picking].chance
+	if (Global.player_deck.monster[parent.selected_slot_index].data != null and 
+		Global.player_deck.monster[parent.selected_slot_index].data.id == 
+		selected_monster.data.id):
+		chances = Global.player_deck.monster[parent.selected_slot_index].chance
+	else:
+		chances.clear()
+		chances.resize(len(actions))
 	
 	# 円グラフ生成
 	pie_chart_update()
 	
 	setting_action_button()
-	# スクリプト上でしかtabbarはいじれないので
-	action_list.get_tab_bar().mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	action_list.set_tab_metadata(0, "モンスターが発動できる技の一覧です。")
-	action_list.set_tab_metadata(1, 
-	"第二形態に進化したモンスターが、発動できる技の一覧です。この技を登録すると、" + 
-	"バトル中に同じ確率で「進化Ⅰ」が現れ、進化することでこの技が発動できるようになります。")
-	action_list.set_tab_metadata(2, 
-	"第三形態に進化したモンスターが、発動できる技の一覧です。この技を登録すると、" + 
-	"バトル中に同じ確率で「進化Ⅱ」が現れ、進化することでこの技が発動できるようになります。")
 
-## モンスターの形態[param form]のプレビュー表示更新関数[br]
+## モンスターの各形態のプレビュー表示を更新する関数[br]
 ## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
-func monster_preview(form: Monster.Form, is_text_only: bool = false) -> void:
-	if evolution_forms.is_empty():
+func monster_preview(is_text_only: bool = false) -> void:
+	if selected_monster.data.evolution_forms.is_empty():
 		return
 	
 	# 棒グラフのアニメーションが終わるまで押せなくする
-	evolution_preview_button.disabled = true
+	parent.evolution_preview_button.disabled = true
 	
-	selected_monster = evolution_forms[form]
-	
-	monster_node.texture = selected_monster.image
-	monster_node.get_child(0).get_child(0).monster = selected_monster
+	monster_node.texture = selected_monster.get_monsterform().image
+	monster_node.get_child(0).get_child(0).monster = (
+		selected_monster.get_monsterform())
 	monster_node.get_child(0).get_child(1).text = (
-		"[b][i]%s[/i][/b]" % selected_monster.name)
+		"[b][i]%s[/i][/b]" % selected_monster.get_monsterform().name)
 	
 	bar_chart_update(is_text_only)
 
 ## ステータス棒グラフ更新関数[br]
 ## ## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
 func bar_chart_update(is_text_only: bool = false) -> void:
-	var status_list = all_status_list[selected_monster.form] ## 表示したいモンスターのステータス一覧
+	## 表示したいモンスターのステータス一覧
+	var status_list = all_status_list[selected_monster.form]
 	var status_index: int = 0 ## status_listのindex指定用
-	for child in status.get_child(0).get_children():
+	for child in parent.status.get_child(0).get_children():
 		for c in child.get_children():
 			if c is RichTextLabel: # ステータス値表示
 				c.text = STATUS_BAR_TEXT[status_index]
@@ -132,16 +126,22 @@ func bar_chart_update(is_text_only: bool = false) -> void:
 						var bar_length: int ## バーの長さ
 						if i == 0: # 第一形態の時、元のバーのみ処理
 							new_bar = current_bar
-							bar_length = all_status_list[i][status_index]
+							bar_length = (
+								all_status_list[i][status_index] / 
+								UNIT_SCALE[status_index]
+							)
 							new_bar.custom_minimum_size.x = 0
 						else: # 新たなバーを生成
 							new_bar = bar_chart_bar_duplicate(current_bar)
-							bar_length = all_status_list[i][status_index] - \
-							all_status_list[i - 1][status_index]
+							bar_length = (
+								(all_status_list[i][status_index] - 
+								all_status_list[i - 1][status_index]) / 
+								UNIT_SCALE[status_index]
+							)
 							child.add_child(new_bar)
 						
 						# アニメーションさせる
-						if (parent.mode == Mode.ACTION or 
+						if (parent.mode == parent.Mode.ACTION or 
 							i == selected_monster.form):
 							bar_chart_animation(new_bar, bar_length)
 						else: # 他は既にセットされている
@@ -174,74 +174,57 @@ callback: Callable = Callable()) -> void:
 	tween = get_tree().create_tween().bind_node(bar)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(bar, "custom_minimum_size:x", final_val, 1)
-	tween.tween_callback(func(): evolution_preview_button.disabled = false)
+	tween.tween_callback(func(): parent.evolution_preview_button.disabled = false)
 	
 	if callback != Callable():
 		tween.tween_callback(callback)
 
 ## 選択中の技出現確率円グラフ更新関数
 func pie_chart_update() -> void:
-	pie_chart.actions = actions
+	pie_chart.actions = Global.action_to_actiondata(actions)
 	pie_chart.chances = chances
 	pie_chart.queue_redraw()
-	await pie_chart.draw_ended # draw関数終了を待つ
-	# グラフ色と確率表記
-	var nodes_i: int = 0 ## nodesのインデックス指定用
-	for child: Panel in $actions/chart_colors.get_children():
-		var panel: StyleBoxFlat = child.get_theme_stylebox("panel")
-		if actions[nodes_i] != null:
-			panel.bg_color = pie_chart.color_list[nodes_i]
-			panel.shadow_size = 30
-		else:
-			panel.bg_color = Color.BLACK
-			panel.shadow_size = 0
-		child.get_child(0).text = "%d%%" % chances[nodes_i]
-		nodes_i += 1
-	# 技ボタン生成と技削除ボタン有効無効切り替え
-	for child in $actions/action_buttons.get_children():
-		child.queue_free()
-	for i in len(actions):
-		var button = Global.action_button.instantiate()
-		button.action = actions[i]
-		button.button_up.connect(func(): action_button_up(button.action))
-		if actions[i] == null:
-			$actions/delete_buttons.get_child(i).disabled = true
-			$actions/delete_buttons.get_child(i).mouse_default_cursor_shape = \
-			CursorShape.CURSOR_ARROW
-			button.set_meta("help_text", "技が登録されていません。クリックで登録画面に移動します。")
-		else:
-			$actions/delete_buttons.get_child(i).disabled = false
-			$actions/delete_buttons.get_child(i).mouse_default_cursor_shape = \
-			CursorShape.CURSOR_POINTING_HAND
-			button.set_meta("help_text", "現在登録されている技。クリックで登録画面に移動します。")
-		help_label.connect_hover_signal(button)
-		$actions/action_buttons.add_child(button)
 
 ## 全ての形態に関して、技をそれぞれのコンテナにボタン化して追加する関数
 func setting_action_button() -> void:
-	if len(evolution_forms) <= 2: # 第三形態がない時
-		action_list.set_tab_disabled(2, true)
-		if len(evolution_forms) == 1: # 第二形態もない時
-			action_list.set_tab_disabled(1, true)
+	for i in len(selected_monster.action):
+		## 技が追加されるコンテナ(ScrollContainer -> MarginContainer -> VboxContainer)
+		var container = action_list.get_child(0).get_child(0)
+		var button = load("res://action_setting_button.tscn").instantiate()
+		button.action = selected_monster.action[i]
+		# lockはsetter内でactionの情報を取得するため、actionより後で設定
+		if selected_monster.level < selected_monster.action[i].unlock_level:
+			button.lock = true
+		else:
+			button.lock = false
+		# chanceはlockの設定時に上書きされてしまうため、lockより後で設定
+		button.chance = selected_monster.chance[i]
+		button.get_child(1).button_up.connect(func(): 
+			action_button_up(button.action.data, button.lock)
+		)
+		button.delete_button_up.connect(func(): 
+			if selected_action == button.action:
+				_on_chance_value_changed(0)
+			else:
+				chances[actions.find(button.action)] = 0
+			
+			pie_chart_update()
+		)
+		button.get_child(1).set_meta("help_text", "クリックで技の詳細を確認できます。")
+		container.add_child(button)
 	
-	for mon: Monster in evolution_forms:
-		## 技が追加されるコンテナ(TabContainer -> ScrollContainer -> VboxContainer)
-		var container = action_list.get_child(mon.form).get_child(0)
-		for act: Action in mon.actions:
-			var button = Global.action_button.instantiate()
-			button.action = act
-			button.button_up.connect(func(): action_button_up(button.action))
-			button.set_meta("help_text", "クリックで技の詳細を確認できます。")
-			container.add_child(button)
+	connect_hover_signal.emit(action_list)
 
 ## 技ボタンが押された時の関数
-func action_button_up(act: Action, extra: bool = false) -> void:
+## [param is_not_editable]が[code]true[/code]の時、確率の操作ができないように
+##一部ノードを使用不可にする。
+func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
 	var container := $action_description/ability/container
 	for child in container.get_children(): # 初期化
 		child.queue_free()
 	
-	if parent.mode != Mode.ACTION: # まだ移動していなければカメラ移動
-		parent.mode = Mode.ACTION
+	if parent.mode != parent.Mode.ACTION: # まだ移動していなければカメラ移動
+		parent.mode = parent.Mode.ACTION
 	
 	if act == null: # nullなら移動だけして中断
 		return
@@ -249,17 +232,14 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 	action_select.show() # nullじゃなければ表示
 	action_description.show()
 	
-	selected_action = act
-	# 選ばれた技が既に登録されているかどうかで登録ボタンの挙動を変える
-	if act in actions:
-		confirm_button.disabled = true
-	else:
-		confirm_button.disabled = false
+	var index := selected_monster.action.map(func(e): return e.data).find(act)
+	selected_action = selected_monster.action[index]
 	## 元々ボタンがあれば取得される
 	var exists = action_select.get_node_or_null("action_button")
 	if exists: # 存在したら削除
 		action_select.remove_child(exists)
 		exists.queue_free()
+	
 	## 新たに表示されるボタン
 	var button = Global.action_button.instantiate()
 	button.name = "action_button"
@@ -267,10 +247,10 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 	button.action = act
 	button.mouse_default_cursor_shape = Control.CURSOR_ARROW # カーソルも戻す
 	button.set_meta("help_text", act.description)
-	help_label.connect_hover_signal(button)
+	parent.help_label.connect_hover_signal(button)
 	action_select.add_child(button)
 	
-	if extra == true: # 確率表記を隠し、sliderとspinboxを操作不能に
+	if is_not_editable: # 確率表記を隠し、sliderとspinboxを操作不能に
 		for child in action_select.get_children():
 			if child is Range:
 				child.editable = false
@@ -282,14 +262,10 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 		for node in [slider, spinbox]: # sliderとspinboxのセッティング
 			# この時点では、先に設定していた技の最大値を、次に選ばれた技の確率が越えていた場合に、
 			# 最大値に引っかかってしまう
-			if act in actions:
-				node.set_value_no_signal(chances[actions.find(act)])
-			else:
-				node.set_value_no_signal(0)
+			node.set_value_no_signal(chances[actions.find(selected_action)])
 			node.max_value = float(act.max_chance)
 			# もう一度値を設定して、適切な値に戻す
-			if act in actions:
-				node.set_value_no_signal(chances[actions.find(act)])
+			node.set_value_no_signal(chances[actions.find(selected_action)])
 			$action_select/max_chance.text = "%d%%" % act.max_chance
 			node.editable = true
 		slider.tick_count = slider.max_value / 10 + 1
@@ -297,122 +273,131 @@ func action_button_up(act: Action, extra: bool = false) -> void:
 		for child in action_select.get_children():
 			child.show()
 	
-	var power: RichTextLabel = $action_description/power
-	var mp: RichTextLabel = $action_description/mp
-	var type: RichTextLabel = $action_description/type
-	var target: RichTextLabel = $action_description/target
-	power.text = "[color=red]Power[/color]:%4d" % act.power
-	mp.text = "[color=aqua]MP   [/color]:%4d" % act.mp
+	power_label.text = "[color=red]Power[/color]:%4d" % act.power
+	mp_label.text = "[color=aqua]MP   [/color]:%4d" % act.mp
 	
 	match act.damage_type: # 分類によってテキストと枠線を変える
-		Action.DamageType.なし:
-			type.text = "分類:なし"
-			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
+		ActionData.DamageType.なし:
+			type_label.text = "分類:なし"
+			var style: StyleBoxFlat = type_label.get_theme_stylebox("normal")
 			style.border_color = Color.WHITE
-			type.set_meta("help_text", "いずれのステータスも参照しません。")
+			type_label.set_meta("help_text", "いずれのステータスも参照しません。")
 		
-		Action.DamageType.物理:
-			type.text = "分類:[color=red]物理[/color]"
-			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
+		ActionData.DamageType.物理:
+			type_label.text = "分類:[color=red]物理[/color]"
+			var style: StyleBoxFlat = type_label.get_theme_stylebox("normal")
 			style.border_color = Color.RED
-			type.set_meta("help_text", 
+			type_label.set_meta("help_text", 
 			"攻撃側の[color=orange]ATK[/color]と" + \
 			"守備側の[color=lightblue]DEF[/color]を参照します。")
 		
-		Action.DamageType.魔法:
-			type.text = "分類:[color=dodger_blue]魔法[/color]"
-			var style: StyleBoxFlat = type.get_theme_stylebox("normal")
+		ActionData.DamageType.魔法:
+			type_label.text = "分類:[color=dodger_blue]魔法[/color]"
+			var style: StyleBoxFlat = type_label.get_theme_stylebox("normal")
 			style.border_color = Color.DODGER_BLUE
-			type.set_meta("help_text", 
+			type_label.set_meta("help_text", 
 			"攻撃側の[color=dodgerblue]MAG[/color]と" + \
 			"守備側の[color=violet]RES[/color]を参照します。")
 	
 	match act.target: # 範囲によってテキストを変える
 		Global.Target.なし:
-			target.text = "[color=yellow]対象[/color]:なし"
-			target.set_meta("help_text", "ダメージを与えません。")
+			target_label.text = "[color=yellow]対象[/color]:なし"
+			target_label.set_meta("help_text", "ダメージを与えません。")
 		
 		Global.Target.近接:
-			target.text = "[color=yellow]対象[/color]:近接"
-			target.set_meta("help_text", "場に出ている目の前の敵にダメージを与えます。")
+			target_label.text = "[color=yellow]対象[/color]:近接"
+			target_label.set_meta("help_text", "場に出ている目の前の敵にダメージを与えます。")
 		
 		Global.Target.遠隔:
-			target.text = "[color=yellow]対象[/color]:遠隔"
-			target.set_meta("help_text", "場に出ていない遠くの敵にもダメージを与えられます。")
+			target_label.text = "[color=yellow]対象[/color]:遠隔"
+			target_label.set_meta("help_text", "場に出ていない遠くの敵にもダメージを与えられます。")
 		
 		Global.Target.敵全体:
-			target.text = "[color=yellow]対象[/color]:敵全体"
-			target.set_meta("help_text", "敵全体にダメージを与えます。")
+			target_label.text = "[color=yellow]対象[/color]:敵全体"
+			target_label.set_meta("help_text", "敵全体にダメージを与えます。")
 		
 		Global.Target.自分:
-			target.text = "[color=yellow]対象[/color]:自分"
-			target.set_meta("help_text", "自分にダメージを与えます。")
+			target_label.text = "[color=yellow]対象[/color]:自分"
+			target_label.set_meta("help_text", "自分にダメージを与えます。")
 		
 		Global.Target.味方単体:
-			target.text = "[color=yellow]対象[/color]:味方単体"
-			target.set_meta("help_text", "味方を1体だけ選んでダメージを与えます。")
+			target_label.text = "[color=yellow]対象[/color]:味方単体"
+			target_label.set_meta("help_text", "味方を1体だけ選んでダメージを与えます。")
 		
 		Global.Target.味方全体:
-			target.text = "[color=yellow]対象[/color]:味方全体"
-			target.set_meta("help_text", "味方全体にダメージを与えます。")
+			target_label.text = "[color=yellow]対象[/color]:味方全体"
+			target_label.set_meta("help_text", "味方全体にダメージを与えます。")
 		
 		Global.Target.敵味方全体:
-			target.text = "[color=yellow]対象[/color]:敵味方全体"
-			target.set_meta("help_text", "敵全体と味方全体にダメージを与えます。")
+			target_label.text = "[color=yellow]対象[/color]:敵味方全体"
+			target_label.set_meta("help_text", "敵全体と味方全体にダメージを与えます。")
+	
+	## 技の解放条件を表示するテキスト
+	var unlock_condition_text := "解放:Lv.%2d" % selected_action.unlock_level
+	var unlock_condition_help := (
+		"この技はLv.%dから使用可能になります。" % selected_action.unlock_level)
+	if selected_action.unlock_form != Global.Form.第一形態:
+		unlock_condition_text += (
+			"[img=40]res://image/element/進化技.PNG[/img]%s" % 
+			Global.form_names[selected_action.unlock_form]
+		)
+		unlock_condition_help += (
+			"ただし[b]%s[/b]に進化するまでは使用できず、それまでは対応する" % 
+			Global.form_names[selected_action.unlock_form] + 
+			"「[img=50]res://image/element/進化技.PNG[/img]" + 
+			"[color=yellow]進化技[/color]」に置き換えられ、" + 
+			"これを発動することでモンスターが進化できます。" 
+		)
+	unlock_condition_label.text = unlock_condition_text
+	unlock_condition_label.set_meta("help_text", unlock_condition_help)
 	
 	for ability: Ability in act.ability:
 		var description = Global.ability_description.instantiate()
 		description.ability = ability
+		if ability is AbilityExtra: # ボタンが押された時の処理
+			description.ability_extra_button_up.connect(func(act):
+				action_button_up(act, true))
 		description.set_meta("help_text", ability.description)
 		container.add_child(description)
 	
-	help_label.connect_hover_signal(action_description)
-
-## 技削除ボタンの処理
-func delete_button_up(i: int) -> void:
-	actions[i] = null
-	chances[i] = 0
-	pie_chart_update()
-
-
-func _on_スキルボタン_item_selected(index: int): # オプションボタンで選んだパターンを登録
-	selected_skill = index + 1
+	parent.help_label.connect_hover_signal(action_description)
 
 ## slider及びspinboxの値が変更された時に、反映させる関数
 func _on_chance_value_changed(value: int) -> void:
-	if selected_action in actions: # 既に選択中の技の時
-		var sum_chance: int = 0
-		var index: int = actions.find(selected_action) ## 既に選択中の技のインデックス
-		var previous_chances = chances.duplicate() ## 選択中の技を除いたchances
-		var previous_value = previous_chances.pop_at(index)
-		
-		for i: int in previous_chances:
-			sum_chance += i
-		sum_chance += value
-		
-		if sum_chance > 100: # 100%を越える場合、元の値に差し戻し
-			Global.accept_dialog.display_dialog(
-					"技の出現率の合計が100%を越えてしまいます！")
-			value = previous_value # 元の値に戻す
-		else:
-			chances[index] = value # 技一覧の確率と円グラフを更新
-			pie_chart_update()
+	var sum_chance: int = 0
+	var index: int = actions.find(selected_action) ## 既に選択中の技のインデックス
+	var previous_chances = chances.duplicate() ## 選択中の技を除いたchances
+	var previous_value = previous_chances.pop_at(index)
+	
+	for i: int in previous_chances:
+		sum_chance += i
+	sum_chance += value
+	
+	if sum_chance > 100: # 100%を越える場合、元の値に差し戻し
+		Global.accept_dialog.display_dialog(
+				"技の出現率の合計が100%を越えてしまいます！")
+		value = previous_value # 元の値に戻す
+	else:
+		chances[index] = value # 技一覧の確率と円グラフを更新
+		pie_chart_update()
 	
 	for node in [slider, spinbox]: # sliderとspinboxを更新
 		node.set_value_no_signal(value)
+	
+	action_list.get_child(0).get_child(0).get_child(index).chance = value
 
 ## おまかせボタンが押された時
 func _on_random_button_up() -> void:
-	selected_monster.random_action_selector(actions, chances)
-	actions.resize(4)
-	chances.resize(4)
+	selected_monster.random_action_selector()
+	chances = selected_monster.chance
 	pie_chart_update()
+	
+	for i in len(chances):
+		if actions[i] == selected_action:
+			_on_chance_value_changed(chances[i])
+		else:
+			action_list.get_child(0).get_child(0).get_child(i).chance = chances[i]
 
-## レベル設定のspinbox[param level_spinbox]の[member Range.value]が変更された時、
-##[param level]の値を更新する
-func _on_level_value_changed(value: float) -> void:
-	level = value
 
-
-func _on_action_list_tab_selected(tab: int) -> void:
-	_on_option_button_item_selected(tab)
+func _on_control_status_mode_confirm_button_up() -> void:
+	selected_monster_changed.emit(selected_monster)

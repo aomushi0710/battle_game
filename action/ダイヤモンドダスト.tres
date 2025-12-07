@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_dbh3g"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_kuyix"]
 [ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://element/氷属性.tres" id="3_36dnq"]
-[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="4_ifser"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/ActionData.gd" id="4_ifser"]
 
 [resource]
 script = ExtResource("4_ifser")

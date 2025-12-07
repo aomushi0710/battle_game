@@ -1,5 +1,7 @@
 extends Panel
 
+signal ability_extra_button_up
+
 @onready var background := $background
 @onready var name_label := $name
 @onready var target_label := $target
@@ -206,12 +208,9 @@ func _ready() -> void:
 		button.position = Vector2(8, 147)
 		button.scale = Vector2(0.67, 0.67)
 		button.size.x = 497
-		# 再帰的に親のセレクトノードを探す
-		var parent = get_parent().get_parent().get_parent().get_parent()
-		# セレクト画面の時だけ、技の説明を表示する関数に接続
-		if parent.name == "セレクト":
-			button.button_up.connect(func(): 
-				parent.action_button_up(ability.action, true))
+		button.button_up.connect(func(): 
+			ability_extra_button_up.emit(button.action))
+		
 		ability_extra.add_child(button)
 	
 	else:

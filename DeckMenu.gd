@@ -1,73 +1,81 @@
-extends "res://select.gd"
+extends Control
+
+## 親の[member MenuMonster.selected_monster]変数に代入させるシグナル。[br]
+## 返り値とするリソース[Monster]は親のsetterで複製されて渡される。
+signal selected_monster_changed(monster: Monster)
+signal evolution_form_changed(form: Global.Form)
+signal selected_slot_index_changed(index: int)
 
 const deck_size: int = 3 ## デッキのサイズ
+
+@export var parent: MenuMonster
+@export var evolution_preview_button: OptionButton
 
 @export var lineedit: LineEdit
 @export var monster_icons: HBoxContainer
 @export var monster_names: HBoxContainer
 
-var max_evolution_form: Monster.Form ## デッキのモンスターで最大の進化形態
-## デッキ編成で現在表示中のモンスターの形態。[br]
-## 値を変更すると自動で[code]update()[/code]関数を呼び、デッキ編成の見た目を変更します。
-var preview_form: Monster.Form:
-	set(form):
-		preview_form = form
-		update()
+var max_evolution_form: Global.Form ## デッキのモンスターで最大の進化形態
+## 親の[member MenuMonster.selected_monster]を取得した結果が入る変数
+var selected_monster: Monster
 
 
 func on_mode_entered() -> void:
-	_on_option_button_item_selected(Monster.Form.第一形態)
+	evolution_form_changed.emit(Global.Form.第一形態)
+	# modeが違った時に、update関数がすり抜けないように
+	if parent.mode != parent.Mode.DECK:
+		update(Global.Form.第一形態)
 
 
-func update() -> void:
+func update(form: Global.Form) -> void:
 	if Global.player_deck == null:
 		return
 	
 	lineedit.text = Global.player_deck.name
 	for i in range(deck_size):
-		## [DeckMonster]型で、モンスターが存在するかの確認とレベルの取得に用いる
-		var deck_monster := Global.player_deck.monster[i]
+		## [Monster]型で、モンスターが存在するかの確認とレベルの取得に用いる
+		var monster := Global.player_deck.monster[i]
 		
-		if deck_monster.monster == null:
-			monster_icons.get_child(i).monster = null
+		if monster.data == null:
+			monster_icons.get_child(i).data = null
 			monster_names.get_child(i).text = " \n "
 		else:
-			## [Monster]型で、各形態の情報の取得に用いる
-			var monster: Monster
-			# preview_formの形態を持たないモンスターはモンスターの持つ最後の形態で表示される
-			if deck_monster.evolution_forms.size() > preview_form:
-				monster = deck_monster.evolution_forms[preview_form]
+			# formの形態を持たないモンスターはモンスターの持つ最後の形態で表示される
+			if monster.data.evolution_forms.size() > form:
+				monster.form = form
 			else:
-				monster = deck_monster.evolution_forms[-1]
+				monster.form = len(monster.data.evolution_forms) - 1
 			
-			monster_icons.get_child(i).monster = monster
+			monster_icons.get_child(i).data = monster.data
+			monster_icons.get_child(i).form = monster.form
 			monster_names.get_child(i).text = "[i]Lv.%2d[/i]\n[b]%s[/b]" % \
-			[deck_monster.level, monster.name]
+			[monster.level, monster.get_monsterform().name]
 		
-		if deck_monster.evolution_forms.size() - 1 > max_evolution_form:
-			max_evolution_form = deck_monster.evolution_forms.size() - 1
+			if monster.data.evolution_forms.size() - 1 > max_evolution_form:
+				max_evolution_form = monster.data.evolution_forms.size() - 1
 	
-	var preview_button = evolution_preview_button
 	# 全てのモンスターがnullの時
-	if Global.player_deck.monster.all(func(mon): return mon.monster == null):
+	if Global.player_deck.monster.all(func(mon): return mon.data == null):
 		# ALERT [param preview_form]に代入するとsetterによって再びこの関数が呼ばれる
 		# ので、無限ループを防止すること
-		if preview_form != Monster.Form.第一形態:
-			_on_option_button_item_selected(Monster.Form.第一形態)
+		if form != Global.Form.第一形態:
+			evolution_form_changed.emit(Global.Form.第一形態)
 		
-		preview_button.disabled = true
+		evolution_preview_button.disabled = true
 	else:
 		# 足りない形態の分だけ選択肢を追加する
 		for i in range(max_evolution_form + 1):
-			if preview_button.get_selectable_item(true) < i:
-				preview_button.add_item(Monster.form_names[i], i)
+			if evolution_preview_button.get_selectable_item(true) < i:
+				evolution_preview_button.add_item(Global.form_names[i], i)
 		
-		preview_button.disabled = false
+		evolution_preview_button.disabled = false
 	
 	## 余分な選択肢を削除する回数
-	var delete_count: int = preview_button.get_item_count() - max_evolution_form - 1
+	var delete_count: int = (
+		evolution_preview_button.get_item_count() - max_evolution_form - 1)
 	for i in max(0, delete_count):
-		preview_button.remove_item(preview_button.get_selectable_item(true))
+		evolution_preview_button.remove_item(
+			evolution_preview_button.get_selectable_item(true))
 
 
 func _on_save_button_up() -> void:
@@ -83,7 +91,7 @@ func _on_load_button_up() -> void:
 
 func _on_auto_fill_button_up() -> void:
 	Global.player_deck.deck_creator()
-	_on_option_button_item_selected(Monster.Form.第一形態)
+	evolution_form_changed.emit(Global.Form.第一形態)
 
 
 func _on_reset_button_up() -> void:
@@ -95,7 +103,7 @@ func _on_reset_button_up() -> void:
 
 func _on_confirmed() -> void:
 	Global.player_deck = Deck.new()
-	_on_option_button_item_selected(Monster.Form.第一形態)
+	evolution_form_changed.emit(Global.Form.第一形態)
 	Global.accept_dialog.display_dialog(
 			"デッキデータをリセットしました。", 
 			"リセット完了"
@@ -103,10 +111,10 @@ func _on_confirmed() -> void:
 
 ## モンスターのアイコンがクリックされた時の処理
 func _on_monster_icon_button_up(index: int) -> void:
-	parent.selected_slot_index = index
+	selected_slot_index_changed.emit(index)
 	
-	if monster_icons.get_child(index).monster == null:
-		parent.mode = Mode.MONSTER_SELECT
+	if monster_icons.get_child(index).data == null:
+		parent.mode = parent.Mode.MONSTER_SELECT
 	else:
-		parent.selected_monster = monster_icons.get_child(index).monster
-		parent.mode = Mode.STATUS
+		selected_monster_changed.emit(Global.player_deck.monster[index])
+		parent.mode = parent.Mode.STATUS

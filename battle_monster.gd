@@ -8,18 +8,13 @@ var parent: Node ## 常にbattleノードを参照するように調整される
 var player: bool ## true:味方 false:敵
 var index: int
 var field: bool ## モンスターが場に出ている時[code]true[/code]
-var level: int ## モンスターのレベル
-var evolution_forms: Array[Monster] ## モンスターの全形態を格納する配列
-var monster: Monster ## モンスターの現在の状態 INFO バトル中に更新される場合あり
-var action_list: Array ## 設定された技を格納する配列
-var second_form_action: Array ## 設定された中間進化技を格納する配列
-var third_form_action: Array ## 設定された進化技を格納する配列
-var chance_list: Array ## 技の出現確率を格納する配列
+var data: Monster ## モンスターの現在の状態 INFO バトル中に更新される場合あり
 var effect_list: Array[MonsterEffect] = [] ## エフェクトが格納される配列　INFO 初期値はなし(空)
 var death: bool = false
 var text_setter_callback: Callable ## dialogのtext_setter
 var chance_range: Array[int] ## 抽選に用いる範囲
-var picked_action: Array[Action] ## 抽選され選ばれた技の配列
+var generated_action: Array[Action] ## 乱数による抽選で生成された技の配列
+var available_action: Array[Action] ## 実際に表示される選択可能な技の配列
 
 signal monster_ready ## モンスターが行動可能になった時発行されます
 
@@ -37,53 +32,36 @@ func parent_getter() -> void:
 	while parent.name != "battle":
 		parent = parent.get_parent()
 
+## UI全般の更新を行う関数
+func ui_update() -> void:
+	$HP.max_value = data.maxHP
+	$HP.value = data.HP
+	$HP/text.text = "HP %3d/%3d" % [data.HP, data.maxHP]
+	
+	$MP.max_value = data.maxMP
+	$MP.value = data.MP
+	$MP/text.text = "MP %3d/%3d" % [data.MP, data.maxMP]
+	
+	$SPD.monster = data
+	
+	$name/element.monster = data
+	$name/name.text = "[b][i]%s[/i][/b]" % data.get_monsterform().name
+	texture_normal = data.image
+
 # バトル開始時セットアップ
-func setup(deck_monster: DeckMonster) -> void:
-	# 引数から全て代入
-	level = deck_monster.level
-	evolution_forms = deck_monster.evolution_forms
-	monster = deck_monster.monster
-	action_list = deck_monster.action
-	second_form_action = deck_monster.second_form_action
-	third_form_action = deck_monster.third_form_action
-	chance_list = deck_monster.chance
-	
-	monster.status_calculator(level)
+func setup() -> void:
+	data.data.status_calculator(data.level)
 	# 初期値を設定
-	monster.HP = monster.maxHP
-	monster.MP = monster.maxMP / 5
+	data.HP = data.maxHP
+	data.MP = data.maxMP / 5
 	
-	$HP.max_value = monster.maxHP
-	$HP.value = monster.HP
-	$HP/text.text = "HP %3d/%3d" % [monster.HP, monster.maxHP]
+	ui_update()
+	# 進化技、中間進化技の置換は技がランダムで選ばれる処理の中で行われるようにする
 	
-	$MP.max_value = monster.maxMP
-	$MP.value = monster.MP
-	$MP/text.text = "MP %3d/%3d" % [monster.MP, monster.maxMP]
-	
-	$SPD.max_value = Global.spd_gauge
-	$SPD.value = 0
-	$SPD.monster = monster
-	
-	$name/element.monster = monster
-	$name/name.text = "[b][i]%s[/i][/b]" % monster.name
-	self.texture_normal = monster.image
-	# 進化技、中間進化技の置換
-	if not second_form_action.is_empty(): # 進化技が存在する場合
-		for i in len(action_list):
-			if action_list[i] in second_form_action: # その技が進化技だった時
-				action_list[i] = Global.action_data[10001].duplicate() # 進化Ⅰに置き換える
-				action_list[i].mp = evolution_forms[Monster.Form.第二形態].cost # MP設定
-		
-		if not third_form_action.is_empty():
-			for i in len(action_list):
-				if action_list[i] in third_form_action:
-					action_list[i] = Global.action_data[10002].duplicate()
-					action_list[i].mp = evolution_forms[Monster.Form.第三形態].cost
 	# chance_range 生成
 	var sum_range = 0
-	for i in len(chance_list):
-		var range = chance_list[i]
+	for i in len(data.chance):
+		var range = data.chance[i]
 		if i == 0:
 			range -= 1
 		sum_range += range # ex.1:10% 2:20% 3:30% 4:40%なら、[9,29,59.99]となり、
@@ -140,7 +118,7 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	# フィールドにいる味方モンスターがやられた時
 	if player == true and self == player_monster:
 		text_setter_callback.call(0, false, [
-		"[color=red]%s はやられてしまった！[/color]\n" % monster.name + 
+		"[color=red]%s はやられてしまった！[/color]\n" % data.name + 
 		"次にフィールドに出すモンスターを\n選んでください。"])
 		await parent.changed
 		bench_set() # 死んだモンスターをベンチにセット
@@ -150,7 +128,7 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	# フィールドにいる敵モンスターを倒した時、ランダムに次を選ぶ
 	elif player == false and self == enemy_monster:
 		await text_setter_callback.call(0, true, [
-		"[color=red]%s を倒した！[/color]\n" % monster.name + 
+		"[color=red]%s を倒した！[/color]\n" % data.name + 
 		"次にフィールドに出すモンスターを\n相手が選んでいる..."])
 		await get_tree().create_timer(1).timeout # 考えるフリ
 		parent.enemy_next_index = parent.random_index(false)
@@ -160,65 +138,32 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	else:
 		if player == true:
 			await text_setter_callback.call(0, true, [
-			"[color=red]%s はやられてしまった！[/color]\n" % monster.name])
+			"[color=red]%s はやられてしまった！[/color]\n" % data.name])
 		else:
 			await text_setter_callback.call(0, true, [
-			"[color=red]%s を倒した！[/color]\n" % monster.name])
+			"[color=red]%s を倒した！[/color]\n" % data.name])
 	get_tree().paused = false
 
 ## 進化技を引数にして、そのIDにあった進化処理を施す
 func evolution(id: int) -> Array[String]:
-	var pre_monster = monster
+	var pre_monster_form := data.get_monsterform()
+	var pre_maxHP := pre_monster_form.status_calculator(data.level)[0]
 	if id == 10001: # 進化Ⅰ
-		monster = evolution_forms[Monster.Form.第二形態]
+		data.form = Global.Form.第二形態
 	elif id == 10002: # 進化Ⅱ
-		monster = evolution_forms[Monster.Form.第三形態]
+		data.form = Global.Form.第三形態
 	
-	if player == true:
-		Global.player_deck.monster[index].monster = monster
-	else:
-		Global.enemy_deck.monster[index].monster = monster
-		
 	# hpを引き継ぐ時、進化で伸びたmaxHPの差だけ回復する
-	monster.HP = pre_monster.HP
-	hp_setter(monster.maxHP - pre_monster.maxHP, false)
-	monster.MP = pre_monster.MP
-	
-	$HP.max_value = monster.maxHP
-	$HP/text.text = "HP %3d/%3d" % [monster.HP, monster.maxHP]
-	$MP.max_value = monster.maxMP
-	$SPD.monster = monster
-	$name/element.monster = monster
-	$name/name.text = "[b][i]%s[/i][/b]" % monster.name
-	self.texture_normal = monster.image
-	
-	var act: int = 0 # 進化技リストのindex
-	for i: int in len(action_list): # 進化技を置き換え
-		if action_list[i].id == id:
-			match id:
-				10001:
-					action_list[i] = second_form_action[act]
-				10002:
-					action_list[i] = third_form_action[act]
-				_:
-					print("ERROR:不明なID")
-			act += 1
-	
-	var delete_list = [] # 削除したい技のindexを登録するリスト
-	for i in len(picked_action):
-		if picked_action[i].id == id: # 進化技のID 10001 or 10002
-			delete_list.append(i)
-	delete_list.reverse() # indexの並びを逆順にすることで、配列の後ろから要素を削除する
-	for i in delete_list:
-		picked_action.remove_at(i)
+	hp_setter(data.maxHP - pre_maxHP, false)
+	ui_update()
 	
 	$SoundEffects/evolution.play()
 	
 	return [
 	"[color=red]%s は \n%s に\n進化した！[/color]" % 
-	[pre_monster.name, monster.name], 
+	[pre_monster_form.name, data.get_monsterform().name], 
 	"進化によって %s の\n[color=coral]HP[/color]が[color=green]%d[/color]回復した！" % 
-	[monster.name, monster.maxHP - pre_monster.maxHP]]
+	[data.get_monsterform().name, data.maxHP - pre_maxHP]]
 
 ## ベンチにモンスターをセットする時の処理[br]spdゲージは溜まらない
 func bench_set() -> void:
@@ -248,12 +193,16 @@ func field_set() -> void:
 func spd_max() -> void:
 	# picked_action 生成
 	if parent.tutorial_mode == false:
-		while len(picked_action) < 4: # 4枠全て技で埋まるまで繰り返す
-			var result = randi() % 100 # 0~99の100通りの乱数を生成
+		while len(generated_action) < 4: # 4枠全て技で埋まるまで繰り返す
+			var result = randi_range(0, 99)
 			for i in len(chance_range):
 				if result <= chance_range[i]: # 乱数に応じて出現する技を決定
-					picked_action.append(action_list[i])
+					generated_action.append(data.action[i])
 					break # 対応する技があったら終了
+	
+	available_action = generated_action.map(
+		func(act: Action): act.evolution_check(data.form))
+	
 	monster_ready.emit()
 
 ## エフェクトアイコンの追加関数
@@ -278,45 +227,46 @@ func mp_setter(n: int, text: bool) -> String:
 	var original_n: int = n # マイナスになるため補正されたが、元の数値を利用したい時
 	
 	if n > 0: # mpが回復した時、水色でアニメーション再生
-		if monster.MP >= monster.maxMP: # 既にMPが最大値の時
+		if data.MP >= data.maxMP: # 既にMPが最大値の時
 			if text == true: # 技の効果やアイテムの使用時など何らかの反応が得たい時
-				return "[color=yellow]しかし、%s の" % monster.name + \
+				return "[color=yellow]しかし、%s の" % data.name + \
 				"[color=aqua]MP[/color]は\n減っていなかった...[/color]"
 			else:
 				return ""
-		elif monster.MP + n >= monster.maxMP: # 回復するとMPが最大値を越えてしまう時
-			n = monster.maxMP - monster.MP
+		elif data.MP + n >= data.maxMP: # 回復するとMPが最大値を越えてしまう時
+			n = data.maxMP - data.MP
 		damage_effect(n, 2)
 	else: # MPを削られた時、dark_redでアニメーション再生
-		if monster.MP <= 0: # 何らかの原因で死亡時
+		if data.MP <= 0: # 何らかの原因で死亡時
 			return ""
 		damage_effect(-n, 3)
-		if monster.MP <= -n: # 残りMPを越えるダメージを受けた時
-			n = -monster.MP # MPがマイナスにならないように補正
+		if data.MP <= -n: # 残りMPを越えるダメージを受けた時
+			n = -data.MP # MPがマイナスにならないように補正
 	
-	var mp_text = monster.MP
-	monster.MP += n
+	var mp_text = data.MP
+	data.MP += n
 	tween = get_tree().create_tween().bind_node($MP)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property($MP, "value", monster.MP, 0.5)
-	tween.parallel().tween_method(mp_text_update, mp_text, monster.MP, 0.5)
+	tween.tween_property($MP, "value", data.MP, 0.5)
+	tween.parallel().tween_method(mp_text_update, mp_text, data.MP, 0.5)
 	
 	var return_text: String # textを表示する処理
 	if text == true: # 能動的にmpが変動した場合？
 		if n > 0: # mpが回復した時、水色でアニメーション再生
 			return_text = \
 			"%s の[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % \
-			[monster.name, n]
+			[data.name, n]
 		else:
 			return_text = \
-			"%s は [color=aqua]%dMP[/color]を消費した..." % [monster.name, -n]
+			"%s は [color=aqua]%dMP[/color]を消費した..." % [data.name, -n]
 		return return_text
 	else: # 受動的にmpが変動した場合?
 		if n > 0: # spdゲージがたまって、mpが回復した時
 			return_text = ""
 		else: # 相手の技やアイテムなどによってmpを無理やり減らされた時
 			return_text = \
-			"%s は [color=aqua]%dMP[/color]を失った！" % [monster.name, -original_n]
+			"%s は [color=aqua]%dMP[/color]を失った！" % \
+			[data.get_monsterform().name, -original_n]
 		return return_text
 
 ## HP変動処理関数(setter)[br]n:数値 text true:ダイアログ表示 false:ダイアログ非表示
@@ -324,46 +274,46 @@ func hp_setter(n: int, text: bool) -> String:
 	var original_n: int = n # 元の数値を保存したい時に
 	
 	if n > 0: # hpが回復した)時、緑色でアニメーション再生
-		if monster.HP >= monster.maxHP: # 既にHPが最大値の時
-			return "[color=yellow]しかし、%s の" % monster.name + \
+		if data.HP >= data.maxHP: # 既にHPが最大値の時
+			return "[color=yellow]しかし、%s の" % data.get_monsterform().name + \
 			"[color=coral]HP[/color]は\n減っていなかった...[/color]"
-		elif monster.HP + n >= monster.maxHP: # 回復するとHPが最大値を越えてしまう時
-			n = monster.maxHP - monster.HP
+		elif data.HP + n >= data.maxHP: # 回復するとHPが最大値を越えてしまう時
+			n = data.maxHP - data.HP
 		damage_effect(n, 0)
 		$SoundEffects/heal.play()
 	else: # ダメージを受けた時、オレンジ色でアニメーション再生
-		if monster.HP <= 0: # 何らかの原因で死亡時
+		if data.HP <= 0: # 何らかの原因で死亡時
 			return ""
 		damage_effect(-n, 1)
 		$SoundEffects/damage.play()
-		if monster.HP <= -n: # 残りHPを越えるダメージを受けた時
-			n = -monster.HP # HPがマイナスにならないように補正
+		if data.HP <= -n: # 残りHPを越えるダメージを受けた時
+			n = -data.HP # HPがマイナスにならないように補正
 	
-	var hp_text = monster.HP
-	monster.HP += n
+	var hp_text = data.HP
+	data.HP += n
 	tween = get_tree().create_tween().bind_node($HP)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property($HP, "value", monster.HP, 0.5)
-	tween.parallel().tween_method(hp_text_update, hp_text, monster.HP, 0.5)
+	tween.tween_property($HP, "value", data.HP, 0.5)
+	tween.parallel().tween_method(hp_text_update, hp_text, data.HP, 0.5)
 	
 	var return_text: String # textを表示する処理
 	if text == true:
 		if n > 0: # hpが回復した時、緑色でアニメーション再生
 			return_text = \
 			"%s の[color=coral]HP[/color]が[color=green]%d[/color]回復した！" % \
-			[monster.name, n]
+			[data.get_monsterform().name, n]
 		else:
 			return_text = "%s は[color=orange]%d[/color]ダメージを受けた！" % \
-			[monster.name, -original_n]
+			[data.get_monsterform().name, -original_n]
 	return return_text
 
 ## hp_setterからhp_textの変化アニメーション用 
 func hp_text_update(hp: int) -> void:
-	$HP/text.text = "HP %3d/%3d" % [hp, monster.maxHP]
+	$HP/text.text = "HP %3d/%3d" % [hp, data.maxHP]
 
 ## hp_setterからhp_textの変化アニメーション用 
 func mp_text_update(mp: int) -> void:
-	$MP/text.text = "MP %3d/%3d" % [mp, monster.maxMP]
+	$MP/text.text = "MP %3d/%3d" % [mp, data.maxMP]
 
 ## 増減した数値を視覚的に表示するエフェクトアニメーションを再生する関数
 func damage_effect(dmg: int, type: int) -> void:

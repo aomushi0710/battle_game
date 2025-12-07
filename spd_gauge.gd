@@ -2,6 +2,11 @@ extends TextureProgressBar
 
 var monster: Monster
 
+func _ready() -> void:
+	max_value = Global.spd_gauge
+	value = 0
+
+
 func _process(delta: float) -> void:
 	if value < Global.spd_gauge: # SPDの値ずつ毎秒増加していき、500まで到達するとコマンドリストを表示
 		value += monster.SPD * Global.spd_correction * delta

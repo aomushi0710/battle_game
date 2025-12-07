@@ -1,5 +1,6 @@
 shader_type canvas_item;
 
+uniform float brightness : hint_range(0.0, 2.0) = 1.0;
 uniform vec4 outline_color : source_color = vec4(0.0, 0.0, 0.0, 1.0); // 枠線の色 (デフォルトは黒)
 uniform float outline_width : hint_range(0.0, 10.0) = 5.0; // 枠線の太さ
 
@@ -20,7 +21,8 @@ void fragment() {
 
 	// 元のテクスチャの色を取得
 	vec4 color = texture(TEXTURE, UV);
+	vec4 base = mix(color, outline_color, outline - color.a);
 
-	// もし元の色が透明に近くて、周りに色があれば、アウトラインの色を描画
-	COLOR = mix(color, outline_color, outline - color.a);
+	// ここを自前の brightness で制御
+	COLOR = base * brightness;
 }

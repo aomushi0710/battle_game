@@ -1,8 +1,8 @@
 extends TextureRect
 
-var monster: Monster:
+var monster: MonsterForm:
 	set(mon):
-		if monster == mon: # 前と同じ技を選んだなら何もしない
+		if monster == mon:
 			return
 	
 		if tween and tween.is_running(): # tweenがすでに動作しているなら停止
@@ -31,4 +31,4 @@ func change() -> void: ## 要素更新関数
 	i += 1
 	if i >= len(monster.element): # 無効なindexを取らないように初期化
 		i = 0
-	self.texture = monster.element[i].icon
+	texture = monster.element[i].icon

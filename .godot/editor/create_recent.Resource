@@ -1,8 +1,8 @@
+MonsterForm
 DialogData
 TileSet
 Element
 Deck
-DeckMonster
 Action
 Theme
 FontFile

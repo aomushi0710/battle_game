@@ -5,9 +5,10 @@ extends Node2D
 const VERSION_BETA: bool = true
 
 ## [code]key[/code]モンスターのID[int][br]
-## [code]value[/code][enum Monster.Form]をindexとして持つ[Array][lb][Monster][rb]
-var monster_data = {}
-## [code]key[/code]技のID[int][br][code]value[/code]技リソース[Action] 
+## [code]value[/code]モンスターの基本データ[MonsterData]。[br]
+## 各形態の情報は[member MonsterData.evolution_forms]を参照すること。
+var monster_data: Dictionary[int, MonsterData] = {}
+## [code]key[/code]技のID[int][br][code]value[/code]技リソース[ActionData] 
 var action_data = {}
 ## [code]key[/code]アイテムのID[int][br][code]value[/code]アイテムリソース[Item]
 var item_data = {}
@@ -27,7 +28,7 @@ func _ready() -> void:
 	accept_dialog = get_child(0)
 	confirmation_dialog = get_child(1)
 	
-	directory_load("res://monster/", monster_data, true)
+	directory_load("res://monster/", monster_data)
 	directory_load("res://action/", action_data)
 	directory_load("res://item/", item_data)
 	
@@ -45,6 +46,7 @@ const tutorial_scene = "res://tutorial.tscn"
 const shop_scene = "res://shop.tscn"
 
 const game_button = preload("res://game_button.tscn")
+const monster_icon = preload("res://monster_icon.tscn")
 const inventory_scene = preload("res://inventory.tscn")
 const action_button = preload("res://action_button.tscn")
 const ability_description = preload("res://ability_description.tscn")
@@ -81,6 +83,19 @@ const spd_correction = 30 ## spdゲージ増加量補正 SPD * spd_correction
 @onready var e1_death = false # 敵
 @onready var e2_death = false
 @onready var e3_death = false
+
+enum Form { ## モンスターの形態
+	第一形態, 
+	第二形態, 
+	第三形態, 
+}
+
+static var form_names = {} ## Formの値をkey、Formの定数名をvalueとする辞書
+
+static func _static_init() -> void:
+	for key in Form:
+		var value = Form[key]
+		form_names[value] = key
 
 enum Status {
 	ATK, 
@@ -147,7 +162,7 @@ func directory_load(path: String, dict, array_mode: bool = false):
 	else:
 		print("ERROR:ディレクトリ「%s」が存在しません" % path)
 
-
+## 現在は使用されていません
 func monster_directory_load(path: String, dict):
 	var dir := DirAccess.open(path)
 	if dir:
@@ -185,6 +200,13 @@ func arrays_overlap(array1: Array, array2: Array) -> bool:
 			return true
 	return false
 
+## Array[lb][Action][rb]型からArray[lb][ActionData][rb]型へ変換する関数
+func action_to_actiondata(actions: Array[Action]) -> Array[ActionData]:
+	var result: Array[ActionData]
+	for act in actions:
+		result.append(act.data)
+	return result
+
 ## 比較されるバージョン[param version1]と比較したいバージョン[param version2]を、[br]
 ## 引数として入力し、[param version1]の方が古い場合は[code]true[/code]、[br]
 ## [param version1]の方が新しい、または同一バージョンの場合は[code]false[/code]を返す関数
@@ -207,7 +229,7 @@ ProjectSettings.get_setting("application/config/version")) -> bool:
 
 ## モンスターのステータス表示を生成する関数
 func status_text(monster: Monster) -> String:
-	var text = (
+	var text := (
 		"[color=coral]HP :%3d" % monster.maxHP + 
 		"[/color] [color=green]SPD:%3d" % monster.SPD + 
 		"[/color]\n[color=aqua]MP :%3d" % monster.supplyMP + "  /  %3d" % 
@@ -237,7 +259,7 @@ func all_status(monster: Monster, font_size: int) -> Array[RichTextLabel]:
 	return [name_label, element_label, status_label]
 
 
-func action_description_creator(act: Action, blank: bool) -> Array[String]:
+func action_description_creator(act: ActionData, blank: bool) -> Array[String]:
 	var range_text: String ## 技の対象
 	var range_tip: String ## 技の対象の補足
 	var range_blank: String = "" ## 技の対象表示の空白
@@ -275,15 +297,15 @@ func action_description_creator(act: Action, blank: bool) -> Array[String]:
 			range_tip = "虚空に向かって技を放つのか？"
 	
 	match act.damage_type:
-		Action.DamageType.なし:	
+		ActionData.DamageType.なし:	
 			dmg_type_text = "なし"
 			dmg_type_tip = "いずれのステータスも参照されません"
 			dmg_type_blank = "　　"
-		Action.DamageType.物理:
+		ActionData.DamageType.物理:
 			dmg_type_text = "[color=red]物理[/color]"
 			dmg_type_tip = "自身のATKと相手のDEFを参照します"
 			dmg_type_blank = "　　"
-		Action.DamageType.魔法:
+		ActionData.DamageType.魔法:
 			dmg_type_text = "[color=dodger_blue]魔法[/color]"
 			dmg_type_tip = "自身のMAGと相手のRESを参照します"
 			dmg_type_blank = "　　"

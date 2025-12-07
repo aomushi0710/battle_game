@@ -1,7 +1,10 @@
+class_name MenuMonster
 extends Control
 
-@export_category("モード親ノード")
-@export var parent: Control
+## [enum MenuMonster.Mode]が[param STATUS]の時、決定ボタン
+##[member MenuMonster.confirm_button]が押されると発行される。
+## [member MenuMonster.monster_setting]の最新のselected_monsterを取得する。
+signal status_mode_confirm_button_up
 
 @export_category("モードノード")
 @export var deck_menu: Control
@@ -23,7 +26,44 @@ extends Control
 
 var camera_tween: Tween
 var selected_slot_index: int ## デッキ内で現在編集中のモンスターの位置を示すindex
-var selected_monster: Monster ## 現在選択中の[Monster]
+## 現在選択中の[Monster]の複製。[br]
+## デッキにいるモンスターに影響を与えずに各種データのプレビューを可能にするために使用。
+var selected_monster: Monster:
+	set(value):
+		if value == null:
+			return
+		selected_monster = value.duplicate(true)
+		monster_setting.selected_monster = selected_monster
+
+## デッキ編成で現在表示中のモンスターの形態。[br]
+## 値を変更すると自動で[code]update()[/code]関数を呼び、デッキ編成の見た目を変更します。
+var preview_form: Global.Form:
+	set(form):
+		preview_form = form
+		evolution_preview_button.selected = preview_form
+		match mode:
+			Mode.DECK:
+				deck_menu.update(preview_form)
+			
+			Mode.MONSTER_SELECT:
+				monster_select.update(preview_form)
+			
+			Mode.STATUS, Mode.ACTION:
+				monster_setting.selected_monster.form = preview_form
+
+var level: int: ## プレビュー時のモンスターレベル
+	set(value):
+		level = value
+		# 全ての形態のステータスを更新してリストに登録
+		monster_setting.all_status_list.clear()
+		for i in len(selected_monster.data.evolution_forms):
+			monster_setting.all_status_list.append(
+				selected_monster.data.evolution_forms[i].status_calculator(level))
+		
+		if mode == Mode.STATUS:
+			monster_setting.monster_preview()
+		elif mode == Mode.ACTION:
+			monster_setting.monster_preview(true)
 
 ## [enum Mode]に対応する[Control]ノードの[NodePath]の辞書
 const MODE_TO_NODEPATH: Dictionary[Mode, String] = {
@@ -60,7 +100,7 @@ enum Mode {
 ## この変数に代入を行う時は常に親ノードでの
 var mode: Mode = Mode.DECK:
 	set(next_mode): ## 対応する画面遷移を行ってからモード変更
-		if not is_inside_tree() or parent == null:
+		if not is_inside_tree():
 			return
 		
 		# 全てのボタンを使用不可に
@@ -68,7 +108,7 @@ var mode: Mode = Mode.DECK:
 			if child is Button:
 				child.disabled = true
 		
-		for child in parent.get_children():
+		for child in get_children():
 			if child.name == MODE_TO_NODEPATH[next_mode]:
 				child.show()
 			else:
@@ -78,13 +118,13 @@ var mode: Mode = Mode.DECK:
 			evolution_preview.show()
 		
 		## カメラ移動アニメーション
-		camera_tween = parent.get_tree().create_tween().bind_node(camera)
+		camera_tween = get_tree().create_tween().bind_node(camera)
 		match next_mode:
 			Mode.DECK:
 				deck_menu.on_mode_entered()
 			
 			Mode.MONSTER_SELECT:
-				pass
+				monster_select.on_mode_entered()
 			
 			Mode.STATUS:
 				# ACTIONとSTATUSからの遷移時は呼ばない
@@ -155,7 +195,7 @@ func _on_back_button_up():
 	sound_effects.click.play()
 	match mode:
 		Mode.MONSTER_SELECT:
-			parent.mode = Mode.DECK
+			mode = Mode.DECK
 		
 		Mode.STATUS: # キャラ選択に戻す
 			Global.confirmation_dialog.on_confirm_callable = func():
@@ -176,6 +216,8 @@ func _on_confirm_button_up():
 	sound_effects.click.play()
 	match mode:
 		Mode.STATUS:
+			status_mode_confirm_button_up.emit()
+			
 			var sum_chance = 0 ## 技の出現率の合計
 			for i: int in monster_setting.chances:
 				sum_chance += i
@@ -184,38 +226,14 @@ func _on_confirm_button_up():
 						"出現率の合計が100%ではありません！")
 				return
 			
-			if len(monster_setting.evolution_forms) == 3: # 2回進化モンスター
-				if monster_setting.monster.is_evolution_skipped(
-					monster_setting.actions):
-					Global.accept_dialog.display_dialog(
-							"第三形態の技は登録されていますが、\n" + 
-							"第二形態の技が登録されていません！\n" + 
-							"このモンスターは進化が2回必要です"
-					)
-					return
-			
 			#elif selected_skill == 0: #スキル実装後に実装
 				#$エラーメッセージ.dialog_text = "スキルが選択されていません！"
 				#$エラーメッセージ.popup_centered()
 				#return
 			
-			for i in len(monster_setting.chances): # 技が登録されているが0%になっている時、nullを入れる
-				if monster_setting.chances[i] == 0:
-					monster_setting.actions[i] = null
+			Global.player_deck.monster[selected_slot_index] = selected_monster
 			
-			var deck_monster: DeckMonster = \
-			Global.player_deck.monster[Global.now_picking]
-			deck_monster.level = \
-			Global.save_data.monster_levels[monster_setting.monster_id]
-			deck_monster.evolution_forms = monster_setting.evolution_forms
-			deck_monster.monster = monster_setting.evolution_forms[0].duplicate()
-			deck_monster.action = monster_setting.actions.filter(
-				func(x): return x != null) # nullは消す
-			
-			deck_monster.chance = monster_setting.chances.filter(
-				func(x): return x != 0) # 0は消す
-			#deck_monster.skill = monster_setting.selected_skill
-			get_tree().change_scene_to_file(Global.deck_scene)
+			mode = Mode.DECK
 		
 		Mode.ACTION:
 			# 既存の技を選択中の時
@@ -250,10 +268,27 @@ func _on_confirm_button_up():
 
 ## 進化プレビューオプションボタンで形態が選択された時の処理
 func _on_option_button_item_selected(index: int) -> void:
+	preview_form = index
 	match mode:
-		Mode.DECK:
-			evolution_preview_button.selected = index
-			deck_menu.preview_form = index
-		
 		Mode.STATUS:
-			monster_setting.monster_preview(index)
+			monster_setting.monster_preview()
+		
+		Mode.ACTION:
+			monster_setting.monster_preview(true)
+
+## レベル設定のspinbox[param level_spinbox]の[member Range.value]が変更された時、
+##[param level]の値を更新する
+func _on_level_value_changed(value: float) -> void:
+	level = value
+
+
+func _on_selected_monster_changed(monster: Monster) -> void:
+	selected_monster = monster
+
+
+func _on_selected_slot_index_changed(index: int) -> void:
+	selected_slot_index = index
+
+
+func _on_get_selected_slot_index() -> void:
+	monster_select._selected_slot_index = selected_slot_index

@@ -1,20 +1,19 @@
 class_name Action
 extends Resource
 
-enum DamageType {
-	なし, ## いずれのステータスも参照されません。
-	物理, ## 攻撃側はATK、防御側はDEFを参照します。
-	魔法, ## 攻撃側はMAG、防御側はRESを参照します。
-}
+@export var data: ActionData ## 技の基データ
+@export var unlock_level: int = 1 ## 技の解放レベル
+@export var unlock_form: Global.Form = Global.Form.第一形態 ## 技の解放に必要な形態
 
-@export var id: int ## 技のid
-@export var name: String ## 技の名前
-@export var element: Array[Element] ## 技の属性 Element型のリソース[br]複数登録可能
-@export_range(1,100,1,"suffix:%") var max_chance: int ## 技の最大出現確率
-@export var power: int ## 技の基本的な威力 0なら直接的なダメージは発生しない
-@export var mp: int ## 技の発動に必要なmp
-@export var target: Global.Target ## 技の対象範囲
-@export var damage_type: DamageType ## 技の参照するステータスの分類
-@export var touch: bool ## 技の接触判定[br][code]true[/code]接触する技[br][code]false[/code]:接触しない技
-@export var ability: Array[Ability] ## 技の特殊効果 Ability型のリソース[br]複数登録可能
-@export_multiline var description: String ## 技の説明[br]1行につき全角12文字記述可能
+## 現在の形態[param form]を引数として、その技を利用可能になる形態に達していなければ、
+##対応する形態へ進化させる技として変換してからその技を返す関数
+func evolution_check(form: Global.Form) -> Action:
+	if unlock_form > form:
+		var evolution_action := Action.new() ## 進化用として返す技
+		# 第二形態(定数:1)に進化するための「進化Ⅰ」(ID:10001),
+		# 第三形態(定数:2)に進化するための「進化Ⅱ」(ID:10002)...
+		# という関係にあるために全パターンにおいて以下の式は成立する
+		evolution_action.data = Global.action_data[10000 + unlock_form]
+		return evolution_action
+	else:
+		return self

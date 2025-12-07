@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=5 format=3 uid="uid://7aq76r73mxo2"]
+
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_a0qsd"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="4_jqp34"]
+[ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://element/氷属性.tres" id="4_krni7"]
+[ext_resource type="Texture2D" uid="uid://0duqtna0h2tw" path="res://image/monster/スノーフ.PNG" id="5_fb80k"]
+
+[resource]
+script = ExtResource("4_jqp34")
+name = "スノーフ"
+image = ExtResource("5_fb80k")
+element = Array[ExtResource("3_a0qsd")]([ExtResource("4_krni7")])
+cost = 30
+base_maxHP = 400
+base_maxMP = 50
+base_supplyMP = 10
+base_SPD = 100
+base_ATK = 100
+base_DEF = 100
+base_MAG = 100
+base_RES = 100
+description = ""
+flavor_text = Array[String](["スノーフ はひらひらと舞っている。"])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

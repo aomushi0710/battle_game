@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://delt5jbdq7mva"]
+[gd_resource type="Resource" script_class="ActionData" load_steps=5 format=3 uid="uid://delt5jbdq7mva"]
 
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_1drug"]
-[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_hrb6d"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/ActionData.gd" id="1_hrb6d"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_g8rgo"]
 [ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://element/水属性.tres" id="3_76owy"]
 

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=5 format=3 uid="uid://d06wfhrli4aub"]
+
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="4_n6iky"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="6_kyjat"]
+[ext_resource type="Resource" uid="uid://3bjg4wfbnyh6" path="res://element/雷属性.tres" id="7_st7rq"]
+[ext_resource type="Texture2D" uid="uid://demxi7jb44kox" path="res://image/monster/ボル.PNG" id="8_88yug"]
+
+[resource]
+script = ExtResource("4_n6iky")
+name = "ボル"
+image = ExtResource("8_88yug")
+element = Array[ExtResource("6_kyjat")]([ExtResource("7_st7rq")])
+cost = 0
+base_maxHP = 300
+base_maxMP = 30
+base_supplyMP = 6
+base_SPD = 80
+base_ATK = 80
+base_DEF = 80
+base_MAG = 80
+base_RES = 80
+description = ""
+flavor_text = Array[String]([""])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

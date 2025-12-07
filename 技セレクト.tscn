@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://bbq6gbnyclccj"]
+[gd_scene load_steps=77 format=3 uid="uid://bbq6gbnyclccj"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_14bbj"]
 [ext_resource type="Script" uid="uid://be1a715dl4m8t" path="res://select.gd" id="2_1hqx4"]
@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="5_4lobs"]
 [ext_resource type="Texture2D" uid="uid://cutputtjhww8a" path="res://image/arrow_down_small.png" id="7_4ce10"]
 [ext_resource type="Script" uid="uid://bgt6x6af5clsy" path="res://monster_setting.gd" id="8_4lobs"]
-[ext_resource type="PackedScene" uid="uid://bvbgk42kbwv54" path="res://MonsterIcon.tscn" id="8_ltw0u"]
+[ext_resource type="PackedScene" uid="uid://bvbgk42kbwv54" path="res://monster_icon.tscn" id="8_ltw0u"]
 [ext_resource type="Script" uid="uid://2fvlrr5uk5bg" path="res://DeckMenu.gd" id="8_w7dfb"]
 [ext_resource type="Script" uid="uid://c800gq5mf7cft" path="res://select_background.gd" id="10_250y8"]
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://image/null.PNG" id="10_ilscs"]
@@ -203,7 +203,7 @@ border_width_top = 1
 border_width_right = 1
 border_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0c3n4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t10s7"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
@@ -278,7 +278,7 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lvrxx"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tlog8"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
@@ -294,56 +294,6 @@ shadow_size = 10
 
 [sub_resource type="Theme" id="Theme_oeulo"]
 default_font_size = 30
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hqx4"]
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 20
-corner_radius_bottom_left = 20
-shadow_color = Color(1, 1, 1, 0.501961)
-shadow_size = 10
-
-[sub_resource type="Theme" id="Theme_250y8"]
-default_font_size = 40
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_250y8"]
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 20
-corner_radius_bottom_left = 20
-shadow_color = Color(1, 1, 1, 0.501961)
-shadow_size = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilscs"]
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 20
-corner_radius_bottom_left = 20
-shadow_color = Color(1, 1, 1, 0.501961)
-shadow_size = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dughh"]
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 20
-corner_radius_bottom_left = 20
-shadow_color = Color(1, 1, 1, 0.501961)
-shadow_size = 50
-
-[sub_resource type="Theme" id="Theme_ilscs"]
-default_font_size = 38
 
 [sub_resource type="Gradient" id="Gradient_1hqx4"]
 offsets = PackedFloat32Array(0)
@@ -423,7 +373,11 @@ corner_radius_bottom_left = 1
 expand_margin_left = 4.0
 expand_margin_bottom = 6.0
 
+[sub_resource type="Theme" id="Theme_tlog8"]
+default_font_size = 40
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2vx1"]
+content_margin_left = 4.0
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
@@ -434,8 +388,6 @@ corner_radius_top_left = 1
 corner_radius_top_right = 1
 corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
-expand_margin_left = 4.0
-expand_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l4b1a"]
 bg_color = Color(0, 0, 0, 1)
@@ -462,49 +414,20 @@ border_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 50
 corner_radius_bottom_left = 50
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_epq06"]
-content_margin_left = 35.0
-content_margin_top = 0.0
-content_margin_right = 35.0
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.5, 0.5, 0.5, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14bbj"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.5, 0.5, 0.5, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t10s7"]
-content_margin_left = 35.0
-content_margin_top = 0.0
-content_margin_right = 35.0
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.5, 0.5, 0.5, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tlog8"]
-content_margin_left = 35.0
-content_margin_top = 0.0
-content_margin_right = 35.0
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.5, 0.5, 0.5, 1)
-
 [sub_resource type="Theme" id="Theme_kch7d"]
 default_font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydts3"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="Node2D" type="Node2D"]
 
@@ -567,13 +490,13 @@ text = "[table=2]
 max   [/color][/font_size][/cell]
 [cell][center]:%4d[/center][/cell]"
 vertical_alignment = 1
-metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
+metadata/help_text = "保有できる魔力の最大値。[color=red]この値はレベルアップでは増加しない。[/color]この値の20%が溜まった状態で、バトルが始まります。"
 
 [node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/maxMP"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_j08b8")
-metadata/help_text = "保有できる魔力の最大値。この値の20%が溜まった状態で、バトルが始まります。"
+metadata/help_text = "保有できる魔力の最大値。[color=red]この値はレベルアップでは増加しない。[/color]この値の20%が溜まった状態で、バトルが始まります。"
 
 [node name="supplyMP" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
@@ -592,13 +515,13 @@ text = "[table=2]
 supply[/color][/font_size][/cell]
 [cell][center]:%4d[/center][/cell]"
 vertical_alignment = 1
-metadata/help_text = "行動可能になった時、回復する魔力の量。"
+metadata/help_text = "行動可能になった時、回復する魔力の量。[color=red]この値はレベルアップでは増加しない。[/color]"
 
 [node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/supplyMP"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_0c3n4")
-metadata/help_text = "行動可能になった時、回復する魔力の量。"
+metadata/help_text = "行動可能になった時、回復する魔力の量。[color=red]この値はレベルアップでは増加しない。[/color]"
 
 [node name="SPD" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
@@ -613,13 +536,13 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_spf5i")
 bbcode_enabled = true
 text = "[color=limegreen]SPD[font_size=2]                   [/font_size][/color]:%4d"
 vertical_alignment = 1
-metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
+metadata/help_text = "素早さ。[color=red]この値はレベルアップでは増加しにくい。[/color]ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
 
 [node name="bar" type="TextureRect" parent="CanvasLayer/CanvasLayerUI/Status/status/SPD"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_lvrxx")
-metadata/help_text = "素早さ。ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
+metadata/help_text = "素早さ。[color=red]この値はレベルアップでは増加しにくい。[/color]ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
 
 [node name="ATK" type="HBoxContainer" parent="CanvasLayer/CanvasLayerUI/Status/status"]
 layout_mode = 2
@@ -742,7 +665,7 @@ offset_right = 216.0
 offset_bottom = 1049.0
 theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_0c3n4")
+theme_override_styles/focus = SubResource("StyleBoxFlat_t10s7")
 text = "←戻る"
 color = Color(1, 0, 0, 1)
 metadata/help_text = ""
@@ -805,14 +728,13 @@ metadata/help_text = "指定した形態で、モンスターの情報を表示�
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(960, 540)
 
-[node name="Control" type="Control" parent="." node_paths=PackedStringArray("parent", "deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_14bbj")
 script = ExtResource("2_1hqx4")
-parent = NodePath(".")
 deck_menu = NodePath("DeckMenu")
 monster_select = NodePath("MonsterSelect")
 monster_setting = NodePath("MonsterSetting")
@@ -828,31 +750,18 @@ evolution_preview = NodePath("../CanvasLayer/CanvasLayerUI/EvolutionPreview")
 evolution_preview_button = NodePath("../CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton")
 level_spinbox = NodePath("../CanvasLayer/CanvasLayerUI/Status/Level")
 
-[node name="DeckMenu" type="Control" parent="Control" node_paths=PackedStringArray("lineedit", "monster_icons", "monster_names", "parent", "deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
+[node name="DeckMenu" type="Control" parent="Control" node_paths=PackedStringArray("parent", "evolution_preview_button", "lineedit", "monster_icons", "monster_names")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_w7dfb")
+parent = NodePath("..")
+evolution_preview_button = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton")
 lineedit = NodePath("Deck/LineEdit")
 monster_icons = NodePath("Deck/MonsterIcons")
 monster_names = NodePath("Deck/Names")
-parent = NodePath("..")
-deck_menu = NodePath(".")
-monster_select = NodePath("../MonsterSelect")
-monster_setting = NodePath("../MonsterSetting")
-sound_effects = NodePath("../../SoundEffects")
-background = NodePath("../../background")
-camera = NodePath("../../Camera2D")
-canvas_layer_ui = NodePath("../../CanvasLayer/CanvasLayerUI")
-confirm_button = NodePath("../../CanvasLayer/CanvasLayerUI/Confirm")
-back_button = NodePath("../../CanvasLayer/CanvasLayerUI/Back")
-help_label = NodePath("../../CanvasLayer/CanvasLayerUI/ScrollingLabel")
-status = NodePath("../../CanvasLayer/CanvasLayerUI/Status")
-evolution_preview = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview")
-evolution_preview_button = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton")
-level_spinbox = NodePath("../../CanvasLayer/CanvasLayerUI/Status/Level")
 
 [node name="Deck" type="VBoxContainer" parent="Control/DeckMenu"]
 layout_mode = 0
@@ -873,11 +782,9 @@ layout_mode = 2
 theme_override_constants/separation = 0
 
 [node name="MonsterIcon" parent="Control/DeckMenu/Deck/MonsterIcons" instance=ExtResource("8_ltw0u")]
-custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 
 [node name="MonsterIcon2" parent="Control/DeckMenu/Deck/MonsterIcons" instance=ExtResource("8_ltw0u")]
-custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 
 [node name="MonsterIcon3" parent="Control/DeckMenu/Deck/MonsterIcons" instance=ExtResource("8_ltw0u")]
@@ -956,40 +863,32 @@ offset_right = 1800.0
 offset_bottom = 572.0
 theme_override_colors/font_hover_color = Color(1, 0, 0.0166664, 1)
 theme_override_colors/font_focus_color = Color(1, 0, 0.0166664, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_lvrxx")
+theme_override_styles/focus = SubResource("StyleBoxFlat_tlog8")
 text = "🗑️リセット"
 color = Color(1, 0, 0.0166664, 1)
 metadata/help_text = "現在のデッキをリセットします。"
 
-[node name="MonsterSelect" type="Control" parent="Control" node_paths=PackedStringArray("monster_containers", "parent", "deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
-visible = false
+[node name="MonsterSelect" type="Control" parent="Control" node_paths=PackedStringArray("parent", "evolution_preview_button", "monster_containers")]
 anchors_preset = 0
-offset_right = 40.0
+offset_left = 550.0
+offset_right = 590.0
 offset_bottom = 40.0
 script = ExtResource("10_jsdkd")
-monster_containers = NodePath("MonsterContainers")
 parent = NodePath("..")
-deck_menu = NodePath("../DeckMenu")
-monster_select = NodePath(".")
-monster_setting = NodePath("../MonsterSetting")
-sound_effects = NodePath("../../SoundEffects")
-background = NodePath("../../background")
-camera = NodePath("../../Camera2D")
-canvas_layer_ui = NodePath("../../CanvasLayer/CanvasLayerUI")
-confirm_button = NodePath("../../CanvasLayer/CanvasLayerUI/Confirm")
-back_button = NodePath("../../CanvasLayer/CanvasLayerUI/Back")
-help_label = NodePath("../../CanvasLayer/CanvasLayerUI/ScrollingLabel")
-status = NodePath("../../CanvasLayer/CanvasLayerUI/Status")
-evolution_preview = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview")
 evolution_preview_button = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton")
-level_spinbox = NodePath("../../CanvasLayer/CanvasLayerUI/Status/Level")
+monster_containers = NodePath("ScrollContainer/MonsterContainers")
 
-[node name="MonsterContainers" type="VBoxContainer" parent="Control/MonsterSelect"]
-layout_mode = 0
-offset_right = 1820.0
-offset_bottom = 951.0
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/MonsterSelect"]
+layout_mode = 2
+offset_right = 1370.0
+offset_bottom = 853.0
 
-[node name="MonsterSetting" type="Control" parent="Control" node_paths=PackedStringArray("monster_node", "action_select", "slider", "spinbox", "action_description", "action_list", "pie_chart", "parent", "deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
+[node name="MonsterContainers" type="VBoxContainer" parent="Control/MonsterSelect/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="MonsterSetting" type="Control" parent="Control" node_paths=PackedStringArray("parent", "monster_node", "action_select", "slider", "spinbox", "action_description", "action_list", "pie_chart", "power_label", "mp_label", "type_label", "target_label", "unlock_condition_label")]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1006,28 +905,19 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_14bbj")
 script = ExtResource("8_4lobs")
+parent = NodePath("..")
 monster_node = NodePath("monster")
 action_select = NodePath("action_select")
 slider = NodePath("action_select/chance")
 spinbox = NodePath("action_select/SpinBox")
 action_description = NodePath("action_description")
-action_list = NodePath("action_list")
+action_list = NodePath("ActionList")
 pie_chart = NodePath("PieChart")
-parent = NodePath("..")
-deck_menu = NodePath("../DeckMenu")
-monster_select = NodePath("../MonsterSelect")
-monster_setting = NodePath(".")
-sound_effects = NodePath("../../SoundEffects")
-background = NodePath("../../background")
-camera = NodePath("../../Camera2D")
-canvas_layer_ui = NodePath("../../CanvasLayer/CanvasLayerUI")
-confirm_button = NodePath("../../CanvasLayer/CanvasLayerUI/Confirm")
-back_button = NodePath("../../CanvasLayer/CanvasLayerUI/Back")
-help_label = NodePath("../../CanvasLayer/CanvasLayerUI/ScrollingLabel")
-status = NodePath("../../CanvasLayer/CanvasLayerUI/Status")
-evolution_preview = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview")
-evolution_preview_button = NodePath("../../CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton")
-level_spinbox = NodePath("../../CanvasLayer/CanvasLayerUI/Status/Level")
+power_label = NodePath("action_description/Power")
+mp_label = NodePath("action_description/Mp")
+type_label = NodePath("action_description/Type")
+target_label = NodePath("action_description/Target")
+unlock_condition_label = NodePath("action_description/UnlockCondition")
 
 [node name="monster" type="TextureRect" parent="Control/MonsterSetting"]
 layout_mode = 0
@@ -1065,127 +955,6 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 vertical_alignment = 1
-
-[node name="actions" type="HBoxContainer" parent="Control/MonsterSetting"]
-layout_mode = 0
-offset_left = 1135.0
-offset_top = 588.0
-offset_right = 1911.0
-offset_bottom = 901.0
-theme_override_constants/separation = 20
-
-[node name="chart_colors" type="VBoxContainer" parent="Control/MonsterSetting/actions"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="chart_color1" type="Panel" parent="Control/MonsterSetting/actions/chart_colors"]
-custom_minimum_size = Vector2(86, 63)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_1hqx4")
-
-[node name="chance" type="RichTextLabel" parent="Control/MonsterSetting/actions/chart_colors/chart_color1"]
-clip_contents = false
-layout_mode = 1
-offset_right = 80.0
-offset_bottom = 63.0
-theme = SubResource("Theme_250y8")
-bbcode_enabled = true
-text = "100%"
-scroll_active = false
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="chart_color2" type="Panel" parent="Control/MonsterSetting/actions/chart_colors"]
-custom_minimum_size = Vector2(86, 63)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_250y8")
-
-[node name="chance" type="RichTextLabel" parent="Control/MonsterSetting/actions/chart_colors/chart_color2"]
-clip_contents = false
-layout_mode = 0
-offset_right = 80.0
-offset_bottom = 63.0
-theme = SubResource("Theme_250y8")
-bbcode_enabled = true
-text = "20%"
-scroll_active = false
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="chart_color3" type="Panel" parent="Control/MonsterSetting/actions/chart_colors"]
-custom_minimum_size = Vector2(86, 63)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ilscs")
-
-[node name="chance" type="RichTextLabel" parent="Control/MonsterSetting/actions/chart_colors/chart_color3"]
-clip_contents = false
-layout_mode = 0
-offset_right = 80.0
-offset_bottom = 63.0
-theme = SubResource("Theme_250y8")
-bbcode_enabled = true
-text = "30%"
-scroll_active = false
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="chart_color4" type="Panel" parent="Control/MonsterSetting/actions/chart_colors"]
-custom_minimum_size = Vector2(86, 63)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_dughh")
-
-[node name="chance" type="RichTextLabel" parent="Control/MonsterSetting/actions/chart_colors/chart_color4"]
-clip_contents = false
-layout_mode = 0
-offset_right = 80.0
-offset_bottom = 63.0
-theme = SubResource("Theme_250y8")
-bbcode_enabled = true
-text = "30%"
-scroll_active = false
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="action_buttons" type="VBoxContainer" parent="Control/MonsterSetting/actions"]
-custom_minimum_size = Vector2(590, 0)
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="delete_buttons" type="VBoxContainer" parent="Control/MonsterSetting/actions"]
-layout_mode = 2
-theme_override_constants/separation = 19
-
-[node name="delete1" type="Button" parent="Control/MonsterSetting/actions/delete_buttons"]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme = SubResource("Theme_ilscs")
-text = "❌"
-flat = true
-
-[node name="delete2" type="Button" parent="Control/MonsterSetting/actions/delete_buttons"]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme = SubResource("Theme_ilscs")
-text = "❌"
-flat = true
-
-[node name="delete3" type="Button" parent="Control/MonsterSetting/actions/delete_buttons"]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme = SubResource("Theme_ilscs")
-text = "❌"
-flat = true
-
-[node name="delete4" type="Button" parent="Control/MonsterSetting/actions/delete_buttons"]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme = SubResource("Theme_ilscs")
-text = "❌"
-flat = true
 
 [node name="action_select" type="Control" parent="Control/MonsterSetting"]
 anchors_preset = 0
@@ -1258,14 +1027,13 @@ text = "100%"
 horizontal_alignment = 1
 
 [node name="action_description" type="Control" parent="Control/MonsterSetting"]
-visible = false
 anchors_preset = 0
-offset_left = 1920.0
-offset_top = 200.0
-offset_right = 2710.0
-offset_bottom = 578.0
+offset_left = 1921.0
+offset_top = 188.0
+offset_right = 2711.0
+offset_bottom = 566.0
 
-[node name="power" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
+[node name="Power" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 2
 offset_left = 20.0
@@ -1278,7 +1046,7 @@ text = "[color=red]Power[/color]:9999"
 scroll_active = false
 metadata/help_text = "技の威力。"
 
-[node name="mp" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
+[node name="Mp" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 0
 offset_left = 20.0
@@ -1292,7 +1060,7 @@ text = "[color=aqua]MP   [/color]:9999"
 scroll_active = false
 metadata/help_text = "技を発動する時に消費するMPの量。"
 
-[node name="type" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
+[node name="Type" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 2
 offset_left = 238.0
@@ -1304,7 +1072,7 @@ bbcode_enabled = true
 text = "分類:[color=red]物理[/color]"
 scroll_active = false
 
-[node name="target" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
+[node name="Target" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 2
 offset_left = 238.0
@@ -1317,13 +1085,18 @@ bbcode_enabled = true
 text = "[color=yellow]対象[/color]:敵味方全体"
 scroll_active = false
 
-[node name="description" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
+[node name="UnlockCondition" type="RichTextLabel" parent="Control/MonsterSetting/action_description"]
 clip_contents = false
 layout_mode = 0
-offset_left = 597.0
-offset_right = 758.0
-offset_bottom = 132.0
+offset_left = 553.0
+offset_right = 763.0
+offset_bottom = 140.0
+theme = SubResource("Theme_tlog8")
+theme_override_constants/line_separation = 11
 theme_override_styles/normal = SubResource("StyleBoxFlat_u2vx1")
+bbcode_enabled = true
+text = "解放:Lv.99
+[img=40]res://image/element/進化技.PNG[/img]第二形態"
 
 [node name="ability" type="ScrollContainer" parent="Control/MonsterSetting/action_description"]
 layout_mode = 0
@@ -1352,55 +1125,6 @@ text = "特殊効果"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="action_list" type="TabContainer" parent="Control/MonsterSetting"]
-layout_mode = 0
-offset_left = 1934.0
-offset_top = 588.0
-offset_right = 2528.0
-offset_bottom = 901.0
-theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 32
-theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_epq06")
-theme_override_styles/panel = SubResource("StyleBoxFlat_14bbj")
-theme_override_styles/tab_selected = SubResource("StyleBoxFlat_t10s7")
-theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_tlog8")
-theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_tlog8")
-tab_alignment = 1
-current_tab = 0
-
-[node name="第一形態" type="ScrollContainer" parent="Control/MonsterSetting/action_list"]
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="container" type="VBoxContainer" parent="Control/MonsterSetting/action_list/第一形態"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="第二形態" type="ScrollContainer" parent="Control/MonsterSetting/action_list"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="container" type="VBoxContainer" parent="Control/MonsterSetting/action_list/第二形態"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="第三形態" type="ScrollContainer" parent="Control/MonsterSetting/action_list"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 2
-
-[node name="container" type="VBoxContainer" parent="Control/MonsterSetting/action_list/第三形態"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
 [node name="random" type="Button" parent="Control/MonsterSetting"]
 layout_mode = 0
 offset_left = 871.0
@@ -1416,6 +1140,31 @@ offset_left = 1000.0
 offset_top = 70.0
 offset_right = 2000.0
 offset_bottom = 520.0
+
+[node name="ActionList" type="ScrollContainer" parent="Control/MonsterSetting"]
+z_index = -2
+layout_mode = 0
+offset_left = 1096.0
+offset_top = 603.0
+offset_right = 1896.0
+offset_bottom = 915.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ydts3")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MonsterSetting/ActionList"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MonsterSetting/ActionList/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 18
 
 [node name="background" type="Control" parent="."]
 layout_mode = 3
@@ -1448,10 +1197,14 @@ metadata/_edit_lock_ = true
 
 [node name="SoundEffects" parent="." instance=ExtResource("12_ilscs")]
 
-[connection signal="value_changed" from="CanvasLayer/CanvasLayerUI/Status/Level" to="Control/MonsterSetting" method="_on_level_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/CanvasLayerUI/Status/Level" to="Control" method="_on_level_value_changed"]
 [connection signal="button_up" from="CanvasLayer/CanvasLayerUI/Back" to="Control" method="_on_back_button_up"]
 [connection signal="button_up" from="CanvasLayer/CanvasLayerUI/Confirm" to="Control" method="_on_confirm_button_up"]
 [connection signal="item_selected" from="CanvasLayer/CanvasLayerUI/EvolutionPreview/OptionButton" to="Control" method="_on_option_button_item_selected"]
+[connection signal="status_mode_confirm_button_up" from="Control" to="Control/MonsterSetting" method="_on_control_status_mode_confirm_button_up"]
+[connection signal="evolution_form_changed" from="Control/DeckMenu" to="Control" method="_on_option_button_item_selected"]
+[connection signal="selected_monster_changed" from="Control/DeckMenu" to="Control" method="_on_selected_monster_changed"]
+[connection signal="selected_slot_index_changed" from="Control/DeckMenu" to="Control" method="_on_selected_slot_index_changed"]
 [connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [0]]
 [connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon2" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [1]]
 [connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon3" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [2]]
@@ -1459,7 +1212,10 @@ metadata/_edit_lock_ = true
 [connection signal="button_up" from="Control/DeckMenu/Load" to="Control/DeckMenu" method="_on_load_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/AutoFill" to="Control/DeckMenu" method="_on_auto_fill_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/Reset" to="Control/DeckMenu" method="_on_reset_button_up"]
+[connection signal="get_selected_slot_index" from="Control/MonsterSelect" to="Control" method="_on_get_selected_slot_index"]
+[connection signal="selected_monster_changed" from="Control/MonsterSelect" to="Control" method="_on_selected_monster_changed"]
+[connection signal="connect_hover_signal" from="Control/MonsterSetting" to="CanvasLayer/CanvasLayerUI/ScrollingLabel" method="connect_hover_signal"]
+[connection signal="selected_monster_changed" from="Control/MonsterSetting" to="Control" method="_on_selected_monster_changed"]
 [connection signal="value_changed" from="Control/MonsterSetting/action_select/chance" to="Control/MonsterSetting" method="_on_chance_value_changed"]
 [connection signal="value_changed" from="Control/MonsterSetting/action_select/SpinBox" to="Control/MonsterSetting" method="_on_chance_value_changed"]
-[connection signal="tab_selected" from="Control/MonsterSetting/action_list" to="Control/MonsterSetting" method="_on_action_list_tab_selected"]
 [connection signal="button_up" from="Control/MonsterSetting/random" to="Control/MonsterSetting" method="_on_random_button_up"]

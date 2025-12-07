@@ -32,12 +32,14 @@ anchors_preset = 0
 offset_left = 2.0
 offset_right = 1456.0
 offset_bottom = 81.0
+mouse_filter = 1
 
 [node name="text" type="RichTextLabel" parent="mask"]
 clip_contents = false
 layout_mode = 0
 offset_right = 1472.0
 offset_bottom = 81.0
+mouse_filter = 1
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8ff0p")
 bbcode_enabled = true
 text = "[i]ボタンにカーソルを合わせるとヘルプテキストが表示されます。[/i]"

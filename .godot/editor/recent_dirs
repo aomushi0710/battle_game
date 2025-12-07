@@ -1,5 +1,8 @@
-res://shader
 res://
+res://monster
+res://action
+res://MonsterForm
+res://shader
 res://image/element
 res://image/stage
 res://image/tile
@@ -7,11 +10,9 @@ res://element
 res://deck
 res://resource
 C:/Users/aomus/Documents/Godot Games
-res://action
 res://image/monster
 res://theme
 res://ability/AbilityBuff
 res://resource/Ability
 res://ability
 res://item
-res://monster

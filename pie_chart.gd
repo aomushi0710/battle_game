@@ -6,7 +6,7 @@ signal draw_ended ## _draw関数終了後に発行されます
 const elements_font_size: int = 30 ## フォントサイズ
 const border_width: float = 2 ## ボーダーの太さ
 
-var actions: Array[Action]
+var actions: Array[ActionData]
 var chances: Array[int]
 var color_list: Array[Color] = [Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK] ## これまでの色の履歴を保持
 

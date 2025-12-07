@@ -25,16 +25,19 @@ signal command_ended
 func _ready() -> void:
 	await battle_start_animation()
 	await get_tree().process_frame # 1フレーム待つ
+	
 	for deck: Deck in [Global.player_deck, Global.enemy_deck]:
 		for i: int in len(deck.monster):
 			var monster: BattleMonster = monster_scene.instantiate()
 			monster.index = i
-			monster.setup(deck.monster[i])
+			monster.data = deck.monster[i]
 			monster.text_setter_callback = Callable(dialog, "text_setter")
+			
 			match deck:
 				Global.player_deck:
 					monster.player = true
 					monster.name = "player%d" % (i + 1)
+					
 					if i == 0:
 						player_monster = monster
 						monster.position = Vector2(-256, 350)
@@ -50,12 +53,15 @@ func _ready() -> void:
 						monster.get_node("HP/text").hide()
 						monster.get_node("MP/text").hide()
 						monster.get_node("SPD").hide()
+					
 					player_deck.append(monster)
 					monster.button_up.connect(func():monster_button_up(monster.index))
+				
 				Global.enemy_deck:
 					monster.player = false
 					monster.mouse_filter = Control.MOUSE_FILTER_IGNORE
 					monster.name = "enemy%d" % (i + 1)
+					
 					if i == 0:
 						enemy_monster = monster
 						monster.position = Vector2(1664, 350)
@@ -74,7 +80,9 @@ func _ready() -> void:
 						monster.get_node("HP/text").hide()
 						monster.get_node("MP/text").hide()
 						monster.get_node("SPD").hide()
+					
 					enemy_deck.append(monster)
+					
 			monster.parent_getter()
 			monster.show()
 			# シグナル接続
@@ -160,15 +168,15 @@ func monster_ready(player: bool) -> void:
 		dialog.set_tab_disabled(1, false)
 		dialog.set_tab_disabled(2, false)
 		$button.monster = player_monster # 現在フィールドにいるモンスターを渡す
-		var original_mp: int = player_monster.monster.MP ## MP回復前の値を保持しておく 
-		player_monster.mp_setter(player_monster.monster.supplyMP, false) # mp回復
+		var original_mp: int = player_monster.data.MP ## MP回復前の値を保持しておく 
+		player_monster.mp_setter(player_monster.data.supplyMP, false) # mp回復
 		
 		for button in $button/action.get_children(): # 全てのボタンを一旦削除
 			button.queue_free()
 		# 抽選された技をactionコンテナに追加
-		for i in len(player_monster.picked_action):
+		for i in len(player_monster.available_action):
 			var instance = Global.action_button.instantiate()
-			instance.action = player_monster.picked_action[i]
+			instance.action = player_monster.available_action[i]
 			instance.button_up.connect(func():select_command(i))
 			$button/action.add_child(instance)
 		
@@ -182,8 +190,8 @@ func monster_ready(player: bool) -> void:
 		else:
 			player_ready.emit()
 	else:
-		var original_mp: int = enemy_monster.monster.MP ## MP回復前の値を保持しておく
-		enemy_monster.mp_setter(enemy_monster.monster.supplyMP, false)
+		var original_mp: int = enemy_monster.data.MP ## MP回復前の値を保持しておく
+		enemy_monster.mp_setter(enemy_monster.data.supplyMP, false)
 		
 		enemy_next_index = random_index(false) # 相手側の次に行動するモンスターをランダムにチェンジ
 		
@@ -191,11 +199,11 @@ func monster_ready(player: bool) -> void:
 		await dialog.text_setter(0, true, text)
 		
 		var button_index = randi() % 4 # 味方モンスターと同じ変数名を使用
-		var action: Action = enemy_monster.picked_action[button_index]
+		var action: Action = enemy_monster.available_action[button_index]
 		var action_index: int = enemy_target_select(action)
 		
-		command_selected(enemy_monster, action, action_index)
-		enemy_monster.picked_action.remove_at(button_index)
+		command_selected(enemy_monster, action.data, action_index)
+		enemy_monster.available_action.remove_at(button_index)
 
 ## [param resource]([code]Action[/code]及び[code]Ability[/code])を基に[br]
 ##敵が行うターゲット選択を自動で行い、そのindexを返す関数
@@ -228,6 +236,7 @@ func enemy_target_select(resource: Resource) -> int:
 	return index
 
 ## 死亡フラグを考慮してindexをランダムに指定する関数[br]true:味方index false:敵index
+## TODO 今後whileループを用いない処理に置き換えること
 func random_index(player: bool) -> int:
 	var death_list: Array[bool] = [
 		Global.p1_death, Global.p2_death, Global.p3_death, 
@@ -247,20 +256,21 @@ func random_index(player: bool) -> int:
 ## 引数mpは、mpが自動回復する前に保持されていたmp。比較用に利用する
 func set_ready_text(monster: BattleMonster, mp: int) -> Array[String]:
 	var mp_text: String = "" ## 自動MP回復によるテキスト
-	if mp < monster.monster.maxMP: # MPが満タンでない時
-		if (monster.monster.maxMP - mp) < monster.monster.supplyMP: # MP回復量が最大MPを越してしまう時
+	if mp < monster.data.maxMP: # MPが満タンでない時
+		if (monster.data.maxMP - mp) < monster.data.supplyMP: # MP回復量が最大MPを越してしまう時
 			mp_text = "%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % \
-			[monster.monster.name, monster.monster.maxMP - mp]
+			[monster.data.get_monsterform().name, monster.data.maxMP - mp]
 		else: # supplyMPだけ全て回復しても問題ない時
 			mp_text = "%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % \
-			[monster.monster.name, monster.monster.supplyMP]
+			[monster.data.get_monsterform().name, monster.data.supplyMP]
 	
 	var text: String ## 敵か味方かで変わるテキスト
 	if monster.player == true:
-		text = "[color=yellow]%s は指示を待っている...[/color]" % monster.monster.name
+		text = "[color=yellow]%s は指示を待っている...[/color]" % \
+		monster.data.get_monsterform().name
 	else:
-		text = "[color=yellow]相手の %s の行動！[/color]" % monster.monster.name
-	
+		text = "[color=yellow]相手の %s の行動！[/color]" % \
+		monster.data.get_monsterform().name
 	
 	return ["%s が行動可能になった。\n%s\n%s" % [monster.monster.name, mp_text, text]]
 
@@ -281,7 +291,7 @@ func _on_change_button_up() -> void:
 		if player_deck[player_next_index].death == false:
 			break
 	$button/change.texture_normal = \
-	Global.player_deck.monster[player_next_index].monster.image
+	Global.player_deck.monster[player_next_index].get_monsterform().image
 	if player_monster.index != player_next_index:
 		changed.emit()
 
@@ -291,7 +301,7 @@ func monster_button_up(i: int) -> void:
 		player_next_index = i
 		if player_monster.index != player_next_index:
 			$button/change.texture_normal = \
-			Global.player_deck.monster[player_next_index].monster.image
+			Global.player_deck.monster[player_next_index].get_monsterform().image
 			changed.emit()
 
 ## buttonスクリプト接続用関数
@@ -303,7 +313,7 @@ func select_command(i: int) -> void:
 ## [code]target_setting[/code]関数を用いて決定される。[br][br]
 ## この関数が特殊効果[code]AbilityExtra[/code]によって呼ばれる場合、
 ## [param extra]は[code]true[/code]で呼ぶ。(デフォルトは[code]false[/code])
-func command_selected(monster: BattleMonster, action: Action, index: int, 
+func command_selected(monster: BattleMonster, action: ActionData, index: int, 
 extra: AbilityExtra = null) -> void:
 	dialog.set_tab_disabled(1, true)
 	dialog.set_tab_disabled(2, true)
@@ -328,7 +338,8 @@ extra: AbilityExtra = null) -> void:
 		dialog_text.append(monster.mp_setter(-action.mp, true))
 	# AbilityExtraによって発動した技かどうかで表示メッセージを変える
 	if extra == null:
-		dialog_text.append("%s の %s！" % [monster.monster.name, action.name])
+		dialog_text.append("%s の %s！" % 
+		[monster.data.get_monsterform().name, action.name])
 	else:
 		dialog_text.append(extra.battle_log_message)
 	
@@ -372,19 +383,19 @@ extra: AbilityExtra = null) -> void:
 
 ## [param monster]と[param action]を基に何らかの理由で発動できない技の場合に中断する関数。[br]
 ## 発動可能な技の場合[code]true[/code]を返し、発動不可な技の場合[code]false[/code]を返す。
-func action_checker(monster: BattleMonster, action: Action) -> bool:
+func action_checker(monster: BattleMonster, action: ActionData) -> bool:
 	# 第1形態から最終形態にスキップするのを防止
 	if len(monster.evolution_forms) == 3 \
-	and monster.monster.form == Monster.Form.第一形態 and action.id == 10002:
+	and monster.data.form == Global.Form.第一形態 and action.id == 10002:
 		await dialog.text_setter(0, true, [
-		"[color=yellow]%s はまだ最終形態には進化できない！[/color]\n先に第2形態に進化してください！" % 
-		monster.monster.name])
+		"[color=yellow]%s はまだ第3形態には進化できない！[/color]\n先に第2形態に進化してください！" % 
+		monster.data.get_monsterform().name])
 		return false
 	# mpが足りない場合
 	if monster.monster.MP < action.mp:
 		await dialog.text_setter(0, true, [
 		"%s の %s！\n[color=yellow]しかし、[color=aqua]MP[/color]が足りない！[/color]" % 
-		[monster.monster.name, action.name]])
+		[monster.data.get_monsterform().name, action.name]])
 		return false
 	
 	return true
@@ -435,7 +446,8 @@ damage: int = 0) -> void:
 				text = "これは...どうやら開発者がメッセージを\n入れ忘れているらしい。" + \
 				"\nそれでも特殊効果は発動した！"
 			else:
-				text = ability.battle_log_message % target.monster.name
+				text = ability.battle_log_message % \
+				target.data.get_monsterform().name
 			await dialog.text_setter(0, true, [text])
 		
 		elif ability is AbilityHealing: # 回復
@@ -445,7 +457,7 @@ damage: int = 0) -> void:
 					heal = ability.amount
 				
 				AbilityHealing.AmountType.MAG:
-					heal = monster.monster.MAG * ability.amount
+					heal = monster.data.MAG * ability.amount
 				
 				AbilityHealing.AmountType.吸収:
 					heal = damage * ability.amount
@@ -485,12 +497,12 @@ func item_selected(player: bool, monster: BattleMonster, item: Item, index: int)
 			1: # ライフポーション
 				await item_animation(item, target)
 				var text: String = target.hp_setter( # 最終的には小数点切り捨て
-					target.monster.maxHP * (item.get_power(item.get_level()) / 100.0), true)
+					target.data.maxHP * (item.get_power(item.get_level()) / 100.0), true)
 				await dialog.text_setter(0, true, [text])
 			2: # マナポーション
 				await item_animation(item, target)
 				var text: String = target.mp_setter( # 最終的には小数点切り捨て
-					target.monster.maxMP * (item.get_power(item.get_level()) / 100.0), true)
+					target.data.maxMP * (item.get_power(item.get_level()) / 100.0), true)
 				await dialog.text_setter(0, true, [text])
 	
 	turn_end(monster)
@@ -554,26 +566,21 @@ func turn_end(monster: BattleMonster) -> void:
 	if monster.player == true: # 味方モンスターが動いた後にフレーバーテキスト更新
 		
 		var result = randi() % 4 ## 50%:ステージ 25%:味方モンスター 25%:相手モンスター
-		var matching: bool = false ## false:フレーバーテキスト一覧が空
+		var flavor_text: Array[String] = []
 		match result:
 			0, 1:
-				if len(dialog.stage_flavor_text) != 0: # フレーバーテキストがあれば
-					dialog.now_flavor_text = \
-					dialog.stage_flavor_text[randi() % len(dialog.stage_flavor_text)]
-					matching = true
+				flavor_text = dialog.stage_flavor_text
 			2:
-				if len(player_monster.monster.flavor_text) != 0: # フレーバーテキストがあれば
-					dialog.now_flavor_text = \
-					[player_monster.monster.flavor_text[randi() % len(player_monster.monster.flavor_text)]]
-					matching = true
+				flavor_text = player_monster.data.get_monsterform().flavor_text
 			3:
-				if len(enemy_monster.monster.flavor_text) != 0: # フレーバーテキストがあれば
-					dialog.now_flavor_text = \
-					[enemy_monster.monster.flavor_text[randi() % len(enemy_monster.monster.flavor_text)]]
-					matching = true
-		if matching == false: # なければグローバルフレーバーテキスト
-			dialog.now_flavor_text = \
-			dialog.global_flavor_text[randi() % len(dialog.global_flavor_text)]
+				flavor_text = enemy_monster.data.get_monsterform().flavor_text
+		
+		if flavor_text.is_empty(): # なければグローバルフレーバーテキスト
+			flavor_text = dialog.global_flavor_text
+			if flavor_text.is_empty():
+				flavor_text = ["どうやら何もメッセージがないらしい"]
+		
+		dialog.now_flavor_text = [flavor_text[randi() % len(flavor_text)]]
 	# flavor_text一覧更新
 	if tutorial_mode == false:
 		dialog.flavor_text_setter(dialog.now_flavor_text) # フレーバーテキスト設定
@@ -587,7 +594,7 @@ func battle_finish(win: bool) -> void:
 	if win == true:
 		var coins: int = 0 ## 合計コイン枚数
 		for i in range(3): # コイン獲得
-			coins += enemy_deck[i].monster.coin
+			coins += enemy_deck[i].data.data.coin
 		Global.coin_setter(coins)
 		$"../result_rect/win".show()
 		dialog.text_setter(0, false, [
@@ -703,15 +710,15 @@ func attribute(o: int,d: int):
 		return 1.0 # その他等倍
 
 ## 属性倍率計算機(反復)
-func attribute_setup(action: Action, monster: Monster) -> float:
+func attribute_setup(action: ActionData, monster: Monster) -> float:
 	var magnification: float = 1.0 # 最終的な属性相性倍率
 	for act_element: Element in action.element:
-		for monster_element: Element in monster.element:
+		for monster_element: Element in monster.get_monsterform().element:
 			magnification *= attribute(act_element.id, monster_element.id)
 	return magnification
 
 ## ダメージ計算機[br]戻り値array[ダメージ(int), 属性相性テキスト(string)]
-func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)\
+func damage_calc(action: ActionData, offense: BattleMonster, defense: BattleMonster)\
  -> Array:
 	if action.power == 0: # powerが0なら不要なので中断
 		return [0, ""]
@@ -720,18 +727,18 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 	var type: Array[Global.Status] = []
 	type.resize(2)
 	match action.damage_type: # 必要なステータス参照
-		Action.DamageType.なし:
+		ActionData.DamageType.なし:
 			pass
 		
-		Action.DamageType.物理:
-			status[0] = offense.monster.ATK
-			status[1] = defense.monster.DEF
+		ActionData.DamageType.物理:
+			status[0] = offense.data.ATK
+			status[1] = defense.data.DEF
 			type[0] = Global.Status.ATK
 			type[1] = Global.Status.DEF
 		
-		Action.DamageType.魔法:
-			status[0] = offense.monster.MAG
-			status[1] = defense.monster.RES
+		ActionData.DamageType.魔法:
+			status[0] = offense.data.MAG
+			status[1] = defense.data.RES
 			type[0] = Global.Status.MAG
 			type[1] = Global.Status.RES
 		
@@ -762,7 +769,7 @@ func damage_calc(action: Action, offense: BattleMonster, defense: BattleMonster)
 	# モンスターと技の属性一致倍率を乗算
 	var break_mode: bool = false # 2回目のbreak用
 	for i: Element in action.element:
-		for j: Element in offense.monster.element:
+		for j: Element in offense.data.get_monsterform().element:
 			if i == j:
 				damage *= 1.5
 				break_mode = true

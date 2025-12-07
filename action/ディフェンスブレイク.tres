@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Action" load_steps=8 format=3 uid="uid://briermx7pisp0"]
+[gd_resource type="Resource" script_class="ActionData" load_steps=8 format=3 uid="uid://briermx7pisp0"]
 
-[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="1_1qgl5"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/ActionData.gd" id="1_1qgl5"]
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_apyhf"]
 [ext_resource type="Script" uid="uid://b4gbl34tandgs" path="res://resource/Ability/AbilityDebuff.gd" id="2_ldud1"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_wu700"]

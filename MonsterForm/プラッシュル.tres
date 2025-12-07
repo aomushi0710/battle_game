@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=5 format=3 uid="uid://dwtjm0k6dyhba"]
+
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_7yt4x"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="4_eojh2"]
+[ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://element/水属性.tres" id="4_kp6np"]
+[ext_resource type="Texture2D" uid="uid://kkhkjhbbs1an" path="res://image/monster/プラッシュル.PNG" id="5_bp8ub"]
+
+[resource]
+script = ExtResource("4_eojh2")
+name = "プラッシュル"
+image = ExtResource("5_bp8ub")
+element = Array[ExtResource("3_7yt4x")]([ExtResource("4_kp6np")])
+cost = 50
+base_maxHP = 500
+base_maxMP = 70
+base_supplyMP = 15
+base_SPD = 120
+base_ATK = 120
+base_DEF = 120
+base_MAG = 120
+base_RES = 120
+description = ""
+flavor_text = Array[String]([])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

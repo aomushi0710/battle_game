@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=5 format=3 uid="uid://cybqsqvyfg8a5"]
+
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="4_o4t5r"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="7_sgjua"]
+[ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://element/水属性.tres" id="8_g5w3w"]
+[ext_resource type="Texture2D" uid="uid://dyu8q1ukq7a0t" path="res://image/monster/ラシュ.PNG" id="9_x7xk4"]
+
+[resource]
+script = ExtResource("4_o4t5r")
+name = "ラシュ"
+image = ExtResource("9_x7xk4")
+element = Array[ExtResource("7_sgjua")]([ExtResource("8_g5w3w")])
+cost = 0
+base_maxHP = 300
+base_maxMP = 30
+base_supplyMP = 6
+base_SPD = 80
+base_ATK = 80
+base_DEF = 80
+base_MAG = 80
+base_RES = 80
+description = ""
+flavor_text = Array[String]([""])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

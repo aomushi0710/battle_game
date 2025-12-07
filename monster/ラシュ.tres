@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="MonsterData" load_steps=21 format=3 uid="uid://bgg2mbqbnmq2r"]
+
+[ext_resource type="Script" uid="uid://c3nuh5veon1bs" path="res://resource/Action.gd" id="1_4icye"]
+[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://action/体当たり.tres" id="2_xm6fs"]
+[ext_resource type="Resource" uid="uid://wrxn60f1ot7c" path="res://action/水しぶき.tres" id="3_0y25j"]
+[ext_resource type="Resource" uid="uid://b3bo5h7oxgsjd" path="res://action/あられ.tres" id="4_f4u5y"]
+[ext_resource type="Resource" uid="uid://l5scpwjq6m7w" path="res://action/スプラッシュ.tres" id="5_oeifj"]
+[ext_resource type="Resource" uid="uid://0sm1taom5kmr" path="res://action/癒しの水.tres" id="6_54bkj"]
+[ext_resource type="Resource" uid="uid://b558mwty0ww2l" path="res://action/メガスプラッシュ.tres" id="7_0stfr"]
+[ext_resource type="Resource" uid="uid://delt5jbdq7mva" path="res://action/ギガスプラッシュ.tres" id="8_egjuh"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="9_t0y1a"]
+[ext_resource type="Resource" uid="uid://cybqsqvyfg8a5" path="res://MonsterForm/ラシュ.tres" id="10_mpnit"]
+[ext_resource type="Resource" uid="uid://c5r8cwe3tpw2q" path="res://MonsterForm/プラシュ.tres" id="11_g5mnr"]
+[ext_resource type="Resource" uid="uid://dwtjm0k6dyhba" path="res://MonsterForm/プラッシュル.tres" id="12_djetj"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://resource/MonsterData.gd" id="13_e7pir"]
+
+[sub_resource type="Resource" id="Resource_j3liv"]
+script = ExtResource("1_4icye")
+data = ExtResource("2_xm6fs")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_yudp5"]
+script = ExtResource("1_4icye")
+data = ExtResource("3_0y25j")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_bpjag"]
+script = ExtResource("1_4icye")
+data = ExtResource("4_f4u5y")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_caque"]
+script = ExtResource("1_4icye")
+data = ExtResource("5_oeifj")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_8n4wh"]
+script = ExtResource("1_4icye")
+data = ExtResource("6_54bkj")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_ncq7s"]
+script = ExtResource("1_4icye")
+data = ExtResource("7_0stfr")
+unlock_level = 1
+unlock_form = 1
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_jugx2"]
+script = ExtResource("1_4icye")
+data = ExtResource("8_egjuh")
+unlock_level = 1
+unlock_form = 2
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[resource]
+script = ExtResource("13_e7pir")
+id = 4
+evolution_forms = Array[ExtResource("9_t0y1a")]([ExtResource("10_mpnit"), ExtResource("11_g5mnr"), ExtResource("12_djetj")])
+action = Array[ExtResource("1_4icye")]([SubResource("Resource_j3liv"), SubResource("Resource_yudp5"), SubResource("Resource_bpjag"), SubResource("Resource_caque"), SubResource("Resource_8n4wh"), SubResource("Resource_ncq7s"), SubResource("Resource_jugx2")])
+coin = 10
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

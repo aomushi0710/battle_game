@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://resource/Ability/ability.gd" id="1_ia8av"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_mhvs0"]
-[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/action.gd" id="3_3jq46"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://resource/ActionData.gd" id="3_3jq46"]
 [ext_resource type="Resource" uid="uid://dl5j0v1e805u5" path="res://element/風属性.tres" id="3_igfj5"]
 [ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://element/水属性.tres" id="4_0t13g"]
 

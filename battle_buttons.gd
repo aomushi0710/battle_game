@@ -1,14 +1,14 @@
 extends Control
 
-@onready var battle_node := $".."
-@onready var action_container := $action
+@export var battle_node: Control
+@export var action_container: VBoxContainer
 const MONSTER_NAME_LIMIT: int = 8 ## statusに表示する上での、モンスターの名前の上限文字数
 var now_showing: int ## 現在表示中のボタンメニュー[br]0:main 1:action 2:item 3:status 4:target 5:monsters
 var now_player: bool ## true:現在playerの情報を表示 false:現在enemyの情報を表示
 var monster: BattleMonster
-var selected_action_button: Button
+var selected_action_button: ActionButton
 var button_index: int
-var selected_action: Action
+var selected_action: ActionData
 var selected_item: Item
 var tween: Tween
 ## チュートリアル用:ステータス表示の、playerかenemyかを選択するボタンが押された時のシグナル
@@ -23,7 +23,7 @@ signal back
 func _ready() -> void: # 初期値
 	$"戻る".disabled = true
 	now_showing = 0
-	$change.texture_normal = Global.player_deck.monster[0].monster.image
+	$change.texture_normal = Global.player_deck.monster[0].get_monsterform().image
 	
 	# item生成
 	# TODO 今後、デッキに3つまでアイテムを設定できるようにする。その3つのアイテムについて繰り返す
@@ -44,14 +44,15 @@ func _ready() -> void: # 初期値
 ## 技の対象を選ぶ必要がある時に表示されるボタンを生成する関数
 func _on_action_button_selected(index: int) -> void:
 	$"戻る".disabled = true
-	selected_action_button = $action.get_child(index)
+	selected_action_button = action_container.get_child(index)
 	button_index = index
 	selected_action = selected_action_button.action # 選ばれた技を登録
 	# 選ばれた技ボタンのアニメーション
-	var instance = Global.action_button.instantiate()
+	var instance: ActionButton = Global.action_button.instantiate()
 	instance.name = "selected"
 	instance.action = selected_action
-	instance.position = Vector2(220, 841 + selected_action_button.position.y * action_container.scale.x) # 選ばれたボタンの座標から取得
+	instance.position = Vector2( # 選ばれたボタンの座標から取得
+		220, 841 + selected_action_button.position.y * action_container.scale.x)
 	instance.size = selected_action_button.size
 	instance.scale = action_container.scale
 	add_child(instance)
@@ -131,26 +132,27 @@ func show_action_button() -> void:
 	now_showing = 1
 	if $"../".tutorial_mode == false:
 		$dialogtab.text_setter(0, false, ["技を選んでください！\nクリックで技の詳細を確認できます。"])
-	for child in $action.get_children():
+	for child in action_container.get_children():
 		child.modulate.a = 0
-	$action.show() # 透明にしてから表示
-	tween = get_tree().create_tween().bind_node($action) # 順番にアニメーションするためにcreate_tween()を外に出す
-	for child in $action.get_children():
+	action_container.show() # 透明にしてから表示
+	# 順番にアニメーションするためにcreate_tween()を外に出す
+	tween = get_tree().create_tween().bind_node(action_container)
+	for child in action_container.get_children():
 		tween.tween_property(child, "modulate:a", 1, 0.2)
-	for button: Button in $action.get_children():
+	for button: Button in action_container.get_children():
 		button.disabled = $"../".tutorial_mode
 	if $"../".back_disabled == false:
 		$"戻る".disabled = false
 
 ## action消滅アニメーション
 func hide_action_button() -> void:
-	for button: Button in $action.get_children():
+	for button: Button in action_container.get_children():
 		button.disabled = true
-	tween = get_tree().create_tween().bind_node($action)
-	tween.tween_property($action, "modulate:a", 0, 0.2)
+	tween = get_tree().create_tween().bind_node(action_container)
+	tween.tween_property(action_container, "modulate:a", 0, 0.2)
 	await tween.finished
-	$action.hide()
-	$action.modulate.a = 1 # 初期化
+	action_container.hide()
+	action_container.modulate.a = 1 # 初期化
 
 ## item出現アニメーション
 func show_item_button() -> void:
@@ -267,7 +269,8 @@ func show_monsters_button(player: bool) -> void:
 	else:
 		deck = Global.enemy_deck
 	for i in range(3):
-		$target.get_child(i).texture_normal = deck.monster[i].monster.image
+		$target.get_child(i).texture_normal = \
+		deck.monster[i].get_monsterform().image
 	$target.show()
 	tween = get_tree().create_tween().bind_node($target)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
@@ -405,7 +408,7 @@ func target_button_setting() -> void:
 					
 					else:
 						$target.get_child(i).texture_normal = \
-						Global.enemy_deck.monster[i].monster.image
+						Global.enemy_deck.monster[i].get_monsterform().image
 						disable = false
 					# 近接の時、場にいないモンスターは暗くし、押せなくする
 					if (target == Global.Target.近接 and
@@ -427,7 +430,7 @@ func target_button_setting() -> void:
 					
 					else:
 						$target.get_child(i).texture_normal = \
-						Global.player_deck.monster[i].monster.image
+						Global.player_deck.monster[i].get_monsterform().image
 						disable = false
 					# 近接の時、場にいないモンスターは暗くし、押せなくする
 					if (target == Global.Target.自分 and
@@ -533,10 +536,12 @@ func target_button_up(i: int) -> void:
 	await hide_target_button()
 	show_main_button() # 最初の表示に戻す ボタンは利用不可のまま
 	
-	$action.remove_child(selected_action_button) # 選ばれた技ボタンを最後に消す
+	action_container.remove_child(selected_action_button) # 選ばれた技ボタンを最後に消す
 	if selected_action_button:
 		selected_action_button.queue_free()
-	monster.picked_action.remove_at(button_index) # モンスターの技一覧から消す
+	
+	monster.generated_action.remove_at(button_index) # TODO 不要かも？
+	monster.available_action.remove_at(button_index) # モンスターの技一覧から消す
 
 
 func item_target_button_up(i: int) -> void:
@@ -558,14 +563,14 @@ func item_target_button_up(i: int) -> void:
 func status_dialog(i: int) -> void:
 	var mon: Monster
 	if now_player == true:
-		mon = Global.player_deck.monster[i].monster
+		mon = Global.player_deck.monster[i]
 	else:
-		mon = Global.enemy_deck.monster[i].monster
+		mon = Global.enemy_deck.monster[i]
 	
 	# チュートリアル中は、ページ送りを待つ
 	if $"../".tutorial_mode == true:
 		await $dialogtab.text_setter(1, $"../".tutorial_mode, [
-		mon.name + "\n" + 
+		mon.get_monsterform().name + "\n" + 
 		"[color=coral]HP :%3d[/color] " % mon.maxHP + 
 		" [color=aqua]MP :%3d  /  %3d[/color] " % [mon.supplyMP, mon.maxMP] + 
 		" [color=orange]ATK:%3d[/color] " % mon.ATK + 
@@ -577,7 +582,7 @@ func status_dialog(i: int) -> void:
 		status_paging.emit()
 	else:
 		$dialogtab.text_setter(1, $"../".tutorial_mode, [
-		mon.name + "\n" + 
+		mon.get_monsterform().name + "\n" + 
 		"[color=coral]HP :%3d[/color] " % mon.maxHP + 
 		" [color=aqua]MP :%3d  /  %3d[/color] " % [mon.supplyMP, mon.maxMP] + 
 		" [color=orange]ATK:%3d[/color] " % mon.ATK + 

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=5 format=3 uid="uid://cf0r1hmg65ryx"]
+
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_aiy3j"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="4_15o2e"]
+[ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://element/氷属性.tres" id="4_hwmsp"]
+[ext_resource type="Texture2D" uid="uid://cai52uvpjx18j" path="res://image/monster/スノフレク.PNG" id="5_jty41"]
+
+[resource]
+script = ExtResource("4_15o2e")
+name = "スノフレク"
+image = ExtResource("5_jty41")
+element = Array[ExtResource("3_aiy3j")]([ExtResource("4_hwmsp")])
+cost = 50
+base_maxHP = 500
+base_maxMP = 70
+base_supplyMP = 15
+base_SPD = 120
+base_ATK = 120
+base_DEF = 120
+base_MAG = 120
+base_RES = 120
+description = ""
+flavor_text = Array[String](["スノフレク はひらひらと舞っている。"])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

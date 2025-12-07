@@ -130,12 +130,14 @@ offset_bottom = 373.6
 scale = Vector2(0.75, 0.75)
 theme_override_constants/separation = 0
 
-[node name="button" type="Control" parent="battle"]
+[node name="button" type="Control" parent="battle" node_paths=PackedStringArray("battle_node", "action_container")]
 process_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_hwahx")
+battle_node = NodePath("..")
+action_container = NodePath("action")
 
 [node name="change" type="TextureButton" parent="battle/button"]
 process_mode = 3
