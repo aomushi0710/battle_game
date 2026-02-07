@@ -31,10 +31,10 @@ func _on_node_2d_tree_entered() -> void:
 				break
 	
 	for monster in Global.player_deck.monster: # 3体のモンスターを順番に処理
-		if monster.monster != null:
+		if monster.data != null:
 			# モンスターが居ない位置のキャラセレクトをしている時
 			# デッキに居るモンスターを選択不可に
-			if Global.player_deck.monster[Global.now_picking].monster == null:
+			if Global.player_deck.monster[Global.now_picking].data == null:
 				var id = monster.monster.id
 				var j = (id - 1) / HCONTAINER_LIMIT # 行指定
 				var i = id - HCONTAINER_LIMIT * j - 1 # 列指定

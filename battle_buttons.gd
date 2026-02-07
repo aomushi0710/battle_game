@@ -403,7 +403,7 @@ func target_button_setting() -> void:
 					if death_list[i] == true:
 						$target.get_child(i).texture_normal = load("res://image/お墓.PNG")
 					
-					elif Global.enemy_deck.monster[i].monster == null:
+					elif Global.enemy_deck.monster[i].data == null:
 						$target.get_child(i).texture_normal = load("res://image/null.PNG")
 					
 					else:
@@ -425,7 +425,7 @@ func target_button_setting() -> void:
 					if death_list[i + 3] == true:
 						$target.get_child(i).texture_normal = load("res://image/お墓.PNG")
 					
-					elif Global.player_deck.monster[i].monster == null:
+					elif Global.player_deck.monster[i].data == null:
 						$target.get_child(i).texture_normal = load("res://image/null.PNG")
 					
 					else:

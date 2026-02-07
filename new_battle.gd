@@ -272,7 +272,7 @@ func set_ready_text(monster: BattleMonster, mp: int) -> Array[String]:
 		text = "[color=yellow]相手の %s の行動！[/color]" % \
 		monster.data.get_monsterform().name
 	
-	return ["%s が行動可能になった。\n%s\n%s" % [monster.monster.name, mp_text, text]]
+	return ["%s が行動可能になった。\n%s\n%s" % [monster.data.get_monsterform().name, mp_text, text]]
 
 ## ターン終了後にフィールドに立つモンスターのindexと画像を設定します
 func _on_change_button_up() -> void:
@@ -369,7 +369,7 @@ extra: AbilityExtra = null) -> void:
 			dialog_text.append(text)
 			await dialog.text_setter(0, true, dialog_text)
 	
-			if target.monster.HP <= 0: # 死亡時処理
+			if target.data.HP <= 0: # 死亡時処理
 				await target.dead(player_monster, enemy_monster)
 	
 	# 全ての特殊能力について順番に処理
@@ -392,7 +392,7 @@ func action_checker(monster: BattleMonster, action: ActionData) -> bool:
 		monster.data.get_monsterform().name])
 		return false
 	# mpが足りない場合
-	if monster.monster.MP < action.mp:
+	if monster.data.MP < action.mp:
 		await dialog.text_setter(0, true, [
 		"%s の %s！\n[color=yellow]しかし、[color=aqua]MP[/color]が足りない！[/color]" % 
 		[monster.data.get_monsterform().name, action.name]])
@@ -758,7 +758,7 @@ func damage_calc(action: ActionData, offense: BattleMonster, defense: BattleMons
 				if type[i] == ability.status: # 計算に用いるステータスと一致している時
 					status[i] /= ability.amount
 	
-	var magnification: float = attribute_setup(action, defense.monster)
+	var magnification: float = attribute_setup(action, defense.data)
 	var magnification_text: String = ""
 	if magnification < 1.0:
 		magnification_text = "[color=light_blue]耐性があるようだ...[/color]\n"

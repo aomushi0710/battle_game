@@ -55,7 +55,7 @@ func update(form: Global.Form) -> void:
 				max_evolution_form = monster.data.evolution_forms.size() - 1
 	
 	# 全てのモンスターがnullの時
-	if Global.player_deck.monster.all(func(mon): return mon.data == null):
+	if Global.player_deck.monster.all(func(mon: Monster): return mon.data == null):
 		# ALERT [param preview_form]に代入するとsetterによって再びこの関数が呼ばれる
 		# ので、無限ループを防止すること
 		if form != Global.Form.第一形態:

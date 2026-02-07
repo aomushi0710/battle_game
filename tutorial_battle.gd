@@ -97,8 +97,8 @@ func _on_player_ready() -> void:
 	arrow_mark_setter(100, "red", 90, Vector2(790, 660))
 	await dialog.text_setter(0, true, [
 		"%s が行動可能になった。\n%s は[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % 
-		[player_monster.monster.name, player_monster.monster.name, player_monster.monster.supplyMP] + 
-		"\n[color=yellow]%s は指示を待っている...[/color]" % player_monster.monster.name, 
+		[player_monster.data.get_monsterform().name, player_monster.data.get_monsterform().name, player_monster.data.supplyMP] + 
+		"\n[color=yellow]%s は指示を待っている...[/color]" % player_monster.data.get_monsterform().name, 
 		"[color=aqua]青[/color]の[color=aqua][b]MPゲージ[/b][/color]は、モンスターが行動可能\n" + 
 		"になるたびに[color=aqua][b]supplyMP[/b][/color]の値だけ回復！\n" + 
 		"バトルは[color=aqua][b]maxMP[/b][/color]の20%から始まるぞ。"])

@@ -13,26 +13,26 @@ var detail = ""
 # 押したボタンの場所のモンスターを選択
 func _on_first_button_up():
 	Global.now_picking = 0
-	if Global.player_deck.monster[0].monster == null:
+	if Global.player_deck.monster[0].data == null:
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
-		Global.selected_monster = Global.player_deck.monster[0].monster.id
+		Global.selected_monster = Global.player_deck.monster[0].data.id
 		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_second_button_up():
 	Global.now_picking = 1
-	if Global.player_deck.monster[1].monster == null:
+	if Global.player_deck.monster[1].data == null:
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
-		Global.selected_monster = Global.player_deck.monster[1].monster.id
+		Global.selected_monster = Global.player_deck.monster[1].data.id
 		get_tree().change_scene_to_file(Global.select_scene)
 
 func _on_third_button_up():
 	Global.now_picking = 2
-	if Global.player_deck.monster[2].monster == null:
+	if Global.player_deck.monster[2].data == null:
 		get_tree().change_scene_to_file(Global.chara_scene)
 	else:
-		Global.selected_monster = Global.player_deck.monster[2].monster.id
+		Global.selected_monster = Global.player_deck.monster[2].data.id
 		get_tree().change_scene_to_file(Global.select_scene)
 
 
@@ -51,38 +51,37 @@ func _on_デッキセレクト_tree_entered():
 			$"../enemy/monster/third"
 		]
 		
-		if Global.player_deck.monster[i].monster != null:
-			buttons[i].texture_normal = Global.player_deck.monster[i].monster.image
+		if Global.player_deck.monster[i].data != null:
+			buttons[i].texture_normal = Global.player_deck.monster[i].get_monsterform().image
 		else:
 			buttons[i].texture_normal = textures[i]
 	
-		enemy_buttons[i].texture_normal = Global.enemy_deck.monster[i].monster.image
+		enemy_buttons[i].texture_normal = Global.enemy_deck.monster[i].get_monsterform().image
 	
 	Global.now_picking = -1
 
 
 func _on_test_button_up():
 	for i in range(3):
-		if Global.player_deck.monster[i].monster == null:
+		if Global.player_deck.monster[i].data == null:
 			Global.accept_dialog.display_dialog(
 					"デッキ内には3体のモンスターを登録してください！")
 			return
 	
-	Global.player_deck.evolution_check() # 自分のデッキに対してチェック
 	get_tree().change_scene_to_file(Global.battle_scene)
 
 
 func _on_button_button_up(): # 選択可能なモンスター、技からランダムにチームを編成します。
 	Global.player_deck.deck_creator()
 	for i in range(3):
-		if Global.player_deck.monster[i].monster != null:
+		if Global.player_deck.monster[i].data != null:
 			match i:
 				0:
-					$first.texture_normal = Global.player_deck.monster[i].monster.image
+					$first.texture_normal = Global.player_deck.monster[i].get_monsterform().image
 				1:
-					$second.texture_normal = Global.player_deck.monster[i].monster.image
+					$second.texture_normal = Global.player_deck.monster[i].get_monsterform().image
 				2:
-					$third.texture_normal = Global.player_deck.monster[i].monster.image
+					$third.texture_normal = Global.player_deck.monster[i].get_monsterform().image
 
 
 func _on_戻る_button_up():
@@ -122,13 +121,11 @@ func _on_confirmed() -> void:
 
 func _on_new_button_up() -> void:
 	for i in range(3):
-		if Global.player_deck.monster[i].monster == null:
+		if Global.player_deck.monster[i].data == null:
 			Global.accept_dialog.display_dialog(
 					"デッキ内には3体のモンスターを登録してください！")
 			return
 	
-	Global.player_deck.evolution_check() # 自分のデッキに対してチェック
-	Global.enemy_deck.evolution_check()
 	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 0.5)
 	tween.tween_callback(func(): get_tree().change_scene_to_file(Global.new_battle_scene))
@@ -138,39 +135,33 @@ func _on_tutorial_button_up() -> void:
 	Global.current_deck = Global.player_deck.duplicate() # 避難
 	# 味方チュートリアルデッキ構築
 	## スライム＠体当たり:50%, 自己再生:30%, DEFエンハンス:10%, ATKブレイク:10%
-	var first := DeckMonster.new()
+	var first := Monster.new()
 	## ゴースト＠体当たり:40%, 暗闇:40%, 霊魂吸収:10%, ギガダークネス:10%
-	var second := DeckMonster.new()
+	var second := Monster.new()
 	## バニン＠火の玉:40%, 暗闇:40%, フレイム:20%
-	var third := DeckMonster.new()
+	var third := Monster.new()
 	
 	first.level = 1
-	first.evolution_forms = monster_data[1]
-	first.monster = monster_data[1][0].duplicate()
+	first.data = monster_data[1]
 	first.action = [action_data[1], action_data[4], action_data[46], action_data[49]]
 	first.chance = [50, 30, 10, 10]
 	
 	second.level = 1
-	second.evolution_forms = monster_data[2]
-	second.monster = monster_data[2][0].duplicate()
+	second.data = monster_data[2]
 	second.action = [action_data[1], action_data[12], action_data[1001], action_data[36]]
 	second.chance = [40, 40, 10, 10]
 	
 	third.level = 1
-	third.evolution_forms = monster_data[3]
-	third.monster = monster_data[3][0].duplicate()
+	third.data = monster_data[3]
 	third.action = [action_data[5], action_data[12], action_data[13]]
 	third.chance = [40, 40, 20]
 	
 	Global.player_deck.monster = [first, second, third]
-	Global.player_deck.evolution_check()
 	
 	# 相手チュートリアルデッキ構築
 	## カカシスライム@体当たり:100%
 	Global.enemy_deck = Deck.new()
 	Global.enemy_deck = load("res://deck/チュートリアル.tres").duplicate(true)
-	Global.enemy_deck.evolution_forms_setting()
-	Global.enemy_deck.evolution_check()
 	
 	tween = get_tree().create_tween().bind_node($"../../fade")
 	tween.tween_property($"../../fade", "color:a", 1, 0.5)

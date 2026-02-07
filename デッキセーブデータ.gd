@@ -23,11 +23,11 @@ func _on_tree_entered() -> void: # デッキスロットインスタンス生成
 
 
 func _on_戻る_button_up() -> void:
-	get_tree().change_scene_to_file(Global.deck_scene)
+	get_tree().change_scene_to_file(Global.select_scene)
 
 
 func save_file(slot: int) -> void:
-	var has_empty_slot = Global.player_deck.monster.any(func(m): return m.monster == null)
+	var has_empty_slot = Global.player_deck.monster.any(func(m): return m.data == null)
 	
 	if Global.player_deck.monster.size() < 3 or has_empty_slot:
 		Global.accept_dialog.display_dialog(
@@ -37,28 +37,25 @@ func save_file(slot: int) -> void:
 	# 技のArray[Action]を技のIDのArray[int]に変換
 	var action_id: Array[Array] = [[],[],[]] ## 技がIDに変換されたもの
 	for i in range(3): # 全てのモンスターの技のIDのリストを生成
-		action_id[i] = deck.monster[i].action.map(func(act): return act.id)
+		action_id[i] = deck.monster[i].action.map(func(act: Action): return act.data.id)
 	
 	var deck_data := {
 		"name": deck.name,
 		
 		"first":{
-			"monster": deck.monster[0].monster.id, # monster -> int
+			"id": deck.monster[0].data.id, # Monster -> int
 			"action": action_id[0], # Array[Action] -> Array[int]
 			"chance": deck.monster[0].chance, # Array[int]
-			"skill": deck.monster[0].skill # int
 		},
 		"second":{
-			"monster": deck.monster[1].monster.id,
+			"id": deck.monster[1].data.id,
 			"action": action_id[1],
 			"chance": deck.monster[1].chance,
-			"skill": deck.monster[1].skill
 		},
 		"third":{
-			"monster": deck.monster[2].monster.id,
+			"id": deck.monster[2].data.id,
 			"action": action_id[2],
 			"chance": deck.monster[2].chance,
-			"skill": deck.monster[2].skill
 		},
 		
 		"version": ProjectSettings.get_setting("application/config/version"),
@@ -131,16 +128,19 @@ func load_file(slot: int) -> void:
 		var pos: Dictionary = deck_data[index[i]] # deck_data["first"]など
 		
 		var actions: Array[Action] ## セーブデータのidから、復元された技のリスト
-		for id in pos["action"]:
-			actions.append(action_data[id])
 		
-		deck.monster[i].evolution_forms = monster_data[pos["monster"]]
-		deck.monster[i].monster = monster_data[pos["monster"]][0].duplicate() # 未進化状態
+		# セーブデータから取得したActionData型のIDと、
+		# セーブデータのモンスターIDに対応したMonsterDataのactionプロパティから取得した
+		# Action型の中のActionData型のIDが一致するものだけを復元
+		for id: int in pos["action"]:
+			for act: Action in monster_data[pos["id"]].action: # 
+				if id == act.data.id:
+					actions.append(act)
+					break
+		
+		deck.monster[i].data = monster_data[pos["id"]]
 		deck.monster[i].action = actions
 		deck.monster[i].chance = pos["chance"]
-		deck.monster[i].skill = pos["skill"]
-	
-	deck.evolution_check()
 
 
 func reset_file(slot: int) -> void:
@@ -239,9 +239,9 @@ func setting() -> void:
 
 func cheat_check(slot: int, result: Dictionary) -> Dictionary:
 	# デッキ内にモンスターが重複している
-	if (result["first"]["monster"] == result["second"]["monster"] or 
-		result["first"]["monster"] == result["third"]["monster"] or 
-		result["second"]["monster"] == result["third"]["monster"]):
+	if (result["first"]["id"] == result["second"]["id"] or 
+		result["first"]["id"] == result["third"]["id"] or 
+		result["second"]["id"] == result["third"]["id"]):
 		delete_save(slot)
 		OS.alert("セーブデータ%dが削除されました。" % slot, \
 		"デッキに同じモンスターを入れられないのは知っているだろう？")

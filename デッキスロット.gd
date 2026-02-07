@@ -16,14 +16,15 @@ func _ready() -> void: # セーブ時かロード時かによってボタンを�
 
 
 func setting(data: Dictionary) -> void: # デッキスロットUI上に各種データを表示する関数
+	print("data: ", data)
 	if data != {}:
 		$Label.text = data["name"]
 		$HBoxContainer/first.texture_normal = \
-		monster_data[data["first"]["monster"]][0].image
+		monster_data[data["first"]["id"]]["evolution_forms"][0].image
 		$HBoxContainer/second.texture_normal = \
-		monster_data[data["second"]["monster"]][0].image
+		monster_data[data["second"]["id"]]["evolution_forms"][0].image
 		$HBoxContainer/third.texture_normal = \
-		monster_data[data["third"]["monster"]][0].image
+		monster_data[data["third"]["id"]]["evolution_forms"][0].image
 		
 		var icon = "　"
 		# β版で正式リリース版、あるいはその逆のデータが保存されている場合
