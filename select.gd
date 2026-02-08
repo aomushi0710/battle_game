@@ -121,12 +121,16 @@ var mode: Mode = Mode.DECK:
 		camera_tween = get_tree().create_tween().bind_node(camera)
 		match next_mode:
 			Mode.DECK:
+				confirm_button.hide()
 				deck_menu.on_mode_entered()
 			
 			Mode.MONSTER_SELECT:
+				confirm_button.show()
 				monster_select.on_mode_entered()
 			
 			Mode.STATUS:
+				confirm_button.show()
+				
 				# ACTIONとSTATUSからの遷移時は呼ばない
 				if mode != Mode.ACTION and mode != Mode.STATUS:
 					monster_setting.on_mode_entered()
@@ -147,6 +151,8 @@ var mode: Mode = Mode.DECK:
 				await camera_tween.finished
 			
 			Mode.ACTION:
+				confirm_button.show()
+				
 				# 棒グラフの棒とボタンを隠すアニメーション
 				status.get_child(1).hide()
 				for container in status.get_child(0).get_children():
@@ -194,6 +200,9 @@ func _ready() -> void:
 func _on_back_button_up():
 	sound_effects.click.play()
 	match mode:
+		Mode.DECK:
+			get_tree().change_scene_to_file(Global.map_scene)
+		
 		Mode.MONSTER_SELECT:
 			mode = Mode.DECK
 		
@@ -225,11 +234,6 @@ func _on_confirm_button_up():
 				Global.accept_dialog.display_dialog(
 						"出現率の合計が100%ではありません！")
 				return
-			
-			#elif selected_skill == 0: #スキル実装後に実装
-				#$エラーメッセージ.dialog_text = "スキルが選択されていません！"
-				#$エラーメッセージ.popup_centered()
-				#return
 			
 			Global.player_deck.monster[selected_slot_index] = selected_monster
 			

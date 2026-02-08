@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bldb4kxsdbr4q"]
+[gd_scene load_steps=9 format=3 uid="uid://bldb4kxsdbr4q"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_kjvt6"]
+[ext_resource type="Script" uid="uid://cywnusxga3jm3" path="res://map_menu.gd" id="2_4k2b5"]
 [ext_resource type="Script" uid="uid://bcok45812k4sh" path="res://menu_button_panel.gd" id="2_qdv60"]
 [ext_resource type="PackedScene" uid="uid://cfupbo6yh6d2c" path="res://scrolling_label.tscn" id="2_r5awk"]
 [ext_resource type="PackedScene" uid="uid://0n1ixjrprqj2" path="res://game_button.tscn" id="3_qdv60"]
@@ -10,10 +11,25 @@
 bg_color = Color(0, 0, 0, 0.501961)
 skew = Vector2(0.25, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4k2b5"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 0, 0, 0.5)
+shadow_size = 10
+
 [node name="menu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_kjvt6")
+script = ExtResource("2_4k2b5")
 
 [node name="panel" type="Panel" parent="."]
 layout_mode = 0
@@ -25,7 +41,7 @@ script = ExtResource("2_qdv60")
 start_position = Vector2(350, 30)
 separation = Vector2(-30, 120)
 
-[node name="button" parent="panel" instance=ExtResource("3_qdv60")]
+[node name="Monster" parent="panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 350.0
 offset_top = 30.0
@@ -33,7 +49,7 @@ offset_right = 750.0
 offset_bottom = 112.0
 text = "モンスター"
 
-[node name="button2" parent="panel" instance=ExtResource("3_qdv60")]
+[node name="Shop" parent="panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 320.0
 offset_top = 150.0
@@ -49,12 +65,17 @@ offset_right = 690.0
 offset_bottom = 352.0
 text = "セーブ"
 
-[node name="button4" parent="panel" instance=ExtResource("3_qdv60")]
+[node name="Title" parent="panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 260.0
 offset_top = 390.0
 offset_right = 660.0
 offset_bottom = 472.0
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_4k2b5")
+text = "タイトルに戻る"
+color = Color(1, 0, 0, 1)
 
 [node name="coin" type="RichTextLabel" parent="."]
 layout_mode = 0
@@ -73,3 +94,7 @@ offset_left = 32.0
 offset_top = 970.0
 offset_right = 1891.0
 offset_bottom = 1051.0
+
+[connection signal="button_up" from="panel/Monster" to="." method="_on_monster_button_up"]
+[connection signal="button_up" from="panel/Shop" to="." method="_on_shop_button_up"]
+[connection signal="button_up" from="panel/Title" to="." method="_on_title_button_up"]

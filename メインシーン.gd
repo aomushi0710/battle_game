@@ -12,8 +12,7 @@ func _ready() -> void:
 
 
 func _on_button_pressed():
-	# 定義したシーンに切り替え
-	get_tree().change_scene_to_file(Global.deck_scene)
+	get_tree().change_scene_to_file(Global.map_scene)
 
 
 func _on_debug_button_up():

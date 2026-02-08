@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://dt8l34s4g7sjm"]
-
-[node name="TextureButton" type="TextureButton"]
-offset_right = 40.0
-offset_bottom = 40.0

@@ -14,17 +14,17 @@ func _ready() -> void: # セーブ時かロード時かによってボタンを�
 		$save.hide()
 		$load.show()
 
-
-func setting(data: Dictionary) -> void: # デッキスロットUI上に各種データを表示する関数
-	print("data: ", data)
+## デッキスロットUI上に各種データを表示する関数
+## TODO 第二形態・第三形態の見た目でもプレビューできるようにする
+func setting(data: Dictionary) -> void:
 	if data != {}:
 		$Label.text = data["name"]
 		$HBoxContainer/first.texture_normal = \
-		monster_data[data["first"]["id"]]["evolution_forms"][0].image
+		monster_data[data["first"]["id"]].evolution_forms[0].image
 		$HBoxContainer/second.texture_normal = \
-		monster_data[data["second"]["id"]]["evolution_forms"][0].image
+		monster_data[data["second"]["id"]].evolution_forms[0].image
 		$HBoxContainer/third.texture_normal = \
-		monster_data[data["third"]["id"]]["evolution_forms"][0].image
+		monster_data[data["third"]["id"]].evolution_forms[0].image
 		
 		var icon = "　"
 		# β版で正式リリース版、あるいはその逆のデータが保存されている場合

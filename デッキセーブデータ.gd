@@ -129,11 +129,12 @@ func load_file(slot: int) -> void:
 		
 		var actions: Array[Action] ## セーブデータのidから、復元された技のリスト
 		
-		# セーブデータから取得したActionData型のIDと、
-		# セーブデータのモンスターIDに対応したMonsterDataのactionプロパティから取得した
-		# Action型の中のActionData型のIDが一致するものだけを復元
+		# id セーブデータから取得したActionData型のID
+		# act セーブデータのモンスターIDに対応した
+		# MonsterDataのactionプロパティから取得したAction型のリソース
+		# これらのActionData型のIDが一致するものだけを復元
 		for id: int in pos["action"]:
-			for act: Action in monster_data[pos["id"]].action: # 
+			for act: Action in monster_data[pos["id"]].action:
 				if id == act.data.id:
 					actions.append(act)
 					break
@@ -192,13 +193,13 @@ func save_game(slot: int, data: Dictionary, key: String = "I'm watching you") ->
 func load_game(slot: int, key: String = "I'm watching you") -> Dictionary:
 	var path := "user://deck_slot_%d.txt" % slot
 	if not FileAccess.file_exists(path):
-		print("ERROR:セーブファイルが存在しません")
+		print("セーブファイルが存在しません: %s" % path)
 		return {}
 
 	# 1. ファイル読み込み
 	var file := FileAccess.open(path, FileAccess.READ)
 	if not file:
-		print("ERROR:セーブファイルが開けません")
+		printerr("セーブファイルが開けません")
 		return {}
 	var encrypted := file.get_buffer(file.get_length())
 	file.close()
@@ -209,7 +210,7 @@ func load_game(slot: int, key: String = "I'm watching you") -> Dictionary:
 	# 3. デシリアライズして Dictionary に戻す
 	var result = bytes_to_var(decrypted)
 	if typeof(result) != TYPE_DICTIONARY:
-		print("ERROR:セーブファイルが破損しています")
+		printerr("セーブファイルが破損しています")
 		return {}
 	
 	result = cheat_check(slot, result)
@@ -223,13 +224,13 @@ func delete_save(slot: int) -> void:
 		if dir:
 			var err := dir.remove("deck_slot_%d.txt" % slot)
 			if err != OK:
-				print("ERROR:セーブデータの削除に失敗しました: %s" % err)
+				printerr("セーブデータの削除に失敗しました: %s" % err)
 			else:
 				print("セーブデータを削除しました: %s" % path)
 		else:
-			print("ERROR:ディレクトリが存在しません")
+			printerr("ディレクトリが存在しません")
 	else:
-		print("ERROR:セーブデータが存在しません: %s" % path)
+		print("セーブデータが存在しません: %s" % path)
 
 
 func setting() -> void:

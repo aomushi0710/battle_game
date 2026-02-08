@@ -35,6 +35,7 @@ func _ready() -> void:
 	load_game()
 
 const main_scene = "res://メインシーン.tscn"
+const map_scene = "res://map.tscn"
 const deck_scene = "res://デッキセレクト.tscn"
 const chara_scene = "res://キャラ選択.tscn"
 const select_scene = "res://技セレクト.tscn"
