@@ -8,7 +8,11 @@ var parent: Node ## 常にbattleノードを参照するように調整される
 var player: bool ## true:味方 false:敵
 var index: int
 var field: bool ## モンスターが場に出ている時[code]true[/code]
-var data: Monster ## モンスターの現在の状態 INFO バトル中に更新される場合あり
+var data: Monster: ## モンスターの現在の状態 INFO バトル中に更新される場合あり
+	set(value):
+		data = value
+		ui_update()
+
 var effect_list: Array[MonsterEffect] = [] ## エフェクトが格納される配列　INFO 初期値はなし(空)
 var death: bool = false
 var text_setter_callback: Callable ## dialogのtext_setter
@@ -20,6 +24,7 @@ signal monster_ready ## モンスターが行動可能になった時発行さ�
 
 
 func _ready() -> void:
+	setup()
 	if index == 0:
 		field = true
 	else:
@@ -44,13 +49,12 @@ func ui_update() -> void:
 	
 	$SPD.monster = data
 	
-	$name/element.monster = data
+	$name/element.monster = data.get_monsterform()
 	$name/name.text = "[b][i]%s[/i][/b]" % data.get_monsterform().name
-	texture_normal = data.image
+	texture_normal = data.get_monsterform().image
 
 # バトル開始時セットアップ
 func setup() -> void:
-	data.data.status_calculator(data.level)
 	# 初期値を設定
 	data.HP = data.maxHP
 	data.MP = data.maxMP / 5
@@ -118,7 +122,8 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	# フィールドにいる味方モンスターがやられた時
 	if player == true and self == player_monster:
 		text_setter_callback.call(0, false, [
-		"[color=red]%s はやられてしまった！[/color]\n" % data.name + 
+		"[color=red]%s はやられてしまった！[/color]\n" % 
+		data.get_monsterform().name + 
 		"次にフィールドに出すモンスターを\n選んでください。"])
 		await parent.changed
 		bench_set() # 死んだモンスターをベンチにセット
@@ -128,7 +133,7 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	# フィールドにいる敵モンスターを倒した時、ランダムに次を選ぶ
 	elif player == false and self == enemy_monster:
 		await text_setter_callback.call(0, true, [
-		"[color=red]%s を倒した！[/color]\n" % data.name + 
+		"[color=red]%s を倒した！[/color]\n" % data.get_monsterform().name + 
 		"次にフィールドに出すモンスターを\n相手が選んでいる..."])
 		await get_tree().create_timer(1).timeout # 考えるフリ
 		parent.enemy_next_index = parent.random_index(false)
@@ -138,10 +143,12 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	else:
 		if player == true:
 			await text_setter_callback.call(0, true, [
-			"[color=red]%s はやられてしまった！[/color]\n" % data.name])
+			"[color=red]%s はやられてしまった！[/color]\n" % 
+			data.get_monsterform().name])
 		else:
 			await text_setter_callback.call(0, true, [
-			"[color=red]%s を倒した！[/color]\n" % data.name])
+			"[color=red]%s を倒した！[/color]\n" % 
+			data.get_monsterform().name])
 	get_tree().paused = false
 
 ## 進化技を引数にして、そのIDにあった進化処理を施す
@@ -200,8 +207,8 @@ func spd_max() -> void:
 					generated_action.append(data.action[i])
 					break # 対応する技があったら終了
 	
-	available_action = generated_action.map(
-		func(act: Action): act.evolution_check(data.form))
+	available_action.assign(generated_action.map(
+		func(act: Action): return act.evolution_check(data.data, data.form)))
 	
 	monster_ready.emit()
 
@@ -229,8 +236,11 @@ func mp_setter(n: int, text: bool) -> String:
 	if n > 0: # mpが回復した時、水色でアニメーション再生
 		if data.MP >= data.maxMP: # 既にMPが最大値の時
 			if text == true: # 技の効果やアイテムの使用時など何らかの反応が得たい時
-				return "[color=yellow]しかし、%s の" % data.name + \
-				"[color=aqua]MP[/color]は\n減っていなかった...[/color]"
+				return (
+					"[color=yellow]しかし、%s の" %
+					data.get_monsterform().name +
+					"[color=aqua]MP[/color]は\n減っていなかった...[/color]"
+				)
 			else:
 				return ""
 		elif data.MP + n >= data.maxMP: # 回復するとMPが最大値を越えてしまう時
@@ -253,20 +263,24 @@ func mp_setter(n: int, text: bool) -> String:
 	var return_text: String # textを表示する処理
 	if text == true: # 能動的にmpが変動した場合？
 		if n > 0: # mpが回復した時、水色でアニメーション再生
-			return_text = \
-			"%s の[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" % \
-			[data.name, n]
+			return_text = (
+				"%s の[color=aqua]MP[/color]が[color=aqua]%d[/color]回復した！" %
+				[data.get_monsterform().name, n]
+			)
 		else:
-			return_text = \
-			"%s は [color=aqua]%dMP[/color]を消費した..." % [data.name, -n]
+			return_text = (
+				"%s は [color=aqua]%dMP[/color]を消費した..." %
+				[data.get_monsterform().name, -n]
+			)
 		return return_text
 	else: # 受動的にmpが変動した場合?
 		if n > 0: # spdゲージがたまって、mpが回復した時
 			return_text = ""
 		else: # 相手の技やアイテムなどによってmpを無理やり減らされた時
-			return_text = \
-			"%s は [color=aqua]%dMP[/color]を失った！" % \
-			[data.get_monsterform().name, -original_n]
+			return_text = (
+				"%s は [color=aqua]%dMP[/color]を失った！" %
+				[data.get_monsterform().name, -original_n]
+			)
 		return return_text
 
 ## HP変動処理関数(setter)[br]n:数値 text true:ダイアログ表示 false:ダイアログ非表示
@@ -275,8 +289,10 @@ func hp_setter(n: int, text: bool) -> String:
 	
 	if n > 0: # hpが回復した)時、緑色でアニメーション再生
 		if data.HP >= data.maxHP: # 既にHPが最大値の時
-			return "[color=yellow]しかし、%s の" % data.get_monsterform().name + \
-			"[color=coral]HP[/color]は\n減っていなかった...[/color]"
+			return (
+				"[color=yellow]しかし、%s の" % data.get_monsterform().name +
+				"[color=coral]HP[/color]は\n減っていなかった...[/color]"
+			)
 		elif data.HP + n >= data.maxHP: # 回復するとHPが最大値を越えてしまう時
 			n = data.maxHP - data.HP
 		damage_effect(n, 0)
@@ -299,12 +315,16 @@ func hp_setter(n: int, text: bool) -> String:
 	var return_text: String # textを表示する処理
 	if text == true:
 		if n > 0: # hpが回復した時、緑色でアニメーション再生
-			return_text = \
-			"%s の[color=coral]HP[/color]が[color=green]%d[/color]回復した！" % \
-			[data.get_monsterform().name, n]
+			return_text = (
+				"%s の[color=coral]HP[/color]が[color=green]%d[/color]回復した！" %
+				[data.get_monsterform().name, n]
+			)
 		else:
-			return_text = "%s は[color=orange]%d[/color]ダメージを受けた！" % \
-			[data.get_monsterform().name, -original_n]
+			return_text = (
+				"%s は[color=orange]%d[/color]ダメージを受けた！" %
+				[data.get_monsterform().name, -original_n]
+			)
+	
 	return return_text
 
 ## hp_setterからhp_textの変化アニメーション用 

@@ -1,5 +1,8 @@
 extends Control
 
+# ALERT デッキセレクト.tscn及びdeck_select.gdは未使用です！
+# ただし、チュートリアル用の処理の移行が完了するまでこのスクリプトは保持されます。
+
 var first_texture = load("res://image/1st.PNG")
 var second_texture = load("res://image/2nd.PNG")
 var third_texture = load("res://image/3rd.PNG")

@@ -1,13 +1,14 @@
 extends CharacterBody2D
 
 @export var speed = 256
-
+@export var canvas_layer: CanvasLayer
+@export var world: Node2D
+@export var camera: Camera2D
 
 @onready var dialog := $"../../CanvasLayer/dialog"
 @onready var interaction_area := $InteractionArea ## プレイヤーの前方にある検知エリア
 @onready var terrain := $"../tilemap/terrain"
 @onready var tile_size: int = terrain.tile_set.tile_size.x ## タイル1マスの大きさ
-
 
 var is_moving: bool = false ## 移動中かどうかのフラグ
 var object_interactable ## 触れられるオブジェクトの参照
@@ -58,6 +59,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				if is_dialog_active: # 既にダイアログが開かれているなら何もしない
 					return
 				
+				
+				
 				await dialog.dialog_manager(signboard.dialog_datas)
 
 # アイテムを取得する処理
@@ -75,3 +78,15 @@ func _on_dialog_dialog_opened() -> void:
 func _on_dialog_dialog_closed() -> void:
 	can_move = true
 	dialog_just_closed = true
+
+## ダイアログからバトルが開始した時、バトルと無関係なノードを隠し、カメラ機能もオフにする関数
+func _on_dialog_battle_started() -> void:
+	canvas_layer.hide()
+	world.hide()
+	camera.enabled = false
+
+## ダイアログからのバトルが終了した時、バトル前の状態に戻す関数
+func _on_dialog_battle_finished() -> void:
+	canvas_layer.show()
+	world.show()
+	camera.enabled = true

@@ -1,21 +1,26 @@
 extends TabContainer
-@onready var sign = $"../next_sign"
-@onready var sign_pos = sign.position
+
+@export var next_page_arrow: RichTextLabel
+@onready var sign_pos = next_page_arrow.position
 var tween: Tween
-var next_sign_tween: Tween
+var arrow_tween: Tween
 var dialog_expand_tween: Tween
 var text_speed: float = 0.04 ## テキストアニメーションの1文字あたりの再生速度
 var now_flavor_text: Array ## 現在表示中のflavor_textを保持
 var flavor_text: Array ## 待機中に表示されるテキストArray[Array[string]]
-var global_flavor_text: Array ## ステージに関係なく表示されるフレーバーテキスト
-var stage_flavor_text: Array ## ステージ固定のフレーバーテキスト
+var global_flavor_text: Array[Array] ## ステージに関係なく表示されるフレーバーテキスト
+var stage_flavor_text: Array[Array] ## ステージ固定のフレーバーテキスト
 var main_text: Array[String] ## メインに表示するテキストのリスト
 var status_text: Array[String] ## 1要素につき1ページ、全角19文字が3行まで
 var battle_log_text: Array[String] ## NOTE 変更の可能性あり
 var tab_list = [main_text, status_text, battle_log_text] ## tabの位置通りに上記変数を格納する配列
 var image_list = [[null], [null], [null]] ## それぞれのtabの位置に画像を保存する配列
 var current_page: int = 0 ## 現在のページ
-var next_sign: bool = false ## 最終ページでのメッセージ送りボタンの有無
+var has_next_page: bool = false:
+	set(value):
+		if has_next_page != value:
+			has_next_page = value
+			_next_arrow_animation(value)
 
 signal paging ## ダイアログボックスのテキストをメッセージ送りした時に発行されるシグナル
 
@@ -34,16 +39,17 @@ func flavor_text_setter(text: Array) -> void:
 		tween.kill()
 	if text == []: # array要素の型不明の時
 		text = [""] # string型に修正
-	next_sign = false
+	has_next_page = false
 	tab_list[0] = text
 	_on_tab_changed(0)
 
 ## ダイアログボックスに表示するテキストのsetter[br][br]
 ## [param tab]タブのindex[br]
-## [param wait][codetrue[/code]awaitでメッセージ送りを待つ [code]false[/code]待たない[br]
+## [param should_wait][code]true[/code]の時、awaitでメッセージ送りを待つ[br]
 ## [param text]全角21文字を3行分までテキストを表示します。配列の要素1つで1ページ分。[br]
 ## [param image]追加で画像などを左端に表示します。配列の要素1つで1ページ分。初期値はなし[]
-func text_setter(tab: int, wait: bool, text: Array, image: Array = []) -> void:
+func text_setter(tab: int, should_wait: bool, text: Array, image: Array = []
+) -> void:
 	if tween:
 		tween.kill()
 	if text == []: # array要素の型不明の時
@@ -53,12 +59,17 @@ func text_setter(tab: int, wait: bool, text: Array, image: Array = []) -> void:
 		image_list[tab] = image
 	else:
 		image_list[tab] = image
-	next_sign = wait
+	
+	# should_waitがfalseの場合でも、次のページが存在していれば、
+	# _on_tab_changed関数内で自動的にtrueに変更されます。
+	has_next_page = should_wait
 	tab_list[tab] = text
+	
 	_on_tab_changed(tab)
-	if wait == true:
-		await paging # 最後のページがメッセージ送りされてからこの関数の処理を終える
-	# これによって、この関数をawaitで待ちながら呼んだ元の関数を再開させることができる 
+	# 最後のページがメッセージ送りされてからこの関数の処理を終える
+	# これによって、この関数をawaitで待ちながら呼んだ元の関数を再開させることができる
+	if has_next_page == true:
+		await paging
 
 ## タブが切り替えられた時、ページ数を0にリセットしてtext_animationを呼ぶ関数
 func _on_tab_changed(tab: int) -> void:
@@ -73,13 +84,17 @@ func _on_tab_changed(tab: int) -> void:
 			$"../../".enemy_monster.get_node("effect").mouse_filter = MouseFilter.MOUSE_FILTER_STOP
 		if size.y != 270: # 拡大されてた時に戻すアニメーション
 			var duration = (size.y - 270) / 1448 # 現在サイズからアニメーション秒数を逆算(最大0.5)
-			dialog_expand_tween = get_tree().create_tween().bind_node(self)\
-			.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+			dialog_expand_tween = (
+				self.create_tween()
+				.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+			)
 			dialog_expand_tween.tween_property(self, "size:y", 270, duration)\
 			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 			dialog_expand_tween.parallel().tween_property(self, "position:y", 
 			800, duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-			dialog_expand_tween.parallel().tween_property(sign, "modulate:a", 1, duration)
+			dialog_expand_tween.parallel().tween_property(
+				next_page_arrow, "modulate:a", 1, duration
+			)
 			await dialog_expand_tween.finished
 		current_tab = tab
 		current_page = 0
@@ -91,13 +106,17 @@ func _on_tab_changed(tab: int) -> void:
 			child.mouse_default_cursor_shape = Control.CURSOR_ARROW
 			for c in child.get_children():
 				c.mouse_default_cursor_shape = Control.CURSOR_ARROW
-		dialog_expand_tween = get_tree().create_tween().bind_node(self)\
-		.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		dialog_expand_tween = (
+			self.create_tween()
+			.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		)
 		dialog_expand_tween.tween_property(self, "size:y", 994, 0.5)\
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 		dialog_expand_tween.parallel().tween_property(self, "position:y", 76, 0.5)\
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-		dialog_expand_tween.parallel().tween_property(sign, "modulate:a", 0, 0.5)
+		dialog_expand_tween.parallel().tween_property(
+			next_page_arrow, "modulate:a", 0, 0.5
+		)
 		await dialog_expand_tween.finished
 		if $"../../".enemy_monster != null: # スクロールの邪魔にならないように一旦操作受付を止める
 			$"../../".enemy_monster.get_node("effect").mouse_filter = MouseFilter.MOUSE_FILTER_IGNORE
@@ -113,7 +132,7 @@ func text_change_next() -> void:
 			current_page += 1
 			text_animation(current_tab, current_page)
 		else: # 最後のページの時、処理を進める
-			next_sign_off()
+			_next_arrow_animation(false)
 			paging.emit()
 
 ## Enterキーが押された時、ページ変更ボタンか押された時と同様に振る舞う
@@ -158,50 +177,61 @@ func text_animation(tab: int, page: int) -> void:
 		container.alignment = BoxContainer.ALIGNMENT_CENTER
 		label.custom_minimum_size.x = 930
 	
-	tween = get_tree().create_tween().bind_node(label)\
-	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # テキストアニメーション再生
+	tween = ( # テキストアニメーション再生
+		label.create_tween()
+		.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	)
 	tween.tween_property(label, "visible_characters", \
 	len(label.text), text_speed * len(label.text))
-	# 最後のページではない、もしくは最後のページだがプレイヤーの入力を待つとき
-	if len(tab_list[current_tab]) - 1 > current_page or next_sign == true:
-		next_sign_on()
+	
+	# 最後のページではない時
+	if len(tab_list[current_tab]) - 1 > current_page:
+		has_next_page = true
+	
+	print("has_next_page: ", has_next_page)
+
+
+func _next_arrow_animation(has_next: bool) -> void:
+	if arrow_tween and arrow_tween.is_running():
+		arrow_tween.kill()
+	
+	var cursor: CursorShape
+	var color: Color
+	if has_next:
+		cursor = Control.CURSOR_POINTING_HAND
+		color = Color.WHITE
 	else:
-		next_sign_off()
-
-## メッセージ送りボタンアニメーション再生
-func next_sign_on() -> void:
-	if next_sign_tween and next_sign_tween.is_running():
-		next_sign_tween.kill()
-	for child in get_children(): # マウスカーソルを指差しに
-		child.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		cursor = Control.CURSOR_ARROW
+		color = Color.DIM_GRAY
+	
+	for child in get_children():
+		child.mouse_default_cursor_shape = cursor
 		for c in child.get_children():
-			c.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	sign.modulate = Color(Color.WHITE) # 初期化
-	sign.position.y = sign_pos.y
-	next_sign_tween = get_tree().create_tween().bind_node(sign)\
-	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS) # 矢印アニメーション再生
-	next_sign_tween.set_loops()
-	next_sign_tween.tween_property(sign, "position:y", sign_pos.y - 25, 0.5)
-	next_sign_tween.tween_property(sign, "position:y", sign_pos.y, 0.3)\
-	.set_trans(Tween.TRANS_EXPO)
-	next_sign_tween.tween_interval(0.5)
-
-## メッセージ送りボタンアニメーション停止
-func next_sign_off() -> void:
-	if next_sign_tween and next_sign_tween.is_running():
-		next_sign_tween.kill()
-	for child in get_children(): # マウスカーソルをデフォルトに
-		child.mouse_default_cursor_shape = Control.CURSOR_ARROW
-		for c in child.get_children():
-			c.mouse_default_cursor_shape = Control.CURSOR_ARROW
-	sign.modulate = Color(Color.DIM_GRAY)
-	next_sign_tween = get_tree().create_tween().bind_node(sign)\
-	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	next_sign_tween.tween_property(sign, "position:y", sign_pos.y, 0.5)\
-	.set_trans(Tween.TRANS_EXPO)
+			c.mouse_default_cursor_shape = cursor
+	next_page_arrow.modulate = color
+	
+	arrow_tween = ( # 矢印アニメーション再生
+		next_page_arrow.create_tween()
+		.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	)
+	
+	if has_next:
+		next_page_arrow.position.y = sign_pos.y
+		arrow_tween.set_loops()
+		arrow_tween.tween_property(
+			next_page_arrow, "position:y", sign_pos.y - 25, 0.5
+		)
+		arrow_tween.tween_property(
+			next_page_arrow, "position:y", sign_pos.y, 0.3
+		).set_trans(Tween.TRANS_EXPO)
+		arrow_tween.tween_interval(0.5)
+	else:
+		arrow_tween.tween_property(
+			next_page_arrow, "position:y", sign_pos.y, 0.5
+		).set_trans(Tween.TRANS_EXPO)
 
 func battle_finished() -> void:
 	if tween and tween.is_running(): # ボタン点滅アニメーション停止
 		tween.stop()
-	if next_sign_tween and next_sign_tween.is_running():
-		next_sign_tween.stop()
+	if arrow_tween and arrow_tween.is_running():
+		arrow_tween.stop()

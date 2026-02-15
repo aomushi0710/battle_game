@@ -16,6 +16,8 @@ signal dialog_opened ## ダイアログが開かれる時に発行されるシ�
 signal dialog_closed ## ダイアログが閉じられる時に発行されるシグナル
 signal paging
 signal button_chosen(id: int) ## ボタンが押された時にIDと同時に発行されるシグナル
+signal battle_started ## バトル開始シグナル
+signal battle_finished ## バトル終了シグナル
 
 
 func _ready() -> void:
@@ -24,6 +26,7 @@ func _ready() -> void:
 ## ダイアログボックスを開き、[signal dialog_opened]シグナルを発行します。
 func dialog_open() -> void:
 	show()
+	battle_started.connect(func(): )
 	dialog_opened.emit()
 
 ## ダイアログボックスを閉じ、[signal dialog_closed]シグナルを発行します。
@@ -43,7 +46,7 @@ func dialog_manager(datas: Array[DialogData]) -> void:
 		if datas[redirect_id]:
 			redirect_id = await display_dialog(datas[redirect_id])
 		else:
-			print("ERROR:対応するindexのDialogDataが見つかりませんでした。" + 
+			printerr("対応するindexのDialogDataが見つかりませんでした。" + 
 			"ダイアログ表示を中断します。")
 			redirect_id = -1
 	
@@ -54,7 +57,7 @@ func dialog_manager(datas: Array[DialogData]) -> void:
 ##次に表示されるデータのindexを返します
 func display_dialog(data: DialogData) -> int:
 	if visible == false:
-		print("ダイアログボックスは表示されていません。" + 
+		printerr("ダイアログボックスは表示されていません。" + 
 		"事前にdialog_open()で表示させてください。")
 	
 	label.visible_characters = 0
@@ -109,9 +112,28 @@ func display_dialog(data: DialogData) -> int:
 		## 次に表示したいDialogDataのID[br]ボタンがある場合に、動的にIDを変えるための枠
 		var redirect_id: int = await button_chosen
 		return redirect_id
+	elif not data.battle_redirect_id.is_empty():
+		await paging
+		var is_victory := await _transition_to_battle()
+		if is_victory:
+			return data.battle_redirect_id[0]
+		else:
+			return data.battle_redirect_id[1]
 	else:
 		await paging
 		return data.redirect_id
+
+## バトルに移行する関数。[br]勝利すると[code]true[/code]を返します。
+## ALERT バトル開始前に、モンスターがいるかどうかチェックする必要あり
+func _transition_to_battle() -> bool:
+	var battle_scene: Node2D = load(Global.battle_scene).instantiate()
+	get_tree().current_scene.add_child(battle_scene)
+	battle_started.emit()
+	var result: bool = await battle_scene.get_node("battle").battle_finished
+	print("result: ", result)
+	battle_finished.emit()
+	battle_scene.queue_free()
+	return result
 
 ## Enterキーが押された、またはクリックされた時の処理
 func _input(event: InputEvent) -> void:

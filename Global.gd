@@ -20,29 +20,15 @@ var autoload_scene_array: Array[PackedScene] = [
 var accept_dialog: AcceptDialogManager
 var confirmation_dialog: ConfirmationDialogManager
 
-func _ready() -> void:
-	for i in len(autoload_scene_array):
-		var instance = autoload_scene_array[i].instantiate()
-		add_child(instance)
-	
-	accept_dialog = get_child(0)
-	confirmation_dialog = get_child(1)
-	
-	directory_load("res://monster/", monster_data)
-	directory_load("res://action/", action_data)
-	directory_load("res://item/", item_data)
-	
-	load_game()
+
 
 const main_scene = "res://メインシーン.tscn"
 const map_scene = "res://map.tscn"
 const deck_scene = "res://デッキセレクト.tscn"
-const chara_scene = "res://キャラ選択.tscn"
 const select_scene = "res://技セレクト.tscn"
-const battle_scene = "res://バトル.tscn"
+const battle_scene = "res://新バトル.tscn"
 const debug_scene = "res://debug.tscn"
 const deck_save_scene = "res://デッキセーブデータ.tscn"
-const new_battle_scene = "res://新バトル.tscn"
 const tutorial_scene = "res://tutorial.tscn"
 const shop_scene = "res://shop.tscn"
 
@@ -120,6 +106,21 @@ enum Stage { ## バトルステージ一覧
 	PLAIN
 }
 @onready var battle_stage: Stage ## バトルステージ
+
+
+func _ready() -> void:
+	for i in len(autoload_scene_array):
+		var instance = autoload_scene_array[i].instantiate()
+		add_child(instance)
+	
+	accept_dialog = get_child(0)
+	confirmation_dialog = get_child(1)
+	
+	directory_load("res://monster/", monster_data)
+	directory_load("res://action/", action_data)
+	directory_load("res://item/", item_data)
+	
+	load_game()
 
 ## ディレクトリのパス[param path]を指定して読み込み、[br]
 ##辞書[param dict]にIDをキーとしてリソースを格納する関数。[br]

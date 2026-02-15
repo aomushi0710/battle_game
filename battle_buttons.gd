@@ -11,6 +11,7 @@ var button_index: int
 var selected_action: ActionData
 var selected_item: Item
 var tween: Tween
+var is_victory: bool = false ## 勝利フラグ。親ノードからのみ変更されます。
 ## チュートリアル用:ステータス表示の、playerかenemyかを選択するボタンが押された時のシグナル
 signal player_or_enemy_button_pressed
 ## チュートリアル用:ステータスのテキストをページ送りされた時のシグナル
@@ -472,9 +473,8 @@ func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げら�
 				"バトル終了"
 		)
 
-
-func battle_finished() -> void: # バトル終了初期化処理
-	print("battle_finished")
+## バトル終了初期化処理
+func battle_finished() -> void:
 	Global.p1_death = false
 	Global.p2_death = false
 	Global.p3_death = false
@@ -488,7 +488,9 @@ func battle_finished() -> void: # バトル終了初期化処理
 	
 	Global.enemy_deck.deck_creator(false) # 敵デッキ生成
 	Global.battle_stage = Global.Stage.PLAIN # とりあえず草原ステージ
-	get_tree().change_scene_to_file(Global.deck_scene)
+	
+	battle_node.battle_finished.emit(is_victory)
+	print("battle_finished")
 
 
 func _on_target_1_button_up() -> void:

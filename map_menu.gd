@@ -1,5 +1,10 @@
 extends Control
 
+@export var help_label: ScrollingLabel
+
+func _ready() -> void:
+	help_label.connect_hover_signal(self)
+
 
 func _on_monster_button_up() -> void:
 	get_tree().change_scene_to_file(Global.select_scene)

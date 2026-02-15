@@ -75,7 +75,7 @@ func random_action_selector() -> void:
 		chance[index] += 1
 		# 技の出現確率上限に到達した時、候補から除外する
 		if chance[index] >= action[index].data.max_chance:
-			available_index.remove_at(index)
+			available_index.erase(index)
 
 ## 現在の形態固有のデータを持つ[MonsterForm]を取得します
 func get_monsterform() -> MonsterForm:

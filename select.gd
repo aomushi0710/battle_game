@@ -117,8 +117,6 @@ var mode: Mode = Mode.DECK:
 		if evolution_preview.visible == false:
 			evolution_preview.show()
 		
-		## カメラ移動アニメーション
-		camera_tween = get_tree().create_tween().bind_node(camera)
 		match next_mode:
 			Mode.DECK:
 				confirm_button.hide()
@@ -144,6 +142,8 @@ var mode: Mode = Mode.DECK:
 				monster_setting.bar_chart_update()
 				
 				background.color_change(Color.GREEN) # 背景カラーチェンジ
+				# カメラ移動アニメーション
+				camera_tween = get_tree().create_tween().bind_node(camera)
 				camera_tween.tween_property(camera, "offset:x", 960, 1)\
 				.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 				confirm_button.text = "決定"
@@ -167,6 +167,8 @@ var mode: Mode = Mode.DECK:
 				evolution_preview.hide()
 				
 				background.color_change(Color.ORANGE) # 背景カラーチェンジ
+				# カメラ移動アニメーション
+				camera_tween = get_tree().create_tween().bind_node(camera)
 				camera_tween.tween_property(camera, "offset:x", 1750, 1)\
 				.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 				confirm_button.text = "登録"

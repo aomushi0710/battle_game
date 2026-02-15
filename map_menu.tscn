@@ -25,11 +25,12 @@ corner_radius_bottom_left = 80
 shadow_color = Color(1, 0, 0, 0.5)
 shadow_size = 10
 
-[node name="menu" type="Control"]
+[node name="menu" type="Control" node_paths=PackedStringArray("help_label")]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_kjvt6")
 script = ExtResource("2_4k2b5")
+help_label = NodePath("scrolling_label")
 
 [node name="panel" type="Panel" parent="."]
 layout_mode = 0
@@ -56,6 +57,7 @@ offset_top = 150.0
 offset_right = 720.0
 offset_bottom = 232.0
 text = "ショップ"
+metadata/help_text = "ショップへ移動します。"
 
 [node name="button3" parent="panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
@@ -76,6 +78,7 @@ theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
 theme_override_styles/focus = SubResource("StyleBoxFlat_4k2b5")
 text = "タイトルに戻る"
 color = Color(1, 0, 0, 1)
+metadata/help_text = "タイトル画面へ戻ります。"
 
 [node name="coin" type="RichTextLabel" parent="."]
 layout_mode = 0
@@ -87,6 +90,7 @@ bbcode_enabled = true
 text = "[img=50]res://image/coin.PNG[/img] [color=gold]100[/color]"
 scroll_active = false
 script = ExtResource("4_qdv60")
+metadata/help_text = "現在の所持コイン枚数"
 
 [node name="scrolling_label" parent="." instance=ExtResource("2_r5awk")]
 layout_mode = 0

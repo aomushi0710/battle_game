@@ -1,5 +1,8 @@
 class_name ScrollingLabel
 extends Panel
+## ツールチップなどのテキストを表示するパネル。[br]
+## 長文は電光掲示板のように流して表示します。[br]
+## テキストを表示させたいノードにメタデータ「help_text」を追加してください。
 
 @onready var mask := $mask
 @onready var label := $mask/text

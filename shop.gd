@@ -73,7 +73,7 @@ func item_button_up(shop_item) -> void:
 
 
 func _on_戻る_button_up() -> void:
-	get_tree().change_scene_to_file(Global.deck_scene)
+	get_tree().change_scene_to_file(Global.map_scene)
 
 ## 持ち物一覧を開く
 func _on_inventory_button_up() -> void:

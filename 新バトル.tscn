@@ -256,7 +256,7 @@ scale = Vector2(0.781, 0.781)
 focus_mode = 0
 disabled = true
 
-[node name="dialogtab" type="TabContainer" parent="battle/button"]
+[node name="dialogtab" type="TabContainer" parent="battle/button" node_paths=PackedStringArray("next_page_arrow")]
 process_mode = 3
 z_index = 2
 layout_mode = 0
@@ -270,6 +270,7 @@ theme_override_constants/outline_size = 10
 theme_override_constants/side_margin = 0
 current_tab = 1
 script = ExtResource("14_3ru5v")
+next_page_arrow = NodePath("../next_arrow")
 
 [node name="メイン" type="HBoxContainer" parent="battle/button/dialogtab"]
 visible = false
@@ -320,7 +321,7 @@ theme_override_constants/outline_size = 0
 bbcode_enabled = true
 scroll_following = true
 
-[node name="next_sign" type="RichTextLabel" parent="battle/button"]
+[node name="next_arrow" type="RichTextLabel" parent="battle/button"]
 z_index = 2
 layout_mode = 2
 anchor_right = 1.0
@@ -730,5 +731,5 @@ text = "[color=aqua][b]⇀ x0.5[/b][/color]"
 [connection signal="tab_changed" from="battle/button/dialogtab" to="battle/button/dialogtab" method="_on_tab_changed"]
 [connection signal="gui_input" from="battle/button/dialogtab/メイン/text" to="battle/button/dialogtab" method="label_gui_input"]
 [connection signal="gui_input" from="battle/button/dialogtab/ステータス/text" to="battle/button/dialogtab" method="label_gui_input"]
-[connection signal="gui_input" from="battle/button/next_sign" to="battle/button/dialogtab" method="label_gui_input"]
+[connection signal="gui_input" from="battle/button/next_arrow" to="battle/button/dialogtab" method="label_gui_input"]
 [connection signal="button_up" from="battle/button/escape" to="battle/button" method="_on_escape_button_up"]

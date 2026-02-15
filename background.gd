@@ -9,10 +9,11 @@ func _on_tree_entered() -> void:
 		Global.Stage.PLAIN: # 草原ステージ
 			$stage.texture = preload("res://image/stage/草原.PNG")
 			$stage_animation.texture = preload("res://image/stage/青空.PNG")
-			$"../battle/button/dialogtab".stage_flavor_text = [
+			$"../battle/button/dialogtab".stage_flavor_text.assign([
 				["草が風に揺れている..."], 
 				["あの山は遠くにあるように見えるが、\n実際は近くにあるように感じられる。"], 
-				["この辺りは天候が安定している。\n戦いに邪魔が入ることはないだろう。"]]
+				["この辺りは天候が安定している。\n戦いに邪魔が入ることはないだろう。"]
+			])
 	
 	animation_left = $stage_animation
 	animation_right = $stage_animation.duplicate()

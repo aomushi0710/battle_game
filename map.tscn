@@ -23,6 +23,7 @@ name_color = Color(0, 1, 1, 1)
 image = ExtResource("2_p5pve")
 button_text = Array[String]([])
 button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="Resource" id="Resource_sb2pt"]
@@ -34,39 +35,43 @@ name_text = ""
 name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
 button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="Resource" id="Resource_0t07s"]
 script = ExtResource("8_sb2pt")
-text = "君は世界を救ってくれるか？"
+text = "こちらはバトルシミュレーターです。"
 redirect_id = -1
 flag_list = Array[int]([])
-name_text = ""
+name_text = "バトルシミュレーター"
 name_color = Color(0, 0, 0, 1)
-button_text = Array[String](["はい", "いいえ"])
-button_redirect_id = Array[int]([2, 1])
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([1, 2])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="Resource" id="Resource_ooc2g"]
 script = ExtResource("8_sb2pt")
-text = "残念ながら君に拒否権はない"
-redirect_id = 0
+text = "おめでとう！"
+redirect_id = -1
 flag_list = Array[int]([])
-name_text = ""
+name_text = "バトルシミュレーター"
 name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
 button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="Resource" id="Resource_2wwcf"]
 script = ExtResource("8_sb2pt")
-text = "そう言ってくれると嬉しいよ"
+text = "残念！"
 redirect_id = -1
 flag_list = Array[int]([])
-name_text = ""
+name_text = "バトルシミュレーター"
 name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
 button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e0an3"]
@@ -104,7 +109,7 @@ tile_map_data = PackedByteArray("AAACAAUADQAAAAAAAAADAAUADQAAAAAAAAADAAQADQAAAAA
 tile_set = ExtResource("1_e0an3")
 
 [node name="object" type="TileMapLayer" parent="world/tilemap"]
-tile_map_data = PackedByteArray("AAAEAAEAAAAAAAAAAAAEAAIAAAAAAAEAAAAGAAIAAAAAAAEAAAAGAAEAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAEAAEAAAAAAAAAAAAEAAIAAAAAAAEAAAACAAEAAAAAAAAAAAACAAIAAAAAAAEAAAA=")
 tile_set = ExtResource("6_05x41")
 
 [node name="signboards" type="Node2D" parent="world"]
@@ -114,13 +119,16 @@ position = Vector2(288, 132)
 dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt")])
 
 [node name="signboard2" parent="world/signboards" instance=ExtResource("7_oysan")]
-position = Vector2(416, 132)
+position = Vector2(160, 132)
 dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_0t07s"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
 
-[node name="player" type="CharacterBody2D" parent="world"]
+[node name="player" type="CharacterBody2D" parent="world" node_paths=PackedStringArray("canvas_layer", "world", "camera")]
 position = Vector2(32, 288)
 collision_mask = 7
 script = ExtResource("3_urblq")
+canvas_layer = NodePath("../../CanvasLayer")
+world = NodePath("..")
+camera = NodePath("Camera2D")
 
 [node name="texture" type="Sprite2D" parent="world/player"]
 scale = Vector2(0.25, 0.25)
@@ -141,5 +149,7 @@ collision_mask = 11
 shape = SubResource("RectangleShape2D_ooc2g")
 debug_color = Color(1, 1, 0, 0.419608)
 
+[connection signal="battle_finished" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_battle_finished"]
+[connection signal="battle_started" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_battle_started"]
 [connection signal="dialog_closed" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_closed"]
 [connection signal="dialog_opened" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_opened"]

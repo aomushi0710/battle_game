@@ -5,6 +5,10 @@ class_name Deck
 
 @export var monster: Array[Monster] = [Monster.new(), Monster.new(), Monster.new()]
 
+
+func clear() -> void:
+	monster = [Monster.new(), Monster.new(), Monster.new()]
+
 ## ランダムデッキ生成関数[br]
 ## プレイヤーのデッキを生成時([code]if is_player[/code])、
 ##セーブデータから使用可能なモンスターとそのレベルを読み込んで編成します。[br]
@@ -17,6 +21,8 @@ func deck_creator(
 		min_level: int = 1, 
 		max_level: int = 1, 
 ) -> void:
+	clear()
+	
 	## 実際にランダム選択の候補となるモンスターIDの一覧。[br]
 	## ALERT [code]keys()[/code]や[code]fillter()[/code]を利用するので、
 	##型は[Array]とし、[Array][lb][int][rb]のようなネストができない。
@@ -26,7 +32,8 @@ func deck_creator(
 	else:
 		candidate_ids = id_table.duplicate()
 		if candidate_ids.is_empty():
-			candidate_ids = Global.monster_data.keys().filter(func(i): return i > 0)
+			candidate_ids = Global.monster_data.keys().filter(
+				func(i: int): return i > 0)
 	
 	if len(candidate_ids) < 3:
 		push_error("デッキに必要なモンスター数が不足しています！")
