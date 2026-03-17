@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="MonsterForm" load_steps=5 format=3 uid="uid://dyb63dofhuruv"]
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=6 format=3 uid="uid://dyb63dofhuruv"]
 
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://resource/battlelog_data.gd" id="3_4onud"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_vuaio"]
 [ext_resource type="Resource" uid="uid://3bjg4wfbnyh6" path="res://element/雷属性.tres" id="4_8qp1v"]
 [ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="4_vyqdy"]
@@ -20,5 +21,6 @@ base_DEF = 120
 base_MAG = 120
 base_RES = 120
 description = ""
-flavor_text = Array[String]([])
+flavor_text = Array[ExtResource("3_4onud")]([])
+flavor_text_weight = Array[int]([])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"

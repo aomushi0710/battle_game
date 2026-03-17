@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="MonsterForm" load_steps=5 format=3 uid="uid://b0p40hoqu7mpd"]
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=6 format=3 uid="uid://b0p40hoqu7mpd"]
 
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="3_h5k17"]
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://resource/battlelog_data.gd" id="3_yqjam"]
 [ext_resource type="Resource" uid="uid://bsmtumwsut2ll" path="res://element/土属性.tres" id="4_3yv3u"]
 [ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="4_p3duy"]
 [ext_resource type="Texture2D" uid="uid://qujukyxvummw" path="res://image/monster/メテロ.PNG" id="5_848hx"]
@@ -20,5 +21,6 @@ base_DEF = 100
 base_MAG = 100
 base_RES = 100
 description = ""
-flavor_text = Array[String]([])
+flavor_text = Array[ExtResource("3_yqjam")]([])
+flavor_text_weight = Array[int]([])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"

@@ -1,4 +1,5 @@
 extends Panel
+class_name AbilityDescription
 
 signal ability_extra_button_up
 

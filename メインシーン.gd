@@ -3,7 +3,6 @@ extends Node2D
 func _ready() -> void:
 	randomize()
 	Global.enemy_deck.deck_creator(false)
-	Global.battle_stage = Global.Stage.PLAIN # 草原しかないのでとりあえず
 	var version_text: String = ""
 	if Global.VERSION_BETA:
 		version_text += "β "

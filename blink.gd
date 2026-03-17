@@ -12,7 +12,6 @@ func blink() -> void: # 点滅関数
 
 
 func blink_stop() -> void: # 点滅関数のストップ
-	print("blink_stop")
 	if tween and tween.is_running():
 		tween.kill()
 	hide()

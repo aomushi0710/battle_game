@@ -126,11 +126,13 @@ func display_dialog(data: DialogData) -> int:
 ## バトルに移行する関数。[br]勝利すると[code]true[/code]を返します。
 ## ALERT バトル開始前に、モンスターがいるかどうかチェックする必要あり
 func _transition_to_battle() -> bool:
-	var battle_scene: Node2D = load(Global.battle_scene).instantiate()
+	if Global.player_deck.is_empty():
+		return false
+	var battle_scene: Battle = load(Global.battle_scene).instantiate()
+	battle_scene.stage = Global.stage_data[1]
 	get_tree().current_scene.add_child(battle_scene)
 	battle_started.emit()
 	var result: bool = await battle_scene.get_node("battle").battle_finished
-	print("result: ", result)
 	battle_finished.emit()
 	battle_scene.queue_free()
 	return result

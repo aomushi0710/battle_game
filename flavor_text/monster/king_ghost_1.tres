@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BattlelogData" load_steps=2 format=3 uid="uid://bbfruc3uibgek"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://resource/battlelog_data.gd" id="1_d4763"]
+
+[resource]
+script = ExtResource("1_d4763")
+text = Array[String](["キングゴースト は
+舌を大きくつきだした。"])
+should_wait = false
+tab = 0
+image = []
+metadata/_custom_type_script = "uid://cvq84hr01jqh4"

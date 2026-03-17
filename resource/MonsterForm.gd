@@ -1,3 +1,4 @@
+@tool
 class_name MonsterForm
 extends Resource
 ## モンスターの各形態固有の情報を持つクラス。[br]
@@ -22,7 +23,13 @@ extends Resource
 
 @export_category("説明")
 @export_multiline var description: String ## モンスターの説明
-@export_multiline var flavor_text: Array[String] ## モンスターのフレーバーテキスト一覧
+@export var flavor_text: Array[BattlelogData]: ## モンスターのフレーバーテキスト一覧
+	set(value):
+		flavor_text = value
+		flavor_text_weight.resize(len(value))
+		flavor_text_weight.fill(1)
+## [member MonsterForm.flavor_text]の重みづけテーブル
+@export var flavor_text_weight: Array[int]
 
 ## レベル[param lv]を引数として、実際のステータスをまとめて配列で返す関数[br]
 ## [lb]maxHP, maxMP, supplyMP, SPD, ATK, DEF, MAG, RES[rb]

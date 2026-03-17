@@ -73,7 +73,7 @@ func _on_action_button_selected(index: int) -> void:
 	tween.tween_property(instance, "modulate:a", 1, 0.5)
 	# 技説明テキスト表示
 	var descriptions: Array[String] = Global.action_description_creator(selected_action, true)
-	var description_text = ["[i][u]%s[/u][/i]\n%s　　MP Cost:[color=aqua]%d[/color]\n" % 
+	var description_text: Array[String] = ["[i][u]%s[/u][/i]\n%s　　MP Cost:[color=aqua]%d[/color]\n" % 
 		[selected_action.name, descriptions[0], selected_action.mp] + 
 		"%s　　Power　:[color=red]%d[/color]" % [descriptions[1], selected_action.power]]
 	# 特殊効果説明テキストを表示
@@ -84,9 +84,11 @@ func _on_action_button_selected(index: int) -> void:
 		abi_des.ability = ability
 		ability_description.append(abi_des)
 	if $"../".tutorial_mode == false:
-		$dialogtab.text_setter(0, false, description_text, ability_description)
+		$dialogtab.text_setter(BattlelogData.new(
+			description_text, false, BattlelogData.Tab.MAIN, ability_description
+		))
 	else:
-		await $dialogtab.text_setter(0, true, description_text)
+		await $dialogtab.text_setter(BattlelogData.new(description_text))
 		description_paging.emit()
 
 ## メインのactionが押された時
@@ -132,7 +134,9 @@ func hide_main_button() -> void:
 func show_action_button() -> void:
 	now_showing = 1
 	if $"../".tutorial_mode == false:
-		$dialogtab.text_setter(0, false, ["技を選んでください！\nクリックで技の詳細を確認できます。"])
+		$dialogtab.text_setter(BattlelogData.new([
+			"技を選んでください！\nクリックで技の詳細を確認できます。"
+		], false))
 	for child in action_container.get_children():
 		child.modulate.a = 0
 	action_container.show() # 透明にしてから表示
@@ -158,8 +162,9 @@ func hide_action_button() -> void:
 ## item出現アニメーション
 func show_item_button() -> void:
 	now_showing = 2
-	$dialogtab.text_setter(0, false, 
-	["アイテムを選んでください！\n1回のバトル中に1回だけ使えます。"])
+	$dialogtab.text_setter(BattlelogData.new([
+		"アイテムを選んでください！\n1回のバトル中に1回だけ使えます。"
+	], false))
 	$item.show()
 	tween = get_tree().create_tween().bind_node($item)
 	tween.tween_property($item, "position:y", 865, 0.5)\
@@ -208,8 +213,10 @@ func hide_target_button() -> void:
 func show_player_or_enemy_button() -> void:
 	now_showing = 3
 	if $"../".tutorial_mode == false:
-		$dialogtab.text_setter(0, false, [
-		"Player Status で味方のステータスを、\nEnemy  Status で相手のステータスを\n確認できます！"])
+		$dialogtab.text_setter(BattlelogData.new([
+			"Player Status で味方のステータスを、\n" +
+			"Enemy  Status で相手のステータスを\n確認できます！"
+		], false))
 	for i in range(2):
 		var button = Button.new()
 		button.size = Vector2(200, 200)
@@ -261,8 +268,9 @@ func hide_player_or_enemy_button() -> void:
 ## デッキモンスター一覧ボタン出現アニメーション
 func show_monsters_button(player: bool) -> void:
 	now_showing = 5
-	$dialogtab.text_setter(0, false, 
-	["モンスターをクリックして、\nステータスを確認してください！"])
+	$dialogtab.text_setter(BattlelogData.new([
+		"モンスターをクリックして、\nステータスを確認してください！"
+	], false))
 	now_player = player
 	var deck: Deck
 	if player == true:
@@ -299,8 +307,11 @@ func hide_monsters_button() -> void:
 func show_item_target_button(item: Item) -> void:
 	now_showing = 6
 	selected_item = item
-	$dialogtab.text_setter(0, false, ["[b]%s Lv.%d[/b]\n%s" % 
-	[item.name, item.get_level(), item.get_battle_description(item.get_level())]])
+	$dialogtab.text_setter(BattlelogData.new([
+		"[b]%s Lv.%d[/b]\n%s" % 
+		[item.name, item.get_level(), 
+		item.get_battle_description(item.get_level())]
+	], false))
 	
 	await target_button_setting()
 
@@ -324,21 +335,21 @@ func _on_戻る_button_up() -> void: # 戻る連打によるバグの発生をdi
 			battle_finished() # 初期化処理を呼ぶ
 		1:
 			if $"../".tutorial_mode == false:
-				$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
+				$dialogtab.flavor_text_setter()
 			await hide_action_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
 				button.disabled = false
 		2: # 戻る アイテム選択 -> メイン
 			if $"../".tutorial_mode == false:
-				$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
+				$dialogtab.flavor_text_setter()
 			await hide_item_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
 				button.disabled = false
 		3: # 戻る 味方か相手選択 -> メイン
 			if $"../".tutorial_mode == false:
-				$dialogtab.flavor_text_setter($dialogtab.now_flavor_text)
+				$dialogtab.flavor_text_setter()
 			await hide_player_or_enemy_button()
 			show_main_button()
 			for button: Button in $main.get_children(): # 戻るボタンの時だけ利用可能に
@@ -487,10 +498,8 @@ func battle_finished() -> void:
 	Global.enemy_deck.battle_finished()
 	
 	Global.enemy_deck.deck_creator(false) # 敵デッキ生成
-	Global.battle_stage = Global.Stage.PLAIN # とりあえず草原ステージ
 	
 	battle_node.battle_finished.emit(is_victory)
-	print("battle_finished")
 
 
 func _on_target_1_button_up() -> void:
@@ -571,25 +580,27 @@ func status_dialog(i: int) -> void:
 	
 	# チュートリアル中は、ページ送りを待つ
 	if $"../".tutorial_mode == true:
-		await $dialogtab.text_setter(1, $"../".tutorial_mode, [
-		mon.get_monsterform().name + "\n" + 
-		"[color=coral]HP :%3d[/color] " % mon.maxHP + 
-		" [color=aqua]MP :%3d  /  %3d[/color] " % [mon.supplyMP, mon.maxMP] + 
-		" [color=orange]ATK:%3d[/color] " % mon.ATK + 
-		" [color=light_blue]DEF:%3d[/color]\n" % mon.DEF + 
-		"[color=green]SPD:%3d[/color] " % mon.SPD + 
-		" [color=aqua] (supply / max)[/color] " + 
-		" [color=dodger_blue]MAG:%3d[/color] " % mon.MAG + 
-		" [color=violet]RES:%3d[/color]" % mon.RES])
+		await $dialogtab.text_setter(BattlelogData.new([
+			mon.get_monsterform().name + "\n" + 
+			"[color=coral]HP :%3d[/color] " % mon.maxHP + 
+			" [color=aqua]MP :%3d  /  %3d[/color] " % [mon.supplyMP, mon.maxMP] +
+			" [color=orange]ATK:%3d[/color] " % mon.ATK + 
+			" [color=light_blue]DEF:%3d[/color]\n" % mon.DEF + 
+			"[color=green]SPD:%3d[/color] " % mon.SPD + 
+			" [color=aqua] (supply / max)[/color] " + 
+			" [color=dodger_blue]MAG:%3d[/color] " % mon.MAG + 
+			" [color=violet]RES:%3d[/color]" % mon.RES
+		], true, BattlelogData.Tab.STATUS))
 		status_paging.emit()
 	else:
-		$dialogtab.text_setter(1, $"../".tutorial_mode, [
-		mon.get_monsterform().name + "\n" + 
-		"[color=coral]HP :%3d[/color] " % mon.maxHP + 
-		" [color=aqua]MP :%3d  /  %3d[/color] " % [mon.supplyMP, mon.maxMP] + 
-		" [color=orange]ATK:%3d[/color] " % mon.ATK + 
-		" [color=light_blue]DEF:%3d[/color]\n" % mon.DEF + 
-		"[color=green]SPD:%3d[/color] " % mon.SPD + 
-		" [color=aqua] (supply / max)[/color] " + 
-		" [color=dodger_blue]MAG:%3d[/color] " % mon.MAG + 
-		" [color=violet]RES:%3d[/color]" % mon.RES])
+		$dialogtab.text_setter(BattlelogData.new([
+			mon.get_monsterform().name + "\n" + 
+			"[color=coral]HP :%3d[/color] " % mon.maxHP + 
+			" [color=aqua]MP :%3d  /  %3d[/color] " % [mon.supplyMP, mon.maxMP] +
+			" [color=orange]ATK:%3d[/color] " % mon.ATK + 
+			" [color=light_blue]DEF:%3d[/color]\n" % mon.DEF + 
+			"[color=green]SPD:%3d[/color] " % mon.SPD + 
+			" [color=aqua] (supply / max)[/color] " + 
+			" [color=dodger_blue]MAG:%3d[/color] " % mon.MAG + 
+			" [color=violet]RES:%3d[/color]" % mon.RES
+		], false, BattlelogData.Tab.STATUS))

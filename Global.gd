@@ -12,6 +12,8 @@ var monster_data: Dictionary[int, MonsterData] = {}
 var action_data = {}
 ## [code]key[/code]アイテムのID[int][br][code]value[/code]アイテムリソース[Item]
 var item_data = {}
+## [code]key[/code]ステージのID[int][br][code]value[/code]ステージリソース[Item]
+var stage_data: Dictionary[int, Stage] = {}
 
 var autoload_scene_array: Array[PackedScene] = [
 	preload("res://accept_dialog.tscn"), 
@@ -119,6 +121,7 @@ func _ready() -> void:
 	directory_load("res://monster/", monster_data)
 	directory_load("res://action/", action_data)
 	directory_load("res://item/", item_data)
+	directory_load("res://stage/", stage_data)
 	
 	load_game()
 
@@ -126,7 +129,7 @@ func _ready() -> void:
 ##辞書[param dict]にIDをキーとしてリソースを格納する関数。[br]
 ## [param array_mode]が[code]true[/code]の時、サブディレクトリは[br]
 ##それぞれの配列にまとめられてから、格納されます。
-func directory_load(path: String, dict, array_mode: bool = false):
+func directory_load(path: String, dict):
 	var dir := DirAccess.open(path)
 	if dir:
 		print("ディレクトリ「%s」のロードを開始..." % path)
@@ -140,22 +143,13 @@ func directory_load(path: String, dict, array_mode: bool = false):
 			
 			var full_path = path.path_join(file_name) ## rootからのファイルパス
 			
-			if array_mode == false:
-				if dir.current_is_dir():
-					directory_load(full_path, dict)
-				else:
-					var resource = load(full_path)
-					if resource:
-						dict[resource.id] = resource
+			
+			if dir.current_is_dir():
+				directory_load(full_path, dict)
 			else:
-				if dir.current_is_dir():
-					var monster_list: Array[Monster] ## モンスターの全形態
-					var monster_dict = {} ## データを入れる仮の辞書
-					monster_directory_load(full_path, monster_dict)
-					monster_list.resize(len(monster_dict))
-					for key in monster_dict:
-						monster_list[key] = monster_dict[key]
-					dict[monster_list[0].id] = monster_list
+				var resource = load(full_path)
+				if resource:
+					dict[resource.id] = resource
 			
 			file_name = dir.get_next()
 		
@@ -201,6 +195,23 @@ func arrays_overlap(array1: Array, array2: Array) -> bool:
 		if array2.has(i):
 			return true
 	return false
+
+## 重みづけ抽選を行う関数。重みづけテーブルを引数として、抽選された結果のindexを返します。
+## [br][b]アイテムテーブルと重みづけテーブルの要素数は必ず一致させてください。[/b]
+func get_weighted_random(weight: Array[int], ) -> int:
+	var total_weight: int = 0
+	for w in weight:
+		total_weight += w
+	
+	var random: int = randi() % total_weight
+	
+	var current_weight: int = 0
+	for i in weight.size():
+		current_weight += weight[i]
+		if random < current_weight:
+			return i
+	
+	return -1
 
 ## Array[lb][Action][rb]型からArray[lb][ActionData][rb]型へ変換する関数
 func action_to_actiondata(actions: Array[Action]) -> Array[ActionData]:

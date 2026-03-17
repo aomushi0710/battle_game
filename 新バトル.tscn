@@ -1,5 +1,6 @@
-[gd_scene load_steps=32 format=3 uid="uid://bhqk4iva02mmc"]
+[gd_scene load_steps=33 format=3 uid="uid://bhqk4iva02mmc"]
 
+[ext_resource type="Script" uid="uid://6irx70kpkn0v" path="res://battle.gd" id="1_a0jlr"]
 [ext_resource type="Script" uid="uid://b775il0q1wk0u" path="res://background.gd" id="1_jjjva"]
 [ext_resource type="Script" uid="uid://buahejbbay077" path="res://new_battle.gd" id="2_arwha"]
 [ext_resource type="Texture2D" uid="uid://c23i0i02b401a" path="res://image/stage/青空.PNG" id="2_g5d16"]
@@ -60,16 +61,21 @@ default_font_size = 100
 [sub_resource type="Theme" id="Theme_vdm6v"]
 default_font_size = 25
 
-[node name="Node2D" type="Node2D"]
+[node name="Battle" type="Node2D" node_paths=PackedStringArray("stage_node")]
 process_mode = 1
+script = ExtResource("1_a0jlr")
+stage_node = NodePath("background")
 
-[node name="background" type="Control" parent="."]
+[node name="background" type="Control" parent="." node_paths=PackedStringArray("stage_texture", "stage_animation_texture", "dialog")]
 z_index = -10
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_jjjva")
+stage_texture = NodePath("stage")
+stage_animation_texture = NodePath("stage_animation")
+dialog = NodePath("../battle/button/dialogtab")
 metadata/_edit_lock_ = true
 
 [node name="stage_animation" type="TextureRect" parent="background"]
@@ -280,7 +286,7 @@ theme_override_constants/separation = 30
 alignment = 1
 metadata/_tab_index = 0
 
-[node name="text" type="RichTextLabel" parent="battle/button/dialogtab/メイン"]
+[node name="Text" type="RichTextLabel" parent="battle/button/dialogtab/メイン"]
 z_index = 2
 custom_minimum_size = Vector2(930, 0)
 layout_mode = 2
@@ -297,7 +303,7 @@ theme_override_constants/separation = 30
 alignment = 1
 metadata/_tab_index = 1
 
-[node name="text" type="RichTextLabel" parent="battle/button/dialogtab/ステータス"]
+[node name="Text" type="RichTextLabel" parent="battle/button/dialogtab/ステータス"]
 z_index = 2
 custom_minimum_size = Vector2(930, 0)
 layout_mode = 2
@@ -313,7 +319,7 @@ layout_mode = 2
 mouse_filter = 0
 metadata/_tab_index = 2
 
-[node name="text" type="RichTextLabel" parent="battle/button/dialogtab/バトルログ"]
+[node name="Text" type="RichTextLabel" parent="battle/button/dialogtab/バトルログ"]
 z_index = 2
 custom_minimum_size = Vector2(930, 0)
 layout_mode = 2
@@ -719,7 +725,6 @@ text = "[color=aqua][b]⇀ x0.5[/b][/color]"
 
 [node name="SoundEffects2" parent="." instance=ExtResource("21_pcnpl")]
 
-[connection signal="tree_entered" from="background" to="background" method="_on_tree_entered"]
 [connection signal="button_up" from="battle/button/change" to="battle" method="_on_change_button_up"]
 [connection signal="button_up" from="battle/button/戻る" to="battle/button" method="_on_戻る_button_up"]
 [connection signal="button_up" from="battle/button/main/Action" to="battle/button" method="_on_action_button_up"]
@@ -729,7 +734,7 @@ text = "[color=aqua][b]⇀ x0.5[/b][/color]"
 [connection signal="button_up" from="battle/button/target/target2" to="battle/button" method="_on_target_2_button_up"]
 [connection signal="button_up" from="battle/button/target/target3" to="battle/button" method="_on_target_3_button_up"]
 [connection signal="tab_changed" from="battle/button/dialogtab" to="battle/button/dialogtab" method="_on_tab_changed"]
-[connection signal="gui_input" from="battle/button/dialogtab/メイン/text" to="battle/button/dialogtab" method="label_gui_input"]
-[connection signal="gui_input" from="battle/button/dialogtab/ステータス/text" to="battle/button/dialogtab" method="label_gui_input"]
+[connection signal="gui_input" from="battle/button/dialogtab/メイン/Text" to="battle/button/dialogtab" method="label_gui_input"]
+[connection signal="gui_input" from="battle/button/dialogtab/ステータス/Text" to="battle/button/dialogtab" method="label_gui_input"]
 [connection signal="gui_input" from="battle/button/next_arrow" to="battle/button/dialogtab" method="label_gui_input"]
 [connection signal="button_up" from="battle/button/escape" to="battle/button" method="_on_escape_button_up"]

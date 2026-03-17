@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="MonsterForm" load_steps=5 format=3 uid="uid://qcde2e3i3cco"]
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=6 format=3 uid="uid://qcde2e3i3cco"]
 
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="2_xdou7"]
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://resource/battlelog_data.gd" id="3_fxh1c"]
 [ext_resource type="Resource" uid="uid://cie7fwul7ew3q" path="res://element/無属性.tres" id="4_7rhur"]
 [ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="4_iyoot"]
 [ext_resource type="Texture2D" uid="uid://cce41csro47mx" path="res://image/monster/カカシスライム.PNG" id="5_gqdbv"]
@@ -20,4 +21,5 @@ base_DEF = 100
 base_MAG = 0
 base_RES = 100
 description = ""
-flavor_text = Array[String]([])
+flavor_text = Array[ExtResource("3_fxh1c")]([])
+flavor_text_weight = Array[int]([])

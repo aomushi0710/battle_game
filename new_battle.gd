@@ -1,6 +1,7 @@
 extends Control
 
 const monster_scene = preload("res://battle_monster.tscn")
+
 @onready var sound_effect := $"../SoundEffects"
 @onready var dialog = $button/dialogtab
 var tween: Tween
@@ -157,8 +158,10 @@ func battle_start_animation() -> void:
 	$button/escape.disabled = false
 	$button/next_arrow.show()
 	if tutorial_mode == false:
-		dialog.now_flavor_text = ["ついにこの戦いが始まった。"]
-		dialog.text_setter(0, false, dialog.now_flavor_text)
+		dialog.now_flavor_text = BattlelogData.new(
+			["ついにこの戦いが始まった。"], false
+		)
+		dialog.text_setter(dialog.now_flavor_text)
 
 # spdgaugeが溜まり行動可能になった時
 func monster_ready(player: bool) -> void:
@@ -189,7 +192,7 @@ func monster_ready(player: bool) -> void:
 		# dialog更新
 		if tutorial_mode == false:
 			var text: Array[String] = set_ready_text(player_monster, original_mp)
-			dialog.text_setter(0, false, text) # 味方の時はコマンド選択を待つ
+			dialog.text_setter(BattlelogData.new(text, false)) # 味方の時はコマンド選択を待つ
 		else:
 			player_ready.emit()
 	else:
@@ -199,7 +202,7 @@ func monster_ready(player: bool) -> void:
 		enemy_next_index = random_index(false) # 相手側の次に行動するモンスターをランダムにチェンジ
 		
 		var text: Array[String] = set_ready_text(enemy_monster, original_mp)
-		await dialog.text_setter(0, true, text)
+		await dialog.text_setter(BattlelogData.new(text))
 		
 		var button_index = randi() % 4 # 味方モンスターと同じ変数名を使用
 		var action := enemy_monster.available_action[button_index]
@@ -367,12 +370,12 @@ extra: AbilityExtra = null) -> void:
 	else:
 		dialog_text.append(extra.battle_log_message)
 	
-	await dialog.text_setter(0, true, dialog_text)
+	await dialog.text_setter(BattlelogData.new(dialog_text))
 	
 	# 進化技の時
 	if action.id == 10001 or action.id == 10002:
 		dialog_text = monster.evolution(action.id)
-		await dialog.text_setter(0, true, dialog_text)
+		await dialog.text_setter(BattlelogData.new(dialog_text))
 	
 	# 全ての特殊能力について順番に処理
 	for i in len(action.ability):
@@ -390,7 +393,7 @@ extra: AbilityExtra = null) -> void:
 			var text := target.hp_setter(-damage, true)
 			text += "\n%s" % damage_array[1] # ダメージ相性のテキストを追加
 			dialog_text.append(text)
-			await dialog.text_setter(0, true, dialog_text)
+			await dialog.text_setter(BattlelogData.new(dialog_text))
 	
 			if target.data.HP <= 0: # 死亡時処理
 				await target.dead(player_monster, enemy_monster)
@@ -412,9 +415,10 @@ func action_checker(monster: BattleMonster, action: ActionData) -> bool:
 		return false
 	# mpが足りない場合
 	if monster.data.MP < action.mp:
-		await dialog.text_setter(0, true, [
-		"%s の %s！\n[color=yellow]しかし、[color=aqua]MP[/color]が足りない！[/color]" % 
-		[monster.data.get_monsterform().name, action.name]])
+		await dialog.text_setter(BattlelogData.new([
+			"%s の %s！\n[color=yellow]しかし、[color=aqua]MP[/color]が足りない！[/color]" % 
+			[monster.data.get_monsterform().name, action.name]
+		]))
 		return false
 	
 	return true
@@ -424,10 +428,11 @@ func evolution_action_checker(monster: BattleMonster, action: ActionData) -> boo
 	match monster.data.form:
 		Global.Form.第一形態:
 			if action.id > 10001:
-				await dialog.text_setter(0, true, [
-				"[color=yellow]%s はまだ第3形態には進化できない！[/color]\n" % 
-				monster.data.get_monsterform().name +
-				"先に第2形態に進化してください！"])
+				await dialog.text_setter(BattlelogData.new([
+					"[color=yellow]%s はまだ第3形態には進化できない！[/color]\n" % 
+					monster.data.get_monsterform().name +
+					"先に第2形態に進化してください！"
+				]))
 				return false
 	
 	return true
@@ -480,7 +485,7 @@ damage: int = 0) -> void:
 			else:
 				text = ability.battle_log_message % \
 				target.data.get_monsterform().name
-			await dialog.text_setter(0, true, [text])
+			await dialog.text_setter(BattlelogData.new([text]))
 		
 		elif ability is AbilityHealing: # 回復
 			var heal: int ## 回復量
@@ -512,7 +517,7 @@ damage: int = 0) -> void:
 				AbilityHealing.Status.SPD:
 					pass # TODO 未実装
 			
-			await dialog.text_setter(0, true, [dialog_text])
+			await dialog.text_setter(BattlelogData.new([dialog_text]))
 		
 		elif ability is AbilityExtra: # 連続攻撃
 			await command_selected(monster, ability.action, index, ability)
@@ -522,7 +527,9 @@ func item_selected(player: bool, monster: BattleMonster, item: Item, index: int)
 	dialog.set_tab_disabled(1, true)
 	dialog.set_tab_disabled(2, true)
 	# アイテム名10文字以下なら1行で表示可能
-	await dialog.text_setter(0, true, ["%s Lv.%dを使った！" % [item.name, item.get_level()]])
+	await dialog.text_setter(BattlelogData.new([
+		"%s Lv.%dを使った！" % [item.name, item.get_level()]
+	]))
 	var target_list: Array[BattleMonster] = target_setting(player, item, index)
 	for target: BattleMonster in target_list:
 		match item.id:
@@ -530,12 +537,12 @@ func item_selected(player: bool, monster: BattleMonster, item: Item, index: int)
 				await item_animation(item, target)
 				var text: String = target.hp_setter( # 最終的には小数点切り捨て
 					target.data.maxHP * (item.get_power(item.get_level()) / 100.0), true)
-				await dialog.text_setter(0, true, [text])
+				await dialog.text_setter(BattlelogData.new([text]))
 			2: # マナポーション
 				await item_animation(item, target)
 				var text: String = target.mp_setter( # 最終的には小数点切り捨て
 					target.data.maxMP * (item.get_power(item.get_level()) / 100.0), true)
-				await dialog.text_setter(0, true, [text])
+				await dialog.text_setter(BattlelogData.new([text]))
 	
 	turn_end(monster)
 
@@ -596,29 +603,41 @@ func turn_end(monster: BattleMonster) -> void:
 			enemy_monster.get_node("SPD").set_process(true)
 	
 	if monster.player == true: # 味方モンスターが動いた後にフレーバーテキスト更新
+		## 選ばれるフレーバーテキスト一覧の候補
+		var flavor_text_table = [
+			dialog.global_flavor_text,
+			dialog.stage_flavor_text,
+			player_monster.data.get_monsterform().flavor_text,
+			enemy_monster.data.get_monsterform().flavor_text
+		]
+		## [code]flavor_text_table[/code]のそれぞれに対応した重みづけテーブル
+		var weight_table_table = [
+			dialog.global_flavor_text_weight,
+			dialog.stage_flavor_text_weight,
+			player_monster.data.get_monsterform().flavor_text_weight,
+			enemy_monster.data.get_monsterform().flavor_text_weight
+		]
+		## [code]flavor_text_table[/code]の重みづけテーブル
+		var weight_table: Array[int]= [1, 2, 1, 1]
 		
-		var result = randi() % 4 ## 50%:ステージ 25%:味方モンスター 25%:相手モンスター
-		var flavor_text: Array[String] = []
-		match result:
-			0, 1:
-				flavor_text = dialog.stage_flavor_text
-			2:
-				flavor_text = player_monster.data.get_monsterform().flavor_text
-			3:
-				flavor_text = enemy_monster.data.get_monsterform().flavor_text
+		# 配列が空の時、候補から削除しておくことでエラーを防止する。
+		for i in range(flavor_text_table.size() - 1, -1, -1):
+			if flavor_text_table[i].is_empty():
+				flavor_text_table.remove_at(i)
+				weight_table_table.remove_at(i)
+				weight_table.remove_at(i)
 		
-		if flavor_text.is_empty(): # なければグローバルフレーバーテキスト
-			flavor_text.assign(
-				dialog.global_flavor_text
-				[randi() % dialog.global_flavor_text.size()]
-			)
-			if flavor_text.is_empty():
-				flavor_text = ["どうやら何もメッセージがないらしい"]
+		var index := Global.get_weighted_random(weight_table)
+		## 選ばれるフレーバーテキストの候補
+		var available_flavor_text = flavor_text_table[index]
 		
-		dialog.now_flavor_text = [flavor_text[randi() % len(flavor_text)]]
-	# flavor_text一覧更新
+		var flavor_text: BattlelogData = available_flavor_text[
+			Global.get_weighted_random(weight_table_table[index])
+		]
+		dialog.now_flavor_text = flavor_text
+	
 	if tutorial_mode == false:
-		dialog.flavor_text_setter(dialog.now_flavor_text) # フレーバーテキスト設定
+		dialog.text_setter(dialog.now_flavor_text) # フレーバーテキスト設定
 	else:
 		command_ended.emit()
 
@@ -633,15 +652,18 @@ func battle_finish(is_victory: bool) -> void:
 			coins += enemy_deck[i].data.data.coin
 		Global.coin_setter(coins)
 		$"../result_rect/win".show()
-		dialog.text_setter(0, false, [
-		"[b][color=red]勝利！[/color][/b]\n" + \
-		"[color=gold]%dコイン[/color]を手に入れた！\n" % coins + \
-		"左下の戻るボタンを押してバトルを終了"])
+		dialog.text_setter(BattlelogData.new([
+			"[b][color=red]勝利！[/color][/b]\n" +
+			"[color=gold]%dコイン[/color]を手に入れた！\n" % coins +
+			"左下の戻るボタンを押してバトルを終了"
+		], false))
 		
 	else:
 		$"../result_rect/lose".show()
-		dialog.text_setter(0, false, [
-		"[b][color=dodger_blue]敗北...[/color][/b]\n\n左下の戻るボタンを押してバトルを終了 "])
+		dialog.text_setter(BattlelogData.new([
+			"[b][color=dodger_blue]敗北...[/color][/b]\n\n" +
+			"左下の戻るボタンを押してバトルを終了 "
+		], false))
 
 ## 選ばれた敵または味方の[param index]を基にして技・特殊効果・アイテム[param resource]
 ## の発動先をリストにして返す関数[br]

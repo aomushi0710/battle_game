@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="MonsterForm" load_steps=6 format=3 uid="uid://bpssvsyyk1he4"]
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=7 format=3 uid="uid://bpssvsyyk1he4"]
 
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://resource/element.gd" id="4_pqa6r"]
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://resource/battlelog_data.gd" id="4_xo332"]
 [ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://resource/MonsterForm.gd" id="5_iw82a"]
 [ext_resource type="Resource" uid="uid://cie7fwul7ew3q" path="res://element/無属性.tres" id="5_og33c"]
 [ext_resource type="Resource" uid="uid://du8c5g5eab01" path="res://element/闇属性.tres" id="6_r165r"]
@@ -21,7 +22,6 @@ base_DEF = 90
 base_MAG = 130
 base_RES = 90
 description = "少し攻撃・素早さ偏重なステータスを持つ。"
-flavor_text = Array[String](["キングゴースト は
-舌を大きくつきだした。", "キングゴースト は
-爪を綺麗な三角形に磨きあげた。"])
+flavor_text = Array[ExtResource("4_xo332")]([])
+flavor_text_weight = Array[int]([1, 1])
 metadata/_custom_type_script = "uid://bt0467jqpfboq"

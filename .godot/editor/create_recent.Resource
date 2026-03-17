@@ -1,3 +1,5 @@
+BattlelogData
+Stage
 MonsterForm
 DialogData
 TileSet
@@ -10,6 +12,3 @@ AbilityBuff
 AbilityFumble
 AbilityCritical
 AbilityReduction
-AbilityHealing
-AbilityDebuff
-Item

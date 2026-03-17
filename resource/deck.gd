@@ -5,9 +5,17 @@ class_name Deck
 
 @export var monster: Array[Monster] = [Monster.new(), Monster.new(), Monster.new()]
 
-
+## 全てのモンスター選択を解除し、デッキをリセットします。
 func clear() -> void:
 	monster = [Monster.new(), Monster.new(), Monster.new()]
+
+## デッキ内にモンスターが1体も存在していなければ[code]true[/code]を返します。
+func is_empty() -> bool:
+	for mon in monster:
+		if mon and mon.data:
+			return false
+	
+	return true
 
 ## ランダムデッキ生成関数[br]
 ## プレイヤーのデッキを生成時([code]if is_player[/code])、

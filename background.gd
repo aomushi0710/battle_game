@@ -1,22 +1,24 @@
 extends Control
 
+@export var stage_texture: TextureRect
+@export var stage_animation_texture: TextureRect
+@export var dialog: TabContainer
+
+var stage: Stage
 var tween: Tween
 var animation_left: TextureRect
 var animation_right: TextureRect
 
-func _on_tree_entered() -> void:
-	match Global.battle_stage: # ステージ背景の決定
-		Global.Stage.PLAIN: # 草原ステージ
-			$stage.texture = preload("res://image/stage/草原.PNG")
-			$stage_animation.texture = preload("res://image/stage/青空.PNG")
-			$"../battle/button/dialogtab".stage_flavor_text.assign([
-				["草が風に揺れている..."], 
-				["あの山は遠くにあるように見えるが、\n実際は近くにあるように感じられる。"], 
-				["この辺りは天候が安定している。\n戦いに邪魔が入ることはないだろう。"]
-			])
+
+func setup(p_stage: Stage) -> void:
+	stage = p_stage
+	stage_texture.texture = stage.texture
+	stage_animation_texture.texture = stage.animation_texture
+	dialog.stage_flavor_text = stage.flavor_text
+	dialog.stage_flavor_text_weight = stage.flavor_text_weight
 	
-	animation_left = $stage_animation
-	animation_right = $stage_animation.duplicate()
+	animation_left = stage_animation_texture
+	animation_right = stage_animation_texture.duplicate()
 	await get_tree().process_frame
 	add_child(animation_right)
 	animation()

@@ -121,10 +121,11 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 		return
 	# フィールドにいる味方モンスターがやられた時
 	if player == true and self == player_monster:
-		text_setter_callback.call(0, false, [
-		"[color=red]%s はやられてしまった！[/color]\n" % 
-		data.get_monsterform().name + 
-		"次にフィールドに出すモンスターを\n選んでください。"])
+		text_setter_callback.call(BattlelogData.new([
+			"[color=red]%s はやられてしまった！[/color]\n" % 
+			data.get_monsterform().name + 
+			"次にフィールドに出すモンスターを\n選んでください。"
+		], false))
 		await parent.changed
 		bench_set() # 死んだモンスターをベンチにセット
 		parent.player_monster = parent.player_deck[parent.player_next_index] # 次のモンスターを設定
@@ -132,9 +133,10 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 		parent.player_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
 	# フィールドにいる敵モンスターを倒した時、ランダムに次を選ぶ
 	elif player == false and self == enemy_monster:
-		await text_setter_callback.call(0, true, [
-		"[color=red]%s を倒した！[/color]\n" % data.get_monsterform().name + 
-		"次にフィールドに出すモンスターを\n相手が選んでいる..."])
+		await text_setter_callback.call(BattlelogData.new([
+			"[color=red]%s を倒した！[/color]\n" % data.get_monsterform().name +
+			"次にフィールドに出すモンスターを\n相手が選んでいる..."
+		]))
 		await get_tree().create_timer(1).timeout # 考えるフリ
 		parent.enemy_next_index = parent.random_index(false)
 		bench_set()
@@ -142,13 +144,15 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 		parent.enemy_monster.field_set()
 	else:
 		if player == true:
-			await text_setter_callback.call(0, true, [
-			"[color=red]%s はやられてしまった！[/color]\n" % 
-			data.get_monsterform().name])
+			await text_setter_callback.call(BattlelogData.new([
+				"[color=red]%s はやられてしまった！[/color]\n" % 
+				data.get_monsterform().name
+			]))
 		else:
-			await text_setter_callback.call(0, true, [
-			"[color=red]%s を倒した！[/color]\n" % 
-			data.get_monsterform().name])
+			await text_setter_callback.call(BattlelogData.new([
+				"[color=red]%s を倒した！[/color]\n" % 
+				data.get_monsterform().name
+			]))
 	get_tree().paused = false
 
 ## 進化技を引数にして、そのIDにあった進化処理を施す

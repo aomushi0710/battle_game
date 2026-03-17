@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BattlelogData" load_steps=2 format=3 uid="uid://barrhi5pntyn6"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://resource/battlelog_data.gd" id="1_y52yo"]
+
+[resource]
+script = ExtResource("1_y52yo")
+text = Array[String](["スノ はひらひらと舞っている。"])
+should_wait = false
+tab = 0
+image = []
+metadata/_custom_type_script = "uid://cvq84hr01jqh4"
