@@ -11,8 +11,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		
 		if menu.visible:
-			menu.visible = false
-			player.can_move = true
+			menu_close()
 		else:
-			menu.visible = true
-			player.can_move = false
+			menu_open()
+
+## メニューを開きます
+func menu_open() -> void:
+	menu.visible = true
+	player.can_move = false
+
+## メニューを閉じます
+func menu_close() -> void:
+	menu.visible = false
+	player.can_move = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bldb4kxsdbr4q"]
+[gd_scene load_steps=10 format=3 uid="uid://bldb4kxsdbr4q"]
 
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_kjvt6"]
 [ext_resource type="Script" uid="uid://cywnusxga3jm3" path="res://map_menu.gd" id="2_4k2b5"]
@@ -12,6 +12,20 @@ bg_color = Color(0, 0, 0, 0.501961)
 skew = Vector2(0.25, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4k2b5"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 0, 0, 0.5)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4dm5r"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
@@ -106,6 +120,19 @@ offset_right = 1857.0
 
 [node name="text" parent="scrolling_label/mask" index="0"]
 offset_right = 1855.0
+
+[node name="Close" parent="." instance=ExtResource("3_qdv60")]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 807.0
+offset_right = 241.0
+offset_bottom = 884.0
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_4dm5r")
+text = "閉じる"
+color = Color(1, 0, 0, 1)
+metadata/help_text = "メニューを閉じます。また、[b]Xキー[/b]でもメニューを閉じることができます。"
 
 [connection signal="button_up" from="panel/Monster" to="." method="_on_monster_button_up"]
 [connection signal="button_up" from="panel/Shop" to="." method="_on_shop_button_up"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://b6v2nlkh2ak8j"]
+[gd_scene load_steps=26 format=4 uid="uid://b6v2nlkh2ak8j"]
 
 [ext_resource type="TileSet" uid="uid://rw4km3kk1k67" path="res://image/tile/terrain.tres" id="1_e0an3"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_p5pve"]
@@ -10,6 +10,34 @@
 [ext_resource type="TileSet" uid="uid://bm5qn6qq1ml3b" path="res://image/tile/object.tres" id="6_05x41"]
 [ext_resource type="PackedScene" uid="uid://b5nv63d85qwtt" path="res://signboard.tscn" id="7_oysan"]
 [ext_resource type="Script" uid="uid://c8f5dn7tcqt5t" path="res://resource/DialogData.gd" id="8_sb2pt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oysan"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 0, 0, 0.5)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sb2pt"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 0, 0, 0.5)
+shadow_size = 10
 
 [sub_resource type="Resource" id="Resource_bssq0"]
 script = ExtResource("8_sb2pt")
@@ -178,6 +206,12 @@ script = ExtResource("2_iw27f")
 [node name="menu" parent="CanvasLayer" instance=ExtResource("3_71pa8")]
 visible = false
 
+[node name="Title" parent="CanvasLayer/menu/panel" index="3"]
+theme_override_styles/focus = SubResource("StyleBoxFlat_oysan")
+
+[node name="Close" parent="CanvasLayer/menu" index="3"]
+theme_override_styles/focus = SubResource("StyleBoxFlat_sb2pt")
+
 [node name="dialog" parent="CanvasLayer" instance=ExtResource("4_71pa8")]
 offset_top = 680.0
 offset_bottom = 680.0
@@ -246,8 +280,12 @@ offset_right = 2307.0
 offset_bottom = 1206.0
 color = Color(0.5, 0.5, 0.5, 1)
 
+[connection signal="button_up" from="CanvasLayer/menu/Close" to="CanvasLayer/ui" method="menu_close"]
 [connection signal="battle_finished" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_battle_finished"]
 [connection signal="battle_started" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_battle_started"]
 [connection signal="dialog_closed" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_closed"]
 [connection signal="dialog_opened" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_opened"]
 [connection signal="tree_exited" from="world/player" to="world/player" method="_on_tree_exited"]
+
+[editable path="CanvasLayer/menu"]
+[editable path="CanvasLayer/menu/scrolling_label"]
