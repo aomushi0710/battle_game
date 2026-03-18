@@ -118,3 +118,7 @@ func _on_monster_icon_button_up(index: int) -> void:
 	else:
 		selected_monster_changed.emit(Global.player_deck.monster[index])
 		parent.mode = parent.Mode.STATUS
+
+## LineEdit
+func _on_line_edit_text_changed(new_text: String) -> void:
+	Global.player_deck.name = new_text

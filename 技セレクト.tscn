@@ -775,6 +775,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_e1jok")
 placeholder_text = "デッキ名を入力"
+max_length = 20
 metadata/help_text = "デッキに名前を入力できます。"
 
 [node name="MonsterIcons" type="HBoxContainer" parent="Control/DeckMenu/Deck"]
@@ -1205,6 +1206,7 @@ metadata/_edit_lock_ = true
 [connection signal="evolution_form_changed" from="Control/DeckMenu" to="Control" method="_on_option_button_item_selected"]
 [connection signal="selected_monster_changed" from="Control/DeckMenu" to="Control" method="_on_selected_monster_changed"]
 [connection signal="selected_slot_index_changed" from="Control/DeckMenu" to="Control" method="_on_selected_slot_index_changed"]
+[connection signal="text_changed" from="Control/DeckMenu/Deck/LineEdit" to="Control/DeckMenu" method="_on_line_edit_text_changed"]
 [connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [0]]
 [connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon2" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [1]]
 [connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon3" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [2]]

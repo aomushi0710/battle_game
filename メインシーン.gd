@@ -6,8 +6,7 @@ func _ready() -> void:
 	var version_text: String = ""
 	if Global.VERSION_BETA:
 		version_text += "β "
-	$version.text = version_text + "[i]ver.%s[/i]" % \
-	ProjectSettings.get_setting("application/config/version")
+	$version.text = version_text + "[i]ver.%s[/i]" % Global.version
 
 
 func _on_button_pressed():
@@ -37,13 +36,5 @@ func _on_confirmed() -> void:
 	else:
 		path = Global.save_data_path
 	
-	if FileAccess.file_exists(path):
-		var err := DirAccess.remove_absolute(path)
-		
-		if err != OK:
-			print("ERROR:セーブデータの削除に失敗しました: %s" % err)
-		else:
-			print("セーブデータを削除しました")
-			Global.load_game() # 新規セーブデータ作成
-	else:
-		print("ERROR:セーブデータが存在しません: %s" % path)
+	SaveManager.delete_file(path)
+	SaveManager.load_game() # 新規セーブデータ作成

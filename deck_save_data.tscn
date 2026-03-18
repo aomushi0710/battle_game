@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckwkfg1gmev8b"]
+[gd_scene load_steps=4 format=3 uid="uid://ba4qi7gus18vx"]
 
-[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_e8mes"]
-[ext_resource type="Script" uid="uid://b7a2osxjuhyxo" path="res://デッキセーブデータ.gd" id="2_f0prp"]
-[ext_resource type="PackedScene" uid="uid://cgn1xp253pxl6" path="res://deck_slot.tscn" id="3_e8mes"]
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_j2i5e"]
+[ext_resource type="Script" uid="uid://b7a2osxjuhyxo" path="res://デッキセーブデータ.gd" id="2_a5q4i"]
+[ext_resource type="PackedScene" uid="uid://cgn1xp253pxl6" path="res://deck_slot.tscn" id="3_6ayoh"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -11,8 +11,8 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("1_e8mes")
-script = ExtResource("2_f0prp")
+theme = ExtResource("1_j2i5e")
+script = ExtResource("2_a5q4i")
 player_deck_slot = NodePath("DeckSlot")
 container = NodePath("ScrollContainer/DeckSlotContainer")
 
@@ -42,7 +42,7 @@ offset_right = 178.0
 offset_bottom = 1064.0
 text = "←戻る"
 
-[node name="DeckSlot" parent="Control" instance=ExtResource("3_e8mes")]
+[node name="DeckSlot" parent="Control" instance=ExtResource("3_6ayoh")]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
@@ -50,7 +50,7 @@ offset_right = 1880.0
 offset_bottom = 340.0
 color = Color(0.0797502, 6.73831e-07, 0.441536, 1)
 
-[node name="deck_slot_name" parent="Control/DeckSlot" index="0"]
+[node name="DeckSlotLabel" parent="Control/DeckSlot" index="0"]
 text = "[u][b]現在のデッキ[/b][/u]"
 
 [node name="save" parent="Control/DeckSlot" index="4"]

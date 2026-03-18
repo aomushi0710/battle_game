@@ -1,0 +1,97 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgn1xp253pxl6"]
+
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_4cs4a"]
+[ext_resource type="Script" uid="uid://bp2ggvr5hlmwt" path="res://deck_slot.gd" id="2_x43nm"]
+[ext_resource type="PackedScene" uid="uid://bvbgk42kbwv54" path="res://monster_icon.tscn" id="3_78ryd"]
+[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="6_4ct7a"]
+
+[node name="DeckSlot" type="ColorRect" node_paths=PackedStringArray("save_button", "load_button", "reset_button", "deck_slot_label", "deck_name_label", "version_label", "monster_icon_1", "monster_icon_2", "monster_icon_3")]
+custom_minimum_size = Vector2(1840, 300)
+theme = ExtResource("1_4cs4a")
+color = Color(0.3, 0.3, 0.3, 1)
+script = ExtResource("2_x43nm")
+save_button = NodePath("save")
+load_button = NodePath("load")
+reset_button = NodePath("reset")
+deck_slot_label = NodePath("DeckSlotLabel")
+deck_name_label = NodePath("DeckNameLabel")
+version_label = NodePath("version")
+monster_icon_1 = NodePath("HBoxContainer/MonsterIcon")
+monster_icon_2 = NodePath("HBoxContainer/MonsterIcon2")
+monster_icon_3 = NodePath("HBoxContainer/MonsterIcon3")
+
+[node name="DeckSlotLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 486.0
+offset_bottom = 115.0
+bbcode_enabled = true
+text = "[u][b]デッキスロット１[/b][/u]"
+
+[node name="DeckNameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 111.0
+offset_right = 540.0
+offset_bottom = 260.0
+text = "デッキの名前
+上限20文字(全角)"
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 30.0
+offset_right = 1460.0
+offset_bottom = 330.0
+scale = Vector2(0.8, 0.8)
+theme_override_constants/separation = 0
+
+[node name="MonsterIcon" parent="HBoxContainer" instance=ExtResource("3_78ryd")]
+layout_mode = 2
+
+[node name="MonsterIcon2" parent="HBoxContainer" instance=ExtResource("3_78ryd")]
+layout_mode = 2
+
+[node name="MonsterIcon3" parent="HBoxContainer" instance=ExtResource("3_78ryd")]
+layout_mode = 2
+
+[node name="version" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1283.0
+offset_top = 202.0
+offset_right = 1527.0
+offset_bottom = 252.0
+theme = ExtResource("6_4ct7a")
+bbcode_enabled = true
+text = "⚠️[i]ver 3.1.x(β)[/i]"
+
+[node name="save" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1523.0
+offset_top = 50.0
+offset_right = 1750.0
+offset_bottom = 114.0
+mouse_default_cursor_shape = 2
+text = " ✏️セーブ "
+
+[node name="load" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1523.0
+offset_top = 50.0
+offset_right = 1800.0
+offset_bottom = 114.0
+mouse_default_cursor_shape = 2
+text = " 📁ロード "
+
+[node name="reset" type="Button" parent="."]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 1523.0
+offset_top = 186.0
+offset_right = 1800.0
+offset_bottom = 250.0
+mouse_default_cursor_shape = 2
+text = "🗑️リセット"

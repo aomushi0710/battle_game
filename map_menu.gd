@@ -14,5 +14,9 @@ func _on_shop_button_up() -> void:
 	get_tree().change_scene_to_file(Global.shop_scene)
 
 
+func _on_save_button_up() -> void:
+	pass # Replace with function body.
+
+
 func _on_title_button_up() -> void:
 	get_tree().change_scene_to_file(Global.main_scene)

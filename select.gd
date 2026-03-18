@@ -203,6 +203,7 @@ func _on_back_button_up():
 	sound_effects.click.play()
 	match mode:
 		Mode.DECK:
+			SaveManager.save_deck(0, false)
 			get_tree().change_scene_to_file(Global.map_scene)
 		
 		Mode.MONSTER_SELECT:

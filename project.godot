@@ -20,7 +20,7 @@ config/icon="uid://cioi83ubpqfrg"
 
 [autoload]
 
-Global="*res://Global.gd"
+Global="*res://system/Global.gd"
 
 [debug]
 

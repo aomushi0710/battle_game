@@ -1,5 +1,7 @@
 extends Node2D
 
+## 現在のバージョン
+var version: String = ProjectSettings.get_setting("application/config/version")
 ## 現在のバージョンがβ版であるかどうかを表す定数[br]
 ## [code]true[/code]はベータ版、[code]false[/code]は正式リリース版であることを示す
 const VERSION_BETA: bool = true
@@ -30,7 +32,7 @@ const deck_scene = "res://デッキセレクト.tscn"
 const select_scene = "res://技セレクト.tscn"
 const battle_scene = "res://新バトル.tscn"
 const debug_scene = "res://debug.tscn"
-const deck_save_scene = "res://デッキセーブデータ.tscn"
+const deck_save_scene = "res://deck_save_data.tscn"
 const tutorial_scene = "res://tutorial.tscn"
 const shop_scene = "res://shop.tscn"
 
@@ -123,7 +125,8 @@ func _ready() -> void:
 	directory_load("res://item/", item_data)
 	directory_load("res://stage/", stage_data)
 	
-	load_game()
+	SaveManager.load_game()
+	load(deck_save_scene)
 
 ## ディレクトリのパス[param path]を指定して読み込み、[br]
 ##辞書[param dict]にIDをキーとしてリソースを格納する関数。[br]
@@ -224,8 +227,10 @@ func action_to_actiondata(actions: Array[Action]) -> Array[ActionData]:
 ## 引数として入力し、[param version1]の方が古い場合は[code]true[/code]、[br]
 ## [param version1]の方が新しい、または同一バージョンの場合は[code]false[/code]を返す関数
 ## [br][br][param version2]のデフォルト値は、現在バージョンを取得する関数を呼んでいる
-func is_version_older(version1: String, version2: String = 
-ProjectSettings.get_setting("application/config/version")) -> bool:
+func is_version_older(
+	version1: String, 
+	version2: String = Global.version
+) -> bool:
 	var num1_array = version1.split(".") ## version1(比較元)を分割した配列
 	var num2_array = version2.split(".") ## version2(比較先)を分割した配列
 	
@@ -556,111 +561,7 @@ func ability_description_creator(act: Action, index: int, blank: bool) -> Array:
 ## 指定したコイン枚数だけ増減させ、自動でセーブする関数
 func coin_setter(n: int) -> void:
 	save_data.coin += n
-	save_game()
-
-# 暗号化及び複合化を行う関数 data:平文または暗号のデータ key:暗号化キー
-func xor_encrypt(data: PackedByteArray, key: String) -> PackedByteArray:
-	var result = PackedByteArray()
-	var key_bytes = key.to_utf8_buffer()
-	var key_len = key_bytes.size()
-	for i in range(data.size()):
-		result.append(data[i] ^ key_bytes[i % key_len])
-	return result
-
-
-func save_game() -> void:
-	save_file(save_data.to_dictionary())
-
-
-func load_game() -> void:
-	var dict := load_file()
-	# セーブデータが存在しない時、新規セーブデータ作成
-	if dict == {}:
-		save_data = SaveData.new()
-		save_game()
-		
-		var scene = get_tree().current_scene
-		if not scene:
-			print("ERROR:シーンが存在しません")
-			return
-		
-		Global.accept_dialog.display_dialog(
-				"セーブデータが存在しません！\n新たなセーブデータを作成しました。", 
-				"新規セーブデータ作成"
-		)
-	
-	# 現在のバージョン以降のデータの場合、オートセーブを切り、既存データの上書きされるのを防ぐ
-	elif (not is_version_older(dict["version"]) and 
-	dict["version"] != 
-	ProjectSettings.get_setting("application/config/version")):
-		auto_save = false # オートセーブを切る
-		save_data = SaveData.new()
-		
-		$AcceptDialog.title = "⚠️ERROR⚠️"
-		$AcceptDialog.dialog_text = "現在のバージョン ver %s " % \
-		ProjectSettings.get_setting("application/config/version") + \
-		"\n以降に作成されたデータのため、ロードできません。\n\n仮のセーブデータをロードしました。" + \
-		"\n現在のバージョンでもプレイ可能ですが、進行状況はセーブされません。" + \
-		"\nまた、既存データの破損については一切の責任を負いません！"
-		$AcceptDialog.popup_centered()
-	# TODO 過去のバージョンのデータだった場合、互換性があるかチェックし、
-	# データのバージョンを更新する処理を実装する必要あり。
-	else:
-		save_data = SaveData.from_dictionary(dict)
-
-## ファイルをセーブする関数
-func save_file(data: Dictionary, key: String = "I'm watching you") -> void:
-	var path: String ## セーブデータファイルパス
-	if VERSION_BETA == true:
-		path = save_data_path_beta
-	else:
-		path = save_data_path
-
-	var buffer := PackedByteArray()
-	buffer = var_to_bytes(data)
-
-	var encrypted := xor_encrypt(buffer, key)
-
-	var file := FileAccess.open(path, FileAccess.WRITE)
-	if file:
-		file.store_buffer(encrypted)
-		file.close()
-	else:
-		print("ERROR:セーブ先のファイルが存在しません")
-
-## ファイルをロードしてセーブデータの辞書形式を返す関数
-func load_file(key: String = "I'm watching you") -> Dictionary:
-	var path: String ## セーブデータファイルパス
-	if VERSION_BETA == true:
-		path = save_data_path_beta
-	else:
-		path = save_data_path
-	
-	var result ## セーブデータの返り値
-	if not FileAccess.file_exists(path):
-		print("ALERT:セーブデータが存在しません\nALERT:新たにセーブデータを作成します")
-		return {}
-
-	var file := FileAccess.open(path, FileAccess.READ)
-	if not file:
-		print("ERROR:セーブファイルが開けません")
-		return {}
-	var encrypted := file.get_buffer(file.get_length())
-	file.close()
-
-	var decrypted := xor_encrypt(encrypted, key)
-
-	result = bytes_to_var(decrypted)
-	if typeof(result) != TYPE_DICTIONARY:
-		print("ERROR:セーブデータが破損しています！")
-		return {}
-	
-	result = cheat_check(result)
-	return result
-
-## チート検知
-func cheat_check(result: Dictionary) -> Dictionary:
-	return result
+	SaveManager.save_game()
 
 
 @onready var help_message = {"type":

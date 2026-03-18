@@ -101,4 +101,5 @@ offset_bottom = 1051.0
 
 [connection signal="button_up" from="panel/Monster" to="." method="_on_monster_button_up"]
 [connection signal="button_up" from="panel/Shop" to="." method="_on_shop_button_up"]
+[connection signal="button_up" from="panel/button3" to="." method="_on_save_button_up"]
 [connection signal="button_up" from="panel/Title" to="." method="_on_title_button_up"]

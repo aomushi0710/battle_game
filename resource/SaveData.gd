@@ -20,7 +20,7 @@ var monster_levels: Dictionary[int, int] = {
 var item: Dictionary[int, int] = {}
 
 ## セーブデータのバージョン
-var version: String = ProjectSettings.get_setting("application/config/version")
+var version: String = Global.version
 var beta: bool = Global.VERSION_BETA ## β版であるかどうかのフラグ
 
 ## カスタムリソースのプロパティを辞書形式に変換する関数
