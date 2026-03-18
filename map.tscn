@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://b6v2nlkh2ak8j"]
+[gd_scene load_steps=22 format=4 uid="uid://b6v2nlkh2ak8j"]
 
 [ext_resource type="TileSet" uid="uid://rw4km3kk1k67" path="res://image/tile/terrain.tres" id="1_e0an3"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_p5pve"]
@@ -10,6 +10,98 @@
 [ext_resource type="TileSet" uid="uid://bm5qn6qq1ml3b" path="res://image/tile/object.tres" id="6_05x41"]
 [ext_resource type="PackedScene" uid="uid://b5nv63d85qwtt" path="res://signboard.tscn" id="7_oysan"]
 [ext_resource type="Script" uid="uid://c8f5dn7tcqt5t" path="res://resource/DialogData.gd" id="8_sb2pt"]
+
+[sub_resource type="Resource" id="Resource_4on3e"]
+script = ExtResource("8_sb2pt")
+text = "右上に進み、左手にあるモニターからは「チュートリアル」が、
+右手にあるモニターからは「バトル」が行えます！"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_0t07s"]
+script = ExtResource("8_sb2pt")
+text = "こちらはバトルシミュレーターです。
+チュートリアルを開始しますか？"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String](["開始する", "やめる"])
+button_redirect_id = Array[int]([1, 2])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_6qsgm"]
+script = ExtResource("8_sb2pt")
+text = "それでは、チュートリアルを開始します。"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([3, 3])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_a6rn7"]
+script = ExtResource("8_sb2pt")
+text = "またのお越しをお待ちしております。"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_wbpbn"]
+script = ExtResource("8_sb2pt")
+text = "チュートリアルお疲れ様でした。
+[b]X[/b]でメニューを開き、[b]モンスター[/b]ボタンからオリジナルのチームを作成し、
+バトルに挑戦しましょう！"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_ooc2g"]
+script = ExtResource("8_sb2pt")
+text = "バトルお疲れ様でした。[color=red]勝利おめでとうございます！[/color]
+お気に入りのデッキは、[b]X[/b]でメニューを開き[b]モンスター[b]ボタンを
+押した先の画面から[b]セーブ[/b]することもできますよ！"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_2wwcf"]
+script = ExtResource("8_sb2pt")
+text = "バトルお疲れ様でした。残念ですが、またの挑戦をお待ちしています。
+[b]X[/b]でメニューを開き[b]モンスター[b]ボタンを押した先の画面から強力なデッキを
+[b]ロード[/b]できるかもしれません。ぜひお試しください！"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
 [sub_resource type="Resource" id="Resource_oysan"]
 script = ExtResource("8_sb2pt")
@@ -32,42 +124,6 @@ text = "指定がなければどちらも外せる"
 redirect_id = -1
 flag_list = Array[int]([])
 name_text = ""
-name_color = Color(0, 0, 0, 1)
-button_text = Array[String]([])
-button_redirect_id = Array[int]([])
-battle_redirect_id = Array[int]([])
-metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
-
-[sub_resource type="Resource" id="Resource_0t07s"]
-script = ExtResource("8_sb2pt")
-text = "こちらはバトルシミュレーターです。"
-redirect_id = -1
-flag_list = Array[int]([])
-name_text = "バトルシミュレーター"
-name_color = Color(0, 0, 0, 1)
-button_text = Array[String]([])
-button_redirect_id = Array[int]([])
-battle_redirect_id = Array[int]([1, 2])
-metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
-
-[sub_resource type="Resource" id="Resource_ooc2g"]
-script = ExtResource("8_sb2pt")
-text = "おめでとう！"
-redirect_id = -1
-flag_list = Array[int]([])
-name_text = "バトルシミュレーター"
-name_color = Color(0, 0, 0, 1)
-button_text = Array[String]([])
-button_redirect_id = Array[int]([])
-battle_redirect_id = Array[int]([])
-metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
-
-[sub_resource type="Resource" id="Resource_2wwcf"]
-script = ExtResource("8_sb2pt")
-text = "残念！"
-redirect_id = -1
-flag_list = Array[int]([])
-name_text = "バトルシミュレーター"
 name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
 button_redirect_id = Array[int]([])
@@ -105,27 +161,34 @@ offset_bottom = 680.0
 [node name="tilemap" type="Node2D" parent="world"]
 
 [node name="terrain" type="TileMapLayer" parent="world/tilemap"]
-tile_map_data = PackedByteArray("AAACAAUADQAAAAAAAAADAAUADQAAAAAAAAADAAQADQAAAAAAAAACAAQADQAAAAAAAAABAAQADQAAAAAAAAABAAUADQAAAAAAAAAAAAUADQAAAAAAAAAAAAQADQAAAAAAAAAAAAMADQAAAAAAAAABAAMADQAAAAAAAAACAAMADQAAAAAAAAADAAMADQAAAAAAAAAEAAMADQAAAAAAAAAEAAQADQAAAAAAAAAEAAUADQAAAAAAAAAAAAEADgAAAAEAAAABAAEADgAAAAEAAAACAAEADgAAAAEAAAADAAEADgAAAAEAAAAEAAEADgAAAAEAAAAAAAIADgAAAAIAAAABAAIADgAAAAIAAAACAAIADgAAAAIAAAADAAIADgAAAAIAAAAEAAIADgAAAAIAAAD//wEADwAAAAAAAAD//wIADwAAAAAAAAD//wMADwAAAAAAAAD//wQADwAAAAAAAAD//wUADwAAAAAAAAAEAAYADQAAAAAAAAADAAYADQAAAAAAAAACAAYADQAAAAAAAAABAAYADQAAAAAAAAAAAAYADQAAAAAAAAAAAAcADQAAAAAAAAABAAcADQAAAAAAAAACAAcADQAAAAAAAAADAAcADQAAAAAAAAAEAAcADQAAAAAAAAAFAAMADQAAAAAAAAAFAAQADQAAAAAAAAAFAAUADQAAAAAAAAAFAAYADQAAAAAAAAAFAAcADQAAAAAAAAAGAAcADQAAAAAAAAAGAAYADQAAAAAAAAAGAAUADQAAAAAAAAAGAAQADQAAAAAAAAAGAAMADQAAAAAAAAAHAAMADQAAAAAAAAAHAAQADQAAAAAAAAAHAAUADQAAAAAAAAAHAAYADQAAAAAAAAAHAAcADQAAAAAAAAAIAAcADQAAAAAAAAAIAAYADQAAAAAAAAAIAAUADQAAAAAAAAAIAAQADQAAAAAAAAAIAAMADQAAAAAAAAAJAAMADQAAAAAAAAAJAAQADQAAAAAAAAAJAAUADQAAAAAAAAAJAAYADQAAAAAAAAAJAAcADQAAAAAAAAAFAAIADQAAAAAAAAAGAAIADQAAAAAAAAAHAAIADQAAAAAAAAAIAAIADQAAAAAAAAAJAAIADQAAAAAAAAAJAAEADQAAAAAAAAAIAAEADQAAAAAAAAAHAAEADQAAAAAAAAAGAAEADQAAAAAAAAAFAAEADQAAAAAAAAAFAAAADQAAAAAAAAAGAAAADQAAAAAAAAAHAAAADQAAAAAAAAAIAAAADQAAAAAAAAAJAAAADQAAAAAAAAAJAP//DQAAAAAAAAAIAP//DQAAAAAAAAAHAP//DQAAAAAAAAAGAP//DQAAAAAAAAAFAP//DQAAAAAAAAAFAP7/DQAAAAAAAAAGAP7/DQAAAAAAAAAHAP7/DQAAAAAAAAAIAP7/DQAAAAAAAAAJAP7/DQAAAAAAAAAFAP3/DgAAAAIAAAAGAP3/DgAAAAIAAAAHAP3/DgAAAAIAAAAIAP3/DgAAAAIAAAAJAP3/DgAAAAIAAAAFAPz/DgAAAAEAAAAGAPz/DgAAAAEAAAAHAPz/DgAAAAEAAAAIAPz/DgAAAAEAAAAJAPz/DgAAAAEAAAAJAPv/DgAAAAAAAAAIAPv/DgAAAAAAAAAHAPv/DgAAAAAAAAAGAPv/DgAAAAAAAAAFAPv/DgAAAAAAAAAEAPv/DgAAAAAAAAAEAPz/DgAAAAAAAAAEAP3/DgAAAAAAAAAEAP7/DgAAAAAAAAAEAP//DgAAAAAAAAAEAAAADgAAAAAAAAADAAAADgAAAAAAAAACAAAADgAAAAAAAAABAAAADgAAAAAAAAAAAAAADgAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAACAAUADQAAAAAAAAADAAUADQAAAAAAAAADAAQADQAAAAAAAAACAAQADQAAAAAAAAABAAQADQAAAAAAAAABAAUADQAAAAAAAAAAAAUADQAAAAAAAAAAAAQADQAAAAAAAAAAAAMADQAAAAAAAAABAAMADQAAAAAAAAACAAMADQAAAAAAAAADAAMADQAAAAAAAAAEAAMADQAAAAAAAAAEAAQADQAAAAAAAAAEAAUADQAAAAAAAAAAAAEADgAAAAEAAAABAAEADgAAAAEAAAACAAEADgAAAAEAAAADAAEADgAAAAEAAAAEAAEADgAAAAEAAAAAAAIADgAAAAIAAAABAAIADgAAAAIAAAACAAIADgAAAAIAAAADAAIADgAAAAIAAAAEAAIADgAAAAIAAAD//wEADgAAAAAAAAD//wIADgAAAAAAAAD//wMADgAAAAAAAAD//wQADgAAAAAAAAD//wUADgAAAAAAAAAEAAYADQAAAAAAAAADAAYADQAAAAAAAAACAAYADQAAAAAAAAABAAYADQAAAAAAAAAAAAYADQAAAAAAAAAAAAcADQAAAAAAAAABAAcADQAAAAAAAAACAAcADQAAAAAAAAADAAcADQAAAAAAAAAEAAcADQAAAAAAAAAFAAMADQAAAAAAAAAFAAQADQAAAAAAAAAFAAUADQAAAAAAAAAFAAYADQAAAAAAAAAFAAcADQAAAAAAAAAGAAcADQAAAAAAAAAGAAYADQAAAAAAAAAGAAUADQAAAAAAAAAGAAQADQAAAAAAAAAGAAMADQAAAAAAAAAHAAMADQAAAAAAAAAHAAQADQAAAAAAAAAHAAUADQAAAAAAAAAHAAYADQAAAAAAAAAHAAcADQAAAAAAAAAIAAcADQAAAAAAAAAIAAYADQAAAAAAAAAIAAUADQAAAAAAAAAIAAQADQAAAAAAAAAIAAMADQAAAAAAAAAJAAMADQAAAAAAAAAJAAQADQAAAAAAAAAJAAUADQAAAAAAAAAJAAYADQAAAAAAAAAJAAcADQAAAAAAAAAFAAIADQAAAAAAAAAGAAIADQAAAAAAAAAHAAIADQAAAAAAAAAIAAIADQAAAAAAAAAJAAIADQAAAAAAAAAJAAEADQAAAAAAAAAIAAEADQAAAAAAAAAHAAEADQAAAAAAAAAGAAEADQAAAAAAAAAFAAEADQAAAAAAAAAFAAAADQAAAAAAAAAGAAAADQAAAAAAAAAHAAAADQAAAAAAAAAIAAAADQAAAAAAAAAJAAAADQAAAAAAAAAJAP//DQAAAAAAAAAIAP//DQAAAAAAAAAHAP//DQAAAAAAAAAGAP//DQAAAAAAAAAFAP//DQAAAAAAAAAFAP7/DQAAAAAAAAAGAP7/DQAAAAAAAAAHAP7/DQAAAAAAAAAIAP7/DQAAAAAAAAAJAP7/DQAAAAAAAAAFAP3/DgAAAAIAAAAGAP3/DgAAAAIAAAAHAP3/DgAAAAIAAAAIAP3/DgAAAAIAAAAJAP3/DgAAAAIAAAAFAPz/DgAAAAEAAAAGAPz/DgAAAAEAAAAHAPz/DgAAAAEAAAAIAPz/DgAAAAEAAAAJAPz/DgAAAAEAAAAJAPv/DgAAAAAAAAAIAPv/DgAAAAAAAAAHAPv/DgAAAAAAAAAGAPv/DgAAAAAAAAAFAPv/DgAAAAAAAAAEAPv/DgAAAAAAAAAEAPz/DgAAAAAAAAAEAP3/DgAAAAAAAAAEAP7/DgAAAAAAAAAEAP//DgAAAAAAAAAEAAAADgAAAAAAAAADAAAADgAAAAAAAAACAAAADgAAAAAAAAABAAAADgAAAAAAAAAAAAAADgAAAAAAAAD//wAADgAAAAAAAAD//wYADgAAAAAAAAD//wcADgAAAAAAAAD//wgADgAAAAAAAAAAAAgADgAAAAAAAAABAAgADgAAAAAAAAACAAgADgAAAAAAAAADAAgADgAAAAAAAAAEAAgADgAAAAAAAAAFAAgADgAAAAAAAAAGAAgADgAAAAAAAAAHAAgADgAAAAAAAAAIAAgADgAAAAAAAAAJAAgADgAAAAAAAAD//wkADgAAAAEAAAAAAAkADgAAAAEAAAABAAkADgAAAAEAAAACAAkADgAAAAEAAAADAAkADgAAAAEAAAAEAAkADgAAAAEAAAAFAAkADgAAAAEAAAAGAAkADgAAAAEAAAAHAAkADgAAAAEAAAAIAAkADgAAAAEAAAAJAAkADgAAAAEAAAD//woADgAAAAIAAAAAAAoADgAAAAIAAAABAAoADgAAAAIAAAACAAoADgAAAAIAAAADAAoADgAAAAIAAAAEAAoADgAAAAIAAAAFAAoADgAAAAIAAAAGAAoADgAAAAIAAAAHAAoADgAAAAIAAAAIAAoADgAAAAIAAAAJAAoADgAAAAIAAAAKAP3/DgAAAAAAAAALAP3/DgAAAAIAAAAMAP3/DgAAAAIAAAANAP3/DgAAAAIAAAAOAP3/DgAAAAIAAAAKAPz/DgAAAAAAAAALAPz/DgAAAAEAAAAMAPz/DgAAAAEAAAANAPz/DgAAAAEAAAAOAPz/DgAAAAEAAAAKAPv/DgAAAAAAAAALAPv/DgAAAAAAAAAMAPv/DgAAAAAAAAANAPv/DgAAAAAAAAAOAPv/DgAAAAAAAAAPAPv/DgAAAAAAAAAPAPz/DgAAAAEAAAAPAP3/DgAAAAIAAAAPAP7/DQAAAAAAAAAPAP//DQAAAAAAAAAPAAAADQAAAAAAAAAPAAEADQAAAAAAAAAPAAIADQAAAAAAAAAPAAMADgAAAAAAAAAPAAQADgAAAAEAAAAPAAUADgAAAAIAAAAPAAYADQAAAAAAAAAPAAcADQAAAAAAAAAPAAgADgAAAAAAAAAOAAgADgAAAAAAAAANAAgADgAAAAAAAAAMAAgADgAAAAAAAAALAAgADgAAAAAAAAAKAAgADgAAAAAAAAAKAAcADgAAAAAAAAAKAAYADgAAAAAAAAAKAAUADgAAAAAAAAAKAAQADgAAAAAAAAAKAAMADgAAAAAAAAALAAMADgAAAAAAAAAMAAMADgAAAAAAAAANAAMADgAAAAAAAAAOAAMADgAAAAAAAAAOAAQADgAAAAEAAAANAAQADgAAAAEAAAAMAAQADgAAAAEAAAALAAQADgAAAAEAAAALAAUADgAAAAIAAAAMAAUADgAAAAIAAAANAAUADgAAAAIAAAAOAAUADgAAAAIAAAAKAAkADgAAAAEAAAALAAkADgAAAAEAAAAMAAkADgAAAAEAAAANAAkADgAAAAEAAAAOAAkADgAAAAEAAAAPAAkADgAAAAEAAAAKAAoADgAAAAIAAAALAAoADgAAAAIAAAAMAAoADgAAAAIAAAANAAoADgAAAAIAAAAOAAoADgAAAAIAAAAPAAoADgAAAAIAAAALAAYADQAAAAAAAAAMAAYADQAAAAAAAAANAAYADQAAAAAAAAAOAAYADQAAAAAAAAAOAAcADQAAAAAAAAANAAcADQAAAAAAAAAMAAcADQAAAAAAAAALAAcADQAAAAAAAAAKAAIADQAAAAAAAAAKAAEADQAAAAAAAAAKAAAADQAAAAAAAAAKAP//DgAAAAIAAAAKAP7/DgAAAAEAAAALAP7/DQAAAAAAAAAMAP7/DQAAAAAAAAANAP7/DQAAAAAAAAAOAP7/DQAAAAAAAAAOAP//DQAAAAAAAAANAP//DQAAAAAAAAAMAP//DQAAAAAAAAALAP//DQAAAAAAAAALAAAADQAAAAAAAAAMAAAADQAAAAAAAAANAAAADQAAAAAAAAAOAAAADQAAAAAAAAAOAAEADQAAAAAAAAANAAEADQAAAAAAAAAMAAEADQAAAAAAAAALAAEADQAAAAAAAAALAAIADQAAAAAAAAAMAAIADQAAAAAAAAANAAIADQAAAAAAAAAOAAIADQAAAAAAAAAQAPv/DgAAAAAAAAAQAPz/DgAAAAAAAAAQAP3/DgAAAAAAAAAQAP7/DgAAAAAAAAAQAP//DgAAAAAAAAAQAAAADgAAAAAAAAAQAAEADgAAAAAAAAAQAAIADgAAAAAAAAAQAAMADgAAAAAAAAAQAAQADgAAAAAAAAAQAAUADgAAAAAAAAAQAAYADgAAAAAAAAAQAAcADgAAAAAAAAAQAAgADgAAAAAAAAAQAAkADgAAAAEAAAAQAAoADgAAAAIAAAA=")
 tile_set = ExtResource("1_e0an3")
 
 [node name="object" type="TileMapLayer" parent="world/tilemap"]
-tile_map_data = PackedByteArray("AAAEAAEAAAAAAAAAAAAEAAIAAAAAAAEAAAACAAEAAAAAAAAAAAACAAIAAAAAAAEAAAA=")
+tile_map_data = PackedByteArray("AAACAAEAAAAAAAAAAAACAAIAAAAAAAEAAAALAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAANAAQAAAAAAAAAAAAOAAQAAAAAAAAAAAALAAUAAAAAAAEAAAAMAAUAAAAAAAEAAAANAAUAAAAAAAEAAAAOAAUAAAAAAAEAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAHAPz/AAAAAAAAAAAHAP3/AAAAAAEAAAANAP3/AAAAAAEAAAANAPz/AAAAAAAAAAAPAAQAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAUAAAAAAAEAAAA=")
 tile_set = ExtResource("6_05x41")
 
 [node name="signboards" type="Node2D" parent="world"]
 
-[node name="signboard" parent="world/signboards" instance=ExtResource("7_oysan")]
-position = Vector2(288, 132)
-dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt")])
+[node name="signboard3" parent="world/signboards" instance=ExtResource("7_oysan")]
+position = Vector2(160, 132)
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_4on3e")])
 
 [node name="signboard2" parent="world/signboards" instance=ExtResource("7_oysan")]
-position = Vector2(160, 132)
-dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_0t07s"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
+position = Vector2(480, -188)
+id = 1
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_0t07s"), SubResource("Resource_6qsgm"), SubResource("Resource_a6rn7"), SubResource("Resource_wbpbn"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
+
+[node name="signboard" parent="world/signboards" instance=ExtResource("7_oysan")]
+position = Vector2(864, -188)
+id = 2
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt")])
 
 [node name="player" type="CharacterBody2D" parent="world" node_paths=PackedStringArray("canvas_layer", "world", "camera")]
 position = Vector2(32, 288)
 collision_mask = 7
 script = ExtResource("3_urblq")
+speed = 512
 canvas_layer = NodePath("../../CanvasLayer")
 world = NodePath("..")
 camera = NodePath("Camera2D")
@@ -148,6 +211,14 @@ collision_mask = 11
 [node name="CollisionShape2D" type="CollisionShape2D" parent="world/player/InteractionArea"]
 shape = SubResource("RectangleShape2D_ooc2g")
 debug_color = Color(1, 1, 0, 0.419608)
+
+[node name="ColorRect" type="ColorRect" parent="world"]
+z_index = -1
+offset_left = -1202.0
+offset_top = -787.0
+offset_right = 2307.0
+offset_bottom = 1206.0
+color = Color(0.5, 0.5, 0.5, 1)
 
 [connection signal="battle_finished" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_battle_finished"]
 [connection signal="battle_started" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_battle_started"]

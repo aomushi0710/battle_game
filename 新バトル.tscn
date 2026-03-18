@@ -61,10 +61,11 @@ default_font_size = 100
 [sub_resource type="Theme" id="Theme_vdm6v"]
 default_font_size = 25
 
-[node name="Battle" type="Node2D" node_paths=PackedStringArray("stage_node")]
+[node name="Battle" type="Node2D" node_paths=PackedStringArray("stage_node", "battle_node")]
 process_mode = 1
 script = ExtResource("1_a0jlr")
 stage_node = NodePath("background")
+battle_node = NodePath("battle")
 
 [node name="background" type="Control" parent="." node_paths=PackedStringArray("stage_texture", "stage_animation_texture", "dialog")]
 z_index = -10
@@ -229,6 +230,7 @@ offset_right = 220.0
 offset_bottom = 1080.0
 
 [node name="target" type="Control" parent="battle/button"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 220.0
@@ -317,6 +319,7 @@ visible = false
 z_index = 2
 layout_mode = 2
 mouse_filter = 0
+alignment = 1
 metadata/_tab_index = 2
 
 [node name="Text" type="RichTextLabel" parent="battle/button/dialogtab/バトルログ"]

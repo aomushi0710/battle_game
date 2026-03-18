@@ -33,7 +33,7 @@ const select_scene = "res://技セレクト.tscn"
 const battle_scene = "res://新バトル.tscn"
 const debug_scene = "res://debug.tscn"
 const deck_save_scene = "res://deck_save_data.tscn"
-const tutorial_scene = "res://tutorial.tscn"
+const tutorial_scene = "res://new_tutorial.tscn"
 const shop_scene = "res://shop.tscn"
 
 const game_button = preload("res://game_button.tscn")

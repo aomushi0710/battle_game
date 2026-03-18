@@ -11,6 +11,7 @@ extends Control
 var text_tween: Tween
 var text_speed: float = 0.04
 var now_id: int ## 現在表示中の[class DialogData]の[code]id[/code]
+var signboard_id: int ## 現在表示中の[member SignBoard.id]
 
 signal dialog_opened ## ダイアログが開かれる時に発行されるシグナル
 signal dialog_closed ## ダイアログが閉じられる時に発行されるシグナル
@@ -38,9 +39,10 @@ func dialog_close() -> void:
 ##[code]display_dialog()[/code]関数を呼び出していく関数。
 ## ダイアログの開閉[code]dialog_open()[/code][code]dialog_close()[/code]
 ##もまとめて行われます。
-func dialog_manager(datas: Array[DialogData]) -> void:
+func dialog_manager(datas: Array[DialogData], id: int) -> void:
 	dialog_open()
 	
+	signboard_id = id
 	var redirect_id: int = 0 ## 次に表示したい[class DialogData]のID
 	while redirect_id >= 0: # IDが-1になるまでダイアログ表示を繰り返す
 		if datas[redirect_id]:
@@ -124,17 +126,62 @@ func display_dialog(data: DialogData) -> int:
 		return data.redirect_id
 
 ## バトルに移行する関数。[br]勝利すると[code]true[/code]を返します。
-## ALERT バトル開始前に、モンスターがいるかどうかチェックする必要あり
 func _transition_to_battle() -> bool:
-	if Global.player_deck.is_empty():
-		return false
-	var battle_scene: Battle = load(Global.battle_scene).instantiate()
-	battle_scene.stage = Global.stage_data[1]
+	var battle_scene
+	var result: bool
+	if signboard_id == 1:
+		battle_scene = load(Global.tutorial_scene).instantiate()
+		battle_scene.stage = Global.stage_data[1]
+		Global.enemy_deck = load(
+			"res://deck/チュートリアル.tres").duplicate(true)
+		
+		Global.current_deck = Global.player_deck.duplicate() # 避難
+		# 味方チュートリアルデッキ構築
+		## スライム＠体当たり:50%, 自己再生:30%, DEFエンハンス:10%, ATKブレイク:10%
+		var first := Monster.new()
+		## ゴースト＠体当たり:40%, 暗闇:40%, 霊魂吸収:10%, ギガダークネス:10%
+		var second := Monster.new()
+		## バニン＠火の玉:40%, 暗闇:40%, フレイム:20%
+		var third := Monster.new()
+
+		first.level = 1
+		first.data = Global.monster_data[1]
+		first.action = [
+			first.data.action[0], first.data.action[1], 
+			first.data.action[4], first.data.action[5]
+		]
+		first.chance = [50, 30, 10, 10]
+
+		second.level = 1
+		second.data = Global.monster_data[2]
+		second.action = [
+			second.data.action[0], second.data.action[3], 
+			second.data.action[6], second.data.action[7]
+		]
+		second.chance = [40, 40, 10, 10]
+
+		third.level = 1
+		third.data = Global.monster_data[3]
+		third.action = [
+			third.data.action[1], third.data.action[2], 
+			third.data.action[3]
+		]
+		third.chance = [40, 40, 20]
+
+		Global.player_deck.monster = [first, second, third]
+	else:
+		if Global.player_deck.is_empty(): # デッキにモンスターがいなければ敗北として中断
+			return false
+		
+		battle_scene = load(Global.battle_scene).instantiate()
+		battle_scene.stage = Global.stage_data[1]
+	
 	get_tree().current_scene.add_child(battle_scene)
 	battle_started.emit()
-	var result: bool = await battle_scene.get_node("battle").battle_finished
+	result = await battle_scene.get_node("battle").battle_finished
 	battle_finished.emit()
 	battle_scene.queue_free()
+	
 	return result
 
 ## Enterキーが押された、またはクリックされた時の処理

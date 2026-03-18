@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_x2gt3")
 text = Array[String](["この黒い箱は[b]ダイアログボックス[/b]！
-バトル中はこの枠内にメッセージが表示\\nされる。
-[color=yellow]枠の中をクリックしてみよう！[/color]", "右下の矢印が動いている時は
+バトル中はこの枠内にメッセージが表示
+される。[color=yellow]枠の中をクリックしてみよう！[/color]", "右下の矢印が動いている時は
 このようにクリックで次に進むことが
 できる。", "もしくはEnterキーやスペースキーでも
 大丈夫だ！(他のボタンにフォーカスが
@@ -15,5 +15,5 @@ text = Array[String](["この黒い箱は[b]ダイアログボックス[/b]！
 [color=red]それではバトルを始めよう！[/color]"])
 should_wait = true
 tab = 0
-image = []
+image = [null, null, null, null]
 metadata/_custom_type_script = "uid://cvq84hr01jqh4"

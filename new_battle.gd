@@ -26,7 +26,7 @@ signal player_ready
 signal command_ended
 
 # 味方と敵のデッキを準備
-func _ready() -> void:
+func setup() -> void:
 	await battle_start_animation()
 	await get_tree().process_frame # 1フレーム待つ
 	
@@ -180,7 +180,9 @@ func monster_ready(player: bool) -> void:
 		for button in $button/action.get_children(): # 全てのボタンを一旦削除
 			button.queue_free()
 		# 抽選された技をactionコンテナに追加
+		print("action name")
 		for i in len(player_monster.available_action):
+			print(player_monster.available_action[i].data.name)
 			var instance = Global.action_button.instantiate()
 			instance.action = player_monster.available_action[i].data
 			instance.button_up.connect(func():select_command(i))

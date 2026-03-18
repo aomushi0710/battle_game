@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://b75oop3n8nq72"]
 
 [ext_resource type="PackedScene" uid="uid://bhqk4iva02mmc" path="res://新バトル.tscn" id="1_7n6eb"]
-[ext_resource type="Script" uid="uid://k0a6gnwbx4e1" path="res://tutorial.gd" id="1_yb1ct"]
+[ext_resource type="Script" uid="uid://b6omq0x3owa0u" path="res://new_tutorial.gd" id="2_hu44a"]
 [ext_resource type="Script" uid="uid://dqntmojta1yls" path="res://tutorial_battle.gd" id="3_ehuit"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="4_5mrt3"]
 [ext_resource type="Script" uid="uid://ba6b532p8r4rb" path="res://tutorial_buttons.gd" id="4_hu44a"]
@@ -13,9 +13,10 @@
 bg_color = Color(0, 0, 0, 0.501961)
 
 [node name="tutorial" type="Node2D"]
-script = ExtResource("1_yb1ct")
 
-[node name="Node2D" parent="." instance=ExtResource("1_7n6eb")]
+[node name="Node2D" parent="." node_paths=PackedStringArray("dialog_node") instance=ExtResource("1_7n6eb")]
+script = ExtResource("2_hu44a")
+dialog_node = NodePath("battle/button/dialogtab")
 
 [node name="battle" parent="Node2D" index="1"]
 script = ExtResource("3_ehuit")

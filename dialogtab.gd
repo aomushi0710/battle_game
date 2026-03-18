@@ -12,10 +12,6 @@ var global_flavor_text_weight: Array[int] ## 全てのステージで表示さ�
 var stage_flavor_text: Array[BattlelogData] ## ステージ固定のフレーバーテキスト
 var stage_flavor_text_weight: Array[int] ## ステージ固定フレーバーテキストの重みづけテーブル
 
-var main_text: Array[String] ## メインに表示するテキストのリスト
-var status_text: Array[String] ## 1要素につき1ページ、全角19文字が3行まで
-var battle_log_text: Array[String] ## NOTE 変更の可能性あり
-
 ## それぞれのtabに対応する[BattlelogData]を格納する辞書
 var text_data: Dictionary[BattlelogData.Tab, BattlelogData] = {
 	BattlelogData.Tab.MAIN: null,
@@ -23,7 +19,6 @@ var text_data: Dictionary[BattlelogData.Tab, BattlelogData] = {
 	BattlelogData.Tab.BATTLE_LOG: null,
 }
 
-var tab_list := [main_text, status_text, battle_log_text] ## tabの位置通りに上記変数を格納する配列
 var image_list := [[null], [null], [null]] ## それぞれのtabの位置に画像を保存する配列
 var current_page: int = 0 ## 現在のページ
 var has_next_page: bool = false:
@@ -80,7 +75,7 @@ func _on_tab_changed(tab: BattlelogData.Tab) -> void:
 				label = child
 				break
 		
-		label.clear() # 一旦削除してからアニメーション
+		label.text = "" # 一旦削除してからアニメーション
 		if $"../../".enemy_monster != null: # 元に戻す
 			$"../../".enemy_monster.get_node("effect").mouse_filter = MouseFilter.MOUSE_FILTER_STOP
 		
@@ -109,7 +104,7 @@ func _on_tab_changed(tab: BattlelogData.Tab) -> void:
 		text_animation(tab, current_page)
 	
 	else: # バトルログ表示処理
-		get_child(tab).get_child(0).clear()
+		get_child(tab).get_child(0).text = ""
 		current_tab = tab
 		
 		# ALERT バトルログが拡大された時、裏にいるモンスターにマウスカーソルが

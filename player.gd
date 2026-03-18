@@ -61,7 +61,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				
 				
 				
-				await dialog.dialog_manager(signboard.dialog_datas)
+				await dialog.dialog_manager(signboard.dialog_datas, signboard.id)
 
 # アイテムを取得する処理
 func pickup():

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BattlelogData" load_steps=2 format=3 uid="uid://bdjlk004lrud2"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://resource/battlelog_data.gd" id="1_hw246"]
+
+[resource]
+script = ExtResource("1_hw246")
+text = Array[String](["それでは、敵を攻撃してみよう！
+[color=yellow]戻るボタンを２回押してから、
+Actionボタンをクリック！[/color]"])
+should_wait = false
+tab = 0
+image = [null]
+metadata/_custom_type_script = "uid://cvq84hr01jqh4"

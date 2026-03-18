@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BattlelogData" load_steps=2 format=3 uid="uid://cu74vsof2ud2f"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://resource/battlelog_data.gd" id="1_js7jk"]
+
+[resource]
+script = ExtResource("1_js7jk")
+text = Array[String](["左のアイコンは技の属性を表している。
+「体当たり」は[img=50]res://image/element/無属性.PNG[/img]無属性だ。
+[color=yellow]１番上の「体当たり」を選んでみよう！[/color]"])
+should_wait = false
+tab = 0
+image = [null]
+metadata/_custom_type_script = "uid://cvq84hr01jqh4"

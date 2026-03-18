@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="BattlelogData" load_steps=2 format=3 uid="uid://cn4qsbdvsaux7"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://resource/battlelog_data.gd" id="1_uim5h"]
+
+[resource]
+script = ExtResource("1_uim5h")
+text = Array[String](["[color=coral][b]HP[/b][/color]: モンスターの体力。ダメージを
+受けると減っていき、０になると
+[color=red]行動不能[/color]になってしまう。", "[color=aqua][b]MP[/b][/color]: モンスターの持つ魔力。
+一部の技を使うときに必要になる。
+そして[color=aqua]MP[/color]には[color=yellow]２つのパラメータ[/color]がある。", "[color=aqua][b]supplyMP[/b][/color]:1ターンで回復する[color=aqua]MP[/color]の量。
+[color=aqua][b]maxMP[/b][/color]:[color=aqua]MP[/color]をため込める量の限界。
+バトルは[color=aqua]maxMP[/color]の20%の状態で始まる。", "[color=green][b]SPD[/b][/color]:モンスターの素早さ。
+この値が大きければ大きいほど、
+[color=green]SPDゲージ[/color]が溜まる速度が上がる。", "[color=red][b]ATK[/b][/color]:モンスターの物理攻撃力。
+[color=light_blue][b]DEF[/b][/color]:モンスターの物理防御力。
+[color=red]物理技[/color]は、このステータスが使われる。", "[color=dodger_blue][b]MAG[/b][/color]:モンスターの魔法攻撃力。
+[color=purple][b]RES[/b][/color]:モンスターの魔法防御力。
+[color=dodger_blue]魔法技[/color]は、このステータスが使われる。", "バトル中はいつでも敵と味方の
+ステータスを確認できるので、
+有効活用して戦おう！"])
+should_wait = true
+tab = 0
+image = [null, null, null, null, null, null, null]
+metadata/_custom_type_script = "uid://cvq84hr01jqh4"
