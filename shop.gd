@@ -103,7 +103,7 @@ func _on_confirmed() -> void:
 	else:
 		Global.save_data.item[selected_item.item.id] += 1
 	
-	Global.save_game()
+	SaveManager.save_game()
 	
 	Global.accept_dialog.display_dialog(
 			"%s Lv.%dを手に入れた！" % [selected_item.name, selected_item.level], 

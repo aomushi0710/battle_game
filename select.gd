@@ -83,7 +83,7 @@ const CONFIRM_BUTTON_HELP_TEXT: Dictionary[Mode, String] = {
 ## [enum Mode]に対応する[param back_button]ノードの
 ##メタデータ[code]help_text[/code]に入る[String]の辞書
 const BACK_BUTTON_HELP_TEXT: Dictionary[Mode, String] = {
-	Mode.DECK: " ", 
+	Mode.DECK: "現在のデッキ内容を保存し、マップ画面へ戻ります。", 
 	Mode.MONSTER_SELECT: "パーティ編成画面へ戻ります。", 
 	Mode.STATUS: "[color=red]設定を保存せずに、[/color]モンスターセレクト画面へ戻ります。", 
 	Mode.ACTION: "元の画面へ戻ります。", 
@@ -120,14 +120,17 @@ var mode: Mode = Mode.DECK:
 		match next_mode:
 			Mode.DECK:
 				confirm_button.hide()
+				status.hide()
 				deck_menu.on_mode_entered()
 			
 			Mode.MONSTER_SELECT:
 				confirm_button.show()
+				status.show()
 				monster_select.on_mode_entered()
 			
 			Mode.STATUS:
 				confirm_button.show()
+				status.show()
 				
 				# ACTIONとSTATUSからの遷移時は呼ばない
 				if mode != Mode.ACTION and mode != Mode.STATUS:
@@ -152,6 +155,7 @@ var mode: Mode = Mode.DECK:
 			
 			Mode.ACTION:
 				confirm_button.show()
+				status.show()
 				
 				# 棒グラフの棒とボタンを隠すアニメーション
 				status.get_child(1).hide()
@@ -203,6 +207,11 @@ func _on_back_button_up():
 	sound_effects.click.play()
 	match mode:
 		Mode.DECK:
+			if Global.player_deck.is_empty():
+				Global.accept_dialog.display_dialog(
+					"デッキには全ての枠を埋めてください！"
+				)
+				return
 			SaveManager.save_deck(0, false)
 			get_tree().change_scene_to_file(Global.map_scene)
 		

@@ -15,7 +15,8 @@ func _on_shop_button_up() -> void:
 
 
 func _on_save_button_up() -> void:
-	pass # Replace with function body.
+	SaveManager.save_game()
+	Global.accept_dialog.display_dialog("セーブが完了しました！", "✅セーブ完了✅")
 
 
 func _on_title_button_up() -> void:

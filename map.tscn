@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://b6v2nlkh2ak8j"]
+[gd_scene load_steps=24 format=4 uid="uid://b6v2nlkh2ak8j"]
 
 [ext_resource type="TileSet" uid="uid://rw4km3kk1k67" path="res://image/tile/terrain.tres" id="1_e0an3"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="1_p5pve"]
@@ -11,10 +11,38 @@
 [ext_resource type="PackedScene" uid="uid://b5nv63d85qwtt" path="res://signboard.tscn" id="7_oysan"]
 [ext_resource type="Script" uid="uid://c8f5dn7tcqt5t" path="res://resource/DialogData.gd" id="8_sb2pt"]
 
+[sub_resource type="Resource" id="Resource_bssq0"]
+script = ExtResource("8_sb2pt")
+text = "このゲームはプレイヤーが[b]確率を操作する[/b]ことで勝利を掴む、
+新感覚コマンドバトルゲームです！"
+redirect_id = 1
+flag_list = Array[int]([])
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_jk4ss"]
+script = ExtResource("8_sb2pt")
+text = "まずは[b]Xキー[/b]を押してメニューを開き、
+[b]デッキ[/b]ボタンを押して、自分だけのデッキを作りましょう！"
+redirect_id = 2
+flag_list = Array[int]([])
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
 [sub_resource type="Resource" id="Resource_4on3e"]
 script = ExtResource("8_sb2pt")
-text = "右上に進み、左手にあるモニターからは「チュートリアル」が、
-右手にあるモニターからは「バトル」が行えます！"
+text = "右上に進み、左手にあるモニターからは[color=green]「チュートリアル」[/color]が、
+右手にあるモニターからは[color=red]「バトル」[/color]が行えます！
+(チュートリアルはデッキ編成なしでも遊べます。)
+"
 redirect_id = -1
 flag_list = Array[int]([])
 name_text = ""
@@ -64,7 +92,7 @@ metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 [sub_resource type="Resource" id="Resource_wbpbn"]
 script = ExtResource("8_sb2pt")
 text = "チュートリアルお疲れ様でした。
-[b]X[/b]でメニューを開き、[b]モンスター[/b]ボタンからオリジナルのチームを作成し、
+[b]X[/b]でメニューを開き、[b]デッキ[/b]ボタンからオリジナルのチームを作成し、
 バトルに挑戦しましょう！"
 redirect_id = -1
 flag_list = Array[int]([])
@@ -75,10 +103,35 @@ button_redirect_id = Array[int]([])
 battle_redirect_id = Array[int]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
+[sub_resource type="Resource" id="Resource_oysan"]
+script = ExtResource("8_sb2pt")
+text = "こちらはバトルシミュレーターです。
+バトルを開始しますか？"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String](["開始する", "やめる"])
+button_redirect_id = Array[int]([1, 2])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_sb2pt"]
+script = ExtResource("8_sb2pt")
+text = "それではバトルを開始します。"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([3, 4])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
 [sub_resource type="Resource" id="Resource_ooc2g"]
 script = ExtResource("8_sb2pt")
 text = "バトルお疲れ様でした。[color=red]勝利おめでとうございます！[/color]
-お気に入りのデッキは、[b]X[/b]でメニューを開き[b]モンスター[b]ボタンを
+お気に入りのデッキは、[b]X[/b]でメニューを開き[b]デッキ[/b]ボタンを
 押した先の画面から[b]セーブ[/b]することもできますよ！"
 redirect_id = -1
 flag_list = Array[int]([])
@@ -92,38 +145,11 @@ metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 [sub_resource type="Resource" id="Resource_2wwcf"]
 script = ExtResource("8_sb2pt")
 text = "バトルお疲れ様でした。残念ですが、またの挑戦をお待ちしています。
-[b]X[/b]でメニューを開き[b]モンスター[b]ボタンを押した先の画面から強力なデッキを
+[b]X[/b]でメニューを開き[b]デッキ[/b]ボタンを押した先の画面から強力なデッキを
 [b]ロード[/b]できるかもしれません。ぜひお試しください！"
 redirect_id = -1
 flag_list = Array[int]([])
 name_text = "バトルシミュレーター"
-name_color = Color(0, 0, 0, 1)
-button_text = Array[String]([])
-button_redirect_id = Array[int]([])
-battle_redirect_id = Array[int]([])
-metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
-
-[sub_resource type="Resource" id="Resource_oysan"]
-script = ExtResource("8_sb2pt")
-text = "↑こんな感じのネームプレートも表示可能
-画像ありならよりキャラクターが喋ってる感じに
-"
-redirect_id = 1
-flag_list = Array[int]([])
-name_text = "スライム"
-name_color = Color(0, 1, 1, 1)
-image = ExtResource("2_p5pve")
-button_text = Array[String]([])
-button_redirect_id = Array[int]([])
-battle_redirect_id = Array[int]([])
-metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
-
-[sub_resource type="Resource" id="Resource_sb2pt"]
-script = ExtResource("8_sb2pt")
-text = "指定がなければどちらも外せる"
-redirect_id = -1
-flag_list = Array[int]([])
-name_text = ""
 name_color = Color(0, 0, 0, 1)
 button_text = Array[String]([])
 button_redirect_id = Array[int]([])
@@ -172,23 +198,23 @@ tile_set = ExtResource("6_05x41")
 
 [node name="signboard3" parent="world/signboards" instance=ExtResource("7_oysan")]
 position = Vector2(160, 132)
-dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_4on3e")])
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_bssq0"), SubResource("Resource_jk4ss"), SubResource("Resource_4on3e")])
 
 [node name="signboard2" parent="world/signboards" instance=ExtResource("7_oysan")]
 position = Vector2(480, -188)
 id = 1
-dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_0t07s"), SubResource("Resource_6qsgm"), SubResource("Resource_a6rn7"), SubResource("Resource_wbpbn"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_0t07s"), SubResource("Resource_6qsgm"), SubResource("Resource_a6rn7"), SubResource("Resource_wbpbn")])
 
 [node name="signboard" parent="world/signboards" instance=ExtResource("7_oysan")]
 position = Vector2(864, -188)
 id = 2
-dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt")])
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt"), SubResource("Resource_a6rn7"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
 
 [node name="player" type="CharacterBody2D" parent="world" node_paths=PackedStringArray("canvas_layer", "world", "camera")]
 position = Vector2(32, 288)
 collision_mask = 7
 script = ExtResource("3_urblq")
-speed = 512
+speed = 384
 canvas_layer = NodePath("../../CanvasLayer")
 world = NodePath("..")
 camera = NodePath("Camera2D")
@@ -224,3 +250,4 @@ color = Color(0.5, 0.5, 0.5, 1)
 [connection signal="battle_started" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_battle_started"]
 [connection signal="dialog_closed" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_closed"]
 [connection signal="dialog_opened" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_opened"]
+[connection signal="tree_exited" from="world/player" to="world/player" method="_on_tree_exited"]

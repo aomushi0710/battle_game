@@ -17,6 +17,9 @@ var is_dialog_active: bool = false ## ダイアログが開かれているかど
 var dialog_just_closed: bool = false ## ダイアログが閉じられるまで入力を止めるフラグ
 
 
+func _ready() -> void:
+	position = Global.map_position
+
 func _physics_process(delta):
 	if not can_move:
 		velocity = Vector2.ZERO
@@ -90,3 +93,7 @@ func _on_dialog_battle_finished() -> void:
 	canvas_layer.show()
 	world.show()
 	camera.enabled = true
+
+
+func _on_tree_exited() -> void:
+	Global.map_position = position

@@ -24,8 +24,6 @@ var autoload_scene_array: Array[PackedScene] = [
 var accept_dialog: AcceptDialogManager
 var confirmation_dialog: ConfirmationDialogManager
 
-
-
 const main_scene = "res://メインシーン.tscn"
 const map_scene = "res://map.tscn"
 const deck_scene = "res://デッキセレクト.tscn"
@@ -45,6 +43,9 @@ const damage_text = preload("res://damage_text.tscn")
 
 const save_data_path: String = "user://savedata.sav"
 const save_data_path_beta: String = "user://savedata_beta.sav"
+
+## TODO マップ上のプレイヤーの位置はセーブデータに保存できるようにする。
+@onready var map_position: Vector2 = Vector2(32, 288)
 
 @onready var picked_monster = [0,0,0]
 @onready var player_deck := Deck.new()
