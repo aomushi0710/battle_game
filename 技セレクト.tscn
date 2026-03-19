@@ -871,6 +871,7 @@ color = Color(1, 0, 0.0166664, 1)
 metadata/help_text = "現在のデッキをリセットします。"
 
 [node name="MonsterSelect" type="Control" parent="Control" node_paths=PackedStringArray("parent", "evolution_preview_button", "monster_containers")]
+visible = false
 anchors_preset = 0
 offset_left = 550.0
 offset_right = 590.0
@@ -890,7 +891,6 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="MonsterSetting" type="Control" parent="Control" node_paths=PackedStringArray("parent", "monster_node", "action_select", "slider", "spinbox", "action_description", "action_list", "pie_chart", "power_label", "mp_label", "type_label", "target_label", "unlock_condition_label")]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1006,10 +1006,10 @@ select_all_on_focus = true
 [node name="min_chance" type="RichTextLabel" parent="Control/MonsterSetting/action_select"]
 clip_contents = false
 layout_mode = 0
-offset_left = 3.0
+offset_left = -3.0
 offset_top = 123.0
-offset_right = 42.0
-offset_bottom = 167.0
+offset_right = 46.0
+offset_bottom = 173.0
 mouse_filter = 2
 theme = SubResource("Theme_w7dfb")
 bbcode_enabled = true
@@ -1018,10 +1018,10 @@ horizontal_alignment = 1
 
 [node name="max_chance" type="RichTextLabel" parent="Control/MonsterSetting/action_select"]
 layout_mode = 0
-offset_left = 710.0
+offset_left = 705.0
 offset_top = 123.0
-offset_right = 779.0
-offset_bottom = 167.0
+offset_right = 781.0
+offset_bottom = 173.0
 mouse_filter = 2
 theme = SubResource("Theme_w7dfb")
 bbcode_enabled = true
@@ -1091,20 +1091,22 @@ scroll_active = false
 clip_contents = false
 layout_mode = 0
 offset_left = 553.0
-offset_right = 763.0
+offset_right = 773.0
 offset_bottom = 140.0
 theme = SubResource("Theme_tlog8")
-theme_override_constants/line_separation = 11
+theme_override_constants/line_separation = 5
 theme_override_styles/normal = SubResource("StyleBoxFlat_u2vx1")
 bbcode_enabled = true
 text = "解放:Lv.99
 [img=40]res://image/element/進化技.PNG[/img]第二形態"
+horizontal_alignment = 1
+vertical_alignment = 3
 
 [node name="ability" type="ScrollContainer" parent="Control/MonsterSetting/action_description"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 160.0
-offset_right = 763.0
+offset_right = 773.0
 offset_bottom = 360.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_l4b1a")
 
