@@ -248,6 +248,7 @@ func _on_confirm_button_up():
 				return
 			
 			Global.player_deck.monster[selected_slot_index] = selected_monster
+			Global.player_deck.monster[selected_slot_index].chance = monster_setting.chances
 			
 			mode = Mode.DECK
 		
