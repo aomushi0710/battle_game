@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://b775il0q1wk0u" path="res://background.gd" id="1_jjjva"]
 [ext_resource type="Script" uid="uid://buahejbbay077" path="res://new_battle.gd" id="2_arwha"]
 [ext_resource type="Texture2D" uid="uid://c23i0i02b401a" path="res://image/stage/青空.PNG" id="2_g5d16"]
-[ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://image/monster/スライム.PNG" id="2_tc6cq"]
 [ext_resource type="Texture2D" uid="uid://bhmvyc1xf2rgk" path="res://image/stage/草原.PNG" id="3_sraw4"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://theme/default_font_50.tres" id="4_jjjva"]
 [ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://theme/dialog_theme.tres" id="4_pcnpl"]
+[ext_resource type="PackedScene" uid="uid://bvbgk42kbwv54" path="res://monster_icon.tscn" id="8_a0jlr"]
 [ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://SE_battle.tscn" id="8_tc6cq"]
 [ext_resource type="Script" uid="uid://o4ioqobn45d0" path="res://battle_buttons.gd" id="9_hwahx"]
 [ext_resource type="FontFile" uid="uid://b6205dup8y7a4" path="res://font/PressStart2P.ttf" id="11_a0jlr"]
@@ -121,21 +121,19 @@ theme_override_constants/separation = 0
 
 [node name="enemy_deck" type="Control" parent="battle"]
 z_index = -1
-layout_direction = 3
 anchors_preset = 0
-offset_left = -2630.0
+offset_left = 1920.0
 offset_top = 30.0
-offset_right = -1880.0
+offset_right = 2670.0
 offset_bottom = 310.2
 
 [node name="enemy_deck" type="HBoxContainer" parent="battle/enemy_deck"]
-layout_direction = 3
 layout_mode = 0
-offset_left = -250.0
-offset_right = 750.0
+offset_right = 1000.0
 offset_bottom = 373.6
 scale = Vector2(0.75, 0.75)
 theme_override_constants/separation = 0
+alignment = 2
 
 [node name="button" type="Control" parent="battle" node_paths=PackedStringArray("battle_node", "action_container")]
 process_mode = 3
@@ -146,23 +144,20 @@ script = ExtResource("9_hwahx")
 battle_node = NodePath("..")
 action_container = NodePath("action")
 
-[node name="change" type="TextureButton" parent="battle/button"]
-process_mode = 3
-z_index = -1
+[node name="Change" parent="battle/button" instance=ExtResource("8_a0jlr")]
 layout_mode = 0
-offset_left = 151.0
+offset_left = 136.0
 offset_top = 455.0
-offset_right = 407.0
-offset_bottom = 711.0
+offset_right = 436.0
+offset_bottom = 755.0
 scale = Vector2(0.7, 0.7)
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource("2_tc6cq")
 
-[node name="change_text" type="RichTextLabel" parent="battle/button/change"]
+[node name="change_text" type="RichTextLabel" parent="battle/button/Change"]
 layout_mode = 0
-offset_left = -21.286
+offset_left = 0.142578
 offset_top = -145.0
-offset_right = 278.714
+offset_right = 300.143
+offset_bottom = 3.05176e-05
 theme = SubResource("Theme_jjjva")
 bbcode_enabled = true
 text = "次に行動する
@@ -728,7 +723,7 @@ text = "[color=aqua][b]⇀ x0.5[/b][/color]"
 
 [node name="SoundEffects2" parent="." instance=ExtResource("21_pcnpl")]
 
-[connection signal="button_up" from="battle/button/change" to="battle" method="_on_change_button_up"]
+[connection signal="button_up" from="battle/button/Change" to="battle" method="_on_change_button_up"]
 [connection signal="button_up" from="battle/button/戻る" to="battle/button" method="_on_戻る_button_up"]
 [connection signal="button_up" from="battle/button/main/Action" to="battle/button" method="_on_action_button_up"]
 [connection signal="button_up" from="battle/button/main/Item" to="battle/button" method="_on_item_button_up"]

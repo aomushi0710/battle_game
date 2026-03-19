@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cojqfvmn2ehmv"]
+[gd_scene load_steps=16 format=3 uid="uid://cojqfvmn2ehmv"]
 
 [ext_resource type="Texture2D" uid="uid://dlyvosjbrdwn" path="res://image/null.PNG" id="1_5qrwy"]
 [ext_resource type="Script" uid="uid://b0yxuo4ii0je" path="res://battle_monster.gd" id="2_v6f8v"]
@@ -13,17 +13,19 @@
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://theme/default_font_30.tres" id="10_xaxbf"]
 [ext_resource type="Script" uid="uid://cyd3jsa52v1ql" path="res://element_icon.gd" id="11_wq4fc"]
 [ext_resource type="PackedScene" uid="uid://bs8nmf7s1gd6a" path="res://SE_battle.tscn" id="13_c57w8"]
+[ext_resource type="PackedScene" uid="uid://bvbgk42kbwv54" path="res://monster_icon.tscn" id="14_xaxbf"]
 
 [sub_resource type="Theme" id="Theme_xaxbf"]
 default_font_size = 25
 
-[node name="player" type="TextureButton"]
+[node name="player" type="TextureButton" node_paths=PackedStringArray("monster_icon")]
 offset_right = 256.0
 offset_bottom = 256.0
 mouse_force_pass_scroll_events = false
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_5qrwy")
 script = ExtResource("2_v6f8v")
+monster_icon = NodePath("MonsterIcon")
 
 [node name="effect" type="HBoxContainer" parent="."]
 layout_direction = 3
@@ -144,3 +146,8 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0.25098)
 
 [node name="SoundEffects" parent="." instance=ExtResource("13_c57w8")]
+
+[node name="MonsterIcon" parent="." instance=ExtResource("14_xaxbf")]
+layout_mode = 0
+scale = Vector2(0.853, 0.853)
+mouse_filter = 1

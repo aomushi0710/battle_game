@@ -39,9 +39,6 @@ var icon_modulate: float:
 func _ready() -> void:
 	monster_image.material = shader_material.duplicate()
 
-
-
-
 ## [param data]プロパティが変更された時に見た目を更新する関数
 func _update() -> void:
 	if tween and tween.is_running():

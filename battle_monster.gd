@@ -1,6 +1,8 @@
 class_name BattleMonster
 extends TextureButton
 
+@export var monster_icon: MonsterIcon
+
 const DAMAGE_TEXT = preload("res://damage_text.tscn")
 const EFFECT_ICON = preload("res://effect_icon.tscn")
 var tween: Tween
@@ -51,7 +53,9 @@ func ui_update() -> void:
 	
 	$name/element.monster = data.get_monsterform()
 	$name/name.text = "[b][i]%s[/i][/b]" % data.get_monsterform().name
-	texture_normal = data.get_monsterform().image
+	texture_normal = load("res://image/お墓.PNG")
+	monster_icon.data = data.data
+	monster_icon.form = data.form
 
 # バトル開始時セットアップ
 func setup() -> void:
@@ -95,11 +99,8 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	effect_list.clear() # エフェクト全消し
 	$effect.blink_stop()
 	# お墓アニメーション
-	tween = get_tree().create_tween().bind_node(self)\
-	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property(self, "self_modulate:a", 0, 0.3)
-	tween.tween_callback(func(): texture_normal = load("res://image/お墓.PNG"))
-	tween.tween_property(self, "self_modulate:a", 1, 0.3)
+	tween = monster_icon.create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(monster_icon, "modulate:a", 0, 0.5)
 	await tween.finished
 	
 	parent = get_parent()

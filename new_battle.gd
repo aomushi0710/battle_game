@@ -123,7 +123,7 @@ func battle_start_animation() -> void:
 	$"button/戻る".modulate.a = 0
 	$button/dialogtab.modulate.a = 0
 	$button/next_arrow.modulate.a = 0
-	$button/change.modulate.a = 0
+	$button/Change.modulate.a = 0
 	$button/main.position.y = 1080
 	dialog.set_tab_disabled(1, true)
 	dialog.set_tab_disabled(2, true)
@@ -150,7 +150,7 @@ func battle_start_animation() -> void:
 	tween.tween_property($button/escape, "modulate:a", 1, 0.5)
 	tween.parallel().tween_property($"button/戻る", "modulate:a", 1, 0.5)
 	tween.parallel().tween_property($button/dialogtab, "modulate:a", 1, 0.5)
-	tween.parallel().tween_property($button/change, "modulate:a", 1, 0.5)
+	tween.parallel().tween_property($button/Change, "modulate:a", 1, 0.5)
 	tween.parallel().tween_property($button/main, "position:y", 865, 0.5)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
@@ -313,10 +313,8 @@ func _on_change_button_up() -> void:
 		
 		if player_deck[player_next_index].death == false:
 			break
-	
-	$button/change.texture_normal = (
-	Global.player_deck.monster[player_next_index].get_monsterform().image
-	)
+	$button/Change.data = Global.player_deck.monster[player_next_index].data
+	$button/Change.form = Global.player_deck.monster[player_next_index].form
 	if player_monster.index != player_next_index:
 		changed.emit()
 
@@ -325,10 +323,8 @@ func monster_button_up(i: int) -> void:
 	if player_deck[i].death == false: # 生きてたら
 		player_next_index = i
 		if player_monster.index != player_next_index:
-			$button/change.texture_normal = (
-			Global.player_deck.monster[player_next_index]
-			.get_monsterform().image
-			)
+			$button/Change.data = Global.player_deck.monster[player_next_index].data
+			$button/Change.form = Global.player_deck.monster[player_next_index].form
 			changed.emit()
 
 ## buttonスクリプト接続用関数

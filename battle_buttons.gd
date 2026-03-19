@@ -24,7 +24,8 @@ signal back
 func _ready() -> void: # 初期値
 	$"戻る".disabled = true
 	now_showing = 0
-	$change.texture_normal = Global.player_deck.monster[0].get_monsterform().image
+	$Change.data = Global.player_deck.monster[0].data
+	$Change.form = Global.player_deck.monster[0].form
 	
 	# item生成
 	# TODO 今後、デッキに3つまでアイテムを設定できるようにする。その3つのアイテムについて繰り返す
