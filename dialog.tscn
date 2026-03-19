@@ -47,9 +47,9 @@ layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 400.0
 theme_override_constants/margin_left = 110
-theme_override_constants/margin_top = 90
+theme_override_constants/margin_top = 85
 theme_override_constants/margin_right = 110
-theme_override_constants/margin_bottom = 90
+theme_override_constants/margin_bottom = 85
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextBox/MarginContainer"]
 layout_mode = 2
@@ -66,7 +66,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 bbcode_enabled = true
-text = "ダイアログボックスは全角３４文字まで入る行を３行まで入れられます！！
+text = "ダイアログボックスは全角３３文字まで入る行を３行まで入れられます！
 ２行目
 ３行目"
 autowrap_mode = 0

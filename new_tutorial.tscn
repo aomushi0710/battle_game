@@ -25,6 +25,9 @@ script = ExtResource("4_wrc7w")
 [node name="dialogtab" parent="battle/button" index="6"]
 script = ExtResource("5_lpeof")
 
+[node name="battlestart" parent="." index="5"]
+text = "[b][color=green]Tutorial[/color] [color=yellow]Start![/color][/b]"
+
 [node name="arrow_mark" type="RichTextLabel" parent="." index="8"]
 offset_left = 875.0
 offset_top = 133.0

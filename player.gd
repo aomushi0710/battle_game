@@ -4,14 +4,15 @@ extends CharacterBody2D
 @export var canvas_layer: CanvasLayer
 @export var world: Node2D
 @export var camera: Camera2D
+@export var color_rect: ColorRect
 
 @onready var dialog := $"../../CanvasLayer/dialog"
 @onready var interaction_area := $InteractionArea ## プレイヤーの前方にある検知エリア
 @onready var terrain := $"../tilemap/terrain"
 @onready var tile_size: int = terrain.tile_set.tile_size.x ## タイル1マスの大きさ
 
-var is_moving: bool = false ## 移動中かどうかのフラグ
 var object_interactable ## 触れられるオブジェクトの参照
+var is_moving: bool = false ## 移動中かどうかのフラグ
 var can_move: bool = true ## プレイヤーが移動可能かどうかのフラグ
 var is_dialog_active: bool = false ## ダイアログが開かれているかどうかのフラグ
 var dialog_just_closed: bool = false ## ダイアログが閉じられるまで入力を止めるフラグ
@@ -47,6 +48,7 @@ func _physics_process(delta):
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("interact"):
+		
 		var areas = interaction_area.get_overlapping_areas()
 		if not areas.is_empty():
 			var signboard = areas[0]
@@ -59,7 +61,8 @@ func _unhandled_input(event: InputEvent) -> void:
 					dialog_just_closed = false
 					is_dialog_active = false
 					return
-				if is_dialog_active: # 既にダイアログが開かれているなら何もしない
+				# 既にダイアログが開かれているか、メニューが開かれていて動けないなら何もしない
+				if is_dialog_active or not can_move:
 					return
 				
 				
@@ -90,6 +93,7 @@ func _on_dialog_battle_started() -> void:
 
 ## ダイアログからのバトルが終了した時、バトル前の状態に戻す関数
 func _on_dialog_battle_finished() -> void:
+	color_rect.scale = Vector2.ZERO
 	canvas_layer.show()
 	world.show()
 	camera.enabled = true

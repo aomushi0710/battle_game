@@ -1,5 +1,7 @@
 extends Control
 
+@export var color_rect: ColorRect
+
 @onready var hboxcontainer := $TextBox/MarginContainer/HBoxContainer
 @onready var label := $TextBox/MarginContainer/HBoxContainer/Text
 @onready var texture := $TextBox/MarginContainer/HBoxContainer/Image
@@ -27,7 +29,6 @@ func _ready() -> void:
 ## ダイアログボックスを開き、[signal dialog_opened]シグナルを発行します。
 func dialog_open() -> void:
 	show()
-	battle_started.connect(func(): )
 	dialog_opened.emit()
 
 ## ダイアログボックスを閉じ、[signal dialog_closed]シグナルを発行します。
@@ -127,7 +128,7 @@ func display_dialog(data: DialogData) -> int:
 
 ## バトルに移行する関数。[br]勝利すると[code]true[/code]を返します。
 func _transition_to_battle() -> bool:
-	var battle_scene
+	var battle_scene: Battle
 	var result: bool
 	if signboard_id == 1:
 		battle_scene = load(Global.tutorial_scene).instantiate()
@@ -176,6 +177,7 @@ func _transition_to_battle() -> bool:
 		battle_scene = load(Global.battle_scene).instantiate()
 		battle_scene.stage = Global.stage_data[1]
 	
+	await battle_cutin()
 	get_tree().current_scene.add_child(battle_scene)
 	battle_started.emit()
 	result = await battle_scene.get_node("battle").battle_finished
@@ -183,6 +185,14 @@ func _transition_to_battle() -> bool:
 	battle_scene.queue_free()
 	
 	return result
+
+
+func battle_cutin() -> void:
+	var tween = color_rect.create_tween()
+	tween.tween_property(
+		color_rect, "scale", Vector2(1, 1), 0.5
+	).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+	await tween.finished
 
 ## Enterキーが押された、またはクリックされた時の処理
 func _input(event: InputEvent) -> void:

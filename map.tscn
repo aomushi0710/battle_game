@@ -212,9 +212,17 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_oysan")
 [node name="Close" parent="CanvasLayer/menu" index="3"]
 theme_override_styles/focus = SubResource("StyleBoxFlat_sb2pt")
 
-[node name="dialog" parent="CanvasLayer" instance=ExtResource("4_71pa8")]
+[node name="dialog" parent="CanvasLayer" node_paths=PackedStringArray("color_rect") instance=ExtResource("4_71pa8")]
 offset_top = 680.0
 offset_bottom = 680.0
+color_rect = NodePath("../ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(960, 540)
+color = Color(0, 0, 0, 1)
 
 [node name="world" type="Node2D" parent="."]
 
@@ -244,7 +252,7 @@ position = Vector2(864, -188)
 id = 2
 dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt"), SubResource("Resource_a6rn7"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
 
-[node name="player" type="CharacterBody2D" parent="world" node_paths=PackedStringArray("canvas_layer", "world", "camera")]
+[node name="player" type="CharacterBody2D" parent="world" node_paths=PackedStringArray("canvas_layer", "world", "camera", "color_rect")]
 position = Vector2(32, 288)
 collision_mask = 7
 script = ExtResource("3_urblq")
@@ -252,6 +260,7 @@ speed = 384
 canvas_layer = NodePath("../../CanvasLayer")
 world = NodePath("..")
 camera = NodePath("Camera2D")
+color_rect = NodePath("../../CanvasLayer/ColorRect")
 
 [node name="texture" type="Sprite2D" parent="world/player"]
 scale = Vector2(0.25, 0.25)
