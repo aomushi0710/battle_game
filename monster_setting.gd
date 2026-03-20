@@ -338,7 +338,7 @@ func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
 		"この技はLv.%dから使用可能になります。" % selected_action.unlock_level)
 	if selected_action.unlock_form != Global.Form.第一形態:
 		unlock_condition_text += (
-			"[img=40]res://image/element/進化技.PNG[/img]%s" % 
+			"\n[img=40]res://image/element/進化技.PNG[/img]%s" % 
 			Global.form_names[selected_action.unlock_form]
 		)
 		unlock_condition_help += (
