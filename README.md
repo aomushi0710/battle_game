@@ -3,7 +3,7 @@
 <img src="https://i.imgur.com/px6IBx5.png" title="バトル画面">
 
 ### 公開URL
-[プレイ動画(Youtube)](https://youtu.be/P7uS8LkNxDc)
+[動作紹介動画(Youtube)](https://youtu.be/mh3FtvL_wRU)
 
 ### 工夫した点
 - モンスターや技など、あらゆる構造化データをカスタムリソースとして管理し、高い再利用性と拡張性を実現
