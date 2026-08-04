@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://dsl5pgriahipa"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_h36qx"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_xvx6f"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_bowa3"]
+[ext_resource type="Resource" uid="uid://dl5j0v1e805u5" path="res://resource/element/風属性.tres" id="3_0qlpb"]
+
+[resource]
+script = ExtResource("1_h36qx")
+id = 9
+name = "つむじ風"
+element = Array[ExtResource("2_bowa3")]([ExtResource("3_0qlpb")])
+max_chance = 80
+power = 30
+mp = 0
+target = 1
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_xvx6f")]([])
+description = "目の前の敵につむじ風を
+起こして攻撃する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

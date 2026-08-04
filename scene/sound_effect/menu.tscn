@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://yl6fo6eqi2u0"]
+
+[ext_resource type="AudioStream" uid="uid://540wjd0nrasx" path="res://asset/sound/SE/click.ogg" id="1_17xic"]
+[ext_resource type="Script" uid="uid://bcf8nrgn6spqa" path="res://src/sound_effect/menu.gd" id="1_owo5j"]
+
+[node name="SoundEffects" type="Node2D"]
+visible = false
+script = ExtResource("1_owo5j")
+
+[node name="click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_17xic")

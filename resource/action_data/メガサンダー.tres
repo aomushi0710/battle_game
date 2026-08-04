@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=5 format=3 uid="uid://c00etq8tg4ydp"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_dc78q"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_mlgoe"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_rvp3i"]
+[ext_resource type="Resource" uid="uid://3bjg4wfbnyh6" path="res://resource/element/雷属性.tres" id="3_8y2qq"]
+
+[resource]
+script = ExtResource("1_dc78q")
+id = 23
+name = "メガサンダー"
+element = Array[ExtResource("2_rvp3i")]([ExtResource("3_8y2qq")])
+max_chance = 30
+power = 70
+mp = 15
+target = 2
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_mlgoe")]([])
+description = "中級攻撃魔法。強力な
+雷を生み出して攻撃し、
+30%で感電させる。
+(この特殊効果は未実装)"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

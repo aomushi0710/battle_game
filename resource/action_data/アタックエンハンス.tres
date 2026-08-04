@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=8 format=3 uid="uid://daphc0yp3iv34"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_6mbuc"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_cbtc7"]
+[ext_resource type="Script" uid="uid://d2box237wyadg" path="res://src/resource/static_data/ability/AbilityBuff.gd" id="2_h1ij8"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_ogw27"]
+[ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://resource/element/バフ.tres" id="3_h1ij8"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="3_tkmfu"]
+
+[sub_resource type="Resource" id="Resource_3fyj2"]
+script = ExtResource("2_h1ij8")
+status = 0
+amount = 1.5
+turn = 5
+name = "ATK UP"
+bbcode_name = "[color=orange]ATK[/color] [color=red]UP[/color]"
+target = 5
+chance = 100
+timing = 2
+trigger = Array[ExtResource("3_tkmfu")]([])
+description = "味方単体の[color=orange]ATK[/color]を、
+5ターンの間
+1.5倍に強化する。"
+battle_log_message = "%s は[color=orange]ATK[/color]が上がった！"
+placeholder = 0
+metadata/_custom_type_script = "uid://d2box237wyadg"
+
+[resource]
+script = ExtResource("1_6mbuc")
+id = 45
+name = "アタックエンハンス"
+element = Array[ExtResource("2_ogw27")]([ExtResource("3_h1ij8")])
+max_chance = 30
+power = 0
+mp = 20
+target = 0
+damage_type = 0
+touch = false
+ability = Array[ExtResource("1_cbtc7")]([SubResource("Resource_3fyj2")])
+description = "ATK強化魔法。
+味方1体のATKを強化する。
+この効果は5ターンだけ
+持続する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://261705w1prvy"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_e55cj"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_yyx2v"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_twftb"]
+[ext_resource type="Resource" uid="uid://djq54l3oqsuo1" path="res://resource/element/光属性.tres" id="3_rxctn"]
+
+[resource]
+script = ExtResource("1_e55cj")
+id = 11
+name = "光線"
+element = Array[ExtResource("2_twftb")]([ExtResource("3_rxctn")])
+max_chance = 80
+power = 30
+mp = 0
+target = 1
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_yyx2v")]([])
+description = "目の前の敵に光線を射出して
+攻撃する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

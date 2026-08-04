@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://ulhc0khdjd2k"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_3t1u2"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_10pq3"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_mhf3h"]
+[ext_resource type="Resource" uid="uid://du8c5g5eab01" path="res://resource/element/闇属性.tres" id="3_sj72q"]
+
+[resource]
+script = ExtResource("1_10pq3")
+id = 12
+name = "暗闇"
+element = Array[ExtResource("2_mhf3h")]([ExtResource("3_sj72q")])
+max_chance = 80
+power = 30
+mp = 0
+target = 1
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_3t1u2")]([])
+description = "目の前の敵を暗闇に閉じ込め
+攻撃する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

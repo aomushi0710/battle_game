@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="MonsterData" load_steps=7 format=3 uid="uid://be8vh2ta7sdxk"]
+
+[ext_resource type="Script" uid="uid://c3nuh5veon1bs" path="res://src/resource/data/action.gd" id="1_8ndoo"]
+[ext_resource type="Resource" uid="uid://cwy7h38kxvyy7" path="res://resource/action_data/自己再生.tres" id="2_8ndoo"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://src/resource/static_data/monster_form.gd" id="3_t34l7"]
+[ext_resource type="Resource" uid="uid://qcde2e3i3cco" path="res://resource/monster_form/カカシスライム.tres" id="4_36vk2"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://src/resource/static_data/monster_data.gd" id="5_0njmr"]
+
+[sub_resource type="Resource" id="Resource_1lv7c"]
+script = ExtResource("1_8ndoo")
+data = ExtResource("2_8ndoo")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[resource]
+script = ExtResource("5_0njmr")
+id = 0
+evolution_forms = Array[ExtResource("3_t34l7")]([ExtResource("4_36vk2")])
+action = Array[ExtResource("1_8ndoo")]([SubResource("Resource_1lv7c")])
+coin = 0

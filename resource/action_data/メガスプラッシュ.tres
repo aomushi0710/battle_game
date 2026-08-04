@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=5 format=3 uid="uid://b558mwty0ww2l"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_agngf"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_sw4v0"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_l6fqe"]
+[ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://resource/element/水属性.tres" id="3_vfpmr"]
+
+[resource]
+script = ExtResource("1_agngf")
+id = 22
+name = "メガスプラッシュ"
+element = Array[ExtResource("2_l6fqe")]([ExtResource("3_vfpmr")])
+max_chance = 30
+power = 70
+mp = 15
+target = 2
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_sw4v0")]([])
+description = "中級攻撃魔法。強力な
+水を生み出して攻撃し、
+30%で水没させる。
+(この特殊効果は未実装)"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

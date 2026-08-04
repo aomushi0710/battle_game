@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3 uid="uid://derf848njgcr1"]
+
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="1_y071y"]
+[ext_resource type="PackedScene" uid="uid://cqgg7lvejtmh7" path="res://scene/component/action_button.tscn" id="2_raq3y"]
+[ext_resource type="Script" uid="uid://dsi6vk71sy0a7" path="res://src/component/action_setting_button.gd" id="2_y071y"]
+
+[sub_resource type="Theme" id="Theme_ta0ta"]
+default_font_size = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y071y"]
+content_margin_left = 8.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 32
+corner_radius_bottom_left = 32
+corner_detail = 20
+shadow_color = Color(1, 1, 1, 0.501961)
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_aocpg"]
+default_font_size = 35
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ta0ta"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_detail = 20
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gjq5s"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+bg_color = Color(1, 0, 0, 1)
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_detail = 20
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xcw32"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+bg_color = Color(1, 0, 0, 1)
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_detail = 20
+anti_aliasing = false
+
+[node name="ActionSettingButton" type="HBoxContainer" node_paths=PackedStringArray("chance_text", "action_button", "delete_button")]
+custom_minimum_size = Vector2(0, 64)
+theme = ExtResource("1_y071y")
+theme_override_constants/separation = 0
+script = ExtResource("2_y071y")
+chance_text = NodePath("ChanceText")
+action_button = NodePath("action_button")
+delete_button = NodePath("DeleteButton")
+
+[node name="ChanceText" type="RichTextLabel" parent="."]
+clip_contents = false
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_ta0ta")
+theme_override_styles/normal = SubResource("StyleBoxFlat_y071y")
+bbcode_enabled = true
+text = "  0%"
+metadata/help_text = "この技に現在設定されている出現確率。"
+
+[node name="action_button" parent="." instance=ExtResource("2_raq3y")]
+custom_minimum_size = Vector2(590, 0)
+layout_mode = 2
+
+[node name="DeleteButton" type="Button" parent="."]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_aocpg")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ta0ta")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gjq5s")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xcw32")
+disabled = true
+text = "❌"
+metadata/help_text = "クリックすると、出現確率を0%にリセットします。"
+
+[connection signal="button_up" from="DeleteButton" to="." method="_on_delete_button_button_up"]

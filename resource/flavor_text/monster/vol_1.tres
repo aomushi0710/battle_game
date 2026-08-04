@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BattlelogData" load_steps=2 format=3 uid="uid://cllxvk2dg1dpl"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="1_vkeb6"]
+
+[resource]
+script = ExtResource("1_vkeb6")
+text = Array[String]([])
+should_wait = false
+tab = 0
+image = []
+metadata/_custom_type_script = "uid://cvq84hr01jqh4"

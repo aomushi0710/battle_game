@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityReduction" load_steps=2 format=3 uid="uid://dhdy1jpfclnd8"]
+
+[ext_resource type="Script" uid="uid://2er0knjbrch5" path="res://src/resource/static_data/ability/AbilityReduction.gd" id="1_a3d1v"]
+
+[resource]
+script = ExtResource("1_a3d1v")
+status = 0
+amount_type = 0
+amount = 0.0
+category = 0
+additional = 0
+evolution = 0
+name = ""
+bbcode_name = ""
+range = 0
+timing = 0
+trigger = 0
+metadata/_custom_type_script = "uid://2er0knjbrch5"

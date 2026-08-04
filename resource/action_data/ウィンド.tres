@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=5 format=3 uid="uid://cvntdjikwg806"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_dexqc"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_w027w"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_mwhjs"]
+[ext_resource type="Resource" uid="uid://dl5j0v1e805u5" path="res://resource/element/風属性.tres" id="3_wb58s"]
+
+[resource]
+script = ExtResource("1_dexqc")
+id = 17
+name = "ウィンド"
+element = Array[ExtResource("2_mwhjs")]([ExtResource("3_wb58s")])
+max_chance = 50
+power = 50
+mp = 10
+target = 2
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_w027w")]([])
+description = "下級攻撃魔法。
+風を生み出して攻撃し、
+10%で竜巻に巻き込む。
+(この特殊効果は未実装)"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

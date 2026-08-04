@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AbilityCritical" load_steps=3 format=3 uid="uid://bg25sb7b51dal"]
+
+[ext_resource type="Script" uid="uid://ci443rtyfhsyi" path="res://src/resource/static_data/ability/AbilityCritical.gd" id="1_opnux"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="2_rmnc2"]
+
+[resource]
+script = ExtResource("1_opnux")
+amount_type = 0
+amount = 0.0
+name = ""
+bbcode_name = ""
+target = 0
+chance = 100
+timing = 0
+trigger = Array[ExtResource("2_rmnc2")]([])
+description = ""
+battle_log_message = ""
+placeholder = 0
+metadata/_custom_type_script = "uid://ci443rtyfhsyi"

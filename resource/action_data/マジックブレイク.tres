@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=8 format=3 uid="uid://cj2vq7vrkf8bi"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_74kvh"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_njgjh"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_lap31"]
+[ext_resource type="Script" uid="uid://b4gbl34tandgs" path="res://src/resource/static_data/ability/AbilityDebuff.gd" id="2_wthmm"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="3_hcfla"]
+[ext_resource type="Resource" uid="uid://b03a6uay0b6bt" path="res://resource/element/デバフ.tres" id="3_wthmm"]
+
+[sub_resource type="Resource" id="Resource_isxcr"]
+script = ExtResource("2_wthmm")
+status = 2
+amount = 1.5
+turn = 5
+name = "MAG DOWN"
+bbcode_name = "[color=dodger_blue]MAG[/color] [color=royal_blue]DOWN[/color]"
+target = 2
+chance = 100
+timing = 2
+trigger = Array[ExtResource("3_hcfla")]([])
+description = "敵単体の[color=dodger_blue]MAG[/color]を、
+5ターンの間
+2/3倍に弱体化する。"
+battle_log_message = "%s は[color=dodger_blue]MAG[/color]が下がった！"
+placeholder = 0
+metadata/_custom_type_script = "uid://b4gbl34tandgs"
+
+[resource]
+script = ExtResource("1_njgjh")
+id = 51
+name = "マジックブレイク"
+element = Array[ExtResource("2_lap31")]([ExtResource("3_wthmm")])
+max_chance = 30
+power = 0
+mp = 20
+target = 0
+damage_type = 0
+touch = false
+ability = Array[ExtResource("1_74kvh")]([SubResource("Resource_isxcr")])
+description = "MAG弱体魔法。
+敵1体のMAGを弱体化する。
+この効果は5ターンだけ
+持続する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

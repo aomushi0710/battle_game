@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=5 format=3 uid="uid://ccmh0v2pdmioe"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_5a70v"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_241cg"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_hr0w0"]
+[ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://resource/element/氷属性.tres" id="3_1f8eu"]
+
+[resource]
+script = ExtResource("1_5a70v")
+id = 26
+name = "メガアイス"
+element = Array[ExtResource("2_hr0w0")]([ExtResource("3_1f8eu")])
+max_chance = 30
+power = 70
+mp = 15
+target = 2
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_241cg")]([])
+description = "中級攻撃魔法。強力な
+氷を生み出して攻撃し、
+30%で霜焼状態にする。
+(この特殊効果は未実装)"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

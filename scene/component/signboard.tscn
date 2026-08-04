@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5nv63d85qwtt"]
+
+[ext_resource type="Script" uid="uid://pt57v8ecg1uf" path="res://src/component/signboard.gd" id="1_31gs7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvjog"]
+size = Vector2(64, 64)
+
+[node name="signboard" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_31gs7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kvjog")

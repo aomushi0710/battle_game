@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="AbilityDebuff" load_steps=2 format=3 uid="uid://bmp7umix7f01w"]
+
+[ext_resource type="Script" uid="uid://b4gbl34tandgs" path="res://src/resource/static_data/ability/AbilityDebuff.gd" id="1_r16q7"]
+
+[resource]
+script = ExtResource("1_r16q7")
+status = 0
+amount_type = 0
+amount = 0.0
+turn = 0
+category = 0
+buff = 0
+debuff = 0
+healing = 0
+steal = 0
+critical = 0
+additional = 0
+percentage = 0
+evolution = 0
+name = ""
+bbcode_name = ""
+range = 0
+timing = 0
+trigger = 0
+metadata/_custom_type_script = "uid://b4gbl34tandgs"

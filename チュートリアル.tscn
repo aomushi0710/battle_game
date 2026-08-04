@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://6qfxa2w3geol"]
-
-[ext_resource type="PackedScene" uid="uid://bhqk4iva02mmc" path="res://新バトル.tscn" id="1_babjb"]
-
-[node name="Battle" instance=ExtResource("1_babjb")]

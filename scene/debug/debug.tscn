@@ -1,0 +1,269 @@
+[gd_scene load_steps=8 format=3 uid="uid://lhdui3dkf60l"]
+
+[ext_resource type="Script" uid="uid://gr73qw7ffurg" path="res://src/debug/element_multiplier_calc.gd" id="1_w64vr"]
+[ext_resource type="Script" uid="uid://c5cm3u8kdwsx8" path="res://src/debug/debug.gd" id="2_2jd23"]
+[ext_resource type="Script" uid="uid://cqdes4ra5j3dr" path="res://src/debug/damage_calc.gd" id="2_f36wx"]
+[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://asset/theme/default_font_30.tres" id="7_e0a3d"]
+
+[sub_resource type="Theme" id="Theme_u1wox"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_o6yt0"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_0jkx1"]
+default_font_size = 30
+
+[node name="debug" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_2jd23")
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 240.0
+color = Color(0, 0, 0, 1)
+
+[node name="属性倍率計算機" type="RichTextLabel" parent="Control/ColorRect"]
+layout_mode = 0
+offset_right = 1000.0
+offset_bottom = 250.0
+theme = SubResource("Theme_u1wox")
+bbcode_enabled = true
+text = "属性倍率計算機　結果：N/A倍"
+script = ExtResource("1_w64vr")
+
+[node name="攻撃側タイプ1" type="SpinBox" parent="Control/ColorRect/属性倍率計算機"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 100.0
+offset_right = 134.0
+offset_bottom = 142.0
+tooltip_text = "攻撃するモンスターの持つ属性の1つ目"
+min_value = -1.0
+max_value = 8.0
+
+[node name="攻撃側タイプ2" type="SpinBox" parent="Control/ColorRect/属性倍率計算機"]
+layout_mode = 0
+offset_left = 170.0
+offset_top = 100.0
+offset_right = 254.0
+offset_bottom = 142.0
+tooltip_text = "攻撃するモンスターの持つ属性の2つ目"
+min_value = -1.0
+max_value = 8.0
+value = -1.0
+
+[node name="技タイプ1" type="SpinBox" parent="Control/ColorRect/属性倍率計算機"]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 100.0
+offset_right = 374.0
+offset_bottom = 142.0
+tooltip_text = "技の属性の1つ目"
+min_value = -1.0
+max_value = 8.0
+
+[node name="技タイプ2" type="SpinBox" parent="Control/ColorRect/属性倍率計算機"]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 100.0
+offset_right = 464.0
+offset_bottom = 142.0
+tooltip_text = "技の属性の2つ目"
+min_value = -1.0
+max_value = 8.0
+value = -1.0
+
+[node name="防御側タイプ1" type="SpinBox" parent="Control/ColorRect/属性倍率計算機"]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 100.0
+offset_right = 554.0
+offset_bottom = 142.0
+tooltip_text = "攻撃を受けるモンスターの属性1つ目"
+min_value = -1.0
+max_value = 8.0
+
+[node name="防御側タイプ2" type="SpinBox" parent="Control/ColorRect/属性倍率計算機"]
+layout_mode = 0
+offset_left = 590.0
+offset_top = 100.0
+offset_right = 674.0
+offset_bottom = 142.0
+tooltip_text = "攻撃を受けるモンスターの属性2つ目"
+min_value = -1.0
+max_value = 8.0
+value = -1.0
+
+[node name="計算" type="Button" parent="Control/ColorRect/属性倍率計算機"]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 100.0
+offset_right = 768.0
+offset_bottom = 142.0
+text = "計算!"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/ColorRect/属性倍率計算機"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 950.0
+offset_bottom = 90.0
+text = "攻撃側1 攻撃側2 技1   技2   防御側1 防御側2"
+
+[node name="help" type="RichTextLabel" parent="Control/ColorRect/属性倍率計算機"]
+layout_mode = 0
+offset_top = 150.0
+offset_right = 1000.0
+offset_bottom = 230.0
+bbcode_enabled = true
+text = "無属性:0 [color=red]火属性[/color]:1 [color=dodger_blue]水属性[/color]:2 [color=yellow]雷属性[/color]:3 [color=chocolate]土属性[/color]:4 [color=green]風属性[/color]:5 [color=aqua]氷属性[/color]:6
+[color=light_yellow]光属性[/color]:7 [color=purple]闇属性[/color]:8 無し:-1"
+
+[node name="ColorRect2" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_top = 250.0
+offset_right = 1152.0
+offset_bottom = 490.0
+color = Color(0, 0, 0, 1)
+
+[node name="ダメージ計算機" type="RichTextLabel" parent="Control/ColorRect2"]
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 250.0
+theme = SubResource("Theme_o6yt0")
+bbcode_enabled = true
+text = "ダメージ計算機　結果：N/Aダメージ"
+script = ExtResource("2_f36wx")
+
+[node name="技威力" type="SpinBox" parent="Control/ColorRect2/ダメージ計算機"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 100.0
+offset_right = 134.0
+offset_bottom = 142.0
+value = 40.0
+
+[node name="ステータス1" type="SpinBox" parent="Control/ColorRect2/ダメージ計算機"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 100.0
+offset_right = 244.0
+offset_bottom = 142.0
+tooltip_text = "ATKやMAGなどの攻撃する側のステータス"
+max_value = 300.0
+value = 100.0
+
+[node name="ステータス2" type="SpinBox" parent="Control/ColorRect2/ダメージ計算機"]
+layout_mode = 0
+offset_left = 340.0
+offset_top = 100.0
+offset_right = 424.0
+offset_bottom = 142.0
+tooltip_text = "DEFやRESなどの攻撃を受ける側のステータス"
+max_value = 300.0
+value = 100.0
+
+[node name="属性倍率" type="SpinBox" parent="Control/ColorRect2/ダメージ計算機"]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 100.0
+offset_right = 604.0
+offset_bottom = 142.0
+tooltip_text = "属性倍率計算機で得た値などを入力"
+max_value = 6.0
+step = 0.1
+value = 1.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/ColorRect2/ダメージ計算機"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 1050.0
+offset_bottom = 90.0
+text = "技威力 ステータス1 ステータス2 属性倍率"
+
+[node name="計算" type="Button" parent="Control/ColorRect2/ダメージ計算機"]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 100.0
+offset_right = 768.0
+offset_bottom = 142.0
+text = "計算!"
+
+[node name="help" type="RichTextLabel" parent="Control/ColorRect2/ダメージ計算機"]
+layout_mode = 0
+offset_top = 150.0
+offset_right = 1170.0
+offset_bottom = 230.0
+bbcode_enabled = true
+text = "ダメージ計算式は以下の通りです
+技の基礎威力 * (攻撃側の[color=red]ATK[/color]([color=dodger_blue]MAG[/color]) / 防御側の[color=light_blue]DEF[/color]([color=purple]RES[/color])) ** 1.2 (小数以下切り捨て)"
+
+[node name="終了" type="Button" parent="Control"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 1060.0
+offset_top = 81.0
+offset_right = 1128.0
+offset_bottom = 123.0
+theme = SubResource("Theme_0jkx1")
+text = "終了"
+
+[node name="モンスターデータ" type="Button" parent="Control"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 0
+offset_left = 757.0
+offset_top = 31.0
+offset_right = 1125.0
+offset_bottom = 73.0
+theme = SubResource("Theme_0jkx1")
+text = "モンスターデータ詳細表示"
+
+[node name="戻る" type="Button" parent="Control"]
+visible = false
+modulate = Color(1, 1, 0, 1)
+layout_mode = 0
+offset_left = 1057.0
+offset_top = 31.0
+offset_right = 1125.0
+offset_bottom = 73.0
+theme = SubResource("Theme_0jkx1")
+text = "戻る"
+
+[node name="SpinBox" type="SpinBox" parent="Control"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 520.0
+offset_right = 139.0
+offset_bottom = 562.0
+theme = ExtResource("7_e0a3d")
+max_value = 10000.0
+
+[node name="coin_set" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 520.0
+offset_right = 338.0
+offset_bottom = 562.0
+theme = ExtResource("7_e0a3d")
+text = "コインセット"
+
+[node name="element_actions" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 1170.0
+offset_right = 1210.0
+offset_bottom = 40.0
+
+[connection signal="button_up" from="Control/ColorRect/属性倍率計算機/計算" to="Control/ColorRect/属性倍率計算機" method="_on_計算_button_up"]
+[connection signal="button_up" from="Control/ColorRect2/ダメージ計算機/計算" to="Control/ColorRect2/ダメージ計算機" method="_on_計算_button_up"]
+[connection signal="button_up" from="Control/終了" to="Control/ColorRect/属性倍率計算機" method="_on_終了_button_up"]
+[connection signal="button_up" from="Control/モンスターデータ" to="Control" method="_on_モンスターデータ_button_up"]
+[connection signal="button_up" from="Control/戻る" to="Control" method="_on_戻る_button_up"]
+[connection signal="button_up" from="Control/coin_set" to="Control" method="_on_coin_set_button_up"]

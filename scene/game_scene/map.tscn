@@ -1,0 +1,300 @@
+[gd_scene load_steps=26 format=4 uid="uid://b6v2nlkh2ak8j"]
+
+[ext_resource type="TileSet" uid="uid://rw4km3kk1k67" path="res://asset/image/tile/terrain.tres" id="1_e0an3"]
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="1_p5pve"]
+[ext_resource type="Script" uid="uid://c87hdh1wibpae" path="res://src/component/map_ui.gd" id="2_iw27f"]
+[ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://asset/image/monster/スライム.PNG" id="2_p5pve"]
+[ext_resource type="PackedScene" uid="uid://bldb4kxsdbr4q" path="res://scene/component/map_menu.tscn" id="3_71pa8"]
+[ext_resource type="Script" uid="uid://nyb1qpsf3a5a" path="res://src/component/player.gd" id="3_urblq"]
+[ext_resource type="PackedScene" uid="uid://bgn0w8f01647u" path="res://scene/component/dialog.tscn" id="4_71pa8"]
+[ext_resource type="TileSet" uid="uid://bm5qn6qq1ml3b" path="res://asset/image/tile/object.tres" id="6_05x41"]
+[ext_resource type="PackedScene" uid="uid://b5nv63d85qwtt" path="res://scene/component/signboard.tscn" id="7_oysan"]
+[ext_resource type="Script" uid="uid://c8f5dn7tcqt5t" path="res://src/resource/static_data/dialog_data.gd" id="8_sb2pt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oysan"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 0, 0, 0.5)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sb2pt"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+shadow_color = Color(1, 0, 0, 0.5)
+shadow_size = 10
+
+[sub_resource type="Resource" id="Resource_bssq0"]
+script = ExtResource("8_sb2pt")
+text = "このゲームはプレイヤーが[b]確率を操作する[/b]ことで勝利を掴む、
+新感覚コマンドバトルゲームです！"
+redirect_id = 1
+flag_list = Array[int]([])
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_jk4ss"]
+script = ExtResource("8_sb2pt")
+text = "まずは[b]Xキー[/b]を押してメニューを開き、
+[b]デッキ[/b]ボタンを押して、自分だけのデッキを作りましょう！"
+redirect_id = 2
+flag_list = Array[int]([])
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_4on3e"]
+script = ExtResource("8_sb2pt")
+text = "右上に進み、左手にあるモニターからは[color=green]「チュートリアル」[/color]が、
+右手にあるモニターからは[color=red]「バトル」[/color]が行えます！
+(チュートリアルはデッキ編成なしでも遊べます。)
+"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_0t07s"]
+script = ExtResource("8_sb2pt")
+text = "こちらはバトルシミュレーターです。
+チュートリアルを開始しますか？"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String](["開始する", "やめる"])
+button_redirect_id = Array[int]([1, 2])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_6qsgm"]
+script = ExtResource("8_sb2pt")
+text = "それでは、チュートリアルを開始します。"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([3, 3])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_a6rn7"]
+script = ExtResource("8_sb2pt")
+text = "またのお越しをお待ちしております。"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_wbpbn"]
+script = ExtResource("8_sb2pt")
+text = "チュートリアルお疲れ様でした。
+[b]X[/b]でメニューを開き、[b]デッキ[/b]ボタンからオリジナルのチームを作成し、
+バトルに挑戦しましょう！"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_oysan"]
+script = ExtResource("8_sb2pt")
+text = "こちらはバトルシミュレーターです。
+バトルを開始しますか？"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String](["開始する", "やめる"])
+button_redirect_id = Array[int]([1, 2])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_sb2pt"]
+script = ExtResource("8_sb2pt")
+text = "それではバトルを開始します。"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = ""
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([3, 4])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_ooc2g"]
+script = ExtResource("8_sb2pt")
+text = "バトルお疲れ様でした。[color=red]勝利おめでとうございます！[/color]
+お気に入りのデッキは、[b]X[/b]でメニューを開き[b]デッキ[/b]ボタンを
+押した先の画面から[b]セーブ[/b]することもできますよ！"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="Resource" id="Resource_2wwcf"]
+script = ExtResource("8_sb2pt")
+text = "バトルお疲れ様でした。残念ですが、またの挑戦をお待ちしています。
+[b]X[/b]でメニューを開き[b]デッキ[/b]ボタンを押した先の画面から強力なデッキを
+[b]ロード[/b]できるかもしれません。ぜひお試しください！"
+redirect_id = -1
+flag_list = Array[int]([])
+name_text = "バトルシミュレーター"
+name_color = Color(0, 0, 0, 1)
+button_text = Array[String]([])
+button_redirect_id = Array[int]([])
+battle_redirect_id = Array[int]([])
+metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e0an3"]
+size = Vector2(63.9, 63.9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ooc2g"]
+size = Vector2(64, 64)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ui" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+theme = ExtResource("1_p5pve")
+script = ExtResource("2_iw27f")
+
+[node name="menu" parent="CanvasLayer" instance=ExtResource("3_71pa8")]
+visible = false
+
+[node name="Title" parent="CanvasLayer/menu/panel" index="3"]
+theme_override_styles/focus = SubResource("StyleBoxFlat_oysan")
+
+[node name="Close" parent="CanvasLayer/menu" index="3"]
+theme_override_styles/focus = SubResource("StyleBoxFlat_sb2pt")
+
+[node name="dialog" parent="CanvasLayer" node_paths=PackedStringArray("color_rect") instance=ExtResource("4_71pa8")]
+offset_top = 680.0
+offset_bottom = 680.0
+color_rect = NodePath("../ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(960, 540)
+color = Color(0, 0, 0, 1)
+
+[node name="world" type="Node2D" parent="."]
+
+[node name="tilemap" type="Node2D" parent="world"]
+
+[node name="terrain" type="TileMapLayer" parent="world/tilemap"]
+tile_map_data = PackedByteArray("AAACAAUADQAAAAAAAAADAAUADQAAAAAAAAADAAQADQAAAAAAAAACAAQADQAAAAAAAAABAAQADQAAAAAAAAABAAUADQAAAAAAAAAAAAUADQAAAAAAAAAAAAQADQAAAAAAAAAAAAMADQAAAAAAAAABAAMADQAAAAAAAAACAAMADQAAAAAAAAADAAMADQAAAAAAAAAEAAMADQAAAAAAAAAEAAQADQAAAAAAAAAEAAUADQAAAAAAAAAAAAEADgAAAAEAAAABAAEADgAAAAEAAAACAAEADgAAAAEAAAADAAEADgAAAAEAAAAEAAEADgAAAAEAAAAAAAIADgAAAAIAAAABAAIADgAAAAIAAAACAAIADgAAAAIAAAADAAIADgAAAAIAAAAEAAIADgAAAAIAAAD//wEADgAAAAAAAAD//wIADgAAAAAAAAD//wMADgAAAAAAAAD//wQADgAAAAAAAAD//wUADgAAAAAAAAAEAAYADQAAAAAAAAADAAYADQAAAAAAAAACAAYADQAAAAAAAAABAAYADQAAAAAAAAAAAAYADQAAAAAAAAAAAAcADQAAAAAAAAABAAcADQAAAAAAAAACAAcADQAAAAAAAAADAAcADQAAAAAAAAAEAAcADQAAAAAAAAAFAAMADQAAAAAAAAAFAAQADQAAAAAAAAAFAAUADQAAAAAAAAAFAAYADQAAAAAAAAAFAAcADQAAAAAAAAAGAAcADQAAAAAAAAAGAAYADQAAAAAAAAAGAAUADQAAAAAAAAAGAAQADQAAAAAAAAAGAAMADQAAAAAAAAAHAAMADQAAAAAAAAAHAAQADQAAAAAAAAAHAAUADQAAAAAAAAAHAAYADQAAAAAAAAAHAAcADQAAAAAAAAAIAAcADQAAAAAAAAAIAAYADQAAAAAAAAAIAAUADQAAAAAAAAAIAAQADQAAAAAAAAAIAAMADQAAAAAAAAAJAAMADQAAAAAAAAAJAAQADQAAAAAAAAAJAAUADQAAAAAAAAAJAAYADQAAAAAAAAAJAAcADQAAAAAAAAAFAAIADQAAAAAAAAAGAAIADQAAAAAAAAAHAAIADQAAAAAAAAAIAAIADQAAAAAAAAAJAAIADQAAAAAAAAAJAAEADQAAAAAAAAAIAAEADQAAAAAAAAAHAAEADQAAAAAAAAAGAAEADQAAAAAAAAAFAAEADQAAAAAAAAAFAAAADQAAAAAAAAAGAAAADQAAAAAAAAAHAAAADQAAAAAAAAAIAAAADQAAAAAAAAAJAAAADQAAAAAAAAAJAP//DQAAAAAAAAAIAP//DQAAAAAAAAAHAP//DQAAAAAAAAAGAP//DQAAAAAAAAAFAP//DQAAAAAAAAAFAP7/DQAAAAAAAAAGAP7/DQAAAAAAAAAHAP7/DQAAAAAAAAAIAP7/DQAAAAAAAAAJAP7/DQAAAAAAAAAFAP3/DgAAAAIAAAAGAP3/DgAAAAIAAAAHAP3/DgAAAAIAAAAIAP3/DgAAAAIAAAAJAP3/DgAAAAIAAAAFAPz/DgAAAAEAAAAGAPz/DgAAAAEAAAAHAPz/DgAAAAEAAAAIAPz/DgAAAAEAAAAJAPz/DgAAAAEAAAAJAPv/DgAAAAAAAAAIAPv/DgAAAAAAAAAHAPv/DgAAAAAAAAAGAPv/DgAAAAAAAAAFAPv/DgAAAAAAAAAEAPv/DgAAAAAAAAAEAPz/DgAAAAAAAAAEAP3/DgAAAAAAAAAEAP7/DgAAAAAAAAAEAP//DgAAAAAAAAAEAAAADgAAAAAAAAADAAAADgAAAAAAAAACAAAADgAAAAAAAAABAAAADgAAAAAAAAAAAAAADgAAAAAAAAD//wAADgAAAAAAAAD//wYADgAAAAAAAAD//wcADgAAAAAAAAD//wgADgAAAAAAAAAAAAgADgAAAAAAAAABAAgADgAAAAAAAAACAAgADgAAAAAAAAADAAgADgAAAAAAAAAEAAgADgAAAAAAAAAFAAgADgAAAAAAAAAGAAgADgAAAAAAAAAHAAgADgAAAAAAAAAIAAgADgAAAAAAAAAJAAgADgAAAAAAAAD//wkADgAAAAEAAAAAAAkADgAAAAEAAAABAAkADgAAAAEAAAACAAkADgAAAAEAAAADAAkADgAAAAEAAAAEAAkADgAAAAEAAAAFAAkADgAAAAEAAAAGAAkADgAAAAEAAAAHAAkADgAAAAEAAAAIAAkADgAAAAEAAAAJAAkADgAAAAEAAAD//woADgAAAAIAAAAAAAoADgAAAAIAAAABAAoADgAAAAIAAAACAAoADgAAAAIAAAADAAoADgAAAAIAAAAEAAoADgAAAAIAAAAFAAoADgAAAAIAAAAGAAoADgAAAAIAAAAHAAoADgAAAAIAAAAIAAoADgAAAAIAAAAJAAoADgAAAAIAAAAKAP3/DgAAAAAAAAALAP3/DgAAAAIAAAAMAP3/DgAAAAIAAAANAP3/DgAAAAIAAAAOAP3/DgAAAAIAAAAKAPz/DgAAAAAAAAALAPz/DgAAAAEAAAAMAPz/DgAAAAEAAAANAPz/DgAAAAEAAAAOAPz/DgAAAAEAAAAKAPv/DgAAAAAAAAALAPv/DgAAAAAAAAAMAPv/DgAAAAAAAAANAPv/DgAAAAAAAAAOAPv/DgAAAAAAAAAPAPv/DgAAAAAAAAAPAPz/DgAAAAEAAAAPAP3/DgAAAAIAAAAPAP7/DQAAAAAAAAAPAP//DQAAAAAAAAAPAAAADQAAAAAAAAAPAAEADQAAAAAAAAAPAAIADQAAAAAAAAAPAAMADgAAAAAAAAAPAAQADgAAAAEAAAAPAAUADgAAAAIAAAAPAAYADQAAAAAAAAAPAAcADQAAAAAAAAAPAAgADgAAAAAAAAAOAAgADgAAAAAAAAANAAgADgAAAAAAAAAMAAgADgAAAAAAAAALAAgADgAAAAAAAAAKAAgADgAAAAAAAAAKAAcADgAAAAAAAAAKAAYADgAAAAAAAAAKAAUADgAAAAAAAAAKAAQADgAAAAAAAAAKAAMADgAAAAAAAAALAAMADgAAAAAAAAAMAAMADgAAAAAAAAANAAMADgAAAAAAAAAOAAMADgAAAAAAAAAOAAQADgAAAAEAAAANAAQADgAAAAEAAAAMAAQADgAAAAEAAAALAAQADgAAAAEAAAALAAUADgAAAAIAAAAMAAUADgAAAAIAAAANAAUADgAAAAIAAAAOAAUADgAAAAIAAAAKAAkADgAAAAEAAAALAAkADgAAAAEAAAAMAAkADgAAAAEAAAANAAkADgAAAAEAAAAOAAkADgAAAAEAAAAPAAkADgAAAAEAAAAKAAoADgAAAAIAAAALAAoADgAAAAIAAAAMAAoADgAAAAIAAAANAAoADgAAAAIAAAAOAAoADgAAAAIAAAAPAAoADgAAAAIAAAALAAYADQAAAAAAAAAMAAYADQAAAAAAAAANAAYADQAAAAAAAAAOAAYADQAAAAAAAAAOAAcADQAAAAAAAAANAAcADQAAAAAAAAAMAAcADQAAAAAAAAALAAcADQAAAAAAAAAKAAIADQAAAAAAAAAKAAEADQAAAAAAAAAKAAAADQAAAAAAAAAKAP//DgAAAAIAAAAKAP7/DgAAAAEAAAALAP7/DQAAAAAAAAAMAP7/DQAAAAAAAAANAP7/DQAAAAAAAAAOAP7/DQAAAAAAAAAOAP//DQAAAAAAAAANAP//DQAAAAAAAAAMAP//DQAAAAAAAAALAP//DQAAAAAAAAALAAAADQAAAAAAAAAMAAAADQAAAAAAAAANAAAADQAAAAAAAAAOAAAADQAAAAAAAAAOAAEADQAAAAAAAAANAAEADQAAAAAAAAAMAAEADQAAAAAAAAALAAEADQAAAAAAAAALAAIADQAAAAAAAAAMAAIADQAAAAAAAAANAAIADQAAAAAAAAAOAAIADQAAAAAAAAAQAPv/DgAAAAAAAAAQAPz/DgAAAAAAAAAQAP3/DgAAAAAAAAAQAP7/DgAAAAAAAAAQAP//DgAAAAAAAAAQAAAADgAAAAAAAAAQAAEADgAAAAAAAAAQAAIADgAAAAAAAAAQAAMADgAAAAAAAAAQAAQADgAAAAAAAAAQAAUADgAAAAAAAAAQAAYADgAAAAAAAAAQAAcADgAAAAAAAAAQAAgADgAAAAAAAAAQAAkADgAAAAEAAAAQAAoADgAAAAIAAAA=")
+tile_set = ExtResource("1_e0an3")
+
+[node name="object" type="TileMapLayer" parent="world/tilemap"]
+tile_map_data = PackedByteArray("AAACAAEAAAAAAAAAAAACAAIAAAAAAAEAAAALAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAANAAQAAAAAAAAAAAAOAAQAAAAAAAAAAAALAAUAAAAAAAEAAAAMAAUAAAAAAAEAAAANAAUAAAAAAAEAAAAOAAUAAAAAAAEAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAHAPz/AAAAAAAAAAAHAP3/AAAAAAEAAAANAP3/AAAAAAEAAAANAPz/AAAAAAAAAAAPAAQAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAUAAAAAAAEAAAA=")
+tile_set = ExtResource("6_05x41")
+
+[node name="signboards" type="Node2D" parent="world"]
+
+[node name="signboard3" parent="world/signboards" instance=ExtResource("7_oysan")]
+position = Vector2(160, 132)
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_bssq0"), SubResource("Resource_jk4ss"), SubResource("Resource_4on3e")])
+
+[node name="signboard2" parent="world/signboards" instance=ExtResource("7_oysan")]
+position = Vector2(480, -188)
+id = 1
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_0t07s"), SubResource("Resource_6qsgm"), SubResource("Resource_a6rn7"), SubResource("Resource_wbpbn")])
+
+[node name="signboard" parent="world/signboards" instance=ExtResource("7_oysan")]
+position = Vector2(864, -188)
+id = 2
+dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt"), SubResource("Resource_a6rn7"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
+
+[node name="player" type="CharacterBody2D" parent="world" node_paths=PackedStringArray("canvas_layer", "world", "camera", "color_rect")]
+position = Vector2(32, 288)
+collision_mask = 7
+script = ExtResource("3_urblq")
+speed = 384
+canvas_layer = NodePath("../../CanvasLayer")
+world = NodePath("..")
+camera = NodePath("Camera2D")
+color_rect = NodePath("../../CanvasLayer/ColorRect")
+
+[node name="texture" type="Sprite2D" parent="world/player"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_p5pve")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/player"]
+shape = SubResource("RectangleShape2D_e0an3")
+one_way_collision_margin = 0.0
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="Camera2D" type="Camera2D" parent="world/player"]
+zoom = Vector2(1.5, 1.5)
+
+[node name="InteractionArea" type="Area2D" parent="world/player"]
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/player/InteractionArea"]
+shape = SubResource("RectangleShape2D_ooc2g")
+debug_color = Color(1, 1, 0, 0.419608)
+
+[node name="ColorRect" type="ColorRect" parent="world"]
+z_index = -1
+offset_left = -1202.0
+offset_top = -787.0
+offset_right = 2307.0
+offset_bottom = 1206.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[connection signal="button_up" from="CanvasLayer/menu/Close" to="CanvasLayer/ui" method="menu_close"]
+[connection signal="battle_finished" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_battle_finished"]
+[connection signal="battle_started" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_battle_started"]
+[connection signal="dialog_closed" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_closed"]
+[connection signal="dialog_opened" from="CanvasLayer/dialog" to="world/player" method="_on_dialog_dialog_opened"]
+[connection signal="tree_exited" from="world/player" to="world/player" method="_on_tree_exited"]
+
+[editable path="CanvasLayer/menu"]
+[editable path="CanvasLayer/menu/scrolling_label"]

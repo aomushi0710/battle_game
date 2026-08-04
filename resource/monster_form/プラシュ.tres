@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=6 format=3 uid="uid://c5r8cwe3tpw2q"]
+
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="3_2h6e3"]
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="3_o6n8n"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://src/resource/static_data/monster_form.gd" id="4_r0mj3"]
+[ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://resource/element/水属性.tres" id="4_rer33"]
+[ext_resource type="Texture2D" uid="uid://c56rn7eeejcjq" path="res://asset/image/monster/プラシュ.PNG" id="5_qxbwh"]
+
+[resource]
+script = ExtResource("4_r0mj3")
+name = "プラシュ"
+image = ExtResource("5_qxbwh")
+element = Array[ExtResource("3_2h6e3")]([ExtResource("4_rer33")])
+cost = 30
+base_maxHP = 400
+base_maxMP = 50
+base_supplyMP = 10
+base_SPD = 100
+base_ATK = 100
+base_DEF = 100
+base_MAG = 100
+base_RES = 100
+description = ""
+flavor_text = Array[ExtResource("3_o6n8n")]([])
+flavor_text_weight = Array[int]([])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

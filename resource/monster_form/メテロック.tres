@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=6 format=3 uid="uid://dy3bg7i4u024s"]
+
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="3_mn138"]
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="3_r2p5v"]
+[ext_resource type="Resource" uid="uid://bsmtumwsut2ll" path="res://resource/element/土属性.tres" id="4_gpco6"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://src/resource/static_data/monster_form.gd" id="4_ssuha"]
+[ext_resource type="Texture2D" uid="uid://cd7kvc0heu381" path="res://asset/image/monster/メテロック.PNG" id="5_6hvwm"]
+
+[resource]
+script = ExtResource("4_ssuha")
+name = "メテロック"
+image = ExtResource("5_6hvwm")
+element = Array[ExtResource("3_mn138")]([ExtResource("4_gpco6")])
+cost = 50
+base_maxHP = 500
+base_maxMP = 70
+base_supplyMP = 15
+base_SPD = 120
+base_ATK = 120
+base_DEF = 120
+base_MAG = 120
+base_RES = 120
+description = ""
+flavor_text = Array[ExtResource("3_r2p5v")]([])
+flavor_text_weight = Array[int]([])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=6 format=3 uid="uid://bnuog33gcrsxa"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="3_5ji7e"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="3_je3i6"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://src/resource/static_data/monster_form.gd" id="4_8lrjs"]
+[ext_resource type="Resource" uid="uid://dyfst4wxer3yx" path="res://resource/element/火属性.tres" id="4_377x6"]
+[ext_resource type="Texture2D" uid="uid://cajk2ibkm7po3" path="res://asset/image/monster/バニンガ.PNG" id="5_8amdn"]
+
+[resource]
+script = ExtResource("4_8lrjs")
+name = "バニンガ"
+image = ExtResource("5_8amdn")
+element = Array[ExtResource("3_je3i6")]([ExtResource("4_377x6")])
+cost = 30
+base_maxHP = 400
+base_maxMP = 50
+base_supplyMP = 10
+base_SPD = 100
+base_ATK = 100
+base_DEF = 100
+base_MAG = 100
+base_RES = 100
+description = ""
+flavor_text = Array[ExtResource("3_5ji7e")]([])
+flavor_text_weight = Array[int]([1])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"
