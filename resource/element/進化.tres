@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://chq86j35i4uu4"]
+
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="1_0jwra"]
+[ext_resource type="Texture2D" uid="uid://ckhnwdb0dgnh3" path="res://asset/image/element/進化技.PNG" id="1_bwk17"]
+
+[resource]
+script = ExtResource("1_0jwra")
+id = 100
+name = "進化"
+color_text = "gold"
+outline_color = "black"
+color = Color(1, 0.843137, 0, 1)
+icon = ExtResource("1_bwk17")
+metadata/_custom_type_script = "uid://0hbknewd53sh"

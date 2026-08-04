@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BattlelogData" load_steps=2 format=3 uid="uid://vr5jcxoqrlq7"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="1_ygqlg"]
+
+[resource]
+script = ExtResource("1_ygqlg")
+text = Array[String](["草が風に揺れている..."])
+should_wait = false
+tab = 0
+image = [null]
+metadata/_custom_type_script = "uid://cvq84hr01jqh4"

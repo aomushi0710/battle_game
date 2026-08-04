@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BattlelogData" load_steps=2 format=3 uid="uid://dh2t0sytonapr"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="1_x2gt3"]
+
+[resource]
+script = ExtResource("1_x2gt3")
+text = Array[String](["この黒い箱は[b]ダイアログボックス[/b]！
+バトル中はこの枠内にメッセージが表示
+される。[color=yellow]枠の中をクリックしてみよう！[/color]", "右下の矢印が動いている時は
+このようにクリックで次に進むことが
+できる。", "もしくはEnterキーやスペースキーでも
+大丈夫だ！(他のボタンにフォーカスが
+当たっていると動作しません)", "今回は相手がダミーだが、実戦では
+こちらに攻撃してくるので注意しよう。
+[color=red]それではバトルを始めよう！[/color]"])
+should_wait = true
+tab = 0
+image = [null, null, null, null]
+metadata/_custom_type_script = "uid://cvq84hr01jqh4"

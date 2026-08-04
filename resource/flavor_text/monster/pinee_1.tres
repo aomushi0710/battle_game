@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BattlelogData" load_steps=2 format=3 uid="uid://c0e8kyhi6hfax"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="1_1uviv"]
+
+[resource]
+script = ExtResource("1_1uviv")
+text = Array[String](["ルネ はくるくると回っている。"])
+should_wait = false
+tab = 0
+image = []
+metadata/_custom_type_script = "uid://cvq84hr01jqh4"

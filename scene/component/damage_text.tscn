@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dubd3covrtmr8"]
+
+[ext_resource type="Script" uid="uid://dmsinwyjfh8hq" path="res://src/component/damage_text.gd" id="1_csl0i"]
+
+[node name="damage_text" type="RichTextLabel"]
+clip_contents = false
+offset_right = 126.0
+offset_bottom = 176.0
+pivot_offset = Vector2(69, 88)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 10
+bbcode_enabled = true
+text = "[font_size=60][b][i]9999
+9999[/i][/b][/font_size]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_csl0i")

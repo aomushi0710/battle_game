@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://jqojj4mlepvy"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_jrqf7"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_uw0ue"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_d5sy3"]
+[ext_resource type="Resource" uid="uid://3bjg4wfbnyh6" path="res://resource/element/雷属性.tres" id="3_gl1sk"]
+
+[resource]
+script = ExtResource("1_jrqf7")
+id = 39
+name = "ライトニングボルト"
+element = Array[ExtResource("2_d5sy3")]([ExtResource("3_gl1sk")])
+max_chance = 10
+power = 50
+mp = 30
+target = 3
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_uw0ue")]([])
+description = "全体攻撃魔法。稲妻が敵全体
+を駆け巡り、攻撃する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

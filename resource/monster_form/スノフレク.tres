@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=6 format=3 uid="uid://cf0r1hmg65ryx"]
+
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="3_aiy3j"]
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="3_u0k6b"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://src/resource/static_data/monster_form.gd" id="4_15o2e"]
+[ext_resource type="Resource" uid="uid://bv7ciiu33dpfq" path="res://resource/element/氷属性.tres" id="4_hwmsp"]
+[ext_resource type="Texture2D" uid="uid://cai52uvpjx18j" path="res://asset/image/monster/スノフレク.PNG" id="5_jty41"]
+
+[resource]
+script = ExtResource("4_15o2e")
+name = "スノフレク"
+image = ExtResource("5_jty41")
+element = Array[ExtResource("3_aiy3j")]([ExtResource("4_hwmsp")])
+cost = 50
+base_maxHP = 500
+base_maxMP = 70
+base_supplyMP = 15
+base_SPD = 120
+base_ATK = 120
+base_DEF = 120
+base_MAG = 120
+base_RES = 120
+description = ""
+flavor_text = Array[ExtResource("3_u0k6b")]([])
+flavor_text_weight = Array[int]([1])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Stage" load_steps=8 format=3 uid="uid://donavq0wupaj6"]
+
+[ext_resource type="Texture2D" uid="uid://c23i0i02b401a" path="res://asset/image/stage/青空.PNG" id="1_j3kok"]
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="2_a5rp4"]
+[ext_resource type="Resource" uid="uid://vr5jcxoqrlq7" path="res://resource/flavor_text/stage/grassland_1.tres" id="3_0pgyg"]
+[ext_resource type="Resource" uid="uid://dlu6fxt6xfj42" path="res://resource/flavor_text/stage/grassland_2.tres" id="4_ds6sx"]
+[ext_resource type="Resource" uid="uid://cek5h2xwhlvrs" path="res://resource/flavor_text/stage/grassland_3.tres" id="5_asley"]
+[ext_resource type="Script" uid="uid://uu0w627gmkav" path="res://src/resource/static_data/stage.gd" id="6_60ubr"]
+[ext_resource type="Texture2D" uid="uid://bhmvyc1xf2rgk" path="res://asset/image/stage/草原.PNG" id="7_tegkq"]
+
+[resource]
+script = ExtResource("6_60ubr")
+id = 1
+name = "草原"
+texture = ExtResource("7_tegkq")
+animation_texture = ExtResource("1_j3kok")
+flavor_text = Array[ExtResource("2_a5rp4")]([ExtResource("3_0pgyg"), ExtResource("4_ds6sx"), ExtResource("5_asley")])
+flavor_text_weight = Array[int]([2, 1, 1])
+metadata/_custom_type_script = "uid://uu0w627gmkav"

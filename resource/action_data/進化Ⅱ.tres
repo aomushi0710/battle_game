@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=5 format=3 uid="uid://dumnlkvw3t1ho"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_7oqb0"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_p1s31"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_54vat"]
+[ext_resource type="Resource" uid="uid://chq86j35i4uu4" path="res://resource/element/進化.tres" id="3_bfsnu"]
+
+[resource]
+script = ExtResource("1_p1s31")
+id = 10002
+name = "進化Ⅱ"
+element = Array[ExtResource("2_54vat")]([ExtResource("3_bfsnu")])
+max_chance = 100
+power = 0
+mp = 999
+target = 4
+damage_type = 0
+touch = false
+ability = Array[ExtResource("1_7oqb0")]([])
+description = "最終形態へ進化する。
+ステータスが大幅に強化さ
+れ、新たな技を獲得する。
+形式上存在するが技選択
+画面では表示されず、
+バトル中に置き換わる。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

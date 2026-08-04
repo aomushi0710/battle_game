@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://bpgpvjem503ff"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_d2gxs"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_m5p23"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_bgnb0"]
+[ext_resource type="Resource" uid="uid://cg4fkchgvk10g" path="res://resource/element/水属性.tres" id="3_vgw5l"]
+
+[resource]
+script = ExtResource("1_d2gxs")
+id = 38
+name = "オーシャンウェーブ"
+element = Array[ExtResource("2_bgnb0")]([ExtResource("3_vgw5l")])
+max_chance = 10
+power = 50
+mp = 30
+target = 3
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_m5p23")]([])
+description = "全体攻撃魔法。敵全体に
+荒波を打ち付けて攻撃する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

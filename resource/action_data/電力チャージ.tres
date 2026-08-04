@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=10 format=3 uid="uid://bn556avudt7ia"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_xxvxc"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_3lkie"]
+[ext_resource type="Script" uid="uid://bywhlx527vv7b" path="res://src/resource/static_data/ability/AbilityHealing.gd" id="2_t4cw8"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="3_0jxpj"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="3_0k2jo"]
+[ext_resource type="Resource" uid="uid://bbeosy4jqlx0s" path="res://resource/ability/buff/AbilityBuff.tres" id="4_gr6ta"]
+[ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://resource/element/バフ.tres" id="6_pnhlm"]
+[ext_resource type="Resource" uid="uid://wnrb4u76hyxf" path="res://resource/element/回復.tres" id="7_xskjn"]
+
+[sub_resource type="Resource" id="Resource_c008u"]
+script = ExtResource("2_t4cw8")
+status = 0
+amount_type = 0
+amount = 100.0
+name = "定数HP回復"
+bbcode_name = "[color=yellowgreen]定数HP回復[/color]"
+target = 4
+chance = 100
+timing = 2
+trigger = Array[ExtResource("3_0k2jo")]([])
+description = "[color=coral]HP[/color]を100回復する。"
+battle_log_message = "電気エネルギーを溜め込んでいる！"
+placeholder = 0
+metadata/_custom_type_script = "uid://bywhlx527vv7b"
+
+[resource]
+script = ExtResource("3_0jxpj")
+id = 57
+name = "電力チャージ"
+element = Array[ExtResource("2_3lkie")]([ExtResource("6_pnhlm"), ExtResource("7_xskjn")])
+max_chance = 30
+power = 0
+mp = 15
+target = 0
+damage_type = 0
+touch = false
+ability = Array[ExtResource("1_xxvxc")]([SubResource("Resource_c008u"), ExtResource("4_gr6ta")])
+description = "電気エネルギーを溜め込んで、[color=coral]HP[/color]を回復する。さらに、次のターンだけ[color=dodgerblue]MAG[/color]が2倍になる。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

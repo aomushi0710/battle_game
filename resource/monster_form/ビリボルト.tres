@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MonsterForm" load_steps=6 format=3 uid="uid://dyb63dofhuruv"]
+
+[ext_resource type="Script" uid="uid://cvq84hr01jqh4" path="res://src/resource/static_data/battlelog_data.gd" id="3_4onud"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="3_vuaio"]
+[ext_resource type="Resource" uid="uid://3bjg4wfbnyh6" path="res://resource/element/雷属性.tres" id="4_8qp1v"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://src/resource/static_data/monster_form.gd" id="4_vyqdy"]
+[ext_resource type="Texture2D" uid="uid://c4wuk14pfwscb" path="res://asset/image/monster/ビリボルト.PNG" id="5_ypdc5"]
+
+[resource]
+script = ExtResource("4_vyqdy")
+name = "ビリボルト"
+image = ExtResource("5_ypdc5")
+element = Array[ExtResource("3_vuaio")]([ExtResource("4_8qp1v")])
+cost = 50
+base_maxHP = 500
+base_maxMP = 70
+base_supplyMP = 15
+base_SPD = 120
+base_ATK = 120
+base_DEF = 120
+base_MAG = 120
+base_RES = 120
+description = ""
+flavor_text = Array[ExtResource("3_4onud")]([])
+flavor_text_weight = Array[int]([])
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

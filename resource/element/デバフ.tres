@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://b03a6uay0b6bt"]
+
+[ext_resource type="Texture2D" uid="uid://c6skftvqg4rh6" path="res://asset/image/element/デバフ技.PNG" id="1_0uxfs"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="1_vs503"]
+
+[resource]
+script = ExtResource("1_vs503")
+id = 11
+name = "デバフ"
+color_text = "dark_blue"
+outline_color = "white"
+color = Color(0, 0, 0.545098, 1)
+icon = ExtResource("1_0uxfs")
+metadata/_custom_type_script = "uid://0hbknewd53sh"

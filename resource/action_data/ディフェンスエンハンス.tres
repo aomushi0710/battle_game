@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=8 format=3 uid="uid://depvpxqwosvrq"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_5ns35"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_qyg87"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_p08hf"]
+[ext_resource type="Script" uid="uid://d2box237wyadg" path="res://src/resource/static_data/ability/AbilityBuff.gd" id="2_x4cxx"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="3_1qrvi"]
+[ext_resource type="Resource" uid="uid://bejdllvlia6sf" path="res://resource/element/バフ.tres" id="3_x4cxx"]
+
+[sub_resource type="Resource" id="Resource_4yra3"]
+script = ExtResource("2_x4cxx")
+status = 1
+amount = 1.5
+turn = 5
+name = "DEF UP"
+bbcode_name = "[color=light_blue]DEF[/color] [color=red]UP[/color]"
+target = 5
+chance = 100
+timing = 2
+trigger = Array[ExtResource("3_1qrvi")]([])
+description = "味方単体の[color=light_blue]DEF[/color]を、
+5ターンの間
+1.5倍に強化する。"
+battle_log_message = "%s は[color=light_blue]DEF[/color]が上がった！"
+placeholder = 0
+metadata/_custom_type_script = "uid://d2box237wyadg"
+
+[resource]
+script = ExtResource("1_5ns35")
+id = 46
+name = "ディフェンスエンハンス"
+element = Array[ExtResource("2_p08hf")]([ExtResource("3_x4cxx")])
+max_chance = 30
+power = 0
+mp = 20
+target = 0
+damage_type = 0
+touch = false
+ability = Array[ExtResource("1_qyg87")]([SubResource("Resource_4yra3")])
+description = "DEF強化魔法。
+味方1体のDEFを強化する。
+この効果は5ターンだけ
+持続する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

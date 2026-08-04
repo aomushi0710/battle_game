@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="MonsterData" load_steps=21 format=3 uid="uid://bgvfyfkrnriky"]
+
+[ext_resource type="Script" uid="uid://c3nuh5veon1bs" path="res://src/resource/data/action.gd" id="1_1tl1a"]
+[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://resource/action_data/体当たり.tres" id="2_71w80"]
+[ext_resource type="Resource" uid="uid://c1le41ddrlk3w" path="res://resource/action_data/静電気.tres" id="3_s2860"]
+[ext_resource type="Resource" uid="uid://261705w1prvy" path="res://resource/action_data/光線.tres" id="4_n05ms"]
+[ext_resource type="Resource" uid="uid://0xo5oj552l24" path="res://resource/action_data/サンダー.tres" id="5_k0xa7"]
+[ext_resource type="Resource" uid="uid://c00etq8tg4ydp" path="res://resource/action_data/メガサンダー.tres" id="6_g1xqb"]
+[ext_resource type="Resource" uid="uid://bn556avudt7ia" path="res://resource/action_data/電力チャージ.tres" id="7_oee1y"]
+[ext_resource type="Resource" uid="uid://kb2ao1l0uy44" path="res://resource/action_data/ギガサンダー.tres" id="8_t0ufq"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://src/resource/static_data/monster_form.gd" id="9_mvs6d"]
+[ext_resource type="Resource" uid="uid://d06wfhrli4aub" path="res://resource/monster_form/ボル.tres" id="10_441bv"]
+[ext_resource type="Resource" uid="uid://vsltssdt410q" path="res://resource/monster_form/リボル.tres" id="11_7abc7"]
+[ext_resource type="Resource" uid="uid://dyb63dofhuruv" path="res://resource/monster_form/ビリボルト.tres" id="12_ofo75"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://src/resource/static_data/monster_data.gd" id="13_bpod5"]
+
+[sub_resource type="Resource" id="Resource_gaosi"]
+script = ExtResource("1_1tl1a")
+data = ExtResource("2_71w80")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_7q8fe"]
+script = ExtResource("1_1tl1a")
+data = ExtResource("3_s2860")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_h5ot5"]
+script = ExtResource("1_1tl1a")
+data = ExtResource("4_n05ms")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_tddt3"]
+script = ExtResource("1_1tl1a")
+data = ExtResource("5_k0xa7")
+unlock_level = 1
+unlock_form = 0
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_vym0s"]
+script = ExtResource("1_1tl1a")
+data = ExtResource("6_g1xqb")
+unlock_level = 1
+unlock_form = 1
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_nitqh"]
+script = ExtResource("1_1tl1a")
+data = ExtResource("7_oee1y")
+unlock_level = 1
+unlock_form = 1
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_4bsob"]
+script = ExtResource("1_1tl1a")
+data = ExtResource("8_t0ufq")
+unlock_level = 1
+unlock_form = 2
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[resource]
+script = ExtResource("13_bpod5")
+id = 5
+evolution_forms = Array[ExtResource("9_mvs6d")]([ExtResource("10_441bv"), ExtResource("11_7abc7"), ExtResource("12_ofo75")])
+action = Array[ExtResource("1_1tl1a")]([SubResource("Resource_gaosi"), SubResource("Resource_7q8fe"), SubResource("Resource_h5ot5"), SubResource("Resource_tddt3"), SubResource("Resource_vym0s"), SubResource("Resource_nitqh"), SubResource("Resource_4bsob")])
+coin = 10
+metadata/_custom_type_script = "uid://bt0467jqpfboq"

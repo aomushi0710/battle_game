@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://dl5j0v1e805u5"]
+
+[ext_resource type="Texture2D" uid="uid://b20qslc8wsymc" path="res://asset/image/element/風属性.PNG" id="1_l8jo7"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="1_mn4wl"]
+
+[resource]
+script = ExtResource("1_mn4wl")
+id = 5
+name = "風属性"
+color_text = "light_green"
+color = Color(0.564706, 0.933333, 0.564706, 1)
+icon = ExtResource("1_l8jo7")
+metadata/_custom_type_script = "uid://0hbknewd53sh"

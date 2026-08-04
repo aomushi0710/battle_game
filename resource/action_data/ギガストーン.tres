@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ActionData" load_steps=5 format=3 uid="uid://hxfacfccogbn"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_exiqh"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_grgxk"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_1wwnc"]
+[ext_resource type="Resource" uid="uid://bsmtumwsut2ll" path="res://resource/element/土属性.tres" id="3_nf5sy"]
+
+[resource]
+script = ExtResource("1_exiqh")
+id = 32
+name = "ギガストーン"
+element = Array[ExtResource("2_1wwnc")]([ExtResource("3_nf5sy")])
+max_chance = 10
+power = 90
+mp = 20
+target = 2
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_grgxk")]([])
+description = "上級攻撃魔法。巨大な
+岩盤を落として攻撃し、
+50%で泥々状態にする。
+(この特殊効果は未実装)
+"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

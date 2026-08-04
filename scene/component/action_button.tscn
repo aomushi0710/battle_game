@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqgg7lvejtmh7"]
+
+[ext_resource type="Theme" uid="uid://dukn1t5145x33" path="res://asset/theme/action_button.tres" id="1_hae2l"]
+[ext_resource type="Script" uid="uid://cej28jygy1831" path="res://src/component/action_button.gd" id="2_hae2l"]
+[ext_resource type="Texture2D" uid="uid://bn241h8vs7hq7" path="res://asset/image/element/回復技.PNG" id="3_hae2l"]
+
+[sub_resource type="Gradient" id="Gradient_nlxtl"]
+offsets = PackedFloat32Array(0.333333)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cotgl"]
+gradient = SubResource("Gradient_nlxtl")
+fill_from = Vector2(0, 1)
+metadata/_snap_count = 2
+
+[node name="ActionButton" type="Button" node_paths=PackedStringArray("element", "background")]
+offset_right = 590.0
+offset_bottom = 64.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_hae2l")
+text = " "
+alignment = 0
+text_overrun_behavior = 3
+script = ExtResource("2_hae2l")
+element = NodePath("Element")
+background = NodePath("BackGround")
+
+[node name="Element" type="TextureRect" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.999445)
+layout_mode = 1
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 57.0
+offset_bottom = 57.0
+texture = ExtResource("3_hae2l")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BackGround" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.5
+offset_bottom = -0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_cotgl")

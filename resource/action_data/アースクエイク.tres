@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://b7ro03bmnssxx"]
+
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_1kfm1"]
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_retbp"]
+[ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_ndkdr"]
+[ext_resource type="Resource" uid="uid://bsmtumwsut2ll" path="res://resource/element/土属性.tres" id="3_fj6w4"]
+
+[resource]
+script = ExtResource("1_1kfm1")
+id = 40
+name = "アースクエイク"
+element = Array[ExtResource("2_ndkdr")]([ExtResource("3_fj6w4")])
+max_chance = 10
+power = 50
+mp = 30
+target = 3
+damage_type = 2
+touch = false
+ability = Array[ExtResource("1_retbp")]([])
+description = "全体攻撃魔法。
+局地的な地震を発生させ、
+敵全体を攻撃する。"
+metadata/_custom_type_script = "uid://nd5of0c4w8pr"

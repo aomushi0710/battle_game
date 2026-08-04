@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://5rri6dvoh2gq"]
+
+[ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_wtah8"]
+[ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="2_jyiar"]
+
+[resource]
+script = ExtResource("1_wtah8")
+name = ""
+bbcode_name = ""
+target = 0
+chance = 100
+timing = 2
+trigger = Array[ExtResource("2_jyiar")]([])
+description = ""
+battle_log_message = ""
+placeholder = 0

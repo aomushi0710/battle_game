@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq51ycniii6bc"]
+
+[ext_resource type="Theme" uid="uid://bn2rbnxu4hu44" path="res://asset/theme/dialog_theme.tres" id="1_l5d3t"]
+[ext_resource type="Script" uid="uid://newg5gu6dr5d" path="res://src/component/confirmation_dialog.gd" id="2_r5jct"]
+
+[node name="ConfirmationDialog" type="ConfirmationDialog"]
+process_mode = 3
+auto_translate_mode = 1
+transparent_bg = true
+title = "⚠️ERROR⚠️"
+position = Vector2i(0, 60)
+size = Vector2i(294, 338)
+transparent = true
+theme = ExtResource("1_l5d3t")
+script = ExtResource("2_r5jct")
+
+[node name="text" type="RichTextLabel" parent="."]
+clip_contents = false
+offset_left = 10.0
+offset_top = 2.0
+offset_right = 284.0
+offset_bottom = 227.0
+bbcode_enabled = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="canceled" from="." to="." method="reset"]
+[connection signal="confirmed" from="." to="." method="reset"]
