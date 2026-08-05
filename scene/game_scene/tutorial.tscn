@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://boqdfaysrba8x"]
 
 [ext_resource type="PackedScene" uid="uid://bhqk4iva02mmc" path="res://scene/game_scene/battle.tscn" id="1_5xhg5"]
-[ext_resource type="Script" uid="uid://b6omq0x3owa0u" path="res://src/game/new_tutorial.gd" id="2_qj3h5"]
+[ext_resource type="Script" uid="uid://b6omq0x3owa0u" path="res://src/game/tutorial.gd" id="2_qj3h5"]
 [ext_resource type="Script" uid="uid://dqntmojta1yls" path="res://src/component/tutorial_battle.gd" id="3_lf3qi"]
 [ext_resource type="Script" uid="uid://ba6b532p8r4rb" path="res://src/component/tutorial_buttons.gd" id="4_wrc7w"]
 [ext_resource type="Script" uid="uid://bghjkvjk5m5n1" path="res://src/component/tutorial_dialogtab.gd" id="5_lpeof"]
@@ -24,6 +24,9 @@ script = ExtResource("4_wrc7w")
 
 [node name="dialogtab" parent="battle/button" index="6"]
 script = ExtResource("5_lpeof")
+
+[node name="escape" parent="battle/button" index="8"]
+text = "終わる"
 
 [node name="battlestart" parent="." index="5"]
 text = "[b][color=green]Tutorial[/color] [color=yellow]Start![/color][/b]"
