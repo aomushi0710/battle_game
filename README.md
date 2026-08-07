@@ -3,7 +3,9 @@
 <img src="https://i.imgur.com/px6IBx5.png" title="バトル画面">
 
 ### 公開URL
-[動作紹介動画(Youtube)](https://youtu.be/mh3FtvL_wRU)
+どちらの動画もBGMはありませんが、効果音が鳴る場面がありますので音量にはご注意ください。<br>
+[プレイ動画(Youtube)](https://youtu.be/FsRhnli5ZsA) ゲームのコンセプトや大まかな流れが分かる、プレイ体験に焦点を当てた動画です。<br>
+[動作紹介動画(Youtube)](https://youtu.be/mh3FtvL_wRU) ゲームの細かな仕様や技術的な観点が分かる、制作経験に焦点を当てた動画です。
 
 ### 工夫した点
 - モンスターや技など、あらゆる構造化データをカスタムリソースとして管理し、高い再利用性と拡張性を実現
