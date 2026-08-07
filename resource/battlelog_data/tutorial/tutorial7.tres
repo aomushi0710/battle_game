@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_js7jk")
 text = Array[String](["左のアイコンは技の属性を表している。
-「体当たり」は[img=50]res://image/element/無属性.PNG[/img]無属性だ。
+「体当たり」は[img=50]res://asset/image/element/無属性.PNG[/img]無属性だ。
 [color=yellow]１番上の「体当たり」を選んでみよう！[/color]"])
 should_wait = false
 tab = 0
