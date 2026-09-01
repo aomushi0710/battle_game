@@ -75,7 +75,7 @@ func on_mode_entered() -> void:
 	if (Global.player_deck.monster[parent.selected_slot_index].data != null and 
 		Global.player_deck.monster[parent.selected_slot_index].data.id == 
 		selected_monster.data.id):
-		chances = Global.player_deck.monster[parent.selected_slot_index].chance
+		chances = Global.player_deck.monster[parent.selected_slot_index].chance.duplicate()
 	else:
 		chances.clear()
 		chances.resize(len(actions))
