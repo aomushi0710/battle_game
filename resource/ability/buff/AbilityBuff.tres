@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AbilityBuff" load_steps=3 format=3 uid="uid://bbeosy4jqlx0s"]
 
-[ext_resource type="Script" uid="uid://d2box237wyadg" path="res://src/resource/static_data/ability/AbilityBuff.gd" id="1_iwgus"]
+[ext_resource type="Script" uid="uid://d2box237wyadg" path="res://src/resource/static_data/ability/buff.gd" id="1_iwgus"]
 [ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="2_2h8s2"]
 
 [resource]

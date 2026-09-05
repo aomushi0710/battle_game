@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AbilityDebuff" load_steps=2 format=3 uid="uid://bmp7umix7f01w"]
 
-[ext_resource type="Script" uid="uid://b4gbl34tandgs" path="res://src/resource/static_data/ability/AbilityDebuff.gd" id="1_r16q7"]
+[ext_resource type="Script" uid="uid://b4gbl34tandgs" path="res://src/resource/static_data/ability/debuff.gd" id="1_r16q7"]
 
 [resource]
 script = ExtResource("1_r16q7")

@@ -101,7 +101,7 @@ corner_radius_bottom_left = 1
 expand_margin_left = 4.0
 expand_margin_bottom = 2.0
 
-[node name="ability" type="Panel"]
+[node name="Ability" type="Panel"]
 custom_minimum_size = Vector2(350, 196)
 offset_right = 350.0
 offset_bottom = 196.0
@@ -109,7 +109,7 @@ theme = ExtResource("1_j65xr")
 theme_override_styles/panel = SubResource("StyleBoxFlat_uvmqb")
 script = ExtResource("2_r8xot")
 
-[node name="background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 z_index = -1
 layout_mode = 0
 offset_left = 2.0
@@ -119,7 +119,7 @@ theme = ExtResource("1_j65xr")
 texture = SubResource("GradientTexture2D_2som6")
 metadata/_edit_vertical_guides_ = [-26.0]
 
-[node name="name" type="RichTextLabel" parent="."]
+[node name="Name" type="RichTextLabel" parent="."]
 clip_contents = false
 layout_mode = 0
 offset_left = 9.0
@@ -131,7 +131,7 @@ text = "[color=light_blue][b]DEF [color=red]UP[/color][/b][/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="target" type="RichTextLabel" parent="."]
+[node name="Target" type="RichTextLabel" parent="."]
 clip_contents = false
 layout_mode = 0
 offset_left = 16.0
@@ -144,7 +144,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_fs08f")
 bbcode_enabled = true
 text = "[color=yellow]対象[/color]:敵味方全体"
 
-[node name="chance" type="RichTextLabel" parent="."]
+[node name="Chance" type="RichTextLabel" parent="."]
 clip_contents = false
 layout_mode = 0
 offset_left = 217.0
@@ -168,7 +168,7 @@ visible = false
 anchors_preset = 0
 mouse_filter = 2
 
-[node name="multiplier" type="RichTextLabel" parent="AbilityBuff"]
+[node name="Multiplier" type="RichTextLabel" parent="AbilityBuff"]
 clip_contents = false
 layout_mode = 0
 offset_left = 16.0
@@ -181,7 +181,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_j65xr")
 bbcode_enabled = true
 text = "[color=light_blue]倍率[/color]:123456.5倍"
 
-[node name="turn" type="RichTextLabel" parent="AbilityBuff"]
+[node name="Turn" type="RichTextLabel" parent="AbilityBuff"]
 clip_contents = false
 layout_mode = 0
 offset_left = 217.0
@@ -199,7 +199,7 @@ visible = false
 anchors_preset = 0
 mouse_filter = 2
 
-[node name="amount" type="RichTextLabel" parent="AbilityHealing"]
+[node name="Amount" type="RichTextLabel" parent="AbilityHealing"]
 clip_contents = false
 layout_mode = 0
 offset_left = 16.0
@@ -218,7 +218,7 @@ visible = false
 anchors_preset = 0
 mouse_filter = 2
 
-[node name="multiplier" type="RichTextLabel" parent="AbilityCritical"]
+[node name="Multiplier" type="RichTextLabel" parent="AbilityCritical"]
 clip_contents = false
 layout_mode = 0
 offset_left = 16.0

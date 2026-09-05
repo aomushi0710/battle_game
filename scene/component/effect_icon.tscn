@@ -10,12 +10,12 @@ default_font_size = 110
 content_margin_right = 17.0
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[node name="effect_icon" type="TextureButton"]
+[node name="EffectIcon" type="TextureButton"]
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_yfs5u")
 script = ExtResource("2_gw70f")
 
-[node name="turn" type="RichTextLabel" parent="."]
+[node name="Turn" type="RichTextLabel" parent="."]
 clip_contents = false
 layout_mode = 2
 offset_left = 5.0

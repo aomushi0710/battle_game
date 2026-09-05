@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dvghle1vntn6w" path="res://src/game/shop.gd" id="2_e7rdd"]
 [ext_resource type="Script" uid="uid://cor4ln7h2d7oe" path="res://src/component/coin_text.gd" id="3_blqjs"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Shop" type="Node2D"]
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -14,17 +14,7 @@ offset_bottom = 40.0
 theme = ExtResource("1_viryw")
 script = ExtResource("2_e7rdd")
 
-[node name="inventory" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 50.0
-offset_right = 127.0
-offset_bottom = 127.0
-tooltip_text = "持ち物の一覧を開きます"
-mouse_default_cursor_shape = 2
-text = "💼"
-
-[node name="coin" type="RichTextLabel" parent="Control"]
+[node name="Coin" type="RichTextLabel" parent="Control"]
 layout_mode = 0
 offset_left = 150.0
 offset_top = 57.0
@@ -35,7 +25,7 @@ text = "[img=50]res://asset/image/coin.PNG[/img] [color=gold]100[/color]"
 scroll_active = false
 script = ExtResource("3_blqjs")
 
-[node name="戻る" type="Button" parent="Control"]
+[node name="Back" type="Button" parent="Control"]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 0
 offset_left = 50.0
@@ -45,7 +35,7 @@ offset_bottom = 1065.0
 mouse_default_cursor_shape = 2
 text = "←戻る"
 
-[node name="buy" type="Button" parent="Control"]
+[node name="Buy" type="Button" parent="Control"]
 modulate = Color(1, 1, 0, 1)
 layout_mode = 0
 offset_left = 1712.0
@@ -55,7 +45,7 @@ offset_bottom = 1065.0
 mouse_default_cursor_shape = 2
 text = "購入！"
 
-[node name="catalog" type="TabContainer" parent="Control"]
+[node name="ShopCategoryTabs" type="TabContainer" parent="Control"]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 150.0
@@ -63,18 +53,18 @@ offset_right = 1820.0
 offset_bottom = 540.0
 current_tab = 0
 
-[node name="アイテム" type="HBoxContainer" parent="Control/catalog"]
+[node name="Item" type="HBoxContainer" parent="Control/ShopCategoryTabs"]
 layout_mode = 2
 theme_override_constants/separation = 10
 metadata/_tab_index = 0
 
-[node name="装備" type="HBoxContainer" parent="Control/catalog"]
+[node name="Weapon" type="HBoxContainer" parent="Control/ShopCategoryTabs"]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 metadata/_tab_index = 1
 
-[node name="dialog" type="ColorRect" parent="Control"]
+[node name="ShopItemPreview" type="ColorRect" parent="Control"]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 600.0
@@ -82,10 +72,10 @@ offset_right = 1820.0
 offset_bottom = 920.0
 color = Color(0, 0, 0, 0.501961)
 
-[node name="texture" type="Sprite2D" parent="Control/dialog"]
+[node name="Image" type="Sprite2D" parent="Control/ShopItemPreview"]
 position = Vector2(150, 150)
 
-[node name="margin" type="MarginContainer" parent="Control/dialog"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/ShopItemPreview"]
 layout_mode = 0
 offset_left = 300.0
 offset_right = 1720.0
@@ -95,16 +85,16 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="descriptions" type="HBoxContainer" parent="Control/dialog/margin"]
+[node name="Description" type="HBoxContainer" parent="Control/ShopItemPreview/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="description1" type="ColorRect" parent="Control/dialog/margin/descriptions"]
+[node name="CurrentLevel" type="ColorRect" parent="Control/ShopItemPreview/MarginContainer/Description"]
 custom_minimum_size = Vector2(670, 280)
 layout_mode = 2
 color = Color(0.501961, 0, 1, 0.501961)
 
-[node name="text" type="RichTextLabel" parent="Control/dialog/margin/descriptions/description1"]
+[node name="Text" type="RichTextLabel" parent="Control/ShopItemPreview/MarginContainer/Description/CurrentLevel"]
 custom_minimum_size = Vector2(660, 300)
 layout_mode = 2
 offset_left = 5.0
@@ -116,7 +106,7 @@ text = "[center][b]アイテム名 Lv.0[/b][/center]
 現在所持しているアイテムの能力が表示されます！"
 vertical_alignment = 1
 
-[node name="arrow" type="RichTextLabel" parent="Control/dialog/margin/descriptions"]
+[node name="Arrow" type="RichTextLabel" parent="Control/ShopItemPreview/MarginContainer/Description"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 bbcode_enabled = true
@@ -124,12 +114,12 @@ text = "
 
 [b]→[/b]"
 
-[node name="description2" type="ColorRect" parent="Control/dialog/margin/descriptions"]
+[node name="NextLevel" type="ColorRect" parent="Control/ShopItemPreview/MarginContainer/Description"]
 custom_minimum_size = Vector2(670, 0)
 layout_mode = 2
 color = Color(0.501961, 0, 1, 0.501961)
 
-[node name="text" type="RichTextLabel" parent="Control/dialog/margin/descriptions/description2"]
+[node name="Text" type="RichTextLabel" parent="Control/ShopItemPreview/MarginContainer/Description/NextLevel"]
 layout_mode = 2
 offset_left = 5.0
 offset_right = 665.0
@@ -141,6 +131,5 @@ text = "[center][b]アイテム名 Lv.0[/b][/center]
 表示されます！"
 vertical_alignment = 1
 
-[connection signal="button_up" from="Control/inventory" to="Control" method="_on_inventory_button_up"]
-[connection signal="button_up" from="Control/戻る" to="Control" method="_on_戻る_button_up"]
-[connection signal="button_up" from="Control/buy" to="Control" method="_on_buy_button_up"]
+[connection signal="button_up" from="Control/Back" to="Control" method="_on_戻る_button_up"]
+[connection signal="button_up" from="Control/Buy" to="Control" method="_on_buy_button_up"]

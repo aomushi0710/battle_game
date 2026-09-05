@@ -4,18 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://bnr5km71bri1l" path="res://asset/image/item/ライフポーション.PNG" id="2_0whoj"]
 [ext_resource type="Script" uid="uid://baldjafmt2faa" path="res://src/component/shop_item.gd" id="2_d8bsp"]
 
-[node name="shop_item" type="VBoxContainer"]
+[node name="ShopItem" type="VBoxContainer"]
 offset_right = 256.0
 offset_bottom = 260.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_cgojv")
 script = ExtResource("2_d8bsp")
 
-[node name="texture" type="TextureButton" parent="."]
+[node name="Image" type="TextureButton" parent="."]
 layout_mode = 2
 texture_normal = ExtResource("2_0whoj")
 
-[node name="price" type="RichTextLabel" parent="."]
+[node name="Price" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 bbcode_enabled = true

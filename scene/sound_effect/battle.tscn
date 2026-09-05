@@ -7,20 +7,20 @@
 [ext_resource type="AudioStream" uid="uid://m1fpu7jtr0i5" path="res://asset/sound/SE/heal.ogg" id="5_qemhu"]
 [ext_resource type="AudioStream" uid="uid://c5x4yrepr7qm" path="res://asset/sound/SE/evolution.ogg" id="6_vagwo"]
 
-[node name="SoundEffects" type="Node2D"]
+[node name="BattleSE" type="Node"]
 script = ExtResource("1_8jy4m")
 
-[node name="buff" type="AudioStreamPlayer2D" parent="."]
+[node name="Buff" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_qf4g3")
 
-[node name="debuff" type="AudioStreamPlayer2D" parent="."]
+[node name="Debuff" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_7b4xo")
 
-[node name="damage" type="AudioStreamPlayer2D" parent="."]
+[node name="Damage" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_i2rjt")
 
-[node name="heal" type="AudioStreamPlayer2D" parent="."]
+[node name="Heal" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_qemhu")
 
-[node name="evolution" type="AudioStreamPlayer2D" parent="."]
+[node name="Evolution" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_vagwo")

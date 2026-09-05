@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AbilityAilment" load_steps=2 format=3 uid="uid://exv5v4jjyn6k"]
 
-[ext_resource type="Script" uid="uid://bnrx67h15d3c8" path="res://src/resource/static_data/ability/AbilityEffect.gd" id="1_h5r1j"]
+[ext_resource type="Script" uid="uid://bnrx67h15d3c8" path="res://src/resource/static_data/ability/effect.gd" id="1_h5r1j"]
 
 [resource]
 script = ExtResource("1_h5r1j")

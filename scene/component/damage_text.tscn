@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dmsinwyjfh8hq" path="res://src/component/damage_text.gd" id="1_csl0i"]
 
-[node name="damage_text" type="RichTextLabel"]
+[node name="DamageText" type="RichTextLabel"]
 clip_contents = false
 offset_right = 126.0
 offset_bottom = 176.0

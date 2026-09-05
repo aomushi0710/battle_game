@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_qpl7w"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_vopop"]
 [ext_resource type="Resource" uid="uid://cie7fwul7ew3q" path="res://resource/element/無属性.tres" id="3_2cnfl"]
-[ext_resource type="Script" uid="uid://bkfsnbhetj7ha" path="res://src/resource/static_data/ability/AbilityExtra.gd" id="5_2cnfl"]
+[ext_resource type="Script" uid="uid://bkfsnbhetj7ha" path="res://src/resource/static_data/ability/extra.gd" id="5_2cnfl"]
 [ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="6_cqbmj"]
 
 [sub_resource type="Resource" id="Resource_bhft7"]

@@ -39,14 +39,14 @@ corner_radius_bottom_left = 80
 shadow_color = Color(1, 0, 0, 0.5)
 shadow_size = 10
 
-[node name="menu" type="Control" node_paths=PackedStringArray("help_label")]
+[node name="Menu" type="Control" node_paths=PackedStringArray("help_label")]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_kjvt6")
 script = ExtResource("2_4k2b5")
-help_label = NodePath("scrolling_label")
+help_label = NodePath("ScrollingLabel")
 
-[node name="panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 0
 offset_left = -136.0
 offset_right = 585.0
@@ -56,7 +56,7 @@ script = ExtResource("2_qdv60")
 start_position = Vector2(350, 30)
 separation = Vector2(-30, 120)
 
-[node name="Monster" parent="panel" instance=ExtResource("3_qdv60")]
+[node name="Monster" parent="Panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 350.0
 offset_top = 30.0
@@ -65,7 +65,7 @@ offset_bottom = 112.0
 text = "デッキ"
 metadata/help_text = "デッキ編成画面へ移動します。"
 
-[node name="Shop" parent="panel" instance=ExtResource("3_qdv60")]
+[node name="Shop" parent="Panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 320.0
 offset_top = 150.0
@@ -74,7 +74,7 @@ offset_bottom = 232.0
 text = "ショップ"
 metadata/help_text = "ショップへ移動します。"
 
-[node name="Save" parent="panel" instance=ExtResource("3_qdv60")]
+[node name="Save" parent="Panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 290.0
 offset_top = 270.0
@@ -83,7 +83,7 @@ offset_bottom = 352.0
 text = "セーブ"
 metadata/help_text = "現在のデータをセーブします。(オートセーブ機能も存在します。)"
 
-[node name="Title" parent="panel" instance=ExtResource("3_qdv60")]
+[node name="Title" parent="Panel" instance=ExtResource("3_qdv60")]
 layout_mode = 0
 offset_left = 260.0
 offset_top = 390.0
@@ -96,7 +96,7 @@ text = "タイトルに戻る"
 color = Color(1, 0, 0, 1)
 metadata/help_text = "タイトル画面へ戻ります。"
 
-[node name="coin" type="RichTextLabel" parent="."]
+[node name="Coin" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 888.0
@@ -108,17 +108,17 @@ scroll_active = false
 script = ExtResource("4_qdv60")
 metadata/help_text = "現在の所持コイン枚数"
 
-[node name="scrolling_label" parent="." instance=ExtResource("2_r5awk")]
+[node name="ScrollingLabel" parent="." instance=ExtResource("2_r5awk")]
 layout_mode = 0
 offset_left = 32.0
 offset_top = 970.0
 offset_right = 1891.0
 offset_bottom = 1051.0
 
-[node name="mask" parent="scrolling_label" index="0"]
+[node name="mask" parent="ScrollingLabel" index="0"]
 offset_right = 1857.0
 
-[node name="text" parent="scrolling_label/mask" index="0"]
+[node name="text" parent="ScrollingLabel/mask" index="0"]
 offset_right = 1855.0
 
 [node name="Close" parent="." instance=ExtResource("3_qdv60")]
@@ -134,9 +134,9 @@ text = "閉じる"
 color = Color(1, 0, 0, 1)
 metadata/help_text = "メニューを閉じます。また、[b]Xキー[/b]でもメニューを閉じることができます。"
 
-[connection signal="button_up" from="panel/Monster" to="." method="_on_monster_button_up"]
-[connection signal="button_up" from="panel/Shop" to="." method="_on_shop_button_up"]
-[connection signal="button_up" from="panel/Save" to="." method="_on_save_button_up"]
-[connection signal="button_up" from="panel/Title" to="." method="_on_title_button_up"]
+[connection signal="button_up" from="Panel/Monster" to="." method="_on_monster_button_up"]
+[connection signal="button_up" from="Panel/Shop" to="." method="_on_shop_button_up"]
+[connection signal="button_up" from="Panel/Save" to="." method="_on_save_button_up"]
+[connection signal="button_up" from="Panel/Title" to="." method="_on_title_button_up"]
 
-[editable path="scrolling_label"]
+[editable path="ScrollingLabel"]

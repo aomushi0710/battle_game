@@ -23,7 +23,7 @@ alignment = 0
 text_overrun_behavior = 3
 script = ExtResource("2_hae2l")
 element = NodePath("Element")
-background = NodePath("BackGround")
+background = NodePath("Background")
 
 [node name="Element" type="TextureRect" parent="."]
 visible = false
@@ -37,7 +37,7 @@ texture = ExtResource("3_hae2l")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="BackGround" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15

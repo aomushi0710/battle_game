@@ -49,7 +49,7 @@ corner_radius_top_right = 80
 corner_radius_bottom_right = 80
 corner_radius_bottom_left = 80
 
-[node name="button" type="Button"]
+[node name="Button" type="Button"]
 offset_left = 79.0
 offset_top = 54.0
 offset_right = 586.0

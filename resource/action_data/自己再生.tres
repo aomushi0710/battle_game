@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_8disd"]
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_r2cf8"]
-[ext_resource type="Script" uid="uid://bywhlx527vv7b" path="res://src/resource/static_data/ability/AbilityHealing.gd" id="2_pnn4q"]
+[ext_resource type="Script" uid="uid://bywhlx527vv7b" path="res://src/resource/static_data/ability/healing.gd" id="2_pnn4q"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="3_pnn4q"]
 [ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="3_siil7"]
 [ext_resource type="Resource" uid="uid://wnrb4u76hyxf" path="res://resource/element/回復.tres" id="4_siil7"]

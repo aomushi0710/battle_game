@@ -70,11 +70,11 @@ custom_minimum_size = Vector2(0, 64)
 theme = ExtResource("1_y071y")
 theme_override_constants/separation = 0
 script = ExtResource("2_y071y")
-chance_text = NodePath("ChanceText")
-action_button = NodePath("action_button")
-delete_button = NodePath("DeleteButton")
+chance_text = NodePath("Chance")
+action_button = NodePath("ActionButton")
+delete_button = NodePath("Delete")
 
-[node name="ChanceText" type="RichTextLabel" parent="."]
+[node name="Chance" type="RichTextLabel" parent="."]
 clip_contents = false
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -85,11 +85,11 @@ bbcode_enabled = true
 text = "  0%"
 metadata/help_text = "この技に現在設定されている出現確率。"
 
-[node name="action_button" parent="." instance=ExtResource("2_raq3y")]
+[node name="ActionButton" parent="." instance=ExtResource("2_raq3y")]
 custom_minimum_size = Vector2(590, 0)
 layout_mode = 2
 
-[node name="DeleteButton" type="Button" parent="."]
+[node name="Delete" type="Button" parent="."]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -101,4 +101,4 @@ disabled = true
 text = "❌"
 metadata/help_text = "クリックすると、出現確率を0%にリセットします。"
 
-[connection signal="button_up" from="DeleteButton" to="." method="_on_delete_button_button_up"]
+[connection signal="button_up" from="Delete" to="." method="_on_delete_button_button_up"]

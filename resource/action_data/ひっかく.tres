@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_ij3ik"]
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_mux6h"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_kg1qg"]
-[ext_resource type="Script" uid="uid://ci443rtyfhsyi" path="res://src/resource/static_data/ability/AbilityCritical.gd" id="2_qe5p2"]
+[ext_resource type="Script" uid="uid://ci443rtyfhsyi" path="res://src/resource/static_data/ability/critical.gd" id="2_qe5p2"]
 [ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="3_qdvql"]
 [ext_resource type="Resource" uid="uid://cie7fwul7ew3q" path="res://resource/element/無属性.tres" id="3_qe5p2"]
 

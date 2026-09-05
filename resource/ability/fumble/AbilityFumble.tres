@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AbilityFumble" load_steps=2 format=3 uid="uid://bcimmaudt4h4t"]
 
-[ext_resource type="Script" uid="uid://c8eni3klb76o2" path="res://src/resource/static_data/ability/AbilityFumble.gd" id="1_6t4jn"]
+[ext_resource type="Script" uid="uid://c8eni3klb76o2" path="res://src/resource/static_data/ability/fumble.gd" id="1_6t4jn"]
 
 [resource]
 script = ExtResource("1_6t4jn")

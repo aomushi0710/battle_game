@@ -10,17 +10,17 @@ custom_minimum_size = Vector2(1840, 300)
 theme = ExtResource("1_4cs4a")
 color = Color(0.3, 0.3, 0.3, 1)
 script = ExtResource("2_x43nm")
-save_button = NodePath("save")
-load_button = NodePath("load")
-reset_button = NodePath("reset")
-deck_slot_label = NodePath("DeckSlotLabel")
-deck_name_label = NodePath("DeckNameLabel")
-version_label = NodePath("version")
+save_button = NodePath("Save")
+load_button = NodePath("Load")
+reset_button = NodePath("Reset")
+deck_slot_label = NodePath("DeckSlotNumber")
+deck_name_label = NodePath("DeckName")
+version_label = NodePath("Version")
 monster_icon_1 = NodePath("HBoxContainer/MonsterIcon")
 monster_icon_2 = NodePath("HBoxContainer/MonsterIcon2")
 monster_icon_3 = NodePath("HBoxContainer/MonsterIcon3")
 
-[node name="DeckSlotLabel" type="RichTextLabel" parent="."]
+[node name="DeckSlotNumber" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
@@ -29,7 +29,7 @@ offset_bottom = 115.0
 bbcode_enabled = true
 text = "[u][b]デッキスロット１[/b][/u]"
 
-[node name="DeckNameLabel" type="Label" parent="."]
+[node name="DeckName" type="Label" parent="."]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 111.0
@@ -58,7 +58,7 @@ layout_mode = 2
 [node name="MonsterIcon3" parent="HBoxContainer" instance=ExtResource("3_78ryd")]
 layout_mode = 2
 
-[node name="version" type="RichTextLabel" parent="."]
+[node name="Version" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 1283.0
 offset_top = 202.0
@@ -68,7 +68,7 @@ theme = ExtResource("6_4ct7a")
 bbcode_enabled = true
 text = "⚠️[i]ver 3.1.x(β)[/i]"
 
-[node name="save" type="Button" parent="."]
+[node name="Save" type="Button" parent="."]
 layout_mode = 0
 offset_left = 1523.0
 offset_top = 50.0
@@ -77,7 +77,7 @@ offset_bottom = 114.0
 mouse_default_cursor_shape = 2
 text = " ✏️セーブ "
 
-[node name="load" type="Button" parent="."]
+[node name="Load" type="Button" parent="."]
 layout_mode = 0
 offset_left = 1523.0
 offset_top = 50.0
@@ -86,7 +86,7 @@ offset_bottom = 114.0
 mouse_default_cursor_shape = 2
 text = " 📁ロード "
 
-[node name="reset" type="Button" parent="."]
+[node name="Reset" type="Button" parent="."]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 0
 offset_left = 1523.0

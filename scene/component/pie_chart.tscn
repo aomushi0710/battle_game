@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://asset/theme/default_font_30.tres" id="1_6hkke"]
 [ext_resource type="Script" uid="uid://dtdsnqikcdeve" path="res://src/component/pie_chart.gd" id="2_1uolw"]
 
-[node name="pie_chart" type="Control"]
+[node name="PieChart" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1000.0

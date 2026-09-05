@@ -14,7 +14,7 @@ transparent = true
 theme = ExtResource("1_l5d3t")
 script = ExtResource("2_r5jct")
 
-[node name="text" type="RichTextLabel" parent="."]
+[node name="Text" type="RichTextLabel" parent="."]
 clip_contents = false
 offset_left = 10.0
 offset_top = 2.0

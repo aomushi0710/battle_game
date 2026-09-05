@@ -10,11 +10,11 @@ default_font_size = 35
 [sub_resource type="Theme" id="Theme_lf3g1"]
 default_font_size = 35
 
-[node name="メインシーン" type="Node2D"]
+[node name="Main" type="Node2D"]
 scale = Vector2(1.6, 1.6)
 script = ExtResource("1_0gvvv")
 
-[node name="Button" type="Button" parent="."]
+[node name="Start" type="Button" parent="."]
 offset_left = 100.0
 offset_top = 80.0
 offset_right = 388.0
@@ -23,7 +23,7 @@ mouse_default_cursor_shape = 2
 theme = SubResource("Theme_6g3bf")
 text = "コンピューター戦"
 
-[node name="reset" type="Button" parent="."]
+[node name="Reset" type="Button" parent="."]
 modulate = Color(1, 0, 0, 1)
 offset_left = 650.0
 offset_top = 80.0
@@ -32,7 +32,7 @@ offset_bottom = 140.0
 theme = SubResource("Theme_lf3g1")
 text = "🗑️セーブデータ削除"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Description" type="RichTextLabel" parent="."]
 clip_contents = false
 offset_left = 100.0
 offset_top = 139.375
@@ -50,12 +50,12 @@ text = "↑ここを押してセッティング！
 
 [color=red]一部のテキスト・ボタンはカーソルを合わせて少し待つとヒントが表示されます！[/color]"
 
-[node name="debug" type="Button" parent="."]
+[node name="Debug" type="Button" parent="."]
 offset_right = 8.0
 offset_bottom = 8.0
 text = "debug"
 
-[node name="version" type="RichTextLabel" parent="."]
+[node name="Version" type="RichTextLabel" parent="."]
 z_index = -1
 clip_contents = false
 offset_left = 973.0
@@ -67,7 +67,7 @@ bbcode_enabled = true
 text = "[i]β.ver.X.X.X[/i]"
 horizontal_alignment = 2
 
-[node name="copyright" type="RichTextLabel" parent="."]
+[node name="Copyright" type="RichTextLabel" parent="."]
 offset_left = 96.0
 offset_top = 601.875
 offset_right = 443.0
@@ -76,6 +76,6 @@ theme = ExtResource("2_m5oqv")
 bbcode_enabled = true
 text = "[i](C) 2025 aomushi0710[i]"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
-[connection signal="button_up" from="reset" to="." method="_on_reset_button_up"]
-[connection signal="button_up" from="debug" to="." method="_on_debug_button_up"]
+[connection signal="pressed" from="Start" to="." method="_on_button_pressed"]
+[connection signal="button_up" from="Reset" to="." method="_on_reset_button_up"]
+[connection signal="button_up" from="Debug" to="." method="_on_debug_button_up"]

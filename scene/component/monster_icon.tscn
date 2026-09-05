@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bvbgk42kbwv54"]
 
 [ext_resource type="Script" uid="uid://6ovnoynvhb68" path="res://src/component/monster_icon.gd" id="1_1byke"]
-[ext_resource type="Shader" uid="uid://bx8jcjvaqr1cb" path="res://shader/Monster.gdshader" id="2_nbgm6"]
+[ext_resource type="Shader" uid="uid://bx8jcjvaqr1cb" path="res://shader/monster.gdshader" id="2_nbgm6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4dpjf"]
 shader = ExtResource("2_nbgm6")
@@ -32,7 +32,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1byke"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fuo1n"]
 shader = ExtResource("2_nbgm6")
 shader_parameter/brightness = 1.0
 shader_parameter/outline_color = Color(0, 0, 0, 1)
@@ -46,8 +46,8 @@ mouse_default_cursor_shape = 2
 script = ExtResource("1_1byke")
 frame = NodePath("Frame")
 element_frame = NodePath("ElementFrame")
-element_icon = NodePath("ElementIcon")
-back_ground = NodePath("BackGround")
+element_icon = NodePath("ElementImage")
+back_ground = NodePath("Background")
 monster_image = NodePath("MonsterImage")
 shader_material = SubResource("ShaderMaterial_4dpjf")
 
@@ -59,7 +59,7 @@ invert_border = 5.5
 polygon = PackedVector2Array(1.09301e-07, 4, -2.38419e-07, 71, 4, 75, 71, 75, 75, 71, 75, 4, 71, -3.733e-08, 4, 3.30033e-08)
 uv = PackedVector2Array(1.09301e-07, 4, -2.38419e-07, 71, 4, 75, 71, 75, 75, 71, 75, 4, 71, -3.733e-08, 4, 3.30033e-08)
 
-[node name="BackGround" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 22.0
 offset_top = 22.0
@@ -68,7 +68,7 @@ offset_bottom = 278.0
 texture = SubResource("GradientTexture2D_tce2y")
 
 [node name="MonsterImage" type="TextureRect" parent="."]
-material = SubResource("ShaderMaterial_1byke")
+material = SubResource("ShaderMaterial_fuo1n")
 layout_mode = 0
 offset_left = 22.0
 offset_top = 22.0
@@ -83,7 +83,7 @@ texture = SubResource("GradientTexture2D_5e0w7")
 polygon = PackedVector2Array(0, 4, 0, 13, 4, 17, 13, 17, 17, 13, 17, 4, 13, 0, 4, 0)
 uv = PackedVector2Array(0, 4, 0, 13, 4, 17, 13, 17, 17, 13, 17, 4, 13, 0, 4, 0)
 
-[node name="ElementIcon" type="TextureRect" parent="."]
+[node name="ElementImage" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0

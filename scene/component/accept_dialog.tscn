@@ -13,7 +13,7 @@ transparent = true
 theme = ExtResource("1_8dvvl")
 script = ExtResource("2_kisey")
 
-[node name="text" type="RichTextLabel" parent="."]
+[node name="Text" type="RichTextLabel" parent="."]
 clip_contents = false
 offset_left = 10.0
 offset_top = 2.0

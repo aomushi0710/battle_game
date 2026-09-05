@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_ornny"]
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_ukh66"]
-[ext_resource type="Script" uid="uid://b4gbl34tandgs" path="res://src/resource/static_data/ability/AbilityDebuff.gd" id="2_jx3or"]
+[ext_resource type="Script" uid="uid://b4gbl34tandgs" path="res://src/resource/static_data/ability/debuff.gd" id="2_jx3or"]
 [ext_resource type="Script" uid="uid://0hbknewd53sh" path="res://src/resource/static_data/element.gd" id="2_og0ky"]
 [ext_resource type="Resource" uid="uid://b03a6uay0b6bt" path="res://resource/element/デバフ.tres" id="3_jx3or"]
 [ext_resource type="Script" uid="uid://djowhg420fpkh" path="res://src/resource/data/trigger.gd" id="3_rc8jp"]
