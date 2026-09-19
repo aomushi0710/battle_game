@@ -1,124 +1,94 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgn0w8f01647u"]
+[gd_scene load_steps=5 format=3 uid="uid://cx5dup82urnb4"]
 
-[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="1_7voku"]
-[ext_resource type="Script" uid="uid://cbt0mcuwhsnu3" path="res://src/component/map_dialog.gd" id="2_5wlj5"]
+[ext_resource type="Script" uid="uid://ihhhui2rpk8s" path="res://src/component/dialog.gd" id="1_buau7"]
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="2_p0hwe"]
 
-[sub_resource type="Gradient" id="Gradient_w7j6r"]
-colors = PackedColorArray(0, 0, 0, 0.784314, 0, 0, 0, 0.501961)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38lea"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_4uc3s"]
-gradient = SubResource("Gradient_w7j6r")
-fill_from = Vector2(0, 1)
-fill_to = Vector2(0, 0)
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_buau7"]
+color = Color(1, 1, 1, 1)
+grow_begin = 21.0
+grow_end = 21.0
+thickness = 5
 
-[sub_resource type="Gradient" id="Gradient_rxi5t"]
-offsets = PackedFloat32Array(0.5, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0.501961)
+[node name="Dialog" type="CanvasLayer"]
+visible = false
+script = ExtResource("1_buau7")
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_37fld"]
-gradient = SubResource("Gradient_rxi5t")
-fill_from = Vector2(0, 1)
-fill_to = Vector2(0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3kgf7"]
-gradient = SubResource("Gradient_rxi5t")
-fill_from = Vector2(0, 1)
-fill_to = Vector2(0, 0)
-
-[node name="Dialog" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-theme = ExtResource("1_7voku")
-script = ExtResource("2_5wlj5")
-
-[node name="TextBox" type="Control" parent="."]
-anchors_preset = 0
-
-[node name="TextBox" type="Polygon2D" parent="TextBox"]
-position = Vector2(50, 50)
-scale = Vector2(14.2188, 9.406)
-texture = SubResource("GradientTexture2D_4uc3s")
-polygon = PackedVector2Array(0, 8, 0, 32, 120, 32, 128, 24, 128, 0, 8, 0)
-uv = PackedVector2Array(0, 8, 0, 64, 56, 64, 64, 56, 64, 0, 8, 0)
-metadata/_edit_lock_ = true
-
-[node name="MarginContainer" type="MarginContainer" parent="TextBox"]
-layout_mode = 0
+[node name="Background" type="ColorRect" parent="."]
+unique_name_in_owner = true
 offset_right = 1920.0
-offset_bottom = 400.0
-theme_override_constants/margin_left = 110
-theme_override_constants/margin_top = 85
-theme_override_constants/margin_right = 110
-theme_override_constants/margin_bottom = 85
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0.501961)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TextBox/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
-metadata/_edit_lock_ = true
+[node name="PanelContainer" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -270.0
+offset_right = 480.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1e-05, 0.1)
+pivot_offset = Vector2(480, 270)
+theme = ExtResource("2_p0hwe")
+theme_override_styles/panel = SubResource("StyleBoxFlat_38lea")
 
-[node name="Image" type="TextureRect" parent="TextBox/MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
-expand_mode = 2
-metadata/_edit_lock_ = true
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="Text" type="RichTextLabel" parent="TextBox/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 1
+theme_override_constants/separation = 10
+
+[node name="Title" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
 bbcode_enabled = true
-text = "ダイアログボックスは全角３３文字まで入る行を３行まで入れられます！
-２行目
-３行目"
-autowrap_mode = 0
-metadata/_edit_lock_ = true
-
-[node name="NamePlate" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 200.0
-offset_top = 10.0
-offset_right = 200.0
-offset_bottom = 10.0
-
-[node name="Left" type="Polygon2D" parent="NamePlate"]
-scale = Vector2(5, 5)
-texture = SubResource("GradientTexture2D_37fld")
-polygon = PackedVector2Array(9.53674e-07, 0, 8, 16, 8, 0)
-uv = PackedVector2Array(9.53674e-07, 0, 1.90735e-06, 64, 1.90735e-06, 0)
-metadata/_edit_lock_ = true
-
-[node name="Panel" type="TextureRect" parent="NamePlate"]
-layout_mode = 0
-offset_left = 40.0
-offset_right = 440.0
-offset_bottom = 80.0
-texture = SubResource("GradientTexture2D_3kgf7")
-metadata/_edit_lock_ = true
-
-[node name="Text" type="RichTextLabel" parent="NamePlate/Panel"]
-layout_mode = 0
-offset_right = 400.0
-offset_bottom = 80.0
-mouse_filter = 1
-bbcode_enabled = true
-text = "スライム"
-autowrap_mode = 0
+text = "タイトル"
+fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
-[node name="Right" type="Polygon2D" parent="NamePlate"]
-position = Vector2(440, 0)
-scale = Vector2(5, 5)
-texture = SubResource("GradientTexture2D_37fld")
-polygon = PackedVector2Array(9.53674e-07, 0, 8, 16, 0, 16)
-uv = PackedVector2Array(9.53674e-07, 0, 8.00001, 64, 1.90735e-06, 64)
-metadata/_edit_lock_ = true
+[node name="Border" type="Panel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxLine_buau7")
 
-[node name="Buttons" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 1200.0
-offset_top = -470.0
-offset_right = 1800.0
-offset_bottom = 30.0
+[node name="Text" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "本文"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
 theme_override_constants/separation = 20
-alignment = 2

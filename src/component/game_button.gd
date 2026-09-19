@@ -1,4 +1,5 @@
 @tool
+class_name GameButton
 extends Button
 
 var style: StyleBoxFlat = get_theme_stylebox("focus")
