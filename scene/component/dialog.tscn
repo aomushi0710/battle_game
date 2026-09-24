@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cx5dup82urnb4"]
+[gd_scene load_steps=6 format=3 uid="uid://cv82bvosv8k2e"]
 
 [ext_resource type="Script" uid="uid://ihhhui2rpk8s" path="res://src/component/dialog.gd" id="1_buau7"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="2_p0hwe"]
+[ext_resource type="Texture2D" uid="uid://b5nrfwe5e6q35" path="res://asset/image/S4_logo.PNG" id="3_buau7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38lea"]
 bg_color = Color(0, 0, 0, 1)
@@ -25,7 +26,7 @@ thickness = 5
 visible = false
 script = ExtResource("1_buau7")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="ScreenOverlay" type="ColorRect" parent="."]
 unique_name_in_owner = true
 offset_right = 1920.0
 offset_bottom = 1080.0
@@ -76,7 +77,24 @@ visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxLine_buau7")
 
-[node name="Text" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="TextArea" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Background" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/TextArea"]
+unique_name_in_owner = true
+visible = false
+self_modulate = Color(0.5, 0.5, 0.5, 1)
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_buau7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Text" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/TextArea"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2

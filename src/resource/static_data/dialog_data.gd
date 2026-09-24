@@ -7,8 +7,10 @@ extends Resource
 ## ダイアログに表示されるテキスト
 @export_multiline var text: String
 ## ボタンに表示されるテキスト 要素数だけボタンが自動生成されます
-@export var button_text: Array[String]
+@export var button_text: Array[String] = ["OK"]
 
+## [member DialogData.text]が表示される領域の背景に表示される半透明な画像
+@export var background_texture: Texture2D
 ## ダイアログの背景色
 @export var dialog_color: Color = Color.BLACK
 ## ダイアログの枠線色
