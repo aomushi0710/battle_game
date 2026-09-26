@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogData" load_steps=3 format=3 uid="uid://mode7jsvd3jb"]
+
+[ext_resource type="Texture2D" uid="uid://b5nrfwe5e6q35" path="res://asset/image/S4_logo.PNG" id="1_aykt5"]
+[ext_resource type="Script" uid="uid://c3cow7mamavty" path="res://src/resource/static_data/dialog_data.gd" id="1_gjs3w"]
+
+[resource]
+script = ExtResource("1_gjs3w")
+title = "{0}"
+text = "{1}"
+button_text = Array[String](["OK"])
+background_texture = ExtResource("1_aykt5")
+dialog_color = Color(0, 0, 0, 1)
+dialog_border_color = Color(1, 1, 1, 1)
+button_color = Array[Color]([])
+metadata/_custom_type_script = "uid://c3cow7mamavty"
