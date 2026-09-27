@@ -30,10 +30,19 @@ func set_dialog(data: DialogData, format_args: Array = []) -> int:
 	var formatted_title: String = data.title ## [method String.format]を用いて動的に変更されたタイトルテキスト
 	var formatted_text: String = data.text ## [method String.format]を用いて動的に変更された本文テキスト
 	
-	if not formatted_text.is_empty():
+	if not format_args.is_empty():
 		formatted_title = formatted_title.format(format_args)
 		formatted_text = formatted_text.format(format_args)
 	_text_label.text = formatted_text
+	
+	# テキストに合わせてサイズを調整
+	const MIN_WIDTH: float = 860
+	const MAX_WIDTH: float = 1820
+	var raw_text: String = _text_label.get_parsed_text()
+	var font: Font = _text_label.get_theme_font("normal_font_size")
+	var font_size: int = _text_label.get_theme_font_size("normal_font_size")
+	var text_width: int = font.get_multiline_string_size(raw_text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+	_panel_container.custom_minimum_size.x = max(_panel_container.custom_minimum_size.x, clampi(text_width, MIN_WIDTH, MAX_WIDTH) + 100)
 	
 	# タイトルがなければ不要なノードを隠す
 	if data.title.is_empty():
@@ -81,6 +90,8 @@ func hide_dialog() -> void:
 	
 	for child in _button_container.get_children():
 		(child as Button).hide()
+	
+	_panel_container.custom_minimum_size.x = 0
 
 ## ダイアログを表示します
 func _show_dialog() -> void:
@@ -119,12 +130,14 @@ func _set_button(data: DialogData, format_args: Array) -> void:
 				_button_container.add_child(button)
 			
 			var formatted_text = data.button_text[i]
-			if not formatted_text.is_empty():
+			if not format_args.is_empty():
 				formatted_text = formatted_text.format(format_args)
 			button.text = formatted_text
 			
 			if data.button_color and i < data.button_color.size(): # ボタンの色指定があれば
 				button.color = data.button_color[i]
+			else:
+				button.color = Color.YELLOW
 			
 			button.show()
 		
