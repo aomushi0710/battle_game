@@ -26,4 +26,5 @@ func _ready() -> void:
 
 ## ボタンが押された時、エフェクト説明文を出す関数
 func _on_button_up() -> void:
-	Global.accept_dialog.display_dialog(effect.description, effect.effect.name)
+	await DialogManager.set_dialog(preload("res://resource/dialog_data/common/dynamic.tres"), [effect.effect.name, effect.description])
+	DialogManager.hide_dialog()

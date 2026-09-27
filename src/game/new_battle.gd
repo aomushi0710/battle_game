@@ -450,19 +450,19 @@ damage: int = 0) -> void:
 		
 		elif ability is AbilityBuff or ability is AbilityDebuff: # バフ or デバフ
 			## abilityを基に作られた、モンスターに付与されるエフェクト
-			var monster_effect = MonsterEffect.new(ability)
-			var found_effect: bool = false ## 同じエフェクトが見つかったかどうかを確認する
-			
-			if monster == target: # 自分で自分にエフェクトを付けたそのターン数を減らさないために
-				monster_effect.turn += 1
+			var monster_effect := MonsterEffect.new(ability)
+			var has_same_effect: bool = false ## 同じエフェクトが付与されているかどうか
 			
 			for me: MonsterEffect in target.effect_list: # 既に対象が持つエフェクトに対して
 				if monster_effect.effect == me.effect: # 同じものが見つかれば
 					me.turn += monster_effect.turn # ターン数を延長する
-					found_effect = true
+					has_same_effect = true
 					break
-			if found_effect == false: # 同じエフェクトが見つからなかった時、新たに追加
+			
+			if has_same_effect == false: # 同じエフェクトが見つからなかった時、新たに追加
 				target.add_effect(monster_effect)
+				if monster == target: # 自分自身に追加した場合、1ターン余分に消費されることを防止する
+					monster_effect.is_just_applied_to_self = true
 			
 			var damage_text = Global.damage_text.instantiate()
 			damage_text.text = "[font_size=50][b][i]%s[/i][/b][/font_size]" % \

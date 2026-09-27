@@ -12,7 +12,7 @@ extends Control
 @onready var buttons := $Buttons
 var text_tween: Tween
 var text_speed: float = 0.04
-var now_id: int ## 現在表示中の[class DialogData]の[code]id[/code]
+var now_id: int ## 現在表示中の[class MapDialogData]の[code]id[/code]
 var signboard_id: int ## 現在表示中の[member SignBoard.id]
 
 signal dialog_opened ## ダイアログが開かれる時に発行されるシグナル
@@ -40,25 +40,25 @@ func dialog_close() -> void:
 ##[code]display_dialog()[/code]関数を呼び出していく関数。
 ## ダイアログの開閉[code]dialog_open()[/code][code]dialog_close()[/code]
 ##もまとめて行われます。
-func dialog_manager(datas: Array[DialogData], id: int) -> void:
+func dialog_manager(datas: Array[MapDialogData], id: int) -> void:
 	dialog_open()
 	
 	signboard_id = id
-	var redirect_id: int = 0 ## 次に表示したい[class DialogData]のID
+	var redirect_id: int = 0 ## 次に表示したい[class MapDialogData]のID
 	while redirect_id >= 0: # IDが-1になるまでダイアログ表示を繰り返す
 		if datas[redirect_id]:
 			redirect_id = await display_dialog(datas[redirect_id])
 		else:
-			printerr("対応するindexのDialogDataが見つかりませんでした。" + 
+			printerr("対応するindexのMapDialogDataが見つかりませんでした。" + 
 			"ダイアログ表示を中断します。")
 			redirect_id = -1
 	
 	dialog_close()
 
-## [DialogData]型の[param data]を引数として、ダイアログにテキストを表示する関数。
+## [MapDialogData]型の[param data]を引数として、ダイアログにテキストを表示する関数。
 ## [br]awaitを付けてページ送りまたはボタンが押されるまで待った後、
 ##次に表示されるデータのindexを返します
-func display_dialog(data: DialogData) -> int:
+func display_dialog(data: MapDialogData) -> int:
 	if visible == false:
 		printerr("ダイアログボックスは表示されていません。" + 
 		"事前にdialog_open()で表示させてください。")
@@ -112,7 +112,7 @@ func display_dialog(data: DialogData) -> int:
 	
 	# ボタン表示があるかどうかによって待つ処理を変える
 	if data.button_text:
-		## 次に表示したいDialogDataのID[br]ボタンがある場合に、動的にIDを変えるための枠
+		## 次に表示したいMapDialogDataのID[br]ボタンがある場合に、動的にIDを変えるための枠
 		var redirect_id: int = await button_chosen
 		return redirect_id
 	elif not data.battle_redirect_id.is_empty():

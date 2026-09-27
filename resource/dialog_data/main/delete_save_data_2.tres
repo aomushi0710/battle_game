@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DialogData" load_steps=2 format=3 uid="uid://dtl7fkvt704hl"]
+
+[ext_resource type="Script" uid="uid://c3cow7mamavty" path="res://src/resource/static_data/dialog_data.gd" id="1_roay2"]
+
+[resource]
+script = ExtResource("1_roay2")
+title = "セーブデータ削除"
+text = "セーブデータを削除しました。"
+button_text = Array[String](["OK"])
+dialog_color = Color(1, 0, 0, 1)
+dialog_border_color = Color(0, 0, 0, 1)
+button_color = Array[Color]([])
+metadata/_custom_type_script = "uid://c3cow7mamavty"

@@ -14,6 +14,8 @@ var turn: int: ## 残りターン数
 var damage: int ## 状態異常によって受けるダメージ
 var description: String
 
+var is_just_applied_to_self: bool ## このエフェクトが自身によって付与されたばかりかどうか
+
 
 func _init(_effect: Ability) -> void:
 	effect = _effect
@@ -27,6 +29,10 @@ func update() -> void:
 
 ## ターン終了時の処理
 func turn_finished() -> void:
+	if is_just_applied_to_self:
+		is_just_applied_to_self = false
+		return
+	
 	turn -= 1
 	if turn == 0:
 		delete.emit()

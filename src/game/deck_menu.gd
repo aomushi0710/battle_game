@@ -95,19 +95,12 @@ func _on_auto_fill_button_up() -> void:
 
 
 func _on_reset_button_up() -> void:
-	Global.confirmation_dialog.on_confirm_callable = self._on_confirmed
-	Global.confirmation_dialog.display_dialog(
-		"現在選択中のデッキデータをリセットしようとしています。\nよろしいですか？\n" + 
-		"※セーブデータは削除されません。", "リセット確認")
-
-
-func _on_confirmed() -> void:
-	Global.player_deck = Deck.new()
-	evolution_form_changed.emit(Global.Form.第一形態)
-	Global.accept_dialog.display_dialog(
-			"デッキデータをリセットしました。", 
-			"リセット完了"
-	)
+	var selected_index: int = await DialogManager.set_dialog(preload("res://resource/dialog_data/deck_menu/reset_current_deck_1.tres"))
+	if selected_index == 0:
+		Global.player_deck = Deck.new()
+		evolution_form_changed.emit(Global.Form.第一形態)
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/deck_menu/reset_current_deck_2.tres"))
+	DialogManager.hide_dialog()
 
 ## モンスターのアイコンがクリックされた時の処理
 func _on_monster_icon_button_up(index: int) -> void:
