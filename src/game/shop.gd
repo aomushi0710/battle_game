@@ -81,34 +81,22 @@ func _on_inventory_button_up() -> void:
 
 
 func _on_buy_button_up() -> void:
-	if Global.save_data.coin < selected_item.price: # コインがたりない
-		Global.accept_dialog.display_dialog(
-			"コインが足りません！\nバトルでコインを集めましょう！", "コイン不足")
+	if Global.save_data.coin < selected_item.price:
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/shop/coin_shortage.tres"))
+		DialogManager.hide_dialog()
 	else:
-		Global.confirmation_dialog.on_confirm_callable = self._on_confirmed
-		Global.confirmation_dialog.display_dialog(
-				"%s Lv.%dを購入しますか？" % 
-				[selected_item.name, selected_item.level], 
-				"購入確認"
-		)
-
-
-## 購入確認ボタンで購入ボタンを押した時
-func _on_confirmed() -> void:
-	# アイテム情報もセーブするので、ここではセーブしない
-	Global.save_data.coin -= selected_item.price
-	
-	if selected_item.item.id not in Global.save_data.item: # 未所持の時
-		Global.save_data.item[selected_item.item.id] = 1
-	else:
-		Global.save_data.item[selected_item.item.id] += 1
-	
-	SaveManager.save_game()
-	
-	Global.accept_dialog.display_dialog(
-			"%s Lv.%dを手に入れた！" % [selected_item.name, selected_item.level], 
-			"購入完了"
-	)
-	
-	update(-selected_item.price)
-	
+		var selected_index: int = await DialogManager.set_dialog(preload("res://resource/dialog_data/shop/purchase_item_1.tres"), [selected_item.item.name, selected_item.item.get_level() + 1])
+		if selected_index == 0:
+			# アイテム情報もセーブするので、ここではセーブしない
+			Global.save_data.coin -= selected_item.price
+			
+			if selected_item.item.id not in Global.save_data.item: # 未所持の時
+				Global.save_data.item[selected_item.item.id] = 1
+			else:
+				Global.save_data.item[selected_item.item.id] += 1
+			
+			SaveManager.save_game()
+			update(-selected_item.price)
+			
+			await DialogManager.set_dialog(preload("res://resource/dialog_data/shop/purchase_item_2.tres"), [selected_item.item.name, selected_item.item.get_level()])
+		DialogManager.hide_dialog()

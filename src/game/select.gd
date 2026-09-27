@@ -208,10 +208,10 @@ func _on_back_button_up():
 	match mode:
 		Mode.DECK:
 			if Global.player_deck.is_empty():
-				Global.accept_dialog.display_dialog(
-					"デッキには全ての枠を埋めてください！"
-				)
+				await DialogManager.set_dialog(preload("res://resource/dialog_data/select/deck_empty_slot.tres"))
+				DialogManager.hide_dialog()
 				return
+			
 			SaveManager.save_deck(0, false)
 			get_tree().change_scene_to_file(Global.map_scene)
 		
@@ -219,15 +219,10 @@ func _on_back_button_up():
 			mode = Mode.DECK
 		
 		Mode.STATUS: # キャラ選択に戻す
-			Global.confirmation_dialog.on_confirm_callable = func():
+			var selected_index: int = await DialogManager.set_dialog(preload("res://resource/dialog_data/select/go_back_without_save.tres"))
+			if selected_index == 0:
 				mode = Mode.MONSTER_SELECT
-			Global.confirmation_dialog.display_dialog(
-					"変更した内容は保存されていません！\n[color=yellow]" + 
-					"内容を保存するには、キャンセルボタンでこの画面を閉じた後、\n" + 
-					"右下にある決定ボタンを押してください。\n" + 
-					"[/color]前の画面に戻りますか？", 
-					"未保存のデータ"
-			)
+			DialogManager.hide_dialog()
 		
 		Mode.ACTION: # 画面を戻す
 			mode = Mode.STATUS
@@ -243,8 +238,8 @@ func _on_confirm_button_up():
 			for i: int in monster_setting.chances:
 				sum_chance += i
 			if sum_chance != 100:
-				Global.accept_dialog.display_dialog(
-						"出現率の合計が100%ではありません！")
+				await DialogManager.set_dialog(preload("res://resource/dialog_data/select/not_100_chance.tres"))
+				DialogManager.hide_dialog()
 				return
 			
 			Global.player_deck.monster[selected_slot_index] = selected_monster
@@ -252,6 +247,7 @@ func _on_confirm_button_up():
 			
 			mode = Mode.DECK
 		
+		# TODO 押される場面がないため不要？
 		Mode.ACTION:
 			# 既存の技を選択中の時
 			if monster_setting.selected_action in monster_setting.actions:

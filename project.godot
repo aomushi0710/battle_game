@@ -21,6 +21,7 @@ config/icon="uid://cioi83ubpqfrg"
 [autoload]
 
 Global="*res://src/system/Global.gd"
+DialogManager="*res://scene/component/dialog.tscn"
 
 [debug]
 

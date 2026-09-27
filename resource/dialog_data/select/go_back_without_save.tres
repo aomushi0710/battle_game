@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="DialogData" load_steps=3 format=3 uid="uid://cl3dgjq75rcbx"]
+
+[ext_resource type="Texture2D" uid="uid://b5nrfwe5e6q35" path="res://asset/image/S4_logo.PNG" id="1_ox7km"]
+[ext_resource type="Script" uid="uid://c3cow7mamavty" path="res://src/resource/static_data/dialog_data.gd" id="1_pnyj4"]
+
+[resource]
+script = ExtResource("1_pnyj4")
+title = "保存せずに戻る"
+text = "[b]変更した内容は保存されていません！[/b]
+[color=yellow]内容を保存するには、
+キャンセルボタンでこの画面を閉じた後、
+右下にある決定ボタンを押してください。[/color]
+前の画面に戻りますか？"
+button_text = Array[String](["OK", "Cancel"])
+background_texture = ExtResource("1_ox7km")
+dialog_color = Color(0, 0, 0, 1)
+dialog_border_color = Color(1, 1, 1, 1)
+button_color = Array[Color]([Color(1, 1, 0, 1), Color(1, 0, 0, 1)])
+metadata/_custom_type_script = "uid://c3cow7mamavty"

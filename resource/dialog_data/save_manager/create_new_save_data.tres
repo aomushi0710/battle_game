@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DialogData" load_steps=2 format=3 uid="uid://bww8ivs60gloq"]
+
+[ext_resource type="Script" uid="uid://c3cow7mamavty" path="res://src/resource/static_data/dialog_data.gd" id="1_ak018"]
+
+[resource]
+script = ExtResource("1_ak018")
+title = "新規セーブデータ作成"
+text = "[b]セーブデータが存在しません。[/b]
+新たなセーブデータを作成しました。"
+button_text = Array[String](["OK"])
+dialog_color = Color(0, 0, 0, 1)
+dialog_border_color = Color(1, 1, 1, 1)
+button_color = Array[Color]([])
+metadata/_custom_type_script = "uid://c3cow7mamavty"

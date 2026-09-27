@@ -471,19 +471,15 @@ func target_button_setting() -> void:
 
 
 func _on_escape_button_up() -> void: # 逃げるボタン処理 TODO 逃げられないバトル用の処理なども作る
-	Global.confirmation_dialog.on_confirm_callable = self.battle_finished
+	var selected_index: int = -1
 	if $"../".tutorial_mode == true:
-		Global.confirmation_dialog.display_dialog(
-				"チュートリアルを終わりますか？\n" + 
-				"チュートリアルはいつでもプレイ可能です。", 
-				"チュートリアル終了"
-		)
+		selected_index = await DialogManager.set_dialog(preload("res://resource/dialog_data/battle/tutorial_end.tres"))
 	else:
-		Global.confirmation_dialog.display_dialog(
-				"バトルに敗北したことになりますが、本当に逃げますか？\n" + 
-				"[color=red]コインやアイテムも獲得できません！[/color]", 
-				"バトル終了"
-		)
+		selected_index = await DialogManager.set_dialog(preload("res://resource/dialog_data/battle/battle_escape.tres"))
+	
+	if selected_index == 0:
+		battle_finished()
+	DialogManager.hide_dialog()
 
 ## バトル終了初期化処理
 func battle_finished() -> void:

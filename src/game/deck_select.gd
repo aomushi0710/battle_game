@@ -41,21 +41,12 @@ func _on_戻る_button_up() -> void:
 
 
 func delete_deck(slot: int) -> void:
-	Global.confirmation_dialog.on_confirm_callable = \
-	self._on_confirmed.bind(slot)
-	Global.confirmation_dialog.display_dialog(
-			"デッキスロット%dのデータを削除しようとしています。\nよろしいですか？" % slot, 
-			"⚠️削除確認⚠️"
-	)
-
-
-func _on_confirmed(slot: int) -> void:
-	SaveManager.delete_file("user://deck_slot_%d.txt" % slot)
-	setting()
-	Global.accept_dialog.display_dialog(
-			"デッキスロット%dのデータを削除しました。" % slot, 
-			"削除完了"
-	)
+	var selected_index: int = await DialogManager.set_dialog(preload("res://resource/dialog_data/deck_select/delete_deck_slot_1.tres"), [slot])
+	if selected_index == 0:
+		SaveManager.delete_file("user://deck_slot_%d.txt" % slot)
+		setting()
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/deck_select/delete_deck_slot_2.tres"), [slot])
+	DialogManager.hide_dialog()
 
 ## 現在のデッキとセーブスロットのデッキを読み込んで表示する関数
 func setting() -> void:
