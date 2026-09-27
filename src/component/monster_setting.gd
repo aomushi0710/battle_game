@@ -374,9 +374,9 @@ func _on_chance_value_changed(value: int) -> void:
 	sum_chance += value
 	
 	if sum_chance > 100: # 100%を越える場合、元の値に差し戻し
-		Global.accept_dialog.display_dialog(
-				"技の出現率の合計が100%を越えてしまいます！")
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/monster_setting/chance_exceed_100.tres"))
 		value = previous_value # 元の値に戻す
+		DialogManager.hide_dialog()
 	else:
 		chances[index] = value # 技一覧の確率と円グラフを更新
 		pie_chart_update()

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogData" load_steps=3 format=3 uid="uid://bdkih4y43c1pp"]
+
+[ext_resource type="Texture2D" uid="uid://b5nrfwe5e6q35" path="res://asset/image/S4_logo.PNG" id="1_43iuw"]
+[ext_resource type="Script" uid="uid://c3cow7mamavty" path="res://src/resource/static_data/dialog_data.gd" id="1_84inp"]
+
+[resource]
+script = ExtResource("1_84inp")
+title = "[color=red]ERROR[/color]"
+text = "技の出現率が100%を超えてしまいます！"
+button_text = Array[String](["OK"])
+background_texture = ExtResource("1_43iuw")
+dialog_color = Color(0, 0, 0, 1)
+dialog_border_color = Color(1, 1, 1, 1)
+button_color = Array[Color]([])
+metadata/_custom_type_script = "uid://c3cow7mamavty"

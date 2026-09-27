@@ -6,10 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://asset/image/monster/スライム.PNG" id="2_p5pve"]
 [ext_resource type="PackedScene" uid="uid://bldb4kxsdbr4q" path="res://scene/component/map_menu.tscn" id="3_71pa8"]
 [ext_resource type="Script" uid="uid://nyb1qpsf3a5a" path="res://src/component/player.gd" id="3_urblq"]
-[ext_resource type="PackedScene" uid="uid://bgn0w8f01647u" path="res://scene/component/dialog.tscn" id="4_71pa8"]
+[ext_resource type="PackedScene" uid="uid://bgn0w8f01647u" path="res://scene/component/map_dialog.tscn" id="4_71pa8"]
 [ext_resource type="TileSet" uid="uid://bm5qn6qq1ml3b" path="res://asset/image/tile/object.tres" id="6_05x41"]
 [ext_resource type="PackedScene" uid="uid://b5nv63d85qwtt" path="res://scene/component/signboard.tscn" id="7_oysan"]
-[ext_resource type="Script" uid="uid://c8f5dn7tcqt5t" path="res://src/resource/static_data/dialog_data.gd" id="8_sb2pt"]
+[ext_resource type="Script" uid="uid://c8f5dn7tcqt5t" path="res://src/resource/static_data/map_dialog_data.gd" id="8_sb2pt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oysan"]
 bg_color = Color(0, 0, 0, 1)

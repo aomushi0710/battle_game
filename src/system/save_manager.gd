@@ -86,11 +86,6 @@ static func load_game() -> void:
 		if not scene:
 			printerr("シーンが存在しません")
 			return
-		
-		Global.accept_dialog.display_dialog(
-				"セーブデータが存在しません！\n新たなセーブデータを作成しました。", 
-				"新規セーブデータ作成"
-		)
 	
 	# 現在のバージョン以降のデータの場合、オートセーブを切り、既存データの上書きされるのを防ぐ
 	elif (
@@ -100,13 +95,9 @@ static func load_game() -> void:
 		Global.auto_save = false # オートセーブを切る
 		Global.save_data = SaveData.new()
 		
-		Global.accept_dialog.display_dialog(
-			"現在のバージョン ver %s " % Global.version + 
-			"\n以降に作成されたデータのため、ロードできません。\n\n" + 
-			"仮のセーブデータをロードしました。" + 
-			"\n現在のバージョンでもプレイ可能ですが、進行状況はセーブされません。" + 
-			"\nまた、既存データの破損については一切の責任を負いません！"
-		)
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/save_manager/load_from_current_version_onward_1.tres"), [Global.version])
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/save_manager/load_from_current_version_onward_2.tres"))
+		DialogManager.hide_dialog()
 	# TODO 過去のバージョンのデータだった場合、互換性があるかチェックし、
 	# データのバージョンを更新する処理を実装する必要あり。
 	else:
@@ -125,8 +116,8 @@ static func save_deck(slot: int, show_dialog: bool = true) -> void:
 	)
 	
 	if Global.player_deck.monster.size() < 3 or has_empty_slot:
-		Global.accept_dialog.display_dialog(
-				"デッキをセーブするには、全ての枠を埋めてください！")
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/save_manager/save_with_empty_slot.tres"))
+		DialogManager.hide_dialog()
 		return
 	
 	# 技のArray[Action]を技のIDのArray[int]に変換
@@ -161,10 +152,8 @@ static func save_deck(slot: int, show_dialog: bool = true) -> void:
 	
 	save_file(deck_data, "user://deck_slot_%d.txt" % slot)
 	if show_dialog:
-		Global.accept_dialog.display_dialog(
-				"デッキのセーブが完了しました！", 
-				"✅セーブ完了✅"
-		)
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/common/save_complete.tres"))
+		DialogManager.hide_dialog()
 
 ## [DeckSaveData]をロードする関数
 static func load_deck(slot: int, show_dialog: bool = true) -> void:
@@ -175,21 +164,19 @@ static func load_deck(slot: int, show_dialog: bool = true) -> void:
 		return
 	# β版で正式版、正式版でβ版のデータをロードしようとした時
 	elif deck_data["beta"] != Global.VERSION_BETA:
-		if Global.VERSION_BETA == true: # β版
-			Global.accept_dialog.display_dialog(
-					"βバージョンで保存されたデータではないためロードできません。")
+		if Global.VERSION_BETA: # β版
+			await DialogManager.set_dialog(preload("res://resource/dialog_data/save_manager/load_from_master_in_beta.tres"))
+			DialogManager.hide_dialog()
 		else: # 正式リリース版
-			Global.accept_dialog.display_dialog(
-					"βバージョンで保存されたデータはロードできません")
+			await DialogManager.set_dialog(preload("res://resource/dialog_data/save_manager/load_from_beta_in_master.tres"))
+			DialogManager.hide_dialog()
 		return
 	
 	# ALERT βver4.4.0以下のデータはバージョン管理の型が違うので互換性がない
 	# ただしβ版のみのため、正式リリース後は不要
 	elif deck_data["version"] is float:
-		Global.accept_dialog.display_dialog(
-				"バージョン管理方法の変更に伴い、\n" + 
-				"β ver 4.4.0以下で保存されたデータのためロードできません。"
-		)
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/save_manager/load_from_beta_ver_4_4_0_or_earlier.tres"))
+		DialogManager.hide_dialog()
 		return
 	
 	# 現在のバージョン以降のデータの場合
@@ -197,10 +184,8 @@ static func load_deck(slot: int, show_dialog: bool = true) -> void:
 		not Global.is_version_older(deck_data["version"]) and 
 		deck_data["version"] != Global.version
 	):
-		Global.accept_dialog.display_dialog(
-				"現在のバージョン ver %s " % Global.version + 
-				"以降に作成されたデータのため、\nロードできません。"
-		)
+		await DialogManager.set_dialog(preload("res://resource/dialog_data/save_manager/load_deck_from_current_version_onward.tres"), [Global.version])
+		DialogManager.hide_dialog()
 		return
 	
 	#elif deck_data["version"] >= 3.0 and deck_data["version"] < 4.4: # ver3.0~
@@ -210,10 +195,8 @@ static func load_deck(slot: int, show_dialog: bool = true) -> void:
 			#"[color=yellow]⚠️一度更新したバージョンは元に戻せません⚠️[/color]", "")
 	else:
 		if show_dialog:
-			Global.accept_dialog.display_dialog(
-					"デッキのロードが完了しました！", 
-					"✅ロード完了✅"
-			)
+			await DialogManager.set_dialog(preload("res://resource/dialog_data/common/load_complete.tres"))
+			DialogManager.hide_dialog()
 	# TODO 過去のバージョンのデータだった場合、互換性があるかチェックし、
 	# データのバージョンを更新する処理を実装する必要あり。
 	
