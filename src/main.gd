@@ -22,15 +22,8 @@ func _on_debug_button_up():
 func _on_reset_button_up() -> void:
 	var selected_index: int = await DialogManager.set_dialog(preload("res://resource/dialog_data/main/delete_save_data_1.tres"))
 	if selected_index == 1:
-		var path: String ## セーブデータファイルパス
-		if Global.VERSION_BETA == true:
-			path = Global.save_data_path_beta
-		else:
-			path = Global.save_data_path
-		
-		SaveManager.delete_file(path)
+		SaveManager.delete_game()
 		await DialogManager.set_dialog(preload("res://resource/dialog_data/main/delete_save_data_2.tres"))
-		SaveManager.load_game() # 新規セーブデータ作成
 		await DialogManager.set_dialog(preload("res://resource/dialog_data/save_manager/create_new_save_data.tres"))
 	
 	DialogManager.hide_dialog()

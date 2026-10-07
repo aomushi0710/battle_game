@@ -174,7 +174,7 @@ func _transition_to_battle() -> bool:
 
 		Global.player_deck.monster = [first, second, third]
 	else:
-		if Global.player_deck.is_empty(): # デッキにモンスターがいなければ敗北として中断
+		if Global.player_deck.has_empty_slot(): # デッキにモンスターがいなければ敗北として中断
 			return false
 		
 		battle_scene = load(Global.battle_scene).instantiate()

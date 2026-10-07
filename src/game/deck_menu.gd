@@ -79,14 +79,13 @@ func update(form: Global.Form) -> void:
 
 
 func _on_save_button_up() -> void:
-	Global.deck_name = lineedit.text
-	Global.save_mode = true
-	get_tree().change_scene_to_file(Global.deck_save_scene)
+	SaveManager.is_save_mode = true
+	get_tree().change_scene_to_file(Global.DECK_SAVE_SCENE)
 
 
 func _on_load_button_up() -> void:
-	Global.save_mode = false
-	get_tree().change_scene_to_file(Global.deck_save_scene)
+	SaveManager.is_save_mode = false
+	get_tree().change_scene_to_file(Global.DECK_SAVE_SCENE)
 
 
 func _on_auto_fill_button_up() -> void:

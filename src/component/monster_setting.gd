@@ -62,9 +62,9 @@ func on_mode_entered() -> void:
 			parent.evolution_preview_button.add_item(Global.form_names[i], i)
 	
 	# セーブデータ読み込み
-	if selected_monster.data.id in Global.save_data.monster_levels:
+	if selected_monster.data.id in SaveManager.save_data.monster_levels:
 		parent.level_spinbox.value = \
-		Global.save_data.monster_levels[selected_monster.data.id]
+		SaveManager.save_data.monster_levels[selected_monster.data.id]
 	else:
 		parent.level_spinbox.value = 1
 	# モンスターを表示

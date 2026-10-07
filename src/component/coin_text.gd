@@ -8,7 +8,7 @@ var coin: int:
 
 
 func _ready() -> void:
-	coin = Global.save_data.coin
+	coin = SaveManager.save_data.coin
 
 ## コイン枚数をアニメーションで変動させる関数 Global.coinとは独立している
 func change(n: int) -> void:

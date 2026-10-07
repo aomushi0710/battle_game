@@ -210,13 +210,13 @@ func _on_back_button_up():
 	sound_effects.click.play()
 	match mode:
 		Mode.DECK:
-			if Global.player_deck.is_empty():
+			if Global.player_deck.has_empty_slot():
 				await DialogManager.set_dialog(preload("res://resource/dialog_data/select/deck_empty_slot.tres"))
 				DialogManager.hide_dialog()
 				return
 			
-			SaveManager.save_deck(0, false)
-			get_tree().change_scene_to_file(Global.map_scene)
+			SaveManager.save_deck(0)
+			get_tree().change_scene_to_file(Global.MAP_SCENE)
 		
 		Mode.MONSTER_SELECT:
 			mode = Mode.DECK

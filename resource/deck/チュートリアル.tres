@@ -68,4 +68,6 @@ metadata/_custom_type_script = "uid://caxcvll0814us"
 script = ExtResource("1_oqpqk")
 name = ""
 monster = Array[Object]([SubResource("Resource_hmh1l"), SubResource("Resource_kfs45"), SubResource("Resource_n3cpj")])
+version = null
+is_beta = true
 metadata/_custom_type_script = "uid://dfmkbeq2byy01"
