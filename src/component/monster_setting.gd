@@ -22,20 +22,20 @@ const STATUS_BAR_TEXT: Array[String] = [
 
 @export var parent: MenuMonster
 
-@export var monster_node: TextureRect
-@export var action_select: Control
-@export var slider: HSlider
-@export var spinbox: SpinBox
-@export var action_description: Control
-@export var action_list: ScrollContainer
-@export var pie_chart: PieChart
+@onready var monster_texture := %MonsterTexture as TextureRect
+@onready var action_container := %ActionContainer as ScrollContainer
+@onready var pie_chart := %PieChart as PieChart
 
-@export_category("技説明用")
-@export var power_label: RichTextLabel
-@export var mp_label: RichTextLabel
-@export var type_label: RichTextLabel
-@export var target_label: RichTextLabel
-@export var unlock_condition_label: RichTextLabel
+@onready var action_select := %ActionSelect as Control
+@onready var slider := %ChanceSettingSlider as HSlider
+@onready var spinbox := %ChanceSettingSpinBox as SpinBox
+
+@onready var action_description := %ActionDescription as Control
+@onready var power_label := %Power as RichTextLabel
+@onready var mp_label := %Mp as RichTextLabel
+@onready var type_label := %Type as RichTextLabel
+@onready var target_label := %Target as RichTextLabel
+@onready var unlock_condition_label := %UnlockCondition as RichTextLabel
 
 var text_speed: float = 0.05 ## テキストアニメーションの1文字あたりの再生速度
 var selected_monster: Monster ## [member MenuMonster.selected_monster]を参照
@@ -53,7 +53,7 @@ func on_mode_entered() -> void:
 	parent.camera.offset = Vector2(960, 540)
 	
 	# action_listの中身を削除
-	for child in action_list.get_child(0).get_child(0).get_children():
+	for child in action_container.get_child(0).get_child(0).get_children():
 		child.queue_free()
 	
 	# 進化プレビュー選択肢追加
@@ -94,10 +94,10 @@ func monster_preview(is_text_only: bool = false) -> void:
 	# 棒グラフのアニメーションが終わるまで押せなくする
 	parent.evolution_preview_button.disabled = true
 	
-	monster_node.texture = selected_monster.get_monsterform().image
-	monster_node.get_child(0).get_child(0).monster = (
+	monster_texture.texture = selected_monster.get_monsterform().image
+	monster_texture.get_child(0).get_child(0).monster = (
 		selected_monster.get_monsterform())
-	monster_node.get_child(0).get_child(1).text = (
+	monster_texture.get_child(0).get_child(1).text = (
 		"[b][i]%s[/i][/b]" % selected_monster.get_monsterform().name)
 	
 	bar_chart_update(is_text_only)
@@ -189,7 +189,7 @@ func pie_chart_update() -> void:
 func setting_action_button() -> void:
 	for i in len(selected_monster.action):
 		## 技が追加されるコンテナ(ScrollContainer -> MarginContainer -> VboxContainer)
-		var container = action_list.get_child(0).get_child(0)
+		var container = action_container.get_child(0).get_child(0)
 		var button = load("res://scene/component/action_setting_button.tscn").instantiate()
 		button.action = selected_monster.action[i]
 		# lockはsetter内でactionの情報を取得するため、actionより後で設定
@@ -213,7 +213,7 @@ func setting_action_button() -> void:
 		button.get_child(1).set_meta("help_text", "クリックで技の詳細を確認できます。")
 		container.add_child(button)
 	
-	connect_hover_signal.emit(action_list)
+	connect_hover_signal.emit(action_container)
 
 ## 技ボタンが押された時の関数
 ## [param is_not_editable]が[code]true[/code]の時、確率の操作ができないように
@@ -384,7 +384,7 @@ func _on_chance_value_changed(value: int) -> void:
 	for node in [slider, spinbox]: # sliderとspinboxを更新
 		node.set_value_no_signal(value)
 	
-	action_list.get_child(0).get_child(0).get_child(index).chance = value
+	action_container.get_child(0).get_child(0).get_child(index).chance = value
 
 ## おまかせボタンが押された時
 func _on_random_button_up() -> void:
@@ -396,7 +396,7 @@ func _on_random_button_up() -> void:
 		if actions[i] == selected_action:
 			_on_chance_value_changed(chances[i])
 		else:
-			action_list.get_child(0).get_child(0).get_child(i).chance = chances[i]
+			action_container.get_child(0).get_child(0).get_child(i).chance = chances[i]
 
 
 func _on_control_status_mode_confirm_button_up() -> void:

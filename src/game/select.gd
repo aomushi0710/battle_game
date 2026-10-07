@@ -6,13 +6,41 @@ extends Control
 ## [member MenuMonster.monster_setting]の最新のselected_monsterを取得する。
 signal status_mode_confirm_button_up
 
-@export_category("モードノード")
-@export var deck_menu: Control
-@export var monster_select: Control
-@export var monster_setting: Control
+enum Mode {
+	DECK, ## デッキ編成画面
+	MONSTER_SELECT, ## モンスター選択画面
+	STATUS, ## 技セレクト画面(中央のステータス一括表示画面)
+	ACTION, ## 技セレクト画面(右側の技出現確率設定画面)
+}
+
+## [enum Mode]に対応する[Control]ノードの[NodePath]の辞書
+const MODE_TO_NODEPATH: Dictionary[Mode, String] = {
+	Mode.DECK: "DeckMenu", 
+	Mode.MONSTER_SELECT: "MonsterSelect", 
+	Mode.STATUS: "MonsterSetting", 
+	Mode.ACTION: "MonsterSetting", 
+}
+
+## [enum Mode]に対応する[param confirm_button]ノードの
+##メタデータ[code]help_text[/code]に入る[String]の辞書
+const CONFIRM_BUTTON_HELP_TEXT: Dictionary[Mode, String] = {
+	Mode.DECK: " ", 
+	Mode.MONSTER_SELECT: " ", 
+	Mode.STATUS: "設定を保存し、パーティ編成画面へ戻ります。", 
+	Mode.ACTION: "現在選択中の技を登録します。", 
+}
+
+## [enum Mode]に対応する[param back_button]ノードの
+##メタデータ[code]help_text[/code]に入る[String]の辞書
+const BACK_BUTTON_HELP_TEXT: Dictionary[Mode, String] = {
+	Mode.DECK: "現在のデッキ内容を保存し、マップ画面へ戻ります。", 
+	Mode.MONSTER_SELECT: "パーティ編成画面へ戻ります。", 
+	Mode.STATUS: "[color=red]設定を保存せずに、[/color]モンスターセレクト画面へ戻ります。", 
+	Mode.ACTION: "元の画面へ戻ります。", 
+}
 
 @export_category("CanvasLayer")
-@export var sound_effects: Node2D
+@export var sound_effects: Node
 @export var background: Control
 @export var camera: Camera2D
 @export var canvas_layer_ui: Control
@@ -26,6 +54,7 @@ signal status_mode_confirm_button_up
 
 var camera_tween: Tween
 var selected_slot_index: int ## デッキ内で現在編集中のモンスターの位置を示すindex
+
 ## 現在選択中の[Monster]の複製。[br]
 ## デッキにいるモンスターに影響を与えずに各種データのプレビューを可能にするために使用。
 var selected_monster: Monster:
@@ -65,36 +94,7 @@ var level: int: ## プレビュー時のモンスターレベル
 		elif mode == Mode.ACTION:
 			monster_setting.monster_preview(true)
 
-## [enum Mode]に対応する[Control]ノードの[NodePath]の辞書
-const MODE_TO_NODEPATH: Dictionary[Mode, String] = {
-	Mode.DECK: "DeckMenu", 
-	Mode.MONSTER_SELECT: "MonsterSelect", 
-	Mode.STATUS: "MonsterSetting", 
-	Mode.ACTION: "MonsterSetting", 
-}
-## [enum Mode]に対応する[param confirm_button]ノードの
-##メタデータ[code]help_text[/code]に入る[String]の辞書
-const CONFIRM_BUTTON_HELP_TEXT: Dictionary[Mode, String] = {
-	Mode.DECK: " ", 
-	Mode.MONSTER_SELECT: " ", 
-	Mode.STATUS: "設定を保存し、パーティ編成画面へ戻ります。", 
-	Mode.ACTION: "現在選択中の技を登録します。", 
-}
-## [enum Mode]に対応する[param back_button]ノードの
-##メタデータ[code]help_text[/code]に入る[String]の辞書
-const BACK_BUTTON_HELP_TEXT: Dictionary[Mode, String] = {
-	Mode.DECK: "現在のデッキ内容を保存し、マップ画面へ戻ります。", 
-	Mode.MONSTER_SELECT: "パーティ編成画面へ戻ります。", 
-	Mode.STATUS: "[color=red]設定を保存せずに、[/color]モンスターセレクト画面へ戻ります。", 
-	Mode.ACTION: "元の画面へ戻ります。", 
-}
 
-enum Mode {
-	DECK, ## デッキ編成画面
-	MONSTER_SELECT, ## モンスター選択画面
-	STATUS, ## 技セレクト画面(中央のステータス一括表示画面)
-	ACTION, ## 技セレクト画面(右側の技出現確率設定画面)
-}
 
 ## 現在表示中の画面[br]
 ## この変数に代入を行う時は常に親ノードでの
@@ -197,6 +197,9 @@ var mode: Mode = Mode.DECK:
 		): # 既に選ばれた技を選んだ時
 			confirm_button.disabled = true # 再登録を不可に上書き
 
+@onready var deck_menu := %DeckMenu as Control
+@onready var monster_select := %MonsterSelect as Control
+@onready var monster_setting := %MonsterSetting as Control
 
 func _ready() -> void:
 	mode = Mode.DECK

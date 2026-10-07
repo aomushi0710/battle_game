@@ -1,7 +1,7 @@
 extends Control
 
-@export var stage_texture: TextureRect
-@export var stage_animation_texture: TextureRect
+@onready var stage_texture := %Texture as TextureRect
+@onready var stage_animation_texture := %AnimationTexture as TextureRect
 @export var dialog: TabContainer
 
 var stage: Stage

@@ -7,7 +7,7 @@
 [sub_resource type="Theme" id="Theme_ta0ta"]
 default_font_size = 40
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y071y"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fosfv"]
 content_margin_left = 8.0
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
@@ -65,31 +65,32 @@ corner_radius_bottom_right = 32
 corner_detail = 20
 anti_aliasing = false
 
-[node name="ActionSettingButton" type="HBoxContainer" node_paths=PackedStringArray("chance_text", "action_button", "delete_button")]
+[node name="ActionSettingButton" type="HBoxContainer"]
 custom_minimum_size = Vector2(0, 64)
 theme = ExtResource("1_y071y")
 theme_override_constants/separation = 0
 script = ExtResource("2_y071y")
-chance_text = NodePath("Chance")
-action_button = NodePath("ActionButton")
-delete_button = NodePath("Delete")
 
 [node name="Chance" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 clip_contents = false
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_ta0ta")
-theme_override_styles/normal = SubResource("StyleBoxFlat_y071y")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_fosfv")
 bbcode_enabled = true
 text = "  0%"
 metadata/help_text = "この技に現在設定されている出現確率。"
 
 [node name="ActionButton" parent="." instance=ExtResource("2_raq3y")]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(590, 0)
 layout_mode = 2
 
 [node name="Delete" type="Button" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2

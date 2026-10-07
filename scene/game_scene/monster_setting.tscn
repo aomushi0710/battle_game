@@ -729,16 +729,13 @@ metadata/help_text = "指定した形態で、モンスターの情報を表示�
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(960, 540)
 
-[node name="Control" type="Control" parent="." node_paths=PackedStringArray("deck_menu", "monster_select", "monster_setting", "sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_14bbj")
 script = ExtResource("2_1hqx4")
-deck_menu = NodePath("DeckMenu")
-monster_select = NodePath("MonsterSelect")
-monster_setting = NodePath("MonsterSetting")
 sound_effects = NodePath("../SoundEffects")
 background = NodePath("../Background")
 camera = NodePath("../Camera2D")
@@ -751,7 +748,8 @@ evolution_preview = NodePath("../CanvasLayer/UI/EvolutionPreview")
 evolution_preview_button = NodePath("../CanvasLayer/UI/EvolutionPreview/OptionButton")
 level_spinbox = NodePath("../CanvasLayer/UI/Status/Level")
 
-[node name="DeckMenu" type="Control" parent="Control" node_paths=PackedStringArray("parent", "evolution_preview_button", "lineedit", "monster_icons", "monster_names")]
+[node name="DeckMenu" type="Control" parent="Control" node_paths=PackedStringArray("parent", "evolution_preview_button")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -760,9 +758,6 @@ offset_bottom = 40.0
 script = ExtResource("8_w7dfb")
 parent = NodePath("..")
 evolution_preview_button = NodePath("../../CanvasLayer/UI/EvolutionPreview/OptionButton")
-lineedit = NodePath("Deck/LineEdit")
-monster_icons = NodePath("Deck/MonsterIcons")
-monster_names = NodePath("Deck/Names")
 
 [node name="Deck" type="VBoxContainer" parent="Control/DeckMenu"]
 layout_mode = 0
@@ -772,32 +767,35 @@ offset_right = 1410.0
 offset_bottom = 573.0
 theme_override_constants/separation = 0
 
-[node name="LineEdit" type="LineEdit" parent="Control/DeckMenu/Deck"]
+[node name="DeckName" type="LineEdit" parent="Control/DeckMenu/Deck"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_e1jok")
 placeholder_text = "デッキ名を入力"
 max_length = 20
 metadata/help_text = "デッキに名前を入力できます。"
 
-[node name="MonsterIcons" type="HBoxContainer" parent="Control/DeckMenu/Deck"]
+[node name="MonsterIconContainer" type="HBoxContainer" parent="Control/DeckMenu/Deck"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="MonsterIcon" parent="Control/DeckMenu/Deck/MonsterIcons" instance=ExtResource("8_ltw0u")]
+[node name="MonsterIcon" parent="Control/DeckMenu/Deck/MonsterIconContainer" instance=ExtResource("8_ltw0u")]
 layout_mode = 2
 
-[node name="MonsterIcon2" parent="Control/DeckMenu/Deck/MonsterIcons" instance=ExtResource("8_ltw0u")]
+[node name="MonsterIcon2" parent="Control/DeckMenu/Deck/MonsterIconContainer" instance=ExtResource("8_ltw0u")]
 layout_mode = 2
 
-[node name="MonsterIcon3" parent="Control/DeckMenu/Deck/MonsterIcons" instance=ExtResource("8_ltw0u")]
+[node name="MonsterIcon3" parent="Control/DeckMenu/Deck/MonsterIconContainer" instance=ExtResource("8_ltw0u")]
 layout_mode = 2
 
-[node name="Names" type="HBoxContainer" parent="Control/DeckMenu/Deck"]
+[node name="MonsterNameContainer" type="HBoxContainer" parent="Control/DeckMenu/Deck"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_spf5i")
 theme_override_constants/separation = 0
 
-[node name="Name" type="RichTextLabel" parent="Control/DeckMenu/Deck/Names"]
+[node name="Name" type="RichTextLabel" parent="Control/DeckMenu/Deck/MonsterNameContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
@@ -808,7 +806,7 @@ text = "[i]Lv.1[/i]
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Name2" type="RichTextLabel" parent="Control/DeckMenu/Deck/Names"]
+[node name="Name2" type="RichTextLabel" parent="Control/DeckMenu/Deck/MonsterNameContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
@@ -819,7 +817,7 @@ text = "[i]Lv.1[/i]
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Name3" type="RichTextLabel" parent="Control/DeckMenu/Deck/Names"]
+[node name="Name3" type="RichTextLabel" parent="Control/DeckMenu/Deck/MonsterNameContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
@@ -870,7 +868,8 @@ text = "🗑️リセット"
 color = Color(1, 0, 0.0166664, 1)
 metadata/help_text = "現在のデッキをリセットします。"
 
-[node name="MonsterSelect" type="Control" parent="Control" node_paths=PackedStringArray("parent", "evolution_preview_button", "monster_containers")]
+[node name="MonsterSelect" type="Control" parent="Control" node_paths=PackedStringArray("parent", "evolution_preview_button")]
+unique_name_in_owner = true
 visible = false
 anchors_preset = 0
 offset_left = 550.0
@@ -879,18 +878,19 @@ offset_bottom = 40.0
 script = ExtResource("10_jsdkd")
 parent = NodePath("..")
 evolution_preview_button = NodePath("../../CanvasLayer/UI/EvolutionPreview/OptionButton")
-monster_containers = NodePath("ScrollContainer/MonsterContainers")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/MonsterSelect"]
 layout_mode = 2
 offset_right = 1370.0
 offset_bottom = 853.0
 
-[node name="MonsterContainers" type="VBoxContainer" parent="Control/MonsterSelect/ScrollContainer"]
+[node name="MonsterContainer" type="VBoxContainer" parent="Control/MonsterSelect/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="MonsterSetting" type="Control" parent="Control" node_paths=PackedStringArray("parent", "monster_node", "action_select", "slider", "spinbox", "action_description", "action_list", "pie_chart", "power_label", "mp_label", "type_label", "target_label", "unlock_condition_label")]
+[node name="MonsterSetting" type="Control" parent="Control" node_paths=PackedStringArray("parent")]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -908,20 +908,9 @@ size_flags_vertical = 3
 theme = ExtResource("1_14bbj")
 script = ExtResource("8_4lobs")
 parent = NodePath("..")
-monster_node = NodePath("Image")
-action_select = NodePath("ActionSelect")
-slider = NodePath("ActionSelect/ChanceSettingSlider")
-spinbox = NodePath("ActionSelect/ChanceSettingSpinBox")
-action_description = NodePath("ActionDescription")
-action_list = NodePath("ActionList")
-pie_chart = NodePath("PieChart")
-power_label = NodePath("ActionDescription/Power")
-mp_label = NodePath("ActionDescription/Mp")
-type_label = NodePath("ActionDescription/Type")
-target_label = NodePath("ActionDescription/Target")
-unlock_condition_label = NodePath("ActionDescription/UnlockCondition")
 
-[node name="Image" type="TextureRect" parent="Control/MonsterSetting"]
+[node name="MonsterTexture" type="TextureRect" parent="Control/MonsterSetting"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 832.0
 offset_top = 600.0
@@ -930,7 +919,7 @@ offset_bottom = 856.0
 pivot_offset = Vector2(128, 128)
 texture = ExtResource("3_250y8")
 
-[node name="name" type="HBoxContainer" parent="Control/MonsterSetting/Image"]
+[node name="NameContainer" type="HBoxContainer" parent="Control/MonsterSetting/MonsterTexture"]
 clip_contents = true
 layout_direction = 2
 layout_mode = 0
@@ -941,13 +930,13 @@ offset_bottom = -6.0
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="element" type="TextureRect" parent="Control/MonsterSetting/Image/name"]
+[node name="Element" type="TextureRect" parent="Control/MonsterSetting/MonsterTexture/NameContainer"]
 layout_mode = 2
 texture = ExtResource("4_3py80")
 expand_mode = 2
 script = ExtResource("5_4lobs")
 
-[node name="name" type="RichTextLabel" parent="Control/MonsterSetting/Image/name"]
+[node name="Name" type="RichTextLabel" parent="Control/MonsterSetting/MonsterTexture/NameContainer"]
 clip_contents = false
 layout_mode = 2
 theme = SubResource("Theme_oeulo")
@@ -959,12 +948,14 @@ autowrap_mode = 0
 vertical_alignment = 1
 
 [node name="ActionSelect" type="Control" parent="Control/MonsterSetting"]
+unique_name_in_owner = true
 anchors_preset = 0
 offset_left = 1920.0
 offset_right = 1960.0
 offset_bottom = 40.0
 
 [node name="ChanceSettingSlider" type="HSlider" parent="Control/MonsterSetting/ActionSelect"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 22.0
 offset_top = 100.0
@@ -978,6 +969,7 @@ theme_override_styles/slider = SubResource("StyleBoxLine_ilscs")
 ticks_on_borders = true
 
 [node name="ChanceSettingSpinBox" type="SpinBox" parent="Control/MonsterSetting/ActionSelect"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
@@ -1029,6 +1021,7 @@ text = "100%"
 horizontal_alignment = 1
 
 [node name="ActionDescription" type="Control" parent="Control/MonsterSetting"]
+unique_name_in_owner = true
 anchors_preset = 0
 offset_left = 1921.0
 offset_top = 188.0
@@ -1036,6 +1029,7 @@ offset_right = 2711.0
 offset_bottom = 566.0
 
 [node name="Power" type="RichTextLabel" parent="Control/MonsterSetting/ActionDescription"]
+unique_name_in_owner = true
 clip_contents = false
 layout_mode = 2
 offset_left = 20.0
@@ -1049,6 +1043,7 @@ scroll_active = false
 metadata/help_text = "技の威力。"
 
 [node name="Mp" type="RichTextLabel" parent="Control/MonsterSetting/ActionDescription"]
+unique_name_in_owner = true
 clip_contents = false
 layout_mode = 0
 offset_left = 20.0
@@ -1063,6 +1058,7 @@ scroll_active = false
 metadata/help_text = "技を発動する時に消費するMPの量。"
 
 [node name="Type" type="RichTextLabel" parent="Control/MonsterSetting/ActionDescription"]
+unique_name_in_owner = true
 clip_contents = false
 layout_mode = 2
 offset_left = 238.0
@@ -1075,6 +1071,7 @@ text = "分類:[color=red]物理[/color]"
 scroll_active = false
 
 [node name="Target" type="RichTextLabel" parent="Control/MonsterSetting/ActionDescription"]
+unique_name_in_owner = true
 clip_contents = false
 layout_mode = 2
 offset_left = 238.0
@@ -1088,6 +1085,7 @@ text = "[color=yellow]対象[/color]:敵味方全体"
 scroll_active = false
 
 [node name="UnlockCondition" type="RichTextLabel" parent="Control/MonsterSetting/ActionDescription"]
+unique_name_in_owner = true
 clip_contents = false
 layout_mode = 0
 offset_left = 553.0
@@ -1140,12 +1138,14 @@ text = "🔄️おまかせ"
 metadata/help_text = "ランダムに技とその出現確率を登録します。"
 
 [node name="PieChart" parent="Control/MonsterSetting" instance=ExtResource("16_oeulo")]
+unique_name_in_owner = true
 offset_left = 1000.0
 offset_top = 70.0
 offset_right = 2000.0
 offset_bottom = 520.0
 
-[node name="ActionList" type="ScrollContainer" parent="Control/MonsterSetting"]
+[node name="ActionContainer" type="ScrollContainer" parent="Control/MonsterSetting"]
+unique_name_in_owner = true
 z_index = -2
 layout_mode = 0
 offset_left = 1096.0
@@ -1154,7 +1154,7 @@ offset_right = 1896.0
 offset_bottom = 915.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ydts3")
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/MonsterSetting/ActionList"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/MonsterSetting/ActionContainer"]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1164,7 +1164,7 @@ theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 18
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MonsterSetting/ActionList/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MonsterSetting/ActionContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1188,6 +1188,7 @@ color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
 [node name="Mesh" type="TextureRect" parent="Background"]
+unique_name_in_owner = true
 self_modulate = Color(0, 1, 0, 0.501961)
 z_index = -10
 layout_mode = 0
@@ -1209,10 +1210,10 @@ metadata/_edit_lock_ = true
 [connection signal="evolution_form_changed" from="Control/DeckMenu" to="Control" method="_on_option_button_item_selected"]
 [connection signal="selected_monster_changed" from="Control/DeckMenu" to="Control" method="_on_selected_monster_changed"]
 [connection signal="selected_slot_index_changed" from="Control/DeckMenu" to="Control" method="_on_selected_slot_index_changed"]
-[connection signal="text_changed" from="Control/DeckMenu/Deck/LineEdit" to="Control/DeckMenu" method="_on_line_edit_text_changed"]
-[connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [0]]
-[connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon2" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [1]]
-[connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIcons/MonsterIcon3" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [2]]
+[connection signal="text_changed" from="Control/DeckMenu/Deck/DeckName" to="Control/DeckMenu" method="_on_line_edit_text_changed"]
+[connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIconContainer/MonsterIcon" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [0]]
+[connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIconContainer/MonsterIcon2" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [1]]
+[connection signal="button_up" from="Control/DeckMenu/Deck/MonsterIconContainer/MonsterIcon3" to="Control/DeckMenu" method="_on_monster_icon_button_up" binds= [2]]
 [connection signal="button_up" from="Control/DeckMenu/Save" to="Control/DeckMenu" method="_on_save_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/Load" to="Control/DeckMenu" method="_on_load_button_up"]
 [connection signal="button_up" from="Control/DeckMenu/AutoFill" to="Control/DeckMenu" method="_on_auto_fill_button_up"]

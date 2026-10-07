@@ -1,13 +1,13 @@
-class_name ScrollingLabel
-extends Panel
 ## ツールチップなどのテキストを表示するパネル。[br]
 ## 長文は電光掲示板のように流して表示します。[br]
 ## テキストを表示させたいノードにメタデータ「help_text」を追加してください。
+class_name ScrollingLabel
+extends Panel
 
-@onready var mask := $mask
-@onready var label := $mask/text
-var text_speed: float = 0.05
-var tween: Tween
+var text_speed: float = 0.05 ## テキストのスクロール速度 TODO 設定画面などで調節可能にする
+
+@onready var mask := %Mask as Control
+@onready var label := %Text as RichTextLabel
 
 ## help_textデータを持つ全てのノード[param node]にシグナルを接続する再起関数
 func connect_hover_signal(node: Node) -> void:
@@ -26,6 +26,7 @@ func connect_hover_signal(node: Node) -> void:
 
 ## [param label]に表示される[param text]を少しずつ表示させるアニメーションを再生する関数
 func text_animation(text: String) -> void:
+	var tween: Tween
 	# アニメーション中なら中断
 	if tween and tween.is_running():
 		tween.kill()

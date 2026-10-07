@@ -1,11 +1,9 @@
 extends Control
 
-@onready var mesh = $mesh
-## 背景のメッシュがちょうどループする位置
-var roop_pos: Vector2
+@onready var mesh := %Mesh as TextureRect
+@onready var roop_pos := Vector2(-mesh.size.x / 2 + 22, -mesh.size.y / 2 + 24) ## 背景のメッシュがループする位置
 
 func _ready() -> void:
-	roop_pos = Vector2(-mesh.size.x / 2 + 22, -mesh.size.y / 2 + 24)
 	animation()
 
 ## 背景メッシュの移動アニメーションループの関数

@@ -7,4 +7,5 @@
 script = ExtResource("1_owo5j")
 
 [node name="Click" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 stream = ExtResource("1_17xic")

@@ -1,8 +1,8 @@
 extends Control
 
-@onready var menu := $"../menu"
-@onready var dialog := $"../dialog"
-@onready var player := $"../../world/player"
+@onready var menu := $"../Menu"
+@onready var dialog := $"../Dialog"
+@onready var player := $"../../World/Player"
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -1,5 +1,6 @@
+## バトル中に使用される、アイテム表示用のボタン
 class_name ItemButton
 extends TextureButton
 
 var item: Item ## ボタンに割り当てられたアイテム
-var used: bool = false ## true:使用不可状態 false: 使用可能状態
+var is_used: bool = false ## アイテムがバトル中で既に使用されたかどうか

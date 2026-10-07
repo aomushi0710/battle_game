@@ -3,15 +3,15 @@ class_name AbilityDescription
 
 signal ability_extra_button_up
 
-@onready var background := $background
-@onready var name_label := $name
-@onready var target_label := $target
-@onready var chance_label := $chance
-@onready var ability_effect := $AbilityEffect ## AbilityEffectでのみ表示
-@onready var ability_buff := $AbilityBuff ## AbilityBUff及びAbilityDebuffでのみ表示
-@onready var ability_healing := $AbilityHealing ## AbilityHealing及びAbilityReductionでのみ表示
-@onready var ability_critical := $AbilityCritical ## AbilityCritical及びAbilityFumbleでのみ表示
-@onready var ability_extra := $AbilityExtra ## AbilityExtraでのみ表示
+@onready var background := %Background as TextureRect
+@onready var name_label := %Name as RichTextLabel
+@onready var target_label := %Target as RichTextLabel
+@onready var chance_label := %Chance as RichTextLabel
+@onready var ability_effect_ui := %AbilityEffect as Control ## AbilityEffectでのみ表示
+@onready var ability_buff_ui := %AbilityBuff as Control ## AbilityBUff及びAbilityDebuffでのみ表示
+@onready var ability_healing_ui := %AbilityHealing as Control ## AbilityHealing及びAbilityReductionでのみ表示
+@onready var ability_critical_ui := %AbilityCritical as Control ## AbilityCritical及びAbilityFumbleでのみ表示
+@onready var ability_extra_ui := %AbilityExtra as Control ## AbilityExtraでのみ表示
 
 var ability: Ability
 
@@ -27,7 +27,7 @@ func _ready() -> void:
 		# 不要なラベルを隠す
 		for child in get_children():
 			if child.get_class() == "Control":
-				if child == ability_buff:
+				if child == ability_buff_ui:
 					child.show()
 				else:
 					child.hide()
@@ -47,7 +47,7 @@ func _ready() -> void:
 				color_text = "violet"
 		
 		## バフの倍率を表示するRichTextLabel
-		var multiplier: RichTextLabel = ability_buff.get_child(0)
+		var multiplier: RichTextLabel = ability_buff_ui.get_child(0)
 		multiplier.text = (
 			"[color=%s]倍率[/color]:%8.2f倍" % [color_text, ability.amount])
 		
@@ -55,7 +55,7 @@ func _ready() -> void:
 		multiplier_style.border_color = Color(color_text)
 		
 		## バフの持続ターン数を表示するRichTextLabel
-		var turn: RichTextLabel = ability_buff.get_child(1)
+		var turn: RichTextLabel = ability_buff_ui.get_child(1)
 		if ability.turn == -1: # ターン数に-1が設定されていた場合は∞ターン
 			turn.text = "[color=salmon]ターン[/color]:∞"
 		else:
@@ -69,7 +69,7 @@ func _ready() -> void:
 		# 不要なラベルを隠す
 		for child in get_children():
 			if child.get_class() == "Control":
-				if child == ability_buff:
+				if child == ability_buff_ui:
 					child.show()
 				else:
 					child.hide()
@@ -89,7 +89,7 @@ func _ready() -> void:
 				color_text = "violet"
 		
 		## デバフの倍率を表示するRichTextLabel
-		var multiplier: RichTextLabel = ability_buff.get_child(0)
+		var multiplier: RichTextLabel = ability_buff_ui.get_child(0)
 		multiplier.text = (
 			"[color=%s]倍率[/color]:%8.2f倍" % [color_text, 1 / ability.amount])
 		
@@ -97,7 +97,7 @@ func _ready() -> void:
 		multiplier_style.border_color = Color(color_text)
 		
 		## バフの持続ターン数を表示するRichTextLabel
-		var turn: RichTextLabel = ability_buff.get_child(1)
+		var turn: RichTextLabel = ability_buff_ui.get_child(1)
 		if ability.turn == -1: # ターン数に-1が設定されていた場合は∞ターン
 			turn.text = "[color=cornflower_blue]ターン[/color]:∞"
 		else:
@@ -110,7 +110,7 @@ func _ready() -> void:
 		# 不要なラベルを隠す
 		for child in get_children():
 			if child.get_class() == "Control":
-				if child == ability_healing:
+				if child == ability_healing_ui:
 					child.show()
 				else:
 					child.hide()
@@ -158,7 +158,7 @@ func _ready() -> void:
 		space += "[/color]"
 		
 		## 増加量を表示するRichTextLabel
-		var amount: RichTextLabel = ability_healing.get_child(0)
+		var amount: RichTextLabel = ability_healing_ui.get_child(0)
 		amount.text = "%s%s%s" % [status_text, space, amount_text]
 		
 		var amount_style: StyleBoxFlat = amount.get_theme_stylebox("normal")
@@ -169,13 +169,13 @@ func _ready() -> void:
 		# 不要なラベルを隠す
 		for child in get_children():
 			if child.get_class() == "Control":
-				if child == ability_critical:
+				if child == ability_critical_ui:
 					child.show()
 				else:
 					child.hide()
 		
 		## 増加量を表示するRichTextLabel
-		var amount: RichTextLabel = ability_critical.get_child(0)
+		var amount: RichTextLabel = ability_critical_ui.get_child(0)
 		var space_length: int = 10 ## 半角スペースの長さ
 		amount_text = "%.2f" % ability.amount
 		
@@ -199,7 +199,7 @@ func _ready() -> void:
 		# 不要なラベルを隠す
 		for child in get_children():
 			if child.get_class() == "Control":
-				if child == ability_extra:
+				if child == ability_extra_ui:
 					child.show()
 				else:
 					child.hide()
@@ -212,7 +212,7 @@ func _ready() -> void:
 		button.button_up.connect(func(): 
 			ability_extra_button_up.emit(button.action))
 		
-		ability_extra.add_child(button)
+		ability_extra_ui.add_child(button)
 	
 	else:
 		gradient.colors = [Color.BLACK, Color.BLACK]

@@ -1,7 +1,7 @@
-extends Node2D
+extends Node
 
-@onready var buff = $buff
-@onready var debuff = $debuff
-@onready var damage = $damage
-@onready var heal = $heal
-@onready var evolution = $evolution
+@onready var buff = %Buff
+@onready var debuff = %Debuff
+@onready var damage = %Damage
+@onready var heal = %Heal
+@onready var evolution = %Evolution

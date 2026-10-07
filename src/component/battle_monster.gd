@@ -1,7 +1,7 @@
 class_name BattleMonster
 extends TextureButton
 
-@export var monster_icon: MonsterIcon
+@onready var monster_icon := %MonsterIcon as MonsterIcon
 
 const DAMAGE_TEXT = preload("res://scene/component/damage_text.tscn")
 const EFFECT_ICON = preload("res://scene/component/effect_icon.tscn")

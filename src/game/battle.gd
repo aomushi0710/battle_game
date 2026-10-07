@@ -1,11 +1,11 @@
-extends Node2D
 class_name Battle
-
-@export var stage_node: Control
-@export var battle_node: Control
+extends Node2D
 
 var stage: Stage
 var enemy_deck: Deck
+
+@onready var stage_node := %Background as Control
+@onready var battle_node := %Battle as Control
 
 func _ready() -> void:
 	stage_node.setup(stage)

@@ -244,14 +244,15 @@ position = Vector2(864, -188)
 id = 2
 dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt"), SubResource("Resource_a6rn7"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
 
-[node name="Player" type="CharacterBody2D" parent="World" node_paths=PackedStringArray("canvas_layer", "world", "camera")]
+[node name="Player" type="CharacterBody2D" parent="World" node_paths=PackedStringArray("canvas_layer", "world", "dialog", "terrain")]
 position = Vector2(32, 288)
 collision_mask = 7
 script = ExtResource("3_urblq")
 speed = 384
 canvas_layer = NodePath("../../CanvasLayer")
 world = NodePath("..")
-camera = NodePath("Camera2D")
+dialog = NodePath("../../CanvasLayer/Dialog")
+terrain = NodePath("../TileMap/Terrain")
 
 [node name="Image" type="Sprite2D" parent="World/Player"]
 scale = Vector2(0.25, 0.25)
@@ -263,9 +264,11 @@ one_way_collision_margin = 0.0
 debug_color = Color(1, 0, 0, 0.419608)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
+unique_name_in_owner = true
 zoom = Vector2(1.5, 1.5)
 
 [node name="InteractionArea" type="Area2D" parent="World/Player"]
+unique_name_in_owner = true
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player/InteractionArea"]

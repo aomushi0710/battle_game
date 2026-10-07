@@ -12,6 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_usqu2")
 
 [node name="Background" type="ColorRect" parent="."]
+unique_name_in_owner = true
 z_index = 10
 layout_mode = 0
 offset_right = 1920.0
@@ -19,6 +20,7 @@ offset_bottom = 1080.0
 color = Color(0, 0, 0, 1)
 
 [node name="Light" type="ColorRect" parent="."]
+unique_name_in_owner = true
 z_index = 10
 layout_mode = 1
 anchors_preset = 8

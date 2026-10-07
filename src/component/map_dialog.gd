@@ -1,19 +1,22 @@
 extends Control
 
-@export var color_rect: ColorRect
+const BUTTON_SCENE = preload("res://scene/component/game_button.tscn")
 
-@onready var hboxcontainer := $TextBox/MarginContainer/HBoxContainer
-@onready var label := $TextBox/MarginContainer/HBoxContainer/Text
-@onready var texture := $TextBox/MarginContainer/HBoxContainer/Image
-@onready var name_plate := $NamePlate
-@onready var name_panel := $NamePlate/Panel
-@onready var name_label := $NamePlate/Panel/Text
-@onready var name_plate_right := $NamePlate/Right
-@onready var buttons := $Buttons
+@export var color_rect: ColorRect ## バトル開始カットイン時に表示される
+
 var text_tween: Tween
 var text_speed: float = 0.04
 var now_id: int ## 現在表示中の[class MapDialogData]の[code]id[/code]
 var signboard_id: int ## 現在表示中の[member SignBoard.id]
+
+@onready var text_area := %TextArea as HBoxContainer
+@onready var label := %Text as RichTextLabel
+@onready var texture := %Texture as TextureRect
+@onready var name_plate := %NamePlate as Control
+@onready var name_panel := %Panel as TextureRect
+@onready var name_label := %Name as RichTextLabel
+@onready var name_plate_right := %Right as Polygon2D
+@onready var buttons := $Buttons
 
 signal dialog_opened ## ダイアログが開かれる時に発行されるシグナル
 signal dialog_closed ## ダイアログが閉じられる時に発行されるシグナル
@@ -87,9 +90,9 @@ func display_dialog(data: MapDialogData) -> int:
 	# 画像表示処理
 	texture.texture = data.image
 	if data.image:
-		hboxcontainer.add_theme_constant_override("separation", 55)
+		text_area.add_theme_constant_override("separation", 55)
 	else:
-		hboxcontainer.add_theme_constant_override("separation", 0)
+		text_area.add_theme_constant_override("separation", 0)
 	
 	# ボタン表示処理
 	if data.button_text:

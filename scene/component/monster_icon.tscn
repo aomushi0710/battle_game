@@ -38,20 +38,16 @@ shader_parameter/brightness = 1.0
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/outline_width = 5.0
 
-[node name="MonsterIcon" type="TextureButton" node_paths=PackedStringArray("frame", "element_frame", "element_icon", "back_ground", "monster_image")]
+[node name="MonsterIcon" type="TextureButton"]
 custom_minimum_size = Vector2(300, 300)
 offset_right = 300.0
 offset_bottom = 300.0
 mouse_default_cursor_shape = 2
 script = ExtResource("1_1byke")
-frame = NodePath("Frame")
-element_frame = NodePath("ElementFrame")
-element_icon = NodePath("ElementImage")
-back_ground = NodePath("Background")
-monster_image = NodePath("MonsterImage")
 shader_material = SubResource("ShaderMaterial_4dpjf")
 
 [node name="Frame" type="Polygon2D" parent="."]
+unique_name_in_owner = true
 scale = Vector2(4, 4)
 color = Color(0.25, 0.25, 0.25, 1)
 texture = SubResource("GradientTexture2D_5e0w7")
@@ -60,6 +56,7 @@ polygon = PackedVector2Array(1.09301e-07, 4, -2.38419e-07, 71, 4, 75, 71, 75, 75
 uv = PackedVector2Array(1.09301e-07, 4, -2.38419e-07, 71, 4, 75, 71, 75, 75, 71, 75, 4, 71, -3.733e-08, 4, 3.30033e-08)
 
 [node name="Background" type="TextureRect" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 22.0
 offset_top = 22.0
@@ -67,7 +64,8 @@ offset_right = 278.0
 offset_bottom = 278.0
 texture = SubResource("GradientTexture2D_tce2y")
 
-[node name="MonsterImage" type="TextureRect" parent="."]
+[node name="MonsterTexture" type="TextureRect" parent="."]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_fuo1n")
 layout_mode = 0
 offset_left = 22.0
@@ -77,13 +75,15 @@ offset_bottom = 278.0
 stretch_mode = 2
 
 [node name="ElementFrame" type="Polygon2D" parent="."]
+unique_name_in_owner = true
 scale = Vector2(4, 4)
 color = Color(0.25, 0.25, 0.25, 1)
 texture = SubResource("GradientTexture2D_5e0w7")
 polygon = PackedVector2Array(0, 4, 0, 13, 4, 17, 13, 17, 17, 13, 17, 4, 13, 0, 4, 0)
 uv = PackedVector2Array(0, 4, 0, 13, 4, 17, 13, 17, 17, 13, 17, 4, 13, 0, 4, 0)
 
-[node name="ElementImage" type="TextureRect" parent="."]
+[node name="ElementTexture" type="TextureRect" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0

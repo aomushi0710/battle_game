@@ -56,6 +56,7 @@ offset_bottom = 8.0
 text = "debug"
 
 [node name="Version" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 z_index = -1
 clip_contents = false
 offset_left = 973.0

@@ -20,8 +20,9 @@ config/icon="uid://cioi83ubpqfrg"
 
 [autoload]
 
-Global="*res://src/system/Global.gd"
+Global="*res://scene/system/global.tscn"
 DialogManager="*res://scene/component/dialog.tscn"
+SaveManager="*res://src/system/save_manager.gd"
 
 [debug]
 

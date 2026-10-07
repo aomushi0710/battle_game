@@ -1,6 +1,6 @@
 extends Battle
 
-@export var dialog_node: TabContainer
+@onready var dialog_node := %DialogTab as TabContainer
 
 func _ready() -> void:
 	battle_node.tutorial_mode = true

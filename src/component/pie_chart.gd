@@ -3,8 +3,8 @@ extends Control
 
 signal draw_ended ## _draw関数終了後に発行されます
 
-const elements_font_size: int = 30 ## フォントサイズ
-const border_width: float = 2 ## ボーダーの太さ
+const ELEMENTS_FONT_SIZE: int = 30 ## フォントサイズ
+const BORDER_WIDTH: float = 2 ## ボーダーの太さ
 
 var actions: Array[ActionData]
 var chances: Array[int]
@@ -61,7 +61,7 @@ func _draw() -> void:
 		var angle_point := Vector2(cos(mid_angle), sin(mid_angle)) * radius
 		var text: String = "%s\n[b]%d%%[/b]" % [actions[i].name, chances[i]] ## 技の名前と確率
 		## フォントサイズと技名の長さから計算
-		var label_size := Vector2(len(actions[i].name) * elements_font_size * 1.1, elements_font_size * 3.2)
+		var label_size := Vector2(len(actions[i].name) * ELEMENTS_FONT_SIZE * 1.1, ELEMENTS_FONT_SIZE * 3.2)
 		var label_position := center - (label_size / 2) + (angle_point / 1.2) ## labelの位置
 		
 		var style := StyleBoxFlat.new() ## label背景用styleboxを生成
@@ -91,7 +91,7 @@ func _draw() -> void:
 			center,
 			center + Vector2(cos(angle), sin(angle)) * radius,
 			border_color, 
-			border_width,
+			BORDER_WIDTH,
 			true
 		])
 		previous_angle += current_angle
@@ -100,7 +100,7 @@ func _draw() -> void:
 	for params in separation_lines_parameters:
 		draw_line.callv(params)
 	
-	draw_arc(center, radius, 0, TAU, 64, border_color, border_width, true) # 外枠線
+	draw_arc(center, radius, 0, TAU, 64, border_color, BORDER_WIDTH, true) # 外枠線
 	draw_ended.emit()
 
 ## 既に使用された色のリストcolor_listと、追加したい色colorを引数とする。[br]

@@ -61,25 +61,23 @@ default_font_size = 100
 [sub_resource type="Theme" id="Theme_vdm6v"]
 default_font_size = 25
 
-[node name="Battle" type="Node2D" node_paths=PackedStringArray("stage_node", "battle_node")]
+[node name="Battle" type="Node2D"]
 process_mode = 1
 script = ExtResource("1_a0jlr")
-stage_node = NodePath("Background")
-battle_node = NodePath("Battle")
 
-[node name="Background" type="Control" parent="." node_paths=PackedStringArray("stage_texture", "stage_animation_texture", "dialog")]
+[node name="Background" type="Control" parent="." node_paths=PackedStringArray("dialog")]
+unique_name_in_owner = true
 z_index = -10
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_jjjva")
-stage_texture = NodePath("Image")
-stage_animation_texture = NodePath("AnimationImage")
 dialog = NodePath("../Battle/Button/DialogTab")
 metadata/_edit_lock_ = true
 
-[node name="AnimationImage" type="TextureRect" parent="Background"]
+[node name="AnimationTexture" type="TextureRect" parent="Background"]
+unique_name_in_owner = true
 z_index = -1
 layout_mode = 0
 offset_right = 1920.0
@@ -87,14 +85,16 @@ offset_bottom = 1080.0
 texture = ExtResource("2_g5d16")
 metadata/_edit_lock_ = true
 
-[node name="Image" type="TextureRect" parent="Background"]
+[node name="Texture" type="TextureRect" parent="Background"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("3_sraw4")
 metadata/_edit_lock_ = true
 
-[node name="Battle" type="Control" parent="."]
+[node name="Battle" type="Control" parent="." node_paths=PackedStringArray("sound_effect")]
+unique_name_in_owner = true
 process_mode = 1
 layout_mode = 3
 anchors_preset = 0
@@ -102,6 +102,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("4_jjjva")
 script = ExtResource("2_arwha")
+sound_effect = NodePath("../SoundEffects2")
 
 [node name="PlayerDeck" type="Control" parent="Battle"]
 z_index = -1
@@ -145,6 +146,7 @@ battle_node = NodePath("..")
 action_container = NodePath("Actions")
 
 [node name="Change" parent="Battle/Button" instance=ExtResource("8_a0jlr")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 136.0
 offset_top = 455.0
@@ -166,6 +168,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Back" type="Button" parent="Battle/Button"]
+unique_name_in_owner = true
 modulate = Color(1, 0, 0, 1)
 z_index = 1
 layout_mode = 0
@@ -177,6 +180,7 @@ disabled = true
 text = "⬅️戻る"
 
 [node name="Main" type="Control" parent="Battle/Button"]
+unique_name_in_owner = true
 anchors_preset = 0
 offset_left = 220.0
 offset_top = 865.0
@@ -216,6 +220,7 @@ scale = Vector2(0.85, 0.85)
 theme = SubResource("Theme_nfpvw")
 
 [node name="Item" type="Control" parent="Battle/Button"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -225,6 +230,7 @@ offset_right = 220.0
 offset_bottom = 1080.0
 
 [node name="Target" type="Control" parent="Battle/Button"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -260,6 +266,7 @@ focus_mode = 0
 disabled = true
 
 [node name="DialogTab" type="TabContainer" parent="Battle/Button" node_paths=PackedStringArray("next_page_arrow")]
+unique_name_in_owner = true
 process_mode = 3
 z_index = 2
 layout_mode = 0

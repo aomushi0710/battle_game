@@ -6,14 +6,14 @@ signal selected_monster_changed(monster: Monster)
 signal evolution_form_changed(form: Global.Form)
 signal selected_slot_index_changed(index: int)
 
-const deck_size: int = 3 ## デッキのサイズ
+const DECK_SIZE: int = 3 ## デッキのサイズ
 
 @export var parent: MenuMonster
 @export var evolution_preview_button: OptionButton
 
-@export var lineedit: LineEdit
-@export var monster_icons: HBoxContainer
-@export var monster_names: HBoxContainer
+@onready var deck_name_line_edit := %DeckName as LineEdit
+@onready var monster_icon_container := %MonsterIconContainer as  HBoxContainer
+@onready var monster_name_container := %MonsterNameContainer as  HBoxContainer
 
 var max_evolution_form: Global.Form ## デッキのモンスターで最大の進化形態
 ## 親の[member MenuMonster.selected_monster]を取得した結果が入る変数
@@ -31,14 +31,14 @@ func update(form: Global.Form) -> void:
 	if Global.player_deck == null:
 		return
 	
-	lineedit.text = Global.player_deck.name
-	for i in range(deck_size):
+	deck_name_line_edit.text = Global.player_deck.name
+	for i in range(DECK_SIZE):
 		## [Monster]型で、モンスターが存在するかの確認とレベルの取得に用いる
 		var monster := Global.player_deck.monster[i]
 		
 		if monster.data == null:
-			monster_icons.get_child(i).data = null
-			monster_names.get_child(i).text = " \n "
+			monster_icon_container.get_child(i).data = null
+			monster_name_container.get_child(i).text = " \n "
 		else:
 			# formの形態を持たないモンスターはモンスターの持つ最後の形態で表示される
 			if monster.data.evolution_forms.size() > form:
@@ -46,9 +46,9 @@ func update(form: Global.Form) -> void:
 			else:
 				monster.form = len(monster.data.evolution_forms) - 1
 			
-			monster_icons.get_child(i).data = monster.data
-			monster_icons.get_child(i).form = monster.form
-			monster_names.get_child(i).text = "[i]Lv.%2d[/i]\n[b]%s[/b]" % \
+			monster_icon_container.get_child(i).data = monster.data
+			monster_icon_container.get_child(i).form = monster.form
+			monster_name_container.get_child(i).text = "[i]Lv.%2d[/i]\n[b]%s[/b]" % \
 			[monster.level, monster.get_monsterform().name]
 		
 			if monster.data.evolution_forms.size() - 1 > max_evolution_form:
@@ -106,7 +106,7 @@ func _on_reset_button_up() -> void:
 func _on_monster_icon_button_up(index: int) -> void:
 	selected_slot_index_changed.emit(index)
 	
-	if monster_icons.get_child(index).data == null:
+	if monster_icon_container.get_child(index).data == null:
 		parent.mode = parent.Mode.MONSTER_SELECT
 	else:
 		selected_monster_changed.emit(Global.player_deck.monster[index])

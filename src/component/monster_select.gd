@@ -15,7 +15,7 @@ var now_monster_id: int ## status関数、同じモンスターかどうかの�
 @export var parent: MenuMonster
 @export var evolution_preview_button: OptionButton
 
-@export var monster_containers: VBoxContainer
+@onready var monster_container := %MonsterContainer as VBoxContainer
 
 func _on_戻る_button_up():
 	get_tree().change_scene_to_file(Global.deck_scene)
@@ -49,19 +49,19 @@ func _ready() -> void:
 			parent.mode = parent.Mode.STATUS
 		)
 		
-		if i > monster_containers.get_child_count() * HCONTAINER_LIMIT: # コンテナがいっぱいの時
+		if i > monster_container.get_child_count() * HCONTAINER_LIMIT: # コンテナがいっぱいの時
 			var container = HBoxContainer.new()
 			container.add_theme_constant_override("separation", 20)
-			monster_containers.add_child(container) # 新たなコンテナ生成
+			monster_container.add_child(container) # 新たなコンテナ生成
 			
-		for container in monster_containers.get_children():
+		for container in monster_container.get_children():
 			if container.get_child_count() < HCONTAINER_LIMIT: # 横への表示数の限界でなければ
 				container.add_child(button) # 登録
 				break
 
 
 func on_mode_entered():
-	for container: HBoxContainer in monster_containers.get_children():
+	for container: HBoxContainer in monster_container.get_children():
 		for child: MonsterIcon in container.get_children():
 			child.disabled = false
 			child.icon_modulate = 1.0
@@ -91,7 +91,7 @@ func on_mode_entered():
 func monster_icon_disabled(id: int) -> void:
 	var j := (id - 1) / HCONTAINER_LIMIT ## 行指定
 	var i := id - HCONTAINER_LIMIT * j - 1 ## 列指定
-	var button: MonsterIcon = monster_containers.get_child(j).get_child(i)
+	var button: MonsterIcon = monster_container.get_child(j).get_child(i)
 	
 	button.disabled = true
 	button.icon_modulate = 0.5
@@ -99,6 +99,6 @@ func monster_icon_disabled(id: int) -> void:
 
 ## 表示されている全ての[MonsterIcon]の[member MonsterIcon.form]を更新する関数
 func update(form: Global.Form) -> void:
-	for container in monster_containers.get_children():
+	for container in monster_container.get_children():
 		for child: MonsterIcon in container.get_children():
 			child.form = form

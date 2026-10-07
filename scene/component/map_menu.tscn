@@ -39,12 +39,11 @@ corner_radius_bottom_left = 80
 shadow_color = Color(1, 0, 0, 0.5)
 shadow_size = 10
 
-[node name="Menu" type="Control" node_paths=PackedStringArray("help_label")]
+[node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_kjvt6")
 script = ExtResource("2_4k2b5")
-help_label = NodePath("ScrollingLabel")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
@@ -109,17 +108,12 @@ script = ExtResource("4_qdv60")
 metadata/help_text = "現在の所持コイン枚数"
 
 [node name="ScrollingLabel" parent="." instance=ExtResource("2_r5awk")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 32.0
 offset_top = 970.0
 offset_right = 1891.0
 offset_bottom = 1051.0
-
-[node name="mask" parent="ScrollingLabel" index="0"]
-offset_right = 1857.0
-
-[node name="text" parent="ScrollingLabel/mask" index="0"]
-offset_right = 1855.0
 
 [node name="Close" parent="." instance=ExtResource("3_qdv60")]
 layout_mode = 0

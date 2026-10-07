@@ -1,7 +1,8 @@
 extends "res://src/game/new_battle.gd"
 
-@onready var arrow_mark = $"../arrow_mark"
-@onready var pause_text = $"../tutorial_pause_text"
+@export var arrow_mark: RichTextLabel
+@export var pause_text: RichTextLabel
+
 var arrow_tween: Tween
 var pause_tween: Tween
 

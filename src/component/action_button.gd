@@ -3,8 +3,8 @@ class_name ActionButton
 extends Button
 ## 技のボタン
 
-@export var element: TextureRect
-@export var background: TextureRect
+@onready var element := %Element as TextureRect
+@onready var background := %Background as TextureRect
 
 var tween: Tween ## 属性アイコン点滅アニメーション
 var n: int = 0 ## 属性アイコン点滅用

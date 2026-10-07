@@ -6,9 +6,9 @@ signal delete_button_up
 const BASE_SHADOW_SIZE := 10
 const BASE_COLOR_V := 0.5
 
-@export var chance_text: RichTextLabel
-@export var action_button: ActionButton
-@export var delete_button: Button
+@onready var chance_label := %Chance as RichTextLabel
+@onready var action_button := %ActionButton as ActionButton
+@onready var delete_button := %Delete as Button
 
 @export var lock: bool: ## 解放条件を満たしていないなど、ロックされた状態で表示したい時
 	set(value):
@@ -17,20 +17,26 @@ const BASE_COLOR_V := 0.5
 			chance = 0
 			lock = value
 			
+			if not is_node_ready():
+				return
+			
 			action_button.modulate.v = 0.5
-			chance_text.add_theme_font_size_override("normal_font_size", 35)
-			chance_text.set_meta("help_text", 
+			chance_label.add_theme_font_size_override("normal_font_size", 35)
+			chance_label.set_meta("help_text", 
 			"[color=yellow]この技はロックされています！[/color]" + 
 			"モンスターがLv.%d以上に到達すると解放されます。" % 
 			action.unlock_level)
-			chance_text.text = " 🔒 "
+			chance_label.text = " 🔒 "
 		else:
 			lock = value
 			chance = 0
 			
+			if not is_node_ready():
+				return
+			
 			action_button.modulate.v = 1.0
-			chance_text.add_theme_font_size_override("normal_font_size", 40)
-			chance_text.set_meta("help_text", "この技に現在設定されている出現確率。")
+			chance_label.add_theme_font_size_override("normal_font_size", 40)
+			chance_label.set_meta("help_text", "この技に現在設定されている出現確率。")
 
 @export var action: Action: ## 技
 	set(act):
@@ -52,11 +58,11 @@ const BASE_COLOR_V := 0.5
 		
 		chance = value
 		
-		if chance_text != null:
-			chance_text.text = "%3d%%" % chance
+		if chance_label != null:
+			chance_label.text = "%3d%%" % chance
 			
 			var style: StyleBoxFlat = (
-				chance_text.get_theme_stylebox("normal").duplicate(true))
+				chance_label.get_theme_stylebox("normal").duplicate(true))
 			
 			if chance == 0:
 				style.shadow_size = 0
@@ -68,7 +74,7 @@ const BASE_COLOR_V := 0.5
 				style.bg_color.v = BASE_COLOR_V + chance / 200.0
 				delete_button.disabled = false
 			
-			chance_text.add_theme_stylebox_override("normal", style)
+			chance_label.add_theme_stylebox_override("normal", style)
 
 
 func _on_delete_button_button_up() -> void:

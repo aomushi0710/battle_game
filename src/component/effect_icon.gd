@@ -1,6 +1,6 @@
 extends TextureButton
 
-@onready var turn_label := $turn
+@onready var turn_label := %Turn
 @onready var parent: BattleMonster = $"../.."
 
 var effect: MonsterEffect

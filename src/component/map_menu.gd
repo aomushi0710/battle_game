@@ -1,6 +1,6 @@
 extends Control
 
-@export var help_label: ScrollingLabel
+@onready var help_label := %ScrollingLabel as ScrollingLabel
 
 func _ready() -> void:
 	help_label.connect_hover_signal(self)

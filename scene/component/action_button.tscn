@@ -13,7 +13,7 @@ gradient = SubResource("Gradient_nlxtl")
 fill_from = Vector2(0, 1)
 metadata/_snap_count = 2
 
-[node name="ActionButton" type="Button" node_paths=PackedStringArray("element", "background")]
+[node name="ActionButton" type="Button"]
 offset_right = 590.0
 offset_bottom = 64.0
 mouse_default_cursor_shape = 2
@@ -22,10 +22,9 @@ text = " "
 alignment = 0
 text_overrun_behavior = 3
 script = ExtResource("2_hae2l")
-element = NodePath("Element")
-background = NodePath("Background")
 
 [node name="Element" type="TextureRect" parent="."]
+unique_name_in_owner = true
 visible = false
 self_modulate = Color(1, 1, 1, 0.999445)
 layout_mode = 1
@@ -38,6 +37,7 @@ expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="TextureRect" parent="."]
+unique_name_in_owner = true
 z_index = -1
 layout_mode = 1
 anchors_preset = 15

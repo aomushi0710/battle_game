@@ -11,11 +11,13 @@ mouse_default_cursor_shape = 2
 theme = ExtResource("1_cgojv")
 script = ExtResource("2_d8bsp")
 
-[node name="Image" type="TextureButton" parent="."]
+[node name="TextureButton" type="TextureButton" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("2_0whoj")
 
 [node name="Price" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 bbcode_enabled = true

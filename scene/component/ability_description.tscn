@@ -110,6 +110,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_uvmqb")
 script = ExtResource("2_r8xot")
 
 [node name="Background" type="TextureRect" parent="."]
+unique_name_in_owner = true
 z_index = -1
 layout_mode = 0
 offset_left = 2.0
@@ -120,6 +121,7 @@ texture = SubResource("GradientTexture2D_2som6")
 metadata/_edit_vertical_guides_ = [-26.0]
 
 [node name="Name" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 clip_contents = false
 layout_mode = 0
 offset_left = 9.0
@@ -132,6 +134,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Target" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 clip_contents = false
 layout_mode = 0
 offset_left = 16.0
@@ -145,6 +148,7 @@ bbcode_enabled = true
 text = "[color=yellow]対象[/color]:敵味方全体"
 
 [node name="Chance" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 clip_contents = false
 layout_mode = 0
 offset_left = 217.0
@@ -159,11 +163,13 @@ text = "[color=green]確率[/color]:100%"
 fit_content = true
 
 [node name="AbilityEffect" type="Control" parent="."]
+unique_name_in_owner = true
 visible = false
 anchors_preset = 0
 mouse_filter = 2
 
 [node name="AbilityBuff" type="Control" parent="."]
+unique_name_in_owner = true
 visible = false
 anchors_preset = 0
 mouse_filter = 2
@@ -195,6 +201,7 @@ bbcode_enabled = true
 text = "[color=cornflower_blue]ターン[/color]:99"
 
 [node name="AbilityHealing" type="Control" parent="."]
+unique_name_in_owner = true
 visible = false
 anchors_preset = 0
 mouse_filter = 2
@@ -214,6 +221,7 @@ text = "[color=darkorange]ダメージ倍率[/color]:0000000.00倍"
 autowrap_mode = 0
 
 [node name="AbilityCritical" type="Control" parent="."]
+unique_name_in_owner = true
 visible = false
 anchors_preset = 0
 mouse_filter = 2
@@ -233,5 +241,6 @@ text = "[color=green]HP回復量[/color]:99999999[color=dodgerblue]MAG[/color]�
 autowrap_mode = 0
 
 [node name="AbilityExtra" type="Control" parent="."]
+unique_name_in_owner = true
 anchors_preset = 0
 mouse_filter = 2

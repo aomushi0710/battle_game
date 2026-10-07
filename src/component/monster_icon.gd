@@ -2,11 +2,12 @@
 class_name MonsterIcon
 extends TextureButton
 
-@export var frame: Polygon2D
-@export var element_frame: Polygon2D
-@export var element_icon: TextureRect
-@export var back_ground: TextureRect
-@export var monster_image: TextureRect
+@onready var frame := %Frame as Polygon2D
+@onready var element_frame := %ElementFrame as Polygon2D
+@onready var background := %Background as TextureRect
+@onready var element_texture := %ElementTexture as TextureRect
+@onready var monster_texture := %MonsterTexture as TextureRect
+
 @export var shader_material: Material
 
 var tween: Tween
@@ -33,35 +34,35 @@ var icon_modulate: float:
 	set(value):
 		icon_modulate = value
 		modulate.v = icon_modulate
-		monster_image.material.set_shader_parameter("brightness", icon_modulate)
+		monster_texture.material.set_shader_parameter("brightness", icon_modulate)
 
 ## インスタンス生成時に、自動でshaderを複製してから適用
 func _ready() -> void:
-	monster_image.material = shader_material.duplicate()
+	monster_texture.material = shader_material.duplicate()
 
 ## [param data]プロパティが変更された時に見た目を更新する関数
 func _update() -> void:
 	if tween and tween.is_running():
 		element_index = 0
-		element_icon.self_modulate.a = 1
+		element_texture.self_modulate.a = 1
 		tween.kill()
-	if back_ground == null or frame == null or monster_image == null:
+	if background == null or frame == null or monster_texture == null:
 		return
 	
-	back_ground.texture = back_ground.texture.duplicate(true)
-	var gradient: Gradient = back_ground.texture.gradient ## 背景のグラデーション
+	background.texture = background.texture.duplicate(true)
+	var gradient: Gradient = background.texture.gradient ## 背景のグラデーション
 	if data == null:
 		frame.color = Color(0.25, 0.25, 0.25)
 		element_frame.color = Color(0.25, 0.25, 0.25)
-		element_icon.texture = null
-		monster_image.texture = null
+		element_texture.texture = null
+		monster_texture.texture = null
 		gradient.colors = PackedColorArray([Color(0.5, 0.5, 0.5)])
 		gradient.offsets = PackedFloat32Array([0])
 	else:
 		frame.color = data.evolution_forms[form].element[0].color
 		element_frame.color = data.evolution_forms[form].element[0].color
-		element_icon.texture = data.evolution_forms[form].element[0].icon
-		monster_image.texture = data.evolution_forms[form].image
+		element_texture.texture = data.evolution_forms[form].element[0].icon
+		monster_texture.texture = data.evolution_forms[form].image
 		
 		if len(data.evolution_forms[form].element) <= 1: # 複数属性ではない時
 			gradient.colors = PackedColorArray([
@@ -92,7 +93,7 @@ func blink_fade_out() -> void:
 	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUINT)
 	tween.parallel().tween_property(element_frame, "color", Color.WHITE, 1)\
 	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUINT)
-	tween.parallel().tween_property(element_icon, "self_modulate:a", 0, 1)\
+	tween.parallel().tween_property(element_texture, "self_modulate:a", 0, 1)\
 	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUINT)
 	tween.tween_callback(blink_fade_in)
 
@@ -110,7 +111,7 @@ func blink_fade_in() -> void:
 	tween.parallel().tween_property(element_frame, "color", 
 	data.evolution_forms[form].element[element_index].color, 1)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUINT)
-	tween.parallel().tween_property(element_icon, "self_modulate:a", 1, 1)\
+	tween.parallel().tween_property(element_texture, "self_modulate:a", 1, 1)\
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUINT)
 	tween.tween_callback(blink_fade_out)
 
@@ -119,4 +120,4 @@ func change() -> void:
 	element_index += 1
 	if element_index >= len(data.evolution_forms[form].element): # 無効なindexを取らないように初期化
 		element_index = 0
-	element_icon.texture = data.evolution_forms[form].element[element_index].icon
+	element_texture.texture = data.evolution_forms[form].element[element_index].icon

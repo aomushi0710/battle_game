@@ -1,3 +1,3 @@
-extends Node2D
+extends Node
 
-@onready var click := $click
+@onready var click := %Click

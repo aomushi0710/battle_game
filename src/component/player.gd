@@ -3,13 +3,9 @@ extends CharacterBody2D
 @export var speed = 256
 @export var canvas_layer: CanvasLayer
 @export var world: Node2D
-@export var camera: Camera2D
-@export var color_rect: ColorRect
-
-@onready var dialog := $"../../CanvasLayer/dialog"
-@onready var interaction_area := $InteractionArea ## プレイヤーの前方にある検知エリア
-@onready var terrain := $"../tilemap/terrain"
-@onready var tile_size: int = terrain.tile_set.tile_size.x ## タイル1マスの大きさ
+@export var dialog: MapDialog
+@export var terrain: TileMapLayer
+@export var color_rect: ColorRect ## バトル開始カットイン時に表示される
 
 var object_interactable ## 触れられるオブジェクトの参照
 var is_moving: bool = false ## 移動中かどうかのフラグ
@@ -17,6 +13,8 @@ var can_move: bool = true ## プレイヤーが移動可能かどうかのフラ
 var is_dialog_active: bool = false ## ダイアログが開かれているかどうかのフラグ
 var dialog_just_closed: bool = false ## ダイアログが閉じられるまで入力を止めるフラグ
 
+@onready var camera := %Camera2D as Camera2D
+@onready var interaction_area := %InteractionArea as Area2D ## プレイヤーの前方にある検知エリア
 
 func _ready() -> void:
 	position = Global.map_position
@@ -43,7 +41,7 @@ func _physics_process(_delta: float):
 	
 	# プレイヤーの方向に応じて、検知エリアの向きを変える
 	if direction != Vector2.ZERO:
-		interaction_area.position = direction * tile_size
+		interaction_area.position = direction * terrain.tile_set.tile_size.x
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -1,15 +1,16 @@
+@tool
 class_name DeckSlot
 extends ColorRect
 
-@export var save_button: Button
-@export var load_button: Button
-@export var reset_button: Button
-@export var deck_slot_label: RichTextLabel
-@export var deck_name_label: Label
-@export var version_label: RichTextLabel
-@export var monster_icon_1: MonsterIcon
-@export var monster_icon_2: MonsterIcon
-@export var monster_icon_3: MonsterIcon
+@onready var save_button := %Save as Button
+@onready var load_button := %Load as Button
+@onready var delete_button := %Delete as Button
+@onready var deck_slot_number_label := %DeckSlotNumber as RichTextLabel
+@onready var deck_name_label := %DeckName as Label
+@onready var version_label := %Version as RichTextLabel
+@onready var monster_icon_1 := %MonsterIcon1 as MonsterIcon
+@onready var monster_icon_2 := %MonsterIcon2 as MonsterIcon
+@onready var monster_icon_3 := %MonsterIcon3 as MonsterIcon
 
 var slot: int ## デッキスロット番号
 

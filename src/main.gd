@@ -1,12 +1,14 @@
 extends Node2D
 
+@onready var version_label := %Version as RichTextLabel
+
 func _ready() -> void:
 	randomize()
 	Global.enemy_deck.deck_creator(false)
 	var version_text: String = ""
 	if Global.VERSION_BETA:
 		version_text += "β "
-	$version.text = version_text + "[i]ver.%s[/i]" % Global.version
+	version_label.text = version_text + "[i]ver.%s[/i]" % Global.version
 
 
 func _on_button_pressed():

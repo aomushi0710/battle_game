@@ -11,16 +11,21 @@
 script = ExtResource("1_8jy4m")
 
 [node name="Buff" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 stream = ExtResource("2_qf4g3")
 
 [node name="Debuff" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 stream = ExtResource("3_7b4xo")
 
 [node name="Damage" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 stream = ExtResource("4_i2rjt")
 
 [node name="Heal" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 stream = ExtResource("5_qemhu")
 
 [node name="Evolution" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 stream = ExtResource("6_vagwo")

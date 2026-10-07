@@ -1,18 +1,5 @@
 extends Control
 
-const monster_scene = preload("res://scene/component/battle_monster.tscn")
-
-@onready var sound_effect := $"../SoundEffects"
-@onready var dialog = $button/dialogtab
-var tween: Tween
-var player_next_index: int = 0 ## 次にチェンジするモンスターのindex
-var enemy_next_index: int = 0
-var player_deck: Array[BattleMonster]
-var enemy_deck: Array[BattleMonster]
-var player_monster: BattleMonster
-var enemy_monster: BattleMonster
-var tutorial_mode: bool = false ## true:チュートリアル
-var back_disabled: bool = false ## 全ての戻るボタンが true:使用不可 false:使用可能
 ## 死亡時に交代するモンスターが選ばれるまで待つawait用シグナル
 signal changed
 ## バトル終了シグナル。[br]勝利時は[code]true[/code]を返します。
@@ -24,6 +11,22 @@ signal cutin_ended
 signal player_ready
 ## チュートリアル用:モンスター行動完了シグナル
 signal command_ended
+
+const monster_scene = preload("res://scene/component/battle_monster.tscn")
+
+@export var sound_effect: Node
+
+var tween: Tween
+var player_next_index: int = 0 ## 次にチェンジするモンスターのindex
+var enemy_next_index: int = 0
+var player_deck: Array[BattleMonster]
+var enemy_deck: Array[BattleMonster]
+var player_monster: BattleMonster
+var enemy_monster: BattleMonster
+var tutorial_mode: bool = false ## true:チュートリアル
+var back_disabled: bool = false ## 全ての戻るボタンが true:使用不可 false:使用可能
+
+@onready var dialog := %DialogTab as TabContainer
 
 # 味方と敵のデッキを準備
 func setup() -> void:
