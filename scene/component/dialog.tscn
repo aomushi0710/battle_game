@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ihhhui2rpk8s" path="res://src/component/dialog.gd" id="1_buau7"]
 [ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="2_p0hwe"]
-[ext_resource type="Texture2D" uid="uid://b5nrfwe5e6q35" path="res://asset/image/S4_logo.PNG" id="3_buau7"]
+[ext_resource type="Texture2D" uid="uid://b5nrfwe5e6q35" path="res://asset/image/S4_logo.PNG" id="3_j64rt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38lea"]
 bg_color = Color(0, 0, 0, 1)
@@ -91,7 +91,7 @@ custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("3_buau7")
+texture = ExtResource("3_j64rt")
 expand_mode = 1
 stretch_mode = 5
 
