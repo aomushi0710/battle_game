@@ -7,11 +7,11 @@ func _ready() -> void:
 
 
 func _on_monster_button_up() -> void:
-	get_tree().change_scene_to_file(Global.select_scene)
+	get_tree().change_scene_to_file(Global.SELECT_SCENE)
 
 
 func _on_shop_button_up() -> void:
-	get_tree().change_scene_to_file(Global.shop_scene)
+	get_tree().change_scene_to_file(Global.SHOP_SCENE)
 
 
 func _on_save_button_up() -> void:
@@ -21,4 +21,4 @@ func _on_save_button_up() -> void:
 
 
 func _on_title_button_up() -> void:
-	get_tree().change_scene_to_file(Global.main_scene)
+	get_tree().change_scene_to_file(Global.MAIN_SCENE)

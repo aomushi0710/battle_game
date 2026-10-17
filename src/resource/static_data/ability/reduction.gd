@@ -24,8 +24,8 @@ enum AmountType { ## 参照するステータス及び計算式
 
 @export var status: Status ## 減少されるステータス
 @export var amount_type: AmountType ## 参照するステータス及び計算式
-## 回復量[br][br]
-## [code]定数[/code]では[param amount]だけ回復され、[br]
-## [code]現在ゲージ割合[/code], [code]吸収[/code]などでは[param amount]が1なら100%, 0.5なら50%の割合で回復します。[br]
-## [code]ATK[/code], [code]DEF[/code]などのステータス参照の場合は[param amount]倍したステータスの値だけ回復します。
+## 減少量[br][br]
+## [constant AmountType.定数]では[member amount]だけ減少され、[br]
+## [constant AmountType.現在ゲージ割合], [constant AmountType.吸収]などでは[member amount]が1なら100%, 0.5なら50%の割合で減少します。[br]
+## [constant AmountType.ATK], [constant AmountType.DEF]などのステータス参照の場合は[member amount]倍したステータスの値だけ減少します。
 @export var amount: float

@@ -1,8 +1,10 @@
 extends VBoxContainer
+class_name ShopItem
+## ショップに販売されるアイテムのシーン
 
-signal button_up(item) ## ボタンが押された時に、アイテム情報を送るシグナル
+signal button_up(item: Item) ## ボタンが押された時に、アイテム情報を送るシグナル
 
-var item
+var item: Item
 var level: int
 var price: int
 
@@ -12,7 +14,7 @@ var price: int
 func _ready() -> void:
 	name = item.name
 	texture_button.texture_normal = item.image
-	texture_button.button_up.connect(func(): button_up.emit(self)) # 押されたらシグナル発火
+	texture_button.button_up.connect(_on_texture_button_button_up) # 押されたらシグナル発火
 
 ## 販売アイテムのレベルと値段を算出し直す関数
 func update() -> void:
@@ -23,3 +25,7 @@ func update() -> void:
 		"[color=gold]%d[/color]" % price
 	else:
 		price_label.text = "[color=red]売り切れ[/color]"
+
+## [signal BaseButton.button_up]を中継し[signal button_up]を発行します
+func _on_texture_button_button_up() -> void:
+	button_up.emit(self)

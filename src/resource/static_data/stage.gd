@@ -7,8 +7,8 @@ class_name Stage
 @export var name: String
 
 @export_category("Texture")
-@export var texture: Texture ## ステージの画像
-@export var animation_texture: Texture ## アニメーションされるステージの画像
+@export var texture: Texture2D ## ステージの画像
+@export var animation_texture: Texture2D ## アニメーションされるステージの画像
 
 @export_category("Flavor Text")
 @export var flavor_text: Array[BattlelogData]: ## ステージ固有のフレーバーテキスト
@@ -17,4 +17,4 @@ class_name Stage
 		flavor_text_weight.resize(len(flavor_text))
 		flavor_text_weight.fill(1)
 
-@export var flavor_text_weight: Array[int] ## [member Stage.flavor_text]の重みづけテーブル
+@export var flavor_text_weight: Array[int] ## [member flavor_text]の重みづけテーブル

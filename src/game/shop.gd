@@ -3,7 +3,7 @@ extends Control
 const ITEM_SCENE = preload("res://scene/component/shop_item.tscn")
 
 var coin_tween: Tween
-var selected_item
+var selected_item: Item
 
 @onready var item_container := %Item as HBoxContainer
 @onready var buy_button := %Buy as Button
@@ -14,7 +14,7 @@ var selected_item
 
 func _ready() -> void:
 	for i in range(1, len(Global.item_data) + 1): # 商品表示
-		var shop_item = ITEM_SCENE.instantiate()
+		var shop_item := ITEM_SCENE.instantiate() as ShopItem
 		shop_item.item = Global.item_data[i]
 		shop_item.button_up.connect(item_button_up)
 		item_container.add_child(shop_item)
@@ -35,8 +35,8 @@ func update(paid: int) -> void:
 	coin_label.change(paid)
 
 ## アイテムが選ばれた時、説明文を表示する関数
-func item_button_up(shop_item) -> void:
-	# 現在選ばれたアイテム情報を記録
+func item_button_up(shop_item: Item) -> void:
+	# 現在選ばれたアイテム情報を記録s
 	selected_item = shop_item
 	var item: Item = shop_item.item # ショップアイテムシーンに内蔵されているアイテム
 	

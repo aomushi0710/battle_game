@@ -61,7 +61,7 @@ func _on_action_button_selected(index: int) -> void:
 	button_index = index
 	selected_action = selected_action_button.action # 選ばれた技を登録
 	# 選ばれた技ボタンのアニメーション
-	var instance: ActionButton = Global.action_button.instantiate()
+	var instance: ActionButton = Global.ACTION_BUTTON.instantiate() as ActionButton
 	instance.name = "selected"
 	instance.action = selected_action
 	instance.position = Vector2( # 選ばれたボタンの座標から取得
@@ -84,7 +84,7 @@ func _on_action_button_selected(index: int) -> void:
 	tween.tween_property(instance, "modulate:a", 0, 0.5)
 	tween.tween_property(instance, "modulate:a", 1, 0.5)
 	# 技説明テキスト表示
-	var descriptions: Array[String] = Global.action_description_creator(selected_action, true)
+	var descriptions: Array[String] = _action_description_creator(selected_action, true)
 	var description_text: Array[String] = ["[i][u]%s[/u][/i]\n%s　　MP Cost:[color=aqua]%d[/color]\n" % 
 		[selected_action.name, descriptions[0], selected_action.mp] + 
 		"%s　　Power　:[color=red]%d[/color]" % [descriptions[1], selected_action.power]]
@@ -92,7 +92,7 @@ func _on_action_button_selected(index: int) -> void:
 	var ability_description: Array = [null] ## 特殊効果説明画像のリスト
 	for ability: Ability in selected_action.ability:
 		description_text.append(ability.description)
-		var abi_des = Global.ability_description.instantiate()
+		var abi_des = Global.ABILITY_DESCRIPTION.instantiate()
 		abi_des.ability = ability
 		ability_description.append(abi_des)
 	if battle_node.tutorial_mode == false:
@@ -440,7 +440,7 @@ func target_button_setting() -> void:
 						disable = false
 					# 近接の時、場にいないモンスターは暗くし、押せなくする
 					if (target == Enums.Target.近接 and
-						battle_node.enemy_deck[i].field == false):
+						battle_node.enemy_deck[i].on_field == false):
 						target_buttons.get_child(i).modulate = Color(0.5, 0.5, 0.5)
 						disable = true
 					
@@ -462,7 +462,7 @@ func target_button_setting() -> void:
 						disable = false
 					# 近接の時、場にいないモンスターは暗くし、押せなくする
 					if (target == Enums.Target.自分 and
-						battle_node.player_deck[i].field == false):
+						battle_node.player_deck[i].on_field == false):
 						target_buttons.get_child(i).disabled = true
 						target_buttons.get_child(i).modulate = Color(0.5, 0.5, 0.5)
 						disable = true
@@ -616,3 +616,71 @@ func status_dialog(i: int) -> void:
 			" [color=dodger_blue]MAG:%3d[/color] " % mon.MAG + 
 			" [color=violet]RES:%3d[/color]" % mon.RES
 		], false, BattlelogData.Tab.STATUS))
+
+## [ActionData]を引数として、バトルダイアログに表示する文字列を返します
+func _action_description_creator(act: ActionData, blank: bool) -> Array[String]:
+	var range_text: String ## 技の対象
+	var range_tip: String ## 技の対象の補足
+	var range_blank: String = "" ## 技の対象表示の空白
+	var dmg_type_text: String ## 技のステータス参照先
+	var dmg_type_tip: String ## 技のステータス参照先の補足
+	var dmg_type_blank: String ## 技のステータス参照先表示の空白
+	
+	match act.target:
+		Enums.Target.なし:
+			range_text = "なし"
+			range_tip = "発動対象が存在しません"
+		Enums.Target.近接:
+			range_text = "近接"
+			range_tip = "場に出ている敵に技を発動します。"
+		Enums.Target.遠隔:
+			range_text = "遠隔"
+			range_tip = "場に出ているかどうかに関わらず敵に技を発動します。"
+		Enums.Target.敵全体:
+			range_text = "敵全体"
+			range_tip = "敵全体に技を発動します。"
+		Enums.Target.自分:
+			range_text = "自分"
+			range_tip = "自分に技を発動します。"
+		Enums.Target.味方単体:
+			range_text = "味方単体"
+			range_tip = "味方単体に技を発動します。"
+		Enums.Target.味方全体:
+			range_text = "味方全体"
+			range_tip = "味方全体に技を発動します。"
+		Enums.Target.敵味方全体:
+			range_text = "敵味方全体"
+			range_tip = "敵味方全体に技を発動します。"
+		_:
+			range_text = "[color=red][b]ERROR[/b][/color]"
+			range_tip = ""
+	
+	match act.damage_type:
+		ActionData.DamageType.なし:	
+			dmg_type_text = "なし"
+			dmg_type_tip = "いずれのステータスも参照されません"
+			dmg_type_blank = "　　"
+		ActionData.DamageType.物理:
+			dmg_type_text = "[color=red]物理[/color]"
+			dmg_type_tip = "自身のATKと相手のDEFを参照します"
+			dmg_type_blank = "　　"
+		ActionData.DamageType.魔法:
+			dmg_type_text = "[color=dodger_blue]魔法[/color]"
+			dmg_type_tip = "自身のMAGと相手のRESを参照します"
+			dmg_type_blank = "　　"
+		_:
+			dmg_type_text = "[color=red][b]ERROR[/b][/color]"
+			dmg_type_tip = ""
+	
+	if blank == true and len(range_text) < 4: # 空白補完
+		for i in 4 - len(range_text):
+			range_blank += "　"
+	
+	range_text = "[hint=%s]対象:[color=yellow]%s[/color][/hint]" % [range_tip, range_text]
+	dmg_type_text = "[hint=%s]分類:%s[/hint]" % [dmg_type_tip, dmg_type_text]
+	
+	if blank == true:
+		dmg_type_text += dmg_type_blank
+		range_text += range_blank
+	
+	return [dmg_type_text, range_text]

@@ -3,12 +3,11 @@ class_name MonsterForm
 extends Resource
 ## モンスターの各形態固有の情報を持つクラス。[br]
 ## [MonsterData]の変数で参照されます。
-## ALERT この型のリソースファイルはゲーム内で変更してはいけません。
 
 @export_category("モンスター")
 @export var name: String ## モンスターの名前
 @export var image: Texture ## モンスターの画像
-@export var element: Array[Element] ## モンスターの属性 Element型[br]複数登録可能
+@export var element: Array[Element] ## モンスターの属性[br]複数登録可能
 @export var cost: int ## 進化に必要なmp
 
 @export_category("ステータス")
@@ -28,12 +27,13 @@ extends Resource
 		flavor_text = value
 		flavor_text_weight.resize(len(value))
 		flavor_text_weight.fill(1)
-## [member MonsterForm.flavor_text]の重みづけテーブル
+		
+## [member flavor_text]の重みづけテーブル
 @export var flavor_text_weight: Array[int]
 
-## レベル[param lv]を引数として、実際のステータスをまとめて配列で返す関数[br]
+## レベル[param lv]を引数として、実際のステータスをまとめ[PackedInt32Array]で返す関数[br]
 ## [lb]maxHP, maxMP, supplyMP, SPD, ATK, DEF, MAG, RES[rb]
-func status_calculator(lv: int) -> Array[int]:
+func status_calculator(lv: int) -> PackedInt32Array:
 	var start_multiplier: float = 0.9 ## 
 	var growth_per_level: float = 0.1 ## レベルアップで上昇するステータス倍率
 	

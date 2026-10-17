@@ -1,7 +1,8 @@
 extends Panel
 class_name AbilityDescription
+## [ActionData]が持つ[Ability]の詳細について表示するUI
 
-signal ability_extra_button_up
+signal ability_extra_button_up(act: ActionData) ## [AbilityExtra]の場合のみ表示される[ActionButton]が押された時に発行されます
 
 @onready var background := %Background as TextureRect
 @onready var name_label := %Name as RichTextLabel
@@ -34,16 +35,16 @@ func _ready() -> void:
 		
 		var color_text: String ## ステータスに対応した色コード
 		match ability.status:
-			Global.Status.ATK:
+			Enums.Status.ATK:
 				color_text = "orange"
 			
-			Global.Status.DEF:
+			Enums.Status.DEF:
 				color_text = "light_blue"
 			
-			Global.Status.MAG:
+			Enums.Status.MAG:
 				color_text = "dodger_blue"
 			
-			Global.Status.RES:
+			Enums.Status.RES:
 				color_text = "violet"
 		
 		## バフの倍率を表示するRichTextLabel
@@ -76,16 +77,16 @@ func _ready() -> void:
 		
 		var color_text: String ## ステータスに対応した色コード
 		match ability.status:
-			Global.Status.ATK:
+			Enums.Status.ATK:
 				color_text = "orange"
 			
-			Global.Status.DEF:
+			Enums.Status.DEF:
 				color_text = "light_blue"
 			
-			Global.Status.MAG:
+			Enums.Status.MAG:
 				color_text = "dodger_blue"
 			
-			Global.Status.RES:
+			Enums.Status.RES:
 				color_text = "violet"
 		
 		## デバフの倍率を表示するRichTextLabel
@@ -145,11 +146,11 @@ func _ready() -> void:
 				amount_text = "[color=dodger_blue]MAG[/color]の%d%%" % (ability.amount * 100)
 				space_length -= 1 # 全角の数だけ追加で減らす
 		
-		# ALERT ability.amount_type及びamountによって変わるテキストamount_text
-		# の長さによって必要なだけ"0"を入力し、BBcodeのcolorタグで透明を指定することで
-		# 半角スペースと同様に扱っている。これは膨大な桁数において文字列フォーマットの%
-		# を使用すると、実際に文字が入った場合と空白で補完された場合の幅に、差異が生じる
-		# バグへの原始的かつ応急的な処置である。
+		# ALERT ability.amount_type及びamountによって変わるテキストamount_textの長さによって必要なだけ"0"を入力し、
+		# BBcodeのcolorタグで透明を指定することで半角スペースと同様に扱っている。
+		# これは膨大な桁数において文字列フォーマットの%を使用すると、
+		# 実際に文字が入った場合と空白で補完された場合の幅に、
+		# 差異が生じるバグへの応急的な処置である。
 		space_length -= len(Global.strip_bbcode(amount_text))
 		## 空白の代わりとして用いる"0"の集まり
 		var space: String = "[color=transparent]"
@@ -204,13 +205,12 @@ func _ready() -> void:
 				else:
 					child.hide()
 		# 技ボタンを生成する
-		var button = Global.action_button.instantiate()
+		var button := Global.ACTION_BUTTON.instantiate() as ActionButton
 		button.action = ability.action
 		button.position = Vector2(8, 147)
 		button.scale = Vector2(0.67, 0.67)
 		button.size.x = 497
-		button.button_up.connect(func(): 
-			ability_extra_button_up.emit(button.action))
+		button.action_button_up.connect(_on_action_button_up)
 		
 		ability_extra_ui.add_child(button)
 	
@@ -221,28 +221,28 @@ func _ready() -> void:
 	name_label.text = "[b]%s[/b]" % ability.bbcode_name
 	
 	match ability.target:
-		Global.Target.なし:
+		Enums.Target.なし:
 			target_label.text = "[color=yellow]対象[/color]:　 なし 　"
 		
-		Global.Target.近接:
+		Enums.Target.近接:
 			target_label.text = "[color=yellow]対象[/color]:　 近接 　"
 		
-		Global.Target.遠隔:
+		Enums.Target.遠隔:
 			target_label.text = "[color=yellow]対象[/color]:　 遠隔 　"
 		
-		Global.Target.敵全体:
+		Enums.Target.敵全体:
 			target_label.text = "[color=yellow]対象[/color]:　敵全体　"
 		
-		Global.Target.自分:
+		Enums.Target.自分:
 			target_label.text = "[color=yellow]対象[/color]:　 自分 　"
 		
-		Global.Target.味方単体:
+		Enums.Target.味方単体:
 			target_label.text = "[color=yellow]対象[/color]: 味方単体 "
 		
-		Global.Target.味方全体:
+		Enums.Target.味方全体:
 			target_label.text = "[color=yellow]対象[/color]: 味方全体 "
 		
-		Global.Target.敵味方全体:
+		Enums.Target.敵味方全体:
 			target_label.text = "[color=yellow]対象[/color]:敵味方全体"
 		
 		_:
@@ -254,7 +254,7 @@ func _ready() -> void:
 func fit_name_label_size(text: String) -> void:
 	var font: Font = name_label.get_theme_font("bold_font")
 	for i: int in range(80, 0, -1): # 最大サイズ80
-		var text_size = font.get_string_size(
+		var text_size: Vector2 = font.get_string_size(
 			Global.strip_bbcode(text), # bbcodeタグを排除
 			HORIZONTAL_ALIGNMENT_CENTER, 
 			-1, 
@@ -262,3 +262,7 @@ func fit_name_label_size(text: String) -> void:
 		if text_size.x <= name_label.size.x - 20 and text_size.y <= name_label.size.y - 20:
 			name_label.add_theme_font_size_override("bold_font_size", i)
 			break
+
+## [signal ActionButton.action_button_up]を中継し[signal ability_extra_button_up]を発行します
+func _on_action_button_up(act: ActionData) -> void:
+	ability_extra_button_up.emit(act)

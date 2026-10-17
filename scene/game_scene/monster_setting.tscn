@@ -1009,6 +1009,7 @@ text = "0%"
 horizontal_alignment = 1
 
 [node name="MaxChance" type="RichTextLabel" parent="Control/MonsterSetting/ActionSelect"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 705.0
 offset_top = 123.0
@@ -1108,7 +1109,8 @@ offset_right = 773.0
 offset_bottom = 360.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_l4b1a")
 
-[node name="AbilityDescriptions" type="HBoxContainer" parent="Control/MonsterSetting/ActionDescription/Ability"]
+[node name="AbilityDescriptionContainer" type="HBoxContainer" parent="Control/MonsterSetting/ActionDescription/Ability"]
+unique_name_in_owner = true
 z_index = 1
 layout_mode = 2
 theme_override_constants/separation = 0
@@ -1144,7 +1146,7 @@ offset_top = 70.0
 offset_right = 2000.0
 offset_bottom = 520.0
 
-[node name="ActionContainer" type="ScrollContainer" parent="Control/MonsterSetting"]
+[node name="ActionScrollContainer" type="ScrollContainer" parent="Control/MonsterSetting"]
 unique_name_in_owner = true
 z_index = -2
 layout_mode = 0
@@ -1154,7 +1156,7 @@ offset_right = 1896.0
 offset_bottom = 915.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ydts3")
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/MonsterSetting/ActionContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/MonsterSetting/ActionScrollContainer"]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1164,7 +1166,8 @@ theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 18
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MonsterSetting/ActionContainer/MarginContainer"]
+[node name="ActionContainer" type="VBoxContainer" parent="Control/MonsterSetting/ActionScrollContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

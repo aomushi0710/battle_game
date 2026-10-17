@@ -19,7 +19,7 @@ enum PlaceHolder {
 
 @export var name: String ## 特殊効果の名前
 @export_multiline var bbcode_name: String ## 特殊効果の名前(BBcode有り)
-@export var target: Global.Target ## 特殊効果の対象
+@export var target: Enums.Target ## 特殊効果の対象
 @export_range(1, 100) var chance: int = 100 ## 特殊効果の発動確率
 ## 特殊効果を発動するタイミング[br][br]
 ## [code]true[/code][b]ダメージ判定後[/b]に発動します。[br]

@@ -21,23 +21,22 @@ func deck_creator(is_player: bool = true, id_table: Array[int] = [], min_level: 
 	clear()
 	
 	## 実際にランダム選択の候補となるモンスターIDの一覧。[br]
-	## ALERT [code]keys()[/code]や[code]filter()[/code]を利用するので、
-	##型は[Array]とし、[Array][lb][int][rb]のようなネストができない。
-	var candidate_ids: Array
+	var candidate_ids: Array[int]
 	if is_player:
-		candidate_ids = SaveManager.save_data.monster_levels.keys()
+		candidate_ids = SaveManager.save_data.monster_levels.keys() as Array[int]
 	else:
-		candidate_ids = id_table.duplicate()
+		candidate_ids = id_table.duplicate() as Array[int]
 		if candidate_ids.is_empty():
-			candidate_ids = Global.monster_data.keys().filter(
-				func(i: int): return i > 0)
+			for i: int in Global.monster_data:
+				if i > 0:
+					candidate_ids.append(i)
 	
 	if candidate_ids.size() < 3:
 		push_error("デッキに必要なモンスター数が不足しています！")
 		return
 	
 	for mon in monster: # 3枠全てに対して
-		var id = candidate_ids.pick_random()
+		var id: int = candidate_ids[randi_range(0, candidate_ids.size()) - 1]
 		candidate_ids.erase(id)
 		
 		mon.data = Global.monster_data[id]

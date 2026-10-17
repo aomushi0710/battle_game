@@ -2,6 +2,19 @@ class_name Monster
 extends Resource
 ## デッキ内に編成され、各種情報を持つモンスター。
 
+enum Form { ## モンスターの形態
+	第一形態, 
+	第二形態, 
+	第三形態, 
+}
+
+static var form_names: Dictionary[Form, String] = {} ## Formの値をkey、Formの定数名をvalueとする辞書
+
+static func _static_init() -> void:
+	for key: StringName in Form:
+		var value: Form = Form[key] as Form
+		form_names[value] = key
+
 @export var level: int = 1: ## モンスターのレベル。マイナスにはならない。
 	set(value):
 		if value < 1:
@@ -18,7 +31,7 @@ extends Resource
 
 ## モンスターの現在の形態。代入されると、
 ##各種ステータス([Monster maxHP], [Monster maxMP]...)も自動で代入される。
-@export var form: Global.Form = Global.Form.第一形態:
+@export var form: Form = Form.第一形態:
 	set(value):
 		form = value
 		status_update()
@@ -71,7 +84,7 @@ func random_action_selector() -> void:
 			available_index.append(i)
 	
 	for i in range(100):
-		var index = available_index.pick_random() ## 選ばれたindex
+		var index := available_index.pick_random() as int ## 選ばれたindex
 		chance[index] += 1
 		# 技の出現確率上限に到達した時、候補から除外する
 		if chance[index] >= action[index].data.max_chance:

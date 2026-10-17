@@ -13,11 +13,12 @@ extends TextureButton
 var tween: Tween
 var element_index: int = 0 ## [member MonsterForm.element]のindex
 
-@export var form: Global.Form = Global.Form.第一形態: ## 表示されるモンスターの形態
+@export var form: Monster.Form = Monster.Form.第一形態: ## 表示されるモンスターの形態
 	set(value):
 		if data != null:
 			# 対応する形態を持っていない場合は最終形態で表示する
 			if len(data.evolution_forms) <= value:
+				@warning_ignore("int_as_enum_without_cast")
 				form = len(data.evolution_forms) - 1
 			else:	
 				form = value
@@ -27,7 +28,7 @@ var element_index: int = 0 ## [member MonsterForm.element]のindex
 @export var data: MonsterData: ## 表示されるモンスター
 	set(value):
 		data = value
-		form = Global.Form.第一形態
+		form = Monster.Form.第一形態
 
 ## 本来のmodulate.vの値だが、この変数に値を代入することでshaderにも影響を与えられる
 var icon_modulate: float:

@@ -26,6 +26,7 @@ theme = SubResource("Theme_0jkx1")
 text = "終了"
 
 [node name="CoinValue" type="SpinBox" parent="Control"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 19.0
 offset_top = 520.0
@@ -43,10 +44,5 @@ offset_bottom = 562.0
 theme = ExtResource("7_e0a3d")
 text = "コインセット"
 
-[node name="ActionPreview" type="VBoxContainer" parent="Control"]
-layout_mode = 0
-offset_left = 1170.0
-offset_right = 1210.0
-offset_bottom = 40.0
-
+[connection signal="button_up" from="Control/Back" to="Control" method="_on_back_button_up"]
 [connection signal="button_up" from="Control/CoinSet" to="Control" method="_on_coin_set_button_up"]

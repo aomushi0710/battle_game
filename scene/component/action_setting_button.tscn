@@ -80,7 +80,6 @@ size_flags_horizontal = 3
 theme = SubResource("Theme_ta0ta")
 theme_override_font_sizes/normal_font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_fosfv")
-bbcode_enabled = true
 text = "  0%"
 metadata/help_text = "この技に現在設定されている出現確率。"
 

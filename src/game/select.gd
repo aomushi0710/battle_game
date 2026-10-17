@@ -66,7 +66,7 @@ var selected_monster: Monster:
 
 ## デッキ編成で現在表示中のモンスターの形態。[br]
 ## 値を変更すると自動で[code]update()[/code]関数を呼び、デッキ編成の見た目を変更します。
-var preview_form: Global.Form:
+var preview_form: Monster.Form:
 	set(form):
 		preview_form = form
 		evolution_preview_button.selected = preview_form
@@ -86,8 +86,7 @@ var level: int: ## プレビュー時のモンスターレベル
 		# 全ての形態のステータスを更新してリストに登録
 		monster_setting.all_status_list.clear()
 		for i in len(selected_monster.data.evolution_forms):
-			monster_setting.all_status_list.append(
-				selected_monster.data.evolution_forms[i].status_calculator(level))
+			monster_setting.all_status_list.append(selected_monster.data.evolution_forms[i].status_calculator(level))
 		
 		if mode == Mode.STATUS:
 			monster_setting.monster_preview()

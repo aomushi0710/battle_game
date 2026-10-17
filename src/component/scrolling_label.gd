@@ -12,20 +12,16 @@ var text_speed: float = 0.05 ## テキストのスクロール速度 TODO 設定
 ## help_textデータを持つ全てのノード[param node]にシグナルを接続する再起関数
 func connect_hover_signal(node: Node) -> void:
 	if node is Control and node.has_meta("help_text"):
-		node.mouse_entered.connect(func(): 
-			var text: String = "[i]%s[/i]" % node.get_meta("help_text")
-			text_animation(text.replace("\n", "")))
+		node.mouse_entered.connect(_text_animation.bind("[i]%s[/i]" % node.get_meta("help_text").replace("\n", "")))
 	
-	elif node is TabContainer: # TabBarにおけるメタデータの設定はやり方が違うので
-			node.tab_clicked.connect(func(index):
-				var text: String = "[i]%s[/i]" % node.get_tab_metadata(index)
-				text_animation(text.replace("\n", "")))
+	elif node is TabContainer: # TabBarにおけるメタデータの設定方法は異なる
+			node.tab_clicked.connect(_on_tab_container_tab_clicked.bind(node))
 	
 	for child in node.get_children():
 		connect_hover_signal(child)
 
-## [param label]に表示される[param text]を少しずつ表示させるアニメーションを再生する関数
-func text_animation(text: String) -> void:
+## [member label]に表示される[param text]を少しずつ表示させるアニメーションを再生します
+func _text_animation(text: String) -> void:
 	var tween: Tween
 	# アニメーション中なら中断
 	if tween and tween.is_running():
@@ -42,7 +38,11 @@ func text_animation(text: String) -> void:
 		label.text += text # ループ後に元の文字が戻ってくるように追加
 		label.size.x = label.get_content_width() # 画面外に消えるのを防止
 		
-		tween = get_tree().create_tween().bind_node(label).set_loops()
-		tween.tween_interval(2)
-		tween.tween_property(label, "position:x", final_val, duration)
-		tween.tween_callback(func(): label.position.x = 0)
+		tween = label.create_tween().set_loops()
+		tween.tween_interval(2.0)
+		tween.tween_property(label, "position:x", final_val, duration).from(0.0)
+
+## [TabContainer]のmetadataを用いて[merhod _text_animation]を呼びます
+func _on_tab_container_tab_clicked(tab: int, tab_container: TabContainer) -> void:
+	var text: String = "[i]%s[/i]" % tab_container.get_tab_metadata(tab)
+	_text_animation(text.replace("\n", ""))

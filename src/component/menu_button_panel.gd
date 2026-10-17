@@ -15,5 +15,5 @@ extends Panel
 
 func arrange_children() -> void:
 	for i in len(get_children()):
-		var child = get_child(i)
+		var child := get_child(i) as Control
 		child.position = start_position + separation * i

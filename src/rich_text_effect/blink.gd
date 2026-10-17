@@ -1,12 +1,13 @@
 class_name BlinkEffect
 extends RichTextEffect
 
-# このエフェクトのBBCodeタグ名。ここでは[blink]として使う。
+# このクラスには生成AIのコードを使用しています
+## このエフェクトのBBCodeタグ名。ここでは[blink]として使う。
 var bbcode = "blink"
 
-# エフェクトを処理するメインの関数
+## エフェクトを処理するメインの関数
 func _process_custom_fx(char_fx: CharFXTransform) -> bool:
-	# 経過時間（ミリ秒）を取得
+	## 経過時間（ミリ秒）を取得
 	var time = Time.get_ticks_msec() / 1000.0
 	
 	# 0.5秒ごとに表示・非表示を切り替える

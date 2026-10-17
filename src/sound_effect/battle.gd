@@ -1,7 +1,8 @@
+class_name BattleSoundEmitter
 extends Node
 
-@onready var buff = %Buff
-@onready var debuff = %Debuff
-@onready var damage = %Damage
-@onready var heal = %Heal
-@onready var evolution = %Evolution
+@onready var buff := %Buff as AudioStreamPlayer
+@onready var debuff := %Debuff as AudioStreamPlayer
+@onready var damage := %Damage as AudioStreamPlayer
+@onready var heal := %Heal as AudioStreamPlayer
+@onready var evolution := %Evolution as AudioStreamPlayer

@@ -184,7 +184,7 @@ func monster_ready(player: bool) -> void:
 			button.queue_free()
 		# 抽選された技をactionコンテナに追加
 		for i in len(player_monster.available_action):
-			var instance = Global.action_button.instantiate()
+			var instance = Global.ACTION_BUTTON.instantiate()
 			instance.action = player_monster.available_action[i].data
 			instance.button_up.connect(func():select_command(i))
 			$button/action.add_child(instance)
@@ -227,23 +227,23 @@ func enemy_target_select(resource: Resource) -> int:
 	
 	var index: int ## 返り値
 	match resource.target:
-		Global.Target.なし: # 技の代わりに特殊効果の対象を選択する
+		Enums.Target.なし: # 技の代わりに特殊効果の対象を選択する
 			if resource is Action:
 				index = enemy_target_select(resource.ability[0])
 		
-		Global.Target.近接:
+		Enums.Target.近接:
 			index = player_monster.index
 		
-		Global.Target.遠隔:
+		Enums.Target.遠隔:
 			index = random_index(true)
 		
-		Global.Target.自分:
+		Enums.Target.自分:
 			index = enemy_monster.index
 		
-		Global.Target.味方単体:
+		Enums.Target.味方単体:
 			index = random_index(false)
 		
-		Global.Target.敵全体, Global.Target.味方全体, Global.Target.敵味方全体:
+		Enums.Target.敵全体, Enums.Target.味方全体, Enums.Target.敵味方全体:
 			index = -1
 	
 	return index
@@ -301,9 +301,9 @@ func set_ready_text(monster: BattleMonster, mp: int) -> Array[String]:
 ## ターン終了後にフィールドに立つモンスターのindexと画像を設定します
 func _on_change_button_up() -> void:
 	if ( # 全員死んでるなら無視
-		player_deck[0].death == true and 
-		player_deck[1].death == true and 
-		player_deck[2].death == true
+		player_deck[0].is_died == true and 
+		player_deck[1].is_died == true and 
+		player_deck[2].is_died == true
 	):
 		return
 	
@@ -314,7 +314,7 @@ func _on_change_button_up() -> void:
 			2:
 				player_next_index = 0
 		
-		if player_deck[player_next_index].death == false:
+		if player_deck[player_next_index].is_died == false:
 			break
 	$button/Change.data = Global.player_deck.monster[player_next_index].data
 	$button/Change.form = Global.player_deck.monster[player_next_index].form
@@ -323,7 +323,7 @@ func _on_change_button_up() -> void:
 
 ## モンスターのボタンを押して、ターン終了後にフィールドに立つモンスターのindexと画像を設定します
 func monster_button_up(i: int) -> void:
-	if player_deck[i].death == false: # 生きてたら
+	if player_deck[i].is_died == false: # 生きてたら
 		player_next_index = i
 		if player_monster.index != player_next_index:
 			$button/Change.data = Global.player_deck.monster[player_next_index].data
@@ -425,7 +425,7 @@ func action_checker(monster: BattleMonster, action: ActionData) -> bool:
 ## 進化が現在の形態で可能かどうかを調べる関数
 func evolution_action_checker(monster: BattleMonster, action: ActionData) -> bool:
 	match monster.data.form:
-		Global.Form.第一形態:
+		Monster.Form.第一形態:
 			if action.id > 10001:
 				await dialog.text_setter(BattlelogData.new([
 					"[color=yellow]%s はまだ第3形態には進化できない！[/color]\n" % 
@@ -467,7 +467,7 @@ damage: int = 0) -> void:
 				if monster == target: # 自分自身に追加した場合、1ターン余分に消費されることを防止する
 					monster_effect.is_just_applied_to_self = true
 			
-			var damage_text = Global.damage_text.instantiate()
+			var damage_text = Global.DAMAGE_TEXT.instantiate()
 			damage_text.text = "[font_size=50][b][i]%s[/i][/b][/font_size]" % \
 			ability.bbcode_name.replace(" ", "\n")
 			target.add_child(damage_text)
@@ -626,7 +626,7 @@ func turn_end(monster: BattleMonster) -> void:
 				weight_table_table.remove_at(i)
 				weight_table.remove_at(i)
 		
-		var index := Global.get_weighted_random(weight_table)
+		var index = Global.get_weighted_random(weight_table)
 		## 選ばれるフレーバーテキストの候補
 		var available_flavor_text = flavor_text_table[index]
 		
@@ -649,7 +649,7 @@ func battle_finish(is_victory: bool) -> void:
 		var coins: int = 0 ## 合計コイン枚数
 		for i in range(3): # コイン獲得
 			coins += enemy_deck[i].data.data.coin
-		Global.coin_setter(coins)
+		SaveManager.add_coins(coins)
 		$"../result_rect/win".show()
 		dialog.text_setter(BattlelogData.new([
 			"[b][color=red]勝利！[/color][/b]\n" +
@@ -678,70 +678,70 @@ func target_setting(player: bool, resource: Resource, index: int
 	
 	if player == true:
 		match resource.target:
-			Global.Target.近接:
+			Enums.Target.近接:
 				for mon: BattleMonster in enemy_deck:
 					if mon.field == true:
 						target_list.append(mon)
 						break
 			
-			Global.Target.遠隔:
+			Enums.Target.遠隔:
 				target_list.append(enemy_deck[index])
 			
-			Global.Target.敵全体:
+			Enums.Target.敵全体:
 				for mon: BattleMonster in enemy_deck:
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Global.Target.自分:
+			Enums.Target.自分:
 				for mon: BattleMonster in player_deck:
 					if mon.field == true:
 						target_list.append(mon)
 						break
 			
-			Global.Target.味方単体:
+			Enums.Target.味方単体:
 				target_list.append(player_deck[index])
 			
-			Global.Target.味方全体:
+			Enums.Target.味方全体:
 				for mon: BattleMonster in player_deck:
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Global.Target.敵味方全体:
+			Enums.Target.敵味方全体:
 				for deck: Array[BattleMonster] in [enemy_deck, player_deck]:
 					for mon: BattleMonster in deck:
 						if mon.death == false:
 							target_list.append(mon)
 	else:
 		match resource.target:
-			Global.Target.近接:
+			Enums.Target.近接:
 				for mon: BattleMonster in player_deck:
 					if mon.field == true:
 						target_list.append(mon)
 						break
 			
-			Global.Target.遠隔:
+			Enums.Target.遠隔:
 				target_list.append(player_deck[index])
 			
-			Global.Target.敵全体:
+			Enums.Target.敵全体:
 				for mon: BattleMonster in player_deck:
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Global.Target.自分:
+			Enums.Target.自分:
 				for mon: BattleMonster in enemy_deck:
 					if mon.field == true:
 						target_list.append(mon)
 						break
 			
-			Global.Target.味方単体:
+			Enums.Target.味方単体:
 				target_list.append(enemy_deck[index])
 			
-			Global.Target.味方全体:
+			Enums.Target.味方全体:
 				for mon: BattleMonster in enemy_deck:
 					if mon.death == false:
 						target_list.append(mon)
 			
-			Global.Target.敵味方全体:
+			Enums.Target.敵味方全体:
 				for deck: Array[BattleMonster] in [player_deck, enemy_deck]:
 					for mon: BattleMonster in deck:
 						if mon.death == false:
@@ -781,7 +781,7 @@ func damage_calc(action: ActionData, offense: BattleMonster, defense: BattleMons
 		return [0, ""]
 	
 	var status: Array[float] = [0, 0] # ステータス値
-	var type: Array[Global.Status] = []
+	var type: Array[Enums.Status] = []
 	type.resize(2)
 	match action.damage_type: # 必要なステータス参照
 		ActionData.DamageType.なし:
@@ -790,14 +790,14 @@ func damage_calc(action: ActionData, offense: BattleMonster, defense: BattleMons
 		ActionData.DamageType.物理:
 			status[0] = offense.data.ATK
 			status[1] = defense.data.DEF
-			type[0] = Global.Status.ATK
-			type[1] = Global.Status.DEF
+			type[0] = Enums.Status.ATK
+			type[1] = Enums.Status.DEF
 		
 		ActionData.DamageType.魔法:
 			status[0] = offense.data.MAG
 			status[1] = defense.data.RES
-			type[0] = Global.Status.MAG
-			type[1] = Global.Status.RES
+			type[0] = Enums.Status.MAG
+			type[1] = Enums.Status.RES
 		
 		_:
 			print("ERROR:damage_typeが検知できません")

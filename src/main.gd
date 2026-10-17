@@ -6,17 +6,17 @@ func _ready() -> void:
 	randomize()
 	Global.enemy_deck.deck_creator(false)
 	var version_text: String = ""
-	if Global.VERSION_BETA:
+	if Global.IS_BETA:
 		version_text += "β "
 	version_label.text = version_text + "[i]ver.%s[/i]" % Global.version
 
 
-func _on_button_pressed():
-	get_tree().change_scene_to_file(Global.map_scene)
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file(Global.MAP_SCENE)
 
 
-func _on_debug_button_up():
-	get_tree().change_scene_to_file(Global.debug_scene)
+func _on_debug_button_up() -> void:
+	get_tree().change_scene_to_file(Global.DEBUG_SCENE)
 
 ## セーブデータ削除確認画面表示
 func _on_reset_button_up() -> void:

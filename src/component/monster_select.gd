@@ -23,14 +23,14 @@ func _on_戻る_button_up():
 ## モンスターの数だけボタンを生成する関数
 func _ready() -> void:
 	for i in len(Global.monster_data):
-		var button: MonsterIcon = Global.monster_icon.instantiate()
+		var button := Global.MONSTER_ICON.instantiate() as MonsterIcon
 		
 		button.data = Global.monster_data[i]
-		button.form = Global.Form.第一形態
+		button.form = Monster.Form.第一形態
 		button.button_up.connect(func():
 			var monster: Monster ## [signal selected_monster_changed]の引数
 			## デッキに登録されているモンスターIDの配列。モンスターがいない時は-1。
-			var deck_monster_ids := Global.player_deck.monster.map(
+			var deck_monster_ids = Global.player_deck.monster.map(
 				func(m):
 					if m.data == null:
 						return -1
@@ -39,7 +39,7 @@ func _ready() -> void:
 			)
 			
 			if button.data.id in deck_monster_ids:
-				var index := deck_monster_ids.find(button.data.id)
+				var index = deck_monster_ids.find(button.data.id)
 				monster = Global.player_deck.monster[index]
 			else:
 				monster = Monster.new()
@@ -68,12 +68,12 @@ func on_mode_entered():
 	
 	get_selected_slot_index.emit()
 	# 全ての形態の項目を追加
-	for i in len(Global.Form.keys()):
+	for i in len(Monster.Form.keys()):
 		if evolution_preview_button.get_selectable_item(true) < i:
-			evolution_preview_button.add_item(Global.form_names[i], i)
+			evolution_preview_button.add_item(Monster.form_names[i], i)
 	evolution_preview_button.disabled = false
 	## 現在選択中のindexに既に存在しているモンスターのデータ
-	var selected_index_monster := (
+	var selected_index_monster = (
 		Global.player_deck.monster[_selected_slot_index].data)
 	for monster in Global.player_deck.monster: # 3体のモンスターを順番に処理
 		if monster.data != null:
@@ -98,7 +98,7 @@ func monster_icon_disabled(id: int) -> void:
 	button.mouse_default_cursor_shape = Control.CURSOR_ARROW
 
 ## 表示されている全ての[MonsterIcon]の[member MonsterIcon.form]を更新する関数
-func update(form: Global.Form) -> void:
+func update(form: Monster.Form) -> void:
 	for container in monster_container.get_children():
 		for child: MonsterIcon in container.get_children():
 			child.form = form

@@ -49,7 +49,7 @@ func load_file(path: String) -> Dictionary[StringName, Variant]:
 		printerr("セーブファイルが開けません。%s (エラーコード: %d)" % [error_string(err), err])
 		return {}
 	
-	var result = file.get_var()
+	var result: Variant = file.get_var()
 	file.close()
 	
 	if typeof(result) != TYPE_DICTIONARY:
@@ -102,7 +102,7 @@ func load_game() -> void:
 		save_game()
 		
 		# TODO 不要？
-		var scene = Global.get_tree().current_scene
+		var scene := Global.get_tree().current_scene
 		if not scene:
 			printerr("シーンが存在しません")
 			return
@@ -173,6 +173,11 @@ func validate_deck(deck: Deck) -> DeckValidationResult:
 		return DeckValidationResult.MIGRATION_REQUIRED
 	
 	return DeckValidationResult.OK
+
+## 指定した枚数だけコインを増減させ、自動でセーブを行います
+func add_coins(amount: int) -> void:
+	save_data.coin += amount
+	save_game()
 
 # 以下関数内の処理に生成AIのコードを使用しています
 ## [Resource]を[Dictionary]に変換します

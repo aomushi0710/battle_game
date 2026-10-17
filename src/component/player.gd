@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
-@export var speed = 256
+@export var speed: int = 256
 @export var canvas_layer: CanvasLayer
 @export var world: Node2D
 @export var dialog: MapDialog
 @export var terrain: TileMapLayer
-@export var color_rect: ColorRect ## バトル開始カットイン時に表示される
+@export var fade: ColorRect ## バトル開始カットイン時に表示される
 
-var object_interactable ## 触れられるオブジェクトの参照
+var object_interactable: SignBoard ## 触れられるオブジェクトの参照
 var is_moving: bool = false ## 移動中かどうかのフラグ
 var can_move: bool = true ## プレイヤーが移動可能かどうかのフラグ
 var is_dialog_active: bool = false ## ダイアログが開かれているかどうかのフラグ
@@ -19,7 +19,7 @@ var dialog_just_closed: bool = false ## ダイアログが閉じられるまで�
 func _ready() -> void:
 	position = Global.map_position
 
-func _physics_process(_delta: float):
+func _physics_process(_delta: float) -> void:
 	if not can_move:
 		velocity = Vector2.ZERO
 		move_and_slide()
@@ -47,9 +47,9 @@ func _physics_process(_delta: float):
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("interact"):
 		
-		var areas = interaction_area.get_overlapping_areas()
+		var areas := interaction_area.get_overlapping_areas()
 		if not areas.is_empty():
-			var signboard = areas[0]
+			var signboard := areas[0]
 			
 			# 看板の処理
 			if signboard is SignBoard:
@@ -59,19 +59,12 @@ func _unhandled_input(event: InputEvent) -> void:
 					dialog_just_closed = false
 					is_dialog_active = false
 					return
+					
 				# 既にダイアログが開かれているか、メニューが開かれていて動けないなら何もしない
 				if is_dialog_active or not can_move:
 					return
 				
-				
-				
 				await dialog.dialog_manager(signboard.dialog_datas, signboard.id)
-
-# アイテムを取得する処理
-func pickup():
-	if object_interactable.is_pickable:
-		object_interactable.queue_free()
-		object_interactable = null
 
 ## ダイアログが開かれた時、各種フラグを立てる関数
 func _on_dialog_dialog_opened() -> void:
@@ -91,7 +84,7 @@ func _on_dialog_battle_started() -> void:
 
 ## ダイアログからのバトルが終了した時、バトル前の状態に戻す関数
 func _on_dialog_battle_finished() -> void:
-	color_rect.scale = Vector2.ZERO
+	fade.scale = Vector2.ZERO
 	canvas_layer.show()
 	world.show()
 	camera.enabled = true

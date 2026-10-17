@@ -1,5 +1,6 @@
 class_name Attachment
 extends Resource
+## wip
 
 @export var id: int ## アタッチメントの固有ID
 @export var name: String ## アタッチメントの名前

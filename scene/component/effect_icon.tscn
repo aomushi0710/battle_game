@@ -10,7 +10,7 @@ default_font_size = 110
 content_margin_right = 17.0
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[node name="EffectIcon" type="TextureButton"]
+[node name="EffectIconButton" type="TextureButton"]
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_yfs5u")
 script = ExtResource("2_gw70f")

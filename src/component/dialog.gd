@@ -124,12 +124,12 @@ func _set_button(data: DialogData, format_args: Array) -> void:
 				button = _button_container.get_child(i) as GameButton
 			
 			else:
-				button = Global.game_button.instantiate() as GameButton
+				button = Global.GAME_BUTTON.instantiate() as GameButton
 				button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 				button.button_up.connect(option_selected.emit.bind(i))
 				_button_container.add_child(button)
 			
-			var formatted_text = data.button_text[i]
+			var formatted_text: String = data.button_text[i]
 			if not format_args.is_empty():
 				formatted_text = formatted_text.format(format_args)
 			button.text = formatted_text

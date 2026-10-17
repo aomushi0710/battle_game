@@ -3,14 +3,16 @@ class_name ActionButton
 extends Button
 ## 技のボタン
 
-@onready var element := %Element as TextureRect
-@onready var background := %Background as TextureRect
+signal action_button_up(act: ActionData) ## [ActionButton]が押された時に発行されます
 
 var tween: Tween ## 属性アイコン点滅アニメーション
 var n: int = 0 ## 属性アイコン点滅用
 
 @export var action: ActionData: ## 技
 	set(act):
+		if not is_node_ready():
+			return
+		
 		if action == act:
 			return
 		elif tween and tween.is_running():
@@ -43,6 +45,17 @@ var n: int = 0 ## 属性アイコン点滅用
 				gradient.offsets = offset_list
 				
 				blink()
+
+@onready var element := %Element as TextureRect
+@onready var background := %Background as TextureRect
+
+func _ready() -> void:
+	button_up.connect(_on_button_up)
+	_on_button_up()
+
+## 既存の[signal BaseButton.button_up]を中継し[signal action_button_up]を発行します
+func _on_button_up() -> void:
+	action_button_up.emit(action)
 
 ## 点滅関数
 func blink() -> void:

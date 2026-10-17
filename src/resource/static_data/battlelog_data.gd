@@ -13,9 +13,9 @@ enum Tab {
 	set(value):
 		text = value
 		image.resize(value.size())
-@export var should_wait: bool = true ## 最終ページにおいて、プレイヤー入力を待つかどうかのフラグ
+@export var should_wait: bool = true ## 最終ページにおいて入力を待つかどうか
 @export var tab: Tab = Tab.MAIN ## メッセージの表示先となるタブ
-@export var image: Array ## [member BattleDialogData.text]と同時に表示する画像
+@export var image: Array ## [member text]と同時に表示する画像
 
 ## 引数については[BattlelogData]クラスを参照してください。[br]
 ## [param p_image]は常に[param p_text]と同じ要素数となるように調整されます。 

@@ -23,12 +23,14 @@ const STATUS_BAR_TEXT: Array[String] = [
 @export var parent: MenuMonster
 
 @onready var monster_texture := %MonsterTexture as TextureRect
-@onready var action_container := %ActionContainer as ScrollContainer
+@onready var action_scroll_container := %ActionScrollContainer as ScrollContainer
+@onready var action_container := %ActionContainer as VBoxContainer
 @onready var pie_chart := %PieChart as PieChart
 
 @onready var action_select := %ActionSelect as Control
 @onready var slider := %ChanceSettingSlider as HSlider
 @onready var spinbox := %ChanceSettingSpinBox as SpinBox
+@onready var max_chance_label := %MaxChance as RichTextLabel
 
 @onready var action_description := %ActionDescription as Control
 @onready var power_label := %Power as RichTextLabel
@@ -36,16 +38,16 @@ const STATUS_BAR_TEXT: Array[String] = [
 @onready var type_label := %Type as RichTextLabel
 @onready var target_label := %Target as RichTextLabel
 @onready var unlock_condition_label := %UnlockCondition as RichTextLabel
+@onready var ability_description_container := %AbilityDescriptionContainer as HBoxContainer
 
 var text_speed: float = 0.05 ## テキストアニメーションの1文字あたりの再生速度
 var selected_monster: Monster ## [member MenuMonster.selected_monster]を参照
 var selected_action: Action ## 現在選択中の技
-var selected_skill = 0 ## 選ばれたスキルパターン
-var now_select_action = 0 ## 現在指定されている技
-var all_status_list: Array = []
+var selected_skill: int = 0 ## 選ばれたスキルパターン
+var now_select_action: int = 0 ## 現在指定されている技
+var all_status_list: Array[PackedInt32Array] = []
 var actions: Array[Action] = [] ## モンスターが持つ技
 var chances: Array[int] = [] ## 選ばれた技の出現確率
-var check_provability = [] ## 出現率0%弾き出し用
 var text_tween: Tween
 
 
@@ -53,13 +55,13 @@ func on_mode_entered() -> void:
 	parent.camera.offset = Vector2(960, 540)
 	
 	# action_listの中身を削除
-	for child in action_container.get_child(0).get_child(0).get_children():
+	for child in action_container.get_children():
 		child.queue_free()
 	
 	# 進化プレビュー選択肢追加
 	parent.evolution_preview_button.clear()
 	for i in len(selected_monster.data.evolution_forms):
-			parent.evolution_preview_button.add_item(Global.form_names[i], i)
+			parent.evolution_preview_button.add_item(Monster.form_names[i], i)
 	
 	# セーブデータ読み込み
 	if selected_monster.data.id in SaveManager.save_data.monster_levels:
@@ -106,7 +108,7 @@ func monster_preview(is_text_only: bool = false) -> void:
 ## ## [param is_text_only]が[code]false[/code]の時、棒グラフがアニメーションされる。
 func bar_chart_update(is_text_only: bool = false) -> void:
 	## 表示したいモンスターのステータス一覧
-	var status_list = all_status_list[selected_monster.form]
+	var status_list: PackedInt32Array = all_status_list[selected_monster.form]
 	var status_index: int = 0 ## status_listのindex指定用
 	for child in parent.status.get_child(0).get_children():
 		for c in child.get_children():
@@ -155,9 +157,9 @@ func bar_chart_update(is_text_only: bool = false) -> void:
 ## 棒グラフに用いる[param bar]ノードのサイズ[param size_x]及び色を変更して複製された、
 ##新たなbarを返す関数
 func bar_chart_bar_duplicate(bar: TextureRect, size_x: int = 0) -> TextureRect:
-	var new_bar = bar.duplicate()
+	var new_bar := bar.duplicate() as TextureRect
 	new_bar.custom_minimum_size.x = size_x
-	new_bar.texture = new_bar.texture.duplicate(true)
+	new_bar.texture = new_bar.texture.duplicate(true) as Texture2D
 	var gradient: Gradient = new_bar.texture.gradient
 	var original_color := gradient.colors[1]
 	original_color.v -= 0.25
@@ -171,12 +173,12 @@ func bar_chart_bar_duplicate(bar: TextureRect, size_x: int = 0) -> TextureRect:
 func bar_chart_animation(bar: TextureRect, final_val: int, 
 callback: Callable = Callable()) -> void:
 	var tween: Tween
-	tween = get_tree().create_tween().bind_node(bar)\
-	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tween = get_tree().create_tween().bind_node(bar)
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(bar, "custom_minimum_size:x", final_val, 1)
-	tween.tween_callback(func(): parent.evolution_preview_button.disabled = false)
+	tween.tween_callback(parent.evolution_preview_button.set.bind("disabled", false))
 	
-	if callback != Callable():
+	if callback.is_valid():
 		tween.tween_callback(callback)
 
 ## 選択中の技出現確率円グラフ更新関数
@@ -188,39 +190,27 @@ func pie_chart_update() -> void:
 ## 全ての形態に関して、技をそれぞれのコンテナにボタン化して追加する関数
 func setting_action_button() -> void:
 	for i in len(selected_monster.action):
-		## 技が追加されるコンテナ(ScrollContainer -> MarginContainer -> VboxContainer)
-		var container = action_container.get_child(0).get_child(0)
-		var button = load("res://scene/component/action_setting_button.tscn").instantiate()
+		var button := Global.ACTION_SETTING_BUTTON.instantiate() as ActionSettingButton
 		button.action = selected_monster.action[i]
-		# lockはsetter内でactionの情報を取得するため、actionより後で設定
+		# is_lockedはsetter内でactionの情報を取得するため、actionより後で設定
 		if selected_monster.level < selected_monster.action[i].unlock_level:
-			button.lock = true
+			button.is_locked = true
 		else:
-			button.lock = false
-		# chanceはlockの設定時に上書きされてしまうため、lockより後で設定
+			button.is_locked = false
+		# chanceはis_lockedの設定時に上書きされてしまうため、is_lockedより後で設定
 		button.chance = selected_monster.chance[i]
-		button.get_child(1).button_up.connect(func(): 
-			action_button_up(button.action.data, button.lock)
-		)
-		button.delete_button_up.connect(func(): 
-			if selected_action == button.action:
-				_on_chance_value_changed(0)
-			else:
-				chances[actions.find(button.action)] = 0
-			
-			pie_chart_update()
-		)
+		button.action_button.action_button_up.connect(action_button_up.bind(button.is_locked))
+		button.delete_button_up.connect(_on_action_button_delete_button_up)
 		button.get_child(1).set_meta("help_text", "クリックで技の詳細を確認できます。")
-		container.add_child(button)
+		action_container.add_child(button)
 	
-	connect_hover_signal.emit(action_container)
+	connect_hover_signal.emit(action_scroll_container)
 
 ## 技ボタンが押された時の関数
 ## [param is_not_editable]が[code]true[/code]の時、確率の操作ができないように
 ##一部ノードを使用不可にする。
 func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
-	var container := $action_description/ability/container
-	for child in container.get_children(): # 初期化
+	for child in ability_description_container.get_children(): # 初期化
 		child.queue_free()
 	
 	if parent.mode != parent.Mode.ACTION: # まだ移動していなければカメラ移動
@@ -232,16 +222,21 @@ func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
 	action_select.show() # nullじゃなければ表示
 	action_description.show()
 	
-	var index := selected_monster.action.map(func(e): return e.data).find(act)
+	var index: int = -1
+	for i in selected_monster.action.size():
+		if selected_monster.action[i].data == act:
+			index = i
+			break
+	
 	selected_action = selected_monster.action[index]
 	## 元々ボタンがあれば取得される
-	var exists = action_select.get_node_or_null("action_button")
+	var exists := action_select.get_node_or_null("action_button")
 	if exists: # 存在したら削除
 		action_select.remove_child(exists)
 		exists.queue_free()
 	
 	## 新たに表示されるボタン
-	var button = Global.action_button.instantiate()
+	var button := Global.ACTION_BUTTON.instantiate() as ActionButton
 	button.name = "action_button"
 	button.position = Vector2(160, 20)
 	button.action = act
@@ -259,14 +254,14 @@ func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
 			elif child is RichTextLabel:
 				child.hide()
 	else:
-		for node in [slider, spinbox]: # sliderとspinboxのセッティング
+		for node: Range in [slider, spinbox]: # sliderとspinboxのセッティング
 			# この時点では、先に設定していた技の最大値を、次に選ばれた技の確率が越えていた場合に、
 			# 最大値に引っかかってしまう
 			node.set_value_no_signal(chances[actions.find(selected_action)])
 			node.max_value = float(act.max_chance)
 			# もう一度値を設定して、適切な値に戻す
 			node.set_value_no_signal(chances[actions.find(selected_action)])
-			$action_select/max_chance.text = "%d%%" % act.max_chance
+			max_chance_label.text = "%d%%" % act.max_chance
 			node.editable = true
 		slider.tick_count = slider.max_value / 10 + 1
 		
@@ -300,35 +295,35 @@ func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
 			"守備側の[color=violet]RES[/color]を参照します。")
 	
 	match act.target: # 範囲によってテキストを変える
-		Global.Target.なし:
+		Enums.Target.なし:
 			target_label.text = "[color=yellow]対象[/color]:なし"
 			target_label.set_meta("help_text", "ダメージを与えません。")
 		
-		Global.Target.近接:
+		Enums.Target.近接:
 			target_label.text = "[color=yellow]対象[/color]:近接"
 			target_label.set_meta("help_text", "場に出ている目の前の敵にダメージを与えます。")
 		
-		Global.Target.遠隔:
+		Enums.Target.遠隔:
 			target_label.text = "[color=yellow]対象[/color]:遠隔"
 			target_label.set_meta("help_text", "場に出ていない遠くの敵にもダメージを与えられます。")
 		
-		Global.Target.敵全体:
+		Enums.Target.敵全体:
 			target_label.text = "[color=yellow]対象[/color]:敵全体"
 			target_label.set_meta("help_text", "敵全体にダメージを与えます。")
 		
-		Global.Target.自分:
+		Enums.Target.自分:
 			target_label.text = "[color=yellow]対象[/color]:自分"
 			target_label.set_meta("help_text", "自分にダメージを与えます。")
 		
-		Global.Target.味方単体:
+		Enums.Target.味方単体:
 			target_label.text = "[color=yellow]対象[/color]:味方単体"
 			target_label.set_meta("help_text", "味方を1体だけ選んでダメージを与えます。")
 		
-		Global.Target.味方全体:
+		Enums.Target.味方全体:
 			target_label.text = "[color=yellow]対象[/color]:味方全体"
 			target_label.set_meta("help_text", "味方全体にダメージを与えます。")
 		
-		Global.Target.敵味方全体:
+		Enums.Target.敵味方全体:
 			target_label.text = "[color=yellow]対象[/color]:敵味方全体"
 			target_label.set_meta("help_text", "敵全体と味方全体にダメージを与えます。")
 	
@@ -336,14 +331,14 @@ func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
 	var unlock_condition_text := "解放:Lv.%2d" % selected_action.unlock_level
 	var unlock_condition_help := (
 		"この技はLv.%dから使用可能になります。" % selected_action.unlock_level)
-	if selected_action.unlock_form != Global.Form.第一形態:
+	if selected_action.unlock_form != Monster.Form.第一形態:
 		unlock_condition_text += (
 			"\n[img=40]res://asset/image/element/進化技.PNG[/img]%s" % 
-			Global.form_names[selected_action.unlock_form]
+			Monster.form_names[selected_action.unlock_form]
 		)
 		unlock_condition_help += (
 			"ただし[b]%s[/b]に進化するまでは使用できず、それまでは対応する" % 
-			Global.form_names[selected_action.unlock_form] + 
+			Monster.form_names[selected_action.unlock_form] + 
 			"「[img=50]res://asset/image/element/進化技.PNG[/img]" + 
 			"[color=yellow]進化技[/color]」に置き換えられ、" + 
 			"これを発動することでモンスターが進化できます。" 
@@ -352,24 +347,33 @@ func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
 	unlock_condition_label.set_meta("help_text", unlock_condition_help)
 	
 	for ability: Ability in act.ability:
-		var description = Global.ability_description.instantiate()
+		var description := Global.ABILITY_DESCRIPTION.instantiate() as AbilityDescription
 		description.ability = ability
-		if ability is AbilityExtra: # ボタンが押された時の処理
-			description.ability_extra_button_up.connect(func(act):
-				action_button_up(act, true))
+		if ability is AbilityExtra:
+			description.ability_extra_button_up.connect(action_button_up.bind(true))
+		
 		description.set_meta("help_text", ability.description)
-		container.add_child(description)
+		ability_description_container.add_child(description)
 	
 	parent.help_label.connect_hover_signal(action_description)
+
+## [signal ActionSettingButton.delete_button_up]が発行された時、登録された技を削除し、UIを更新します
+func _on_action_button_delete_button_up(action: Action) -> void:
+	if selected_action == action:
+		_on_chance_value_changed(0)
+	else:
+		chances[actions.find(action)] = 0
+	
+	pie_chart_update()
 
 ## slider及びspinboxの値が変更された時に、反映させる関数
 func _on_chance_value_changed(value: int) -> void:
 	var sum_chance: int = 0
 	var index: int = actions.find(selected_action) ## 既に選択中の技のインデックス
-	var previous_chances = chances.duplicate() ## 選択中の技を除いたchances
-	var previous_value = previous_chances.pop_at(index)
+	var previous_chances := chances.duplicate() as Array[int] ## 選択中の技を除いたchances
+	var previous_value := previous_chances.pop_at(index) as int
 	
-	for i: int in previous_chances:
+	for i in previous_chances:
 		sum_chance += i
 	sum_chance += value
 	
@@ -381,10 +385,11 @@ func _on_chance_value_changed(value: int) -> void:
 		chances[index] = value # 技一覧の確率と円グラフを更新
 		pie_chart_update()
 	
-	for node in [slider, spinbox]: # sliderとspinboxを更新
+	for node: Range in [slider, spinbox]: # sliderとspinboxを更新
 		node.set_value_no_signal(value)
 	
-	action_container.get_child(0).get_child(0).get_child(index).chance = value
+	var button := action_container.get_child(index) as ActionSettingButton
+	button.chance = value
 
 ## おまかせボタンが押された時
 func _on_random_button_up() -> void:
@@ -396,7 +401,8 @@ func _on_random_button_up() -> void:
 		if actions[i] == selected_action:
 			_on_chance_value_changed(chances[i])
 		else:
-			action_container.get_child(0).get_child(0).get_child(i).chance = chances[i]
+			var button := action_container.get_child(i) as ActionSettingButton
+			button.chance = chances[i]
 
 
 func _on_control_status_mode_confirm_button_up() -> void:

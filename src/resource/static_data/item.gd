@@ -11,10 +11,9 @@ extends Resource
 
 @export_category("効果")
 @export var max_level: int ## アイテムレベル上限
-@export var power: int ## アイテムの効果量 ※lv1
+@export var power: int ## レベル1時点におけるアイテムの効果量
 @export var power_scale: int ## レベルアップで増える効果量
-## アイテムの対象範囲
-@export var target: Global.Target
+@export var target: Enums.Target ## アイテムの対象範囲
 
 
 @export_category("説明文")
@@ -24,8 +23,8 @@ extends Resource
 
 ## インベントリを確認し、レベルを返す関数
 func get_level() -> int:
-	if id in Global.save_data.item: # 所持しているならレベルを返す
-		return Global.save_data.item[id]
+	if id in SaveManager.save_data.item: # 所持しているならレベルを返す
+		return SaveManager.save_data.item[id]
 	else: # アイテムを未所持なら仮で0を返す
 		return 0
 

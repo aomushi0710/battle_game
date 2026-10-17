@@ -25,6 +25,7 @@ texture_normal = ExtResource("1_5qrwy")
 script = ExtResource("2_v6f8v")
 
 [node name="Effect" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_direction = 3
 layout_mode = 0
 offset_left = -1024.0
@@ -37,6 +38,7 @@ theme_override_constants/separation = 15
 script = ExtResource("3_v6f8v")
 
 [node name="HPBar" type="TextureProgressBar" parent="."]
+unique_name_in_owner = true
 z_index = -1
 layout_mode = 0
 offset_left = 16.0
@@ -64,6 +66,7 @@ text = "HP 555/999"
 vertical_alignment = 1
 
 [node name="MPBar" type="TextureProgressBar" parent="."]
+unique_name_in_owner = true
 z_index = -1
 layout_mode = 0
 offset_left = 16.0
@@ -91,6 +94,7 @@ text = "MP 555/999"
 vertical_alignment = 1
 
 [node name="SPDBar" type="TextureProgressBar" parent="."]
+unique_name_in_owner = true
 z_index = -1
 layout_mode = 0
 offset_left = 16.0
@@ -106,6 +110,7 @@ texture_progress_offset = Vector2(8, 8)
 script = ExtResource("10_v6f8v")
 
 [node name="CenteredWrapper" type="CenterContainer" parent="."]
+unique_name_in_owner = true
 clip_contents = true
 layout_direction = 2
 layout_mode = 1
@@ -134,6 +139,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0.25098)
 
 [node name="SoundEffects" parent="." instance=ExtResource("13_c57w8")]
+unique_name_in_owner = true
 
 [node name="MonsterIcon" parent="." instance=ExtResource("14_xaxbf")]
 unique_name_in_owner = true

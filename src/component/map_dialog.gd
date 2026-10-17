@@ -1,8 +1,6 @@
+class_name MapDialog 
 extends Control
-
-const BUTTON_SCENE = preload("res://scene/component/game_button.tscn")
-
-@export var color_rect: ColorRect ## バトル開始カットイン時に表示される
+## マップ上で主に会話の表示に使用されるダイアログ
 
 var text_tween: Tween
 var text_speed: float = 0.04
@@ -97,7 +95,7 @@ func display_dialog(data: MapDialogData) -> int:
 	# ボタン表示処理
 	if data.button_text:
 		for i in len(data.button_text):
-			var button = Global.game_button.instantiate()
+			var button := Global.GAME_BUTTON.instantiate() as GameButton
 			if i == 0:
 				button.call_deferred("grab_focus")
 			button.text = data.button_text[i]
@@ -134,7 +132,7 @@ func _transition_to_battle() -> bool:
 	var battle_scene: Battle
 	var result: bool
 	if signboard_id == 1:
-		battle_scene = load(Global.tutorial_scene).instantiate()
+		battle_scene = load(Global.TUTORIAL_SCENE).instantiate()
 		battle_scene.stage = Global.stage_data[1]
 		Global.enemy_deck = load(
 			"res://resource/deck/チュートリアル.tres").duplicate(true)
@@ -177,7 +175,7 @@ func _transition_to_battle() -> bool:
 		if Global.player_deck.has_empty_slot(): # デッキにモンスターがいなければ敗北として中断
 			return false
 		
-		battle_scene = load(Global.battle_scene).instantiate()
+		battle_scene = load(Global.BATTLE_SCENE).instantiate()
 		battle_scene.stage = Global.stage_data[1]
 	
 	await battle_cutin()
@@ -191,10 +189,9 @@ func _transition_to_battle() -> bool:
 
 
 func battle_cutin() -> void:
-	var tween = color_rect.create_tween()
-	tween.tween_property(
-		color_rect, "scale", Vector2(1, 1), 0.5
-	).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+	var tween: Tween = color_rect.create_tween()
+	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(color_rect, "scale", Vector2(1, 1), 0.5)
 	await tween.finished
 
 ## Enterキーが押された、またはクリックされた時の処理
