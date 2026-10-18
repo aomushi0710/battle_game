@@ -35,7 +35,7 @@ power = 0
 mp = 20
 target = 0
 damage_type = 0
-touch = false
+is_contact_attack = false
 ability = Array[ExtResource("1_cbtc7")]([SubResource("Resource_3fyj2")])
 description = "ATK強化魔法。
 味方1体のATKを強化する。

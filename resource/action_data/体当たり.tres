@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://bgnhyjwahf61a"]
+[gd_resource type="Resource" script_class="ActionData" load_steps=5 format=3 uid="uid://bgnhyjwahf61a"]
 
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_kuh7w"]
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_rf4b2"]
@@ -15,7 +15,7 @@ power = 30
 mp = 0
 target = 1
 damage_type = 1
-touch = true
+is_contact_attack = false
 ability = Array[ExtResource("1_kuh7w")]([])
 description = "目の前の敵にぶつかって攻撃する"
 metadata/_custom_type_script = "uid://nd5of0c4w8pr"

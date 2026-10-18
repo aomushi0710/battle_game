@@ -32,7 +32,7 @@ power = 30
 mp = 0
 target = 1
 damage_type = 1
-touch = true
+is_contact_attack = false
 ability = Array[ExtResource("1_mux6h")]([SubResource("Resource_g53jj")])
 description = "敵をひっかいて攻撃する。
 20%で急所に当たり、

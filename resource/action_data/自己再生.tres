@@ -33,7 +33,7 @@ power = 0
 mp = 0
 target = 0
 damage_type = 0
-touch = false
+is_contact_attack = false
 ability = Array[ExtResource("1_r2cf8")]([SubResource("Resource_ytjhq")])
 description = "体を再生させて、自分の
 HPを50だけ回復する。"

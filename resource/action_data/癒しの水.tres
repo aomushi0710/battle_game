@@ -33,7 +33,7 @@ power = 0
 mp = 10
 target = 0
 damage_type = 0
-touch = false
+is_contact_attack = false
 ability = Array[ExtResource("1_b4tmm")]([SubResource("Resource_4w8tg")])
 description = "癒し効果を持つ水で、
 味方のHPを回復させる。"

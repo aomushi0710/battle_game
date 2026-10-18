@@ -18,7 +18,9 @@ target = 6
 chance = 100
 timing = 2
 trigger = Array[ExtResource("3_htxax")]([])
-description = "味方全体の[color=violet]RES[/color]を、\\n3ターンの間\\n1.5倍に強化する。"
+description = "味方全体の[color=violet]RES[/color]を、
+3ターンの間
+1.5倍に強化する。"
 battle_log_message = ""
 placeholder = 0
 metadata/_custom_type_script = "uid://d2box237wyadg"
@@ -33,7 +35,7 @@ power = 0
 mp = 30
 target = 0
 damage_type = 0
-touch = false
+is_contact_attack = false
 ability = Array[ExtResource("1_jg3i8")]([SubResource("Resource_v484n")])
 description = "大気中の水蒸気を冷却、
 クリスタルシールドを

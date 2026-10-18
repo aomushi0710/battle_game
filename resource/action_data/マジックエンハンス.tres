@@ -35,7 +35,7 @@ power = 0
 mp = 20
 target = 0
 damage_type = 0
-touch = false
+is_contact_attack = false
 ability = Array[ExtResource("1_ewdwn")]([SubResource("Resource_qtvxb")])
 description = "MAG強化魔法。
 味方1体のMAGを強化する。

@@ -34,7 +34,7 @@ power = 40
 mp = 20
 target = 2
 damage_type = 2
-touch = false
+is_contact_attack = false
 ability = Array[ExtResource("1_sati4")]([SubResource("Resource_lfa25")])
 description = "魂を吸収することで、
 与えたダメージと同等の

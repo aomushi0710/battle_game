@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Action" load_steps=5 format=3 uid="uid://261705w1prvy"]
+[gd_resource type="Resource" script_class="ActionData" load_steps=5 format=3 uid="uid://261705w1prvy"]
 
 [ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="1_e55cj"]
 [ext_resource type="Script" uid="uid://n6604vih5t55" path="res://src/resource/static_data/ability/ability.gd" id="1_yyx2v"]
@@ -15,7 +15,7 @@ power = 30
 mp = 0
 target = 1
 damage_type = 2
-touch = false
+is_contact_attack = false
 ability = Array[ExtResource("1_yyx2v")]([])
 description = "目の前の敵に光線を射出して
 攻撃する。"
