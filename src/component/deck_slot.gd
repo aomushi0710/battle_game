@@ -24,7 +24,6 @@ var slot_index: int ## デッキスロット番号
 
 var is_save_mode: bool: ## セーブ時かどうか[br]この値が変更されると、表示するボタンを切り替えます
 	set(value):
-		print(value)
 		if slot_index <= 0:
 			return
 		

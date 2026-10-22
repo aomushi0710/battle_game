@@ -36,8 +36,7 @@ static func _static_init() -> void:
 		form = value
 		status_update()
 
-@export var action: Array[Action] ## 登録された技[b]のみ[/b]が格納された配列
-@export var chance: Array[int] ## [member Monster.action]で同じindexにあたる技の確率が格納された配列
+@export var chance: Array[int] ## [member MonsterData.action]で同じindexにあたる技の確率が格納された配列
 #@export var skill: int = 0 ## スキルパターン
 
 var maxHP: int ## HPの最大値。[b]現在のHPは別の変数で管理。[/b]
@@ -52,17 +51,19 @@ var RES: int ## 魔法防御力。
 var HP: int ## HPの現在値
 var MP: int ## MPの現在値
 
-## モンスターの持つ技に付け加えて装備の持つ技なども一緒に、[member Monster.action]に格納する関数
+## モンスターの持つ技に付け加えて装備の持つ技なども一緒に、[member MonsterData.action]に格納する関数
 func update() -> void:
-	action = data.action
 	# INFO 今後、装備の技などを更に追加する処理も記述する
-	chance.resize(len(action))
+	chance.resize(len(data.action))
 	chance.fill(0)
 	
 	status_update()
 
 ## 現在のレベルと形態を基にステータスを算出し、自身の変数に代入する関数
 func status_update() -> void:
+	if not data:
+		return
+	
 	var status := data.evolution_forms[form].status_calculator(level)
 	maxHP = status[0]
 	maxMP = status[1]
@@ -77,17 +78,17 @@ func status_update() -> void:
 func random_action_selector() -> void:
 	chance.fill(0)
 	
-	## 出現確率の上限に達していない技の、[member Monster.action]におけるindex一覧
+	## 出現確率の上限に達していない技の、[member MonsterData.action]におけるindex一覧
 	var available_index: Array[int] = []
-	for i in len(action):
-		if level >= action[i].unlock_level:
+	for i in len(data.action):
+		if level >= data.action[i].unlock_level:
 			available_index.append(i)
 	
 	for i in range(100):
 		var index := available_index.pick_random() as int ## 選ばれたindex
 		chance[index] += 1
 		# 技の出現確率上限に到達した時、候補から除外する
-		if chance[index] >= action[index].data.max_chance:
+		if chance[index] >= data.action[index].data.max_chance:
 			available_index.erase(index)
 
 ## 現在の形態固有のデータを持つ[MonsterForm]を取得します

@@ -45,14 +45,17 @@ theme_override_constants/separation = 0
 [node name="MonsterIcon1" parent="HBoxContainer" instance=ExtResource("3_78ryd")]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_default_cursor_shape = 0
 
 [node name="MonsterIcon2" parent="HBoxContainer" instance=ExtResource("3_78ryd")]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_default_cursor_shape = 0
 
 [node name="MonsterIcon3" parent="HBoxContainer" instance=ExtResource("3_78ryd")]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_default_cursor_shape = 0
 
 [node name="Version" type="RichTextLabel" parent="."]
 unique_name_in_owner = true

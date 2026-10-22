@@ -13,6 +13,7 @@ func _ready() -> void:
 		player_deck_slot.deck_name_label.hide()
 		player_deck_slot.version_label.hide()
 	else:
+		player_deck_slot.deck = Global.player_deck
 		player_deck_slot.deck_name_label.text = Global.player_deck.name
 		player_deck_slot.version_label.text = "[i]ver." + Global.player_deck.version + "[/i]"
 		if Global.player_deck.is_beta:

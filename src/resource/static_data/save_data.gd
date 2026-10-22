@@ -2,10 +2,10 @@ class_name SaveData
 extends Resource
 ## セーブデータの情報がまとめられているクラス
 
-var coin: int = 0 ## 所持コイン数
+@export_storage var coin: int = 0 ## 所持コイン数
 
 ## モンスターのIDをkey、モンスターのレベルをvalueとした辞書
-var monster_levels: Dictionary[int, int] = {
+@export_storage var monster_levels: Dictionary[int, int] = {
 	1: 1, 
 	2: 1, 
 	3: 1, 
@@ -17,7 +17,7 @@ var monster_levels: Dictionary[int, int] = {
 }
 
 ## バトルアイテムのIDをkey、バトルアイテムのレベルをvalueとした辞書
-var item: Dictionary[int, int] = {}
+@export_storage var item: Dictionary[int, int] = {}
 
-var version: String = Global.version ## セーブデータのバージョン
-var beta: bool = Global.IS_BETA ## β版であるかどうか
+@export_storage var version: String = Global.version ## セーブデータのバージョン
+@export_storage var beta: bool = Global.IS_BETA ## β版であるかどうか
