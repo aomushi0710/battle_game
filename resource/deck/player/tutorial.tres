@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="Deck" load_steps=9 format=3 uid="uid://cj4go072bmjwf"]
+
+[ext_resource type="Script" uid="uid://dfmkbeq2byy01" path="res://src/resource/data/deck.gd" id="1_1ixmy"]
+[ext_resource type="Resource" uid="uid://br3qcigs0mtjj" path="res://resource/monster_data/スライム.tres" id="2_lahdg"]
+[ext_resource type="Script" uid="uid://caxcvll0814us" path="res://src/resource/data/monster.gd" id="3_cyjvd"]
+[ext_resource type="Resource" uid="uid://dbfbwbft2ic66" path="res://resource/monster_data/ゴースト.tres" id="3_lahdg"]
+[ext_resource type="Resource" uid="uid://b8hekpmdouxe3" path="res://resource/monster_data/バニン.tres" id="4_cyjvd"]
+
+[sub_resource type="Resource" id="Resource_cyjvd"]
+script = ExtResource("3_cyjvd")
+level = 1
+data = ExtResource("2_lahdg")
+form = 0
+chance = Array[int]([50, 30, 0, 0, 10, 10, 0, 0])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="Resource" id="Resource_hergo"]
+script = ExtResource("3_cyjvd")
+level = 1
+data = ExtResource("3_lahdg")
+form = 0
+chance = Array[int]([40, 0, 0, 40, 0, 0, 10, 10])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="Resource" id="Resource_c3lam"]
+script = ExtResource("3_cyjvd")
+level = 1
+data = ExtResource("4_cyjvd")
+form = 0
+chance = Array[int]([0, 40, 40, 20, 0, 0, 0])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[resource]
+script = ExtResource("1_1ixmy")
+name = ""
+monster = Array[Object]([SubResource("Resource_cyjvd"), SubResource("Resource_hergo"), SubResource("Resource_c3lam")])
+version = null
+is_beta = true
+metadata/_custom_type_script = "uid://dfmkbeq2byy01"

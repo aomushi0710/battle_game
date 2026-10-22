@@ -2,14 +2,14 @@
 
 [ext_resource type="Theme" uid="uid://dukn1t5145x33" path="res://asset/theme/action_button.tres" id="1_hae2l"]
 [ext_resource type="Script" uid="uid://cej28jygy1831" path="res://src/component/action_button.gd" id="2_hae2l"]
-[ext_resource type="Texture2D" uid="uid://bn241h8vs7hq7" path="res://asset/image/element/回復技.PNG" id="3_hae2l"]
+[ext_resource type="Texture2D" uid="uid://hy7pihaa78di" path="res://asset/image/element/火属性.PNG" id="3_dofnu"]
 
-[sub_resource type="Gradient" id="Gradient_nlxtl"]
+[sub_resource type="Gradient" id="Gradient_dofnu"]
 offsets = PackedFloat32Array(0.333333)
 colors = PackedColorArray(0, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_cotgl"]
-gradient = SubResource("Gradient_nlxtl")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rueo5"]
+gradient = SubResource("Gradient_dofnu")
 fill_from = Vector2(0, 1)
 metadata/_snap_count = 2
 
@@ -32,7 +32,7 @@ offset_left = 7.0
 offset_top = 7.0
 offset_right = 57.0
 offset_bottom = 57.0
-texture = ExtResource("3_hae2l")
+texture = ExtResource("3_dofnu")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
@@ -43,8 +43,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -0.5
-offset_bottom = -0.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("GradientTexture2D_cotgl")
+texture = SubResource("GradientTexture2D_rueo5")

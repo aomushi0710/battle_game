@@ -5,8 +5,9 @@ signal monster_ready ## モンスターが行動可能になった時発行さ�
 
 const EFFECT_ICON = preload("res://scene/component/effect_icon.tscn")
 
+@export var battle_node: Control ## TODO 今後親ノードを知らずにシグナルアップのみで解決する設計に変更する
+
 var tween: Tween
-var parent: Node ## 常にbattleノードを参照するように調整される変数
 var is_player: bool ## このモンスターは味方かどうか
 var index: int
 var on_field: bool ## このモンスターが場に出ているかどうか
@@ -32,7 +33,7 @@ var available_action: Array[Action] ## 実際に表示される選択可能な�
 @onready var mp_label := %MPBar/Amount as Label
 @onready var spd_bar := %SPDBar as SpeedBar
 
-@onready var sound_effect := %SoundEffects as BattleSoundEmitter
+@onready var se_battle := %SEBattle as BattleSoundEmitter
 
 func _ready() -> void:
 	setup()
@@ -41,15 +42,14 @@ func _ready() -> void:
 	else:
 		on_field = false
 	hide()
-
-
-func parent_getter() -> void:
-	parent = get_parent()
-	while parent.name != "battle":
-		parent = parent.get_parent()
+	
+	ui_update()
 
 ## UI全般の更新を行う関数
 func ui_update() -> void:
+	if not is_node_ready():
+		return
+	
 	hp_bar.max_value = data.maxHP
 	hp_bar.value = data.HP
 	hp_label.text = "HP %3d/%3d" % [data.HP, data.maxHP]
@@ -111,35 +111,28 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 	tween.tween_property(monster_icon, "modulate:a", 0, 0.5)
 	await tween.finished
 	
-	parent = get_parent()
-	while parent.name != "battle":
-		parent = parent.get_parent()
 	spd_bar.set_process(false) # 死んだモンスターを停止
 	spd_bar.value = 0
 	# 相手全滅
 	if Global.e1_death == true and Global.e2_death == true and Global.e3_death == true:
-		parent.battle_finish(true)
-		parent.get_node("button").get_node("戻る").disabled = false
+		battle_node.battle_finish(true)
+		battle_node.buttons.back_button.disabled = false
 		get_tree().paused = false
 		return
 	# 味方全滅
 	elif Global.p1_death == true and Global.p2_death == true and Global.p3_death == true:
-		parent.battle_finish(false)
-		parent.get_node("button").get_node("戻る").disabled = false
+		battle_node.battle_finish(false)
+		battle_node.buttons.back_button.disabled = false
 		get_tree().paused = false
 		return
 	# フィールドにいる味方モンスターがやられた時
 	if is_player == true and self == player_monster:
-		text_setter_callback.call(BattlelogData.new([
-			"[color=red]%s はやられてしまった！[/color]\n" % 
-			data.get_monsterform().name + 
-			"次にフィールドに出すモンスターを\n選んでください。"
-		], false))
-		await parent.changed
-		bench_set() # 死んだモンスターをベンチにセット
-		parent.player_monster = parent.player_deck[parent.player_next_index] # 次のモンスターを設定
-		parent.player_monster.field_set() # 次のモンスターをフィールドにセット
-		parent.player_monster.get_node("SPD").set_process(true) # 交代後のモンスターを再開
+		text_setter_callback.call(BattlelogData.new(["[color=red]%s はやられてしまった！[/color]\n" % data.get_monsterform().name + "次にフィールドに出すモンスターを\n選んでください。"], false))
+		await battle_node.changed
+		set_bench() # 死んだモンスターをベンチにセット
+		battle_node.player_monster = battle_node.player_deck[battle_node.player_next_index] # 次のモンスターを設定
+		battle_node.player_monster.set_field() # 次のモンスターをフィールドにセット
+		battle_node.player_monster.spd_bar.set_process(true) # 交代後のモンスターを再開
 	# フィールドにいる敵モンスターを倒した時、ランダムに次を選ぶ
 	elif not is_player and self == enemy_monster:
 		await text_setter_callback.call(BattlelogData.new([
@@ -147,10 +140,10 @@ func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
 			"次にフィールドに出すモンスターを\n相手が選んでいる..."
 		]))
 		await get_tree().create_timer(1).timeout # 考えるフリ
-		parent.enemy_next_index = parent.random_index(false)
-		bench_set()
-		parent.enemy_monster = parent.enemy_deck[parent.enemy_next_index]
-		parent.enemy_monster.field_set()
+		battle_node.enemy_next_index = battle_node.get_random_index(false)
+		set_bench()
+		battle_node.enemy_monster = battle_node.enemy_deck[battle_node.enemy_next_index]
+		battle_node.enemy_monster.set_field()
 	else:
 		if is_player:
 			await text_setter_callback.call(BattlelogData.new([
@@ -177,7 +170,7 @@ func evolution(id: int) -> Array[String]:
 	hp_setter(data.maxHP - pre_maxHP, false)
 	ui_update()
 	
-	sound_effect.evolution.play()
+	se_battle.evolution.play()
 	
 	return [
 	"[color=red]%s は \n%s に\n進化した！[/color]" % 
@@ -186,25 +179,25 @@ func evolution(id: int) -> Array[String]:
 	[data.get_monsterform().name, data.maxHP - pre_maxHP]]
 
 ## ベンチにモンスターをセットする時の処理[br]spdゲージは溜まらない
-func bench_set() -> void:
+func set_bench() -> void:
 	on_field = false
 	hp_label.hide()
 	mp_label.hide()
 	spd_bar.hide()
-	if is_player == true:
-		reparent(get_parent().get_node("player_deck/player_deck"))
+	if is_player:
+		reparent(battle_node.player_deck_container)
 	else:
-		reparent(get_parent().get_node("enemy_deck/enemy_deck"))
+		reparent(battle_node.enemy_deck_container)
 
 ## フィールドにモンスターをセットする時の処理[br]1f待機後にspdゲージが溜まり始める
-func field_set() -> void:
+func set_field() -> void:
 	on_field = true
 	hp_label.show()
 	mp_label.show()
 	spd_bar.show()
-	reparent(get_parent().get_parent().get_parent())
+	reparent(battle_node)
 	scale = Vector2(1, 1)
-	if is_player == true:
+	if is_player:
 		position = Vector2(500, 350)
 	else:
 		position = Vector2(1164, 350)
@@ -212,12 +205,12 @@ func field_set() -> void:
 ## SPDゲージが溜まり行動可能になった時の処理
 func spd_max() -> void:
 	# picked_action 生成
-	if parent.tutorial_mode == false:
+	if battle_node.tutorial_mode == false:
 		while len(generated_action) < 4: # 4枠全て技で埋まるまで繰り返す
 			var result: int = randi_range(0, 99)
 			for i in len(chance_range):
 				if result <= chance_range[i]: # 乱数に応じて出現する技を決定
-					generated_action.append(data.action[i])
+					generated_action.append(data.data.action[i])
 					break # 対応する技があったら終了
 	
 	var generated_action_size: int = generated_action.size()
@@ -313,12 +306,12 @@ func hp_setter(n: int, text: bool) -> String:
 		elif data.HP + n >= data.maxHP: # 回復するとHPが最大値を越えてしまう時
 			n = data.maxHP - data.HP
 		damage_effect(n, 0)
-		sound_effect.heal.play()
+		se_battle.heal.play()
 	else: # ダメージを受けた時、オレンジ色でアニメーション再生
 		if data.HP <= 0: # 何らかの原因で死亡時
 			return ""
 		damage_effect(-n, 1)
-		sound_effect.damage.play()
+		se_battle.damage.play()
 		if data.HP <= -n: # 残りHPを越えるダメージを受けた時
 			n = -data.HP # HPがマイナスにならないように補正
 	

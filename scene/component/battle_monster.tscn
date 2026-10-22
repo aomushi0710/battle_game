@@ -138,11 +138,11 @@ offset_bottom = 427.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.25098)
 
-[node name="SoundEffects" parent="." instance=ExtResource("13_c57w8")]
-unique_name_in_owner = true
-
 [node name="MonsterIcon" parent="." instance=ExtResource("14_xaxbf")]
 unique_name_in_owner = true
 layout_mode = 0
 scale = Vector2(0.853, 0.853)
 mouse_filter = 1
+
+[node name="SEBattle" parent="." instance=ExtResource("13_c57w8")]
+unique_name_in_owner = true

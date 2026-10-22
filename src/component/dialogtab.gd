@@ -77,7 +77,7 @@ func _on_tab_changed(tab: BattlelogData.Tab) -> void:
 		
 		label.text = "" # 一旦削除してからアニメーション
 		if $"../../".enemy_monster != null: # 元に戻す
-			$"../../".enemy_monster.get_node("effect").mouse_filter = MouseFilter.MOUSE_FILTER_STOP
+			$"../../".enemy_monster.effect_container.mouse_filter = MouseFilter.MOUSE_FILTER_STOP
 		
 		if size.y != 270: # 拡大されていた時に戻すアニメーション
 			var duration = (size.y - 270) / 1448 # 現在サイズからアニメーション秒数を逆算(最大0.5)
@@ -133,7 +133,7 @@ func _on_tab_changed(tab: BattlelogData.Tab) -> void:
 		
 		# スクロールの邪魔にならないように一旦操作受付を止める
 		if $"../../".enemy_monster != null: 
-			$"../../".enemy_monster.get_node("effect").mouse_filter = (
+			$"../../".enemy_monster.effect_container.mouse_filter = (
 				MouseFilter.MOUSE_FILTER_IGNORE
 			)
 		

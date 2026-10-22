@@ -51,6 +51,9 @@ func _ready() -> void:
 
 
 func _update_action_button_lock() -> void:
+	if not is_node_ready():
+			return
+	
 	if is_locked:
 		action_button.modulate.v = 0.5
 		
@@ -67,6 +70,9 @@ func _update_action_button_lock() -> void:
 
 
 func _update_action_button() -> void:
+	if not is_node_ready():
+			return
+	
 	if action and action.data:
 		action_button.action = action.data
 	else:
@@ -74,6 +80,9 @@ func _update_action_button() -> void:
 
 
 func _update_chance() -> void:
+	if not is_node_ready():
+			return
+	
 	chance_label.text = "%3d%%" % chance
 	
 	if chance == 0:

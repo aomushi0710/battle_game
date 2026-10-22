@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="Deck" load_steps=15 format=3 uid="uid://bri0s2ex6jd61"]
+
+[ext_resource type="Script" uid="uid://c3nuh5veon1bs" path="res://src/resource/data/action.gd" id="1_n0wh3"]
+[ext_resource type="Resource" uid="uid://cwy7h38kxvyy7" path="res://resource/action_data/自己再生.tres" id="2_67mvt"]
+[ext_resource type="Resource" uid="uid://be8vh2ta7sdxk" path="res://resource/monster_data/カカシスライム.tres" id="3_om5mt"]
+[ext_resource type="Script" uid="uid://caxcvll0814us" path="res://src/resource/data/monster.gd" id="4_lg7ti"]
+[ext_resource type="Script" uid="uid://dws64oarp8yy8" path="res://src/resource/static_data/monster_form.gd" id="5_bvxbn"]
+[ext_resource type="Resource" uid="uid://qcde2e3i3cco" path="res://resource/monster_form/カカシスライム.tres" id="6_axjil"]
+[ext_resource type="Script" uid="uid://bt0467jqpfboq" path="res://src/resource/static_data/monster_data.gd" id="7_s53v5"]
+[ext_resource type="Script" uid="uid://dfmkbeq2byy01" path="res://src/resource/data/deck.gd" id="8_k8sif"]
+
+[sub_resource type="Resource" id="Resource_hmh1l"]
+script = ExtResource("4_lg7ti")
+level = 1
+data = ExtResource("3_om5mt")
+form = 0
+chance = Array[int]([100])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="Resource" id="Resource_1lv7c"]
+script = ExtResource("1_n0wh3")
+data = ExtResource("2_67mvt")
+unlock_level = null
+unlock_form = null
+metadata/_custom_type_script = "uid://c3nuh5veon1bs"
+
+[sub_resource type="Resource" id="Resource_twc26"]
+script = ExtResource("7_s53v5")
+id = 0
+evolution_forms = Array[ExtResource("5_bvxbn")]([ExtResource("6_axjil")])
+action = Array[ExtResource("1_n0wh3")]([SubResource("Resource_1lv7c")])
+coin = 0
+
+[sub_resource type="Resource" id="Resource_kfs45"]
+script = ExtResource("4_lg7ti")
+level = 1
+data = SubResource("Resource_twc26")
+form = 0
+chance = Array[int]([100])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="Resource" id="Resource_eiybn"]
+script = ExtResource("7_s53v5")
+id = 0
+evolution_forms = Array[ExtResource("5_bvxbn")]([ExtResource("6_axjil")])
+action = Array[ExtResource("1_n0wh3")]([SubResource("Resource_1lv7c")])
+coin = 0
+
+[sub_resource type="Resource" id="Resource_n3cpj"]
+script = ExtResource("4_lg7ti")
+level = 1
+data = SubResource("Resource_eiybn")
+form = 0
+chance = Array[int]([100])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[resource]
+script = ExtResource("8_k8sif")
+name = ""
+monster = Array[Object]([SubResource("Resource_hmh1l"), SubResource("Resource_kfs45"), SubResource("Resource_n3cpj")])
+version = null
+is_beta = true
+metadata/_custom_type_script = "uid://dfmkbeq2byy01"

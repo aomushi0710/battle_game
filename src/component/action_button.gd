@@ -10,52 +10,56 @@ var n: int = 0 ## 属性アイコン点滅用
 
 @export var action: ActionData: ## 技
 	set(act):
-		if not is_node_ready():
-			return
-		
 		if action == act:
 			return
-		elif tween and tween.is_running():
+		action = act
+		
+		if not is_node_ready():
+			return
+		if tween and tween.is_running():
 			tween.kill()
 		
-		action = act
-		background.texture = background.texture.duplicate(true)
-		var gradient: Gradient = background.texture.gradient ## 背景のグラデーション
-		if action == null:
-			text = " "
-			element.hide()
-			gradient.colors = PackedColorArray([Color.BLACK])
-		else:
-			text = action.name
-			element.texture = action.element[0].icon
-			element.show()
-			if len(action.element) <= 1: # 複数属性ではない時
-				gradient.colors = PackedColorArray(
-					[action.element[0].color.darkened(0.5), action.element[0].color])
-				gradient.offsets = PackedFloat32Array([1.0 / 3.0, 2.0 / 3.0])
-			else: # 複数の属性を持つ技の時
-				var color_list: PackedColorArray
-				for ele: Element in action.element: # 属性の色をリストに全て登録
-					color_list.append(ele.color)
-				gradient.colors = color_list
-				
-				var offset_list: PackedFloat32Array
-				for i in len(color_list): # グラデーションの位置をリストに全て登録
-					offset_list.append((i + 1.0) / (len(color_list) + 1.0)) # 色数によって変動
-				gradient.offsets = offset_list
-				
-				blink()
+		_update()
 
 @onready var element := %Element as TextureRect
 @onready var background := %Background as TextureRect
 
 func _ready() -> void:
 	button_up.connect(_on_button_up)
-	_on_button_up()
+	_update()
 
 ## 既存の[signal BaseButton.button_up]を中継し[signal action_button_up]を発行します
 func _on_button_up() -> void:
 	action_button_up.emit(action)
+
+## 現在の[ActionData]に応じてUIを更新します
+func _update() -> void:
+	background.texture = background.texture.duplicate(true)
+	var gradient: Gradient = background.texture.gradient ## 背景のグラデーション
+	if not action:
+		text = " "
+		element.hide()
+		gradient.colors = PackedColorArray([Color.BLACK])
+	else:
+		text = action.name
+		element.texture = action.element[0].icon
+		element.show()
+		if len(action.element) <= 1: # 複数属性ではない時
+			gradient.colors = PackedColorArray(
+				[action.element[0].color.darkened(0.5), action.element[0].color])
+			gradient.offsets = PackedFloat32Array([1.0 / 3.0, 2.0 / 3.0])
+		else: # 複数の属性を持つ技の時
+			var color_list: PackedColorArray
+			for ele: Element in action.element: # 属性の色をリストに全て登録
+				color_list.append(ele.color)
+			gradient.colors = color_list
+			
+			var offset_list: PackedFloat32Array
+			for i in len(color_list): # グラデーションの位置をリストに全て登録
+				offset_list.append((i + 1.0) / (len(color_list) + 1.0)) # 色数によって変動
+			gradient.offsets = offset_list
+			
+			blink()
 
 ## 点滅関数
 func blink() -> void:
