@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://m1fpu7jtr0i5" path="res://asset/sound/SE/heal.ogg" id="5_qemhu"]
 [ext_resource type="AudioStream" uid="uid://c5x4yrepr7qm" path="res://asset/sound/SE/evolution.ogg" id="6_vagwo"]
 
-[node name="BattleSE" type="Node"]
+[node name="SEBattle" type="Node"]
 script = ExtResource("1_8jy4m")
 
 [node name="Buff" type="AudioStreamPlayer" parent="."]

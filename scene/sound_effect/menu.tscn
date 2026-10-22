@@ -3,7 +3,7 @@
 [ext_resource type="AudioStream" uid="uid://540wjd0nrasx" path="res://asset/sound/SE/click.ogg" id="1_17xic"]
 [ext_resource type="Script" uid="uid://bcf8nrgn6spqa" path="res://src/sound_effect/menu.gd" id="1_owo5j"]
 
-[node name="MenuSE" type="Node"]
+[node name="SEMenu" type="Node"]
 script = ExtResource("1_owo5j")
 
 [node name="Click" type="AudioStreamPlayer" parent="."]

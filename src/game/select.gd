@@ -40,14 +40,14 @@ const BACK_BUTTON_HELP_TEXT: Dictionary[Mode, String] = {
 }
 
 @export_category("CanvasLayer")
-@export var sound_effects: Node
+@export var se_menu: MenuSoundEmitter
 @export var background: Control
 @export var camera: Camera2D
 @export var canvas_layer_ui: Control
 @export var confirm_button: Button
 @export var back_button: Button
 @export var help_label: ScrollingLabel
-@export var status: Control
+@export var status_bar: Control
 @export var evolution_preview: Control
 @export var evolution_preview_button: OptionButton
 @export var level_spinbox: SpinBox
@@ -99,6 +99,8 @@ var level: int: ## プレビュー時のモンスターレベル
 ## この変数に代入を行う時は常に親ノードでの
 var mode: Mode = Mode.DECK:
 	set(next_mode): ## 対応する画面遷移を行ってからモード変更
+		if not is_node_ready():
+			return
 		if not is_inside_tree():
 			return
 		
@@ -119,25 +121,25 @@ var mode: Mode = Mode.DECK:
 		match next_mode:
 			Mode.DECK:
 				confirm_button.hide()
-				status.hide()
+				status_bar.hide()
 				deck_menu.on_mode_entered()
 			
 			Mode.MONSTER_SELECT:
 				confirm_button.show()
-				status.show()
+				status_bar.hide()
 				monster_select.on_mode_entered()
 			
 			Mode.STATUS:
 				confirm_button.show()
-				status.show()
+				status_bar.show()
 				
 				# ACTIONとSTATUSからの遷移時は呼ばない
 				if mode != Mode.ACTION and mode != Mode.STATUS:
 					monster_setting.on_mode_entered()
 				
 				# 棒グラフの棒とボタンを表示するアニメーション
-				status.get_child(1).show()
-				for container in status.get_child(0).get_children():
+				status_bar.get_child(1).show()
+				for container in status_bar.get_child(0).get_children():
 					for child in container.get_children():
 						if child is TextureRect:
 							child.show()
@@ -154,11 +156,11 @@ var mode: Mode = Mode.DECK:
 			
 			Mode.ACTION:
 				confirm_button.show()
-				status.show()
+				status_bar.show()
 				
 				# 棒グラフの棒とボタンを隠すアニメーション
-				status.get_child(1).hide()
-				for container in status.get_child(0).get_children():
+				status_bar.get_child(1).hide()
+				for container in status_bar.get_child(0).get_children():
 					for child in container.get_children():
 						if child is TextureRect:
 							monster_setting.bar_chart_animation(
@@ -190,10 +192,7 @@ var mode: Mode = Mode.DECK:
 		for child in canvas_layer_ui.get_children():
 			if child is Button:
 				child.disabled = false
-		if (
-			mode == Mode.ACTION and 
-			monster_setting.selected_action in monster_setting.actions
-		): # 既に選ばれた技を選んだ時
+		if mode == Mode.ACTION and monster_setting.selected_action in monster_setting.actions: # 既に選ばれた技を選んだ時
 			confirm_button.disabled = true # 再登録を不可に上書き
 
 @onready var deck_menu := %DeckMenu as Control
@@ -206,7 +205,7 @@ func _ready() -> void:
 
 ## 戻るボタンの処理
 func _on_back_button_up():
-	sound_effects.click.play()
+	se_menu.click.play()
 	match mode:
 		Mode.DECK:
 			if Global.player_deck.has_empty_slot():
@@ -231,7 +230,7 @@ func _on_back_button_up():
 
 ## 決定ボタンの処理
 func _on_confirm_button_up():
-	sound_effects.click.play()
+	se_menu.click.play()
 	match mode:
 		Mode.STATUS:
 			status_mode_confirm_button_up.emit()
