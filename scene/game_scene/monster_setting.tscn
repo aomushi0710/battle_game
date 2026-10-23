@@ -440,11 +440,10 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_14bbj")
 
-[node name="Status" type="Control" parent="CanvasLayer/UI"]
-visible = false
+[node name="StatusBar" type="Control" parent="CanvasLayer/UI"]
 anchors_preset = 0
 
-[node name="status" type="VBoxContainer" parent="CanvasLayer/UI/Status"]
+[node name="status" type="VBoxContainer" parent="CanvasLayer/UI/StatusBar"]
 layout_mode = 2
 offset_left = 50.0
 offset_top = 50.0
@@ -453,11 +452,11 @@ offset_bottom = 512.0
 theme = SubResource("Theme_4ce10")
 theme_override_constants/separation = 10
 
-[node name="HP" type="HBoxContainer" parent="CanvasLayer/UI/Status/status"]
+[node name="HP" type="HBoxContainer" parent="CanvasLayer/UI/StatusBar/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/Status/status/HP"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/StatusBar/status/HP"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -468,17 +467,17 @@ text = "[color=coral]HP [font_size=2]                   [/font_size][/color]:%4d
 vertical_alignment = 1
 metadata/help_text = "体力。0になると先頭不能になります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/UI/Status/status/HP"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/UI/StatusBar/status/HP"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_epq06")
 metadata/help_text = "体力。0になると先頭不能になります。"
 
-[node name="maxMP" type="HBoxContainer" parent="CanvasLayer/UI/Status/status"]
+[node name="maxMP" type="HBoxContainer" parent="CanvasLayer/UI/StatusBar/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/Status/status/maxMP"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/StatusBar/status/maxMP"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -493,17 +492,17 @@ max   [/color][/font_size][/cell]
 vertical_alignment = 1
 metadata/help_text = "保有できる魔力の最大値。[color=red]この値はレベルアップでは増加しない。[/color]この値の20%が溜まった状態で、バトルが始まります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/UI/Status/status/maxMP"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/UI/StatusBar/status/maxMP"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_j08b8")
 metadata/help_text = "保有できる魔力の最大値。[color=red]この値はレベルアップでは増加しない。[/color]この値の20%が溜まった状態で、バトルが始まります。"
 
-[node name="supplyMP" type="HBoxContainer" parent="CanvasLayer/UI/Status/status"]
+[node name="supplyMP" type="HBoxContainer" parent="CanvasLayer/UI/StatusBar/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/Status/status/supplyMP"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/StatusBar/status/supplyMP"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -518,17 +517,17 @@ supply[/color][/font_size][/cell]
 vertical_alignment = 1
 metadata/help_text = "行動可能になった時、回復する魔力の量。[color=red]この値はレベルアップでは増加しない。[/color]"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/UI/Status/status/supplyMP"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/UI/StatusBar/status/supplyMP"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_0c3n4")
 metadata/help_text = "行動可能になった時、回復する魔力の量。[color=red]この値はレベルアップでは増加しない。[/color]"
 
-[node name="SPD" type="HBoxContainer" parent="CanvasLayer/UI/Status/status"]
+[node name="SPD" type="HBoxContainer" parent="CanvasLayer/UI/StatusBar/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/Status/status/SPD"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/StatusBar/status/SPD"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -539,17 +538,17 @@ text = "[color=limegreen]SPD[font_size=2]                   [/font_size][/color]
 vertical_alignment = 1
 metadata/help_text = "素早さ。[color=red]この値はレベルアップでは増加しにくい。[/color]ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/UI/Status/status/SPD"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/UI/StatusBar/status/SPD"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_lvrxx")
 metadata/help_text = "素早さ。[color=red]この値はレベルアップでは増加しにくい。[/color]ゲージが溜まる速度を表しており、ゲージが溜まると行動可能になります。"
 
-[node name="ATK" type="HBoxContainer" parent="CanvasLayer/UI/Status/status"]
+[node name="ATK" type="HBoxContainer" parent="CanvasLayer/UI/StatusBar/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/Status/status/ATK"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/StatusBar/status/ATK"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -560,17 +559,17 @@ text = "[color=orange]ATK[font_size=2]                   [/font_size][/color]:%4
 vertical_alignment = 1
 metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/UI/Status/status/ATK"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/UI/StatusBar/status/ATK"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_ydts3")
 metadata/help_text = "物理攻撃力。この値が大きいほど、物理技で与えるダメージが大きくなります。"
 
-[node name="DEF" type="HBoxContainer" parent="CanvasLayer/UI/Status/status"]
+[node name="DEF" type="HBoxContainer" parent="CanvasLayer/UI/StatusBar/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/Status/status/DEF"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/StatusBar/status/DEF"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -581,17 +580,17 @@ text = "[color=lightblue]DEF[font_size=2]                   [/font_size][/color]
 vertical_alignment = 1
 metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/UI/Status/status/DEF"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/UI/StatusBar/status/DEF"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_2uk2t")
 metadata/help_text = "物理防御力。この値が大きいほど、物理技で受けるダメージが小さくなります。"
 
-[node name="MAG" type="HBoxContainer" parent="CanvasLayer/UI/Status/status"]
+[node name="MAG" type="HBoxContainer" parent="CanvasLayer/UI/StatusBar/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/Status/status/MAG"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/StatusBar/status/MAG"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -602,17 +601,17 @@ text = "[color=dodgerblue]MAG[font_size=2]                   [/font_size][/color
 vertical_alignment = 1
 metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/UI/Status/status/MAG"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/UI/StatusBar/status/MAG"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_gcshb")
 metadata/help_text = "魔法攻撃力。この値が大きいほど、魔法技で与えるダメージが大きくなります。"
 
-[node name="RES" type="HBoxContainer" parent="CanvasLayer/UI/Status/status"]
+[node name="RES" type="HBoxContainer" parent="CanvasLayer/UI/StatusBar/status"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/Status/status/RES"]
+[node name="status" type="RichTextLabel" parent="CanvasLayer/UI/StatusBar/status/RES"]
 clip_contents = false
 custom_minimum_size = Vector2(150, 49)
 layout_mode = 2
@@ -623,13 +622,13 @@ text = "[color=violet]RES[font_size=2]                   [/font_size][/color]:%4
 vertical_alignment = 1
 metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
 
-[node name="bar" type="TextureRect" parent="CanvasLayer/UI/Status/status/RES"]
+[node name="bar" type="TextureRect" parent="CanvasLayer/UI/StatusBar/status/RES"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 texture = SubResource("GradientTexture2D_mmr34")
 metadata/help_text = "魔法防御力。この値が大きいほど、魔法技で受けるダメージが小さくなります。"
 
-[node name="Level" type="SpinBox" parent="CanvasLayer/UI/Status"]
+[node name="Level" type="SpinBox" parent="CanvasLayer/UI/StatusBar"]
 layout_mode = 0
 offset_left = 46.0
 offset_top = 533.0
@@ -729,24 +728,24 @@ metadata/help_text = "指定した形態で、モンスターの情報を表示�
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(960, 540)
 
-[node name="Control" type="Control" parent="." node_paths=PackedStringArray("sound_effects", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status", "evolution_preview", "evolution_preview_button", "level_spinbox")]
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("se_menu", "background", "camera", "canvas_layer_ui", "confirm_button", "back_button", "help_label", "status_bar", "evolution_preview", "evolution_preview_button", "level_spinbox")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_14bbj")
 script = ExtResource("2_1hqx4")
-sound_effects = NodePath("../SoundEffects")
+se_menu = NodePath("../SEMenu")
 background = NodePath("../Background")
 camera = NodePath("../Camera2D")
 canvas_layer_ui = NodePath("../CanvasLayer/UI")
 confirm_button = NodePath("../CanvasLayer/UI/Confirm")
 back_button = NodePath("../CanvasLayer/UI/Back")
 help_label = NodePath("../CanvasLayer/UI/ScrollingLabel")
-status = NodePath("../CanvasLayer/UI/Status")
+status_bar = NodePath("../CanvasLayer/UI/StatusBar")
 evolution_preview = NodePath("../CanvasLayer/UI/EvolutionPreview")
 evolution_preview_button = NodePath("../CanvasLayer/UI/EvolutionPreview/OptionButton")
-level_spinbox = NodePath("../CanvasLayer/UI/Status/Level")
+level_spinbox = NodePath("../CanvasLayer/UI/StatusBar/Level")
 
 [node name="DeckMenu" type="Control" parent="Control" node_paths=PackedStringArray("parent", "evolution_preview_button")]
 unique_name_in_owner = true
@@ -868,7 +867,7 @@ text = "🗑️リセット"
 color = Color(1, 0, 0.0166664, 1)
 metadata/help_text = "現在のデッキをリセットします。"
 
-[node name="MonsterSelect" type="Control" parent="Control" node_paths=PackedStringArray("parent", "evolution_preview_button")]
+[node name="MonsterSelect" type="Control" parent="Control" node_paths=PackedStringArray("parent", "status_bar", "evolution_preview_button")]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 0
@@ -877,6 +876,7 @@ offset_right = 590.0
 offset_bottom = 40.0
 script = ExtResource("10_jsdkd")
 parent = NodePath("..")
+status_bar = NodePath("../../CanvasLayer/UI/StatusBar")
 evolution_preview_button = NodePath("../../CanvasLayer/UI/EvolutionPreview/OptionButton")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/MonsterSelect"]
@@ -1203,9 +1203,9 @@ expand_mode = 1
 stretch_mode = 1
 metadata/_edit_lock_ = true
 
-[node name="SoundEffects" parent="." instance=ExtResource("12_ilscs")]
+[node name="SEMenu" parent="." instance=ExtResource("12_ilscs")]
 
-[connection signal="value_changed" from="CanvasLayer/UI/Status/Level" to="Control" method="_on_level_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/UI/StatusBar/Level" to="Control" method="_on_level_value_changed"]
 [connection signal="button_up" from="CanvasLayer/UI/Back" to="Control" method="_on_back_button_up"]
 [connection signal="button_up" from="CanvasLayer/UI/Confirm" to="Control" method="_on_confirm_button_up"]
 [connection signal="item_selected" from="CanvasLayer/UI/EvolutionPreview/OptionButton" to="Control" method="_on_option_button_item_selected"]

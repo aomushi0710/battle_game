@@ -72,7 +72,7 @@ func on_mode_entered() -> void:
 	# モンスターを表示
 	monster_preview()
 	
-	actions = selected_monster.action.duplicate()
+	actions = selected_monster.data.action.duplicate()
 	# すでに登録されているものと同じモンスターを選んだ場合、その技をロード
 	if (Global.player_deck.monster[parent.selected_slot_index].data != null and 
 		Global.player_deck.monster[parent.selected_slot_index].data.id == 
@@ -110,7 +110,7 @@ func bar_chart_update(is_text_only: bool = false) -> void:
 	## 表示したいモンスターのステータス一覧
 	var status_list: PackedInt32Array = all_status_list[selected_monster.form]
 	var status_index: int = 0 ## status_listのindex指定用
-	for child in parent.status.get_child(0).get_children():
+	for child in parent.status_bar.get_child(0).get_children():
 		for c in child.get_children():
 			if c is RichTextLabel: # ステータス値表示
 				c.text = STATUS_BAR_TEXT[status_index]
@@ -187,22 +187,23 @@ func pie_chart_update() -> void:
 	pie_chart.chances = chances
 	pie_chart.queue_redraw()
 
-## 全ての形態に関して、技をそれぞれのコンテナにボタン化して追加する関数
+## 全ての[Action]を[ActionSettingButton]として追加する関数
 func setting_action_button() -> void:
-	for i in len(selected_monster.action):
+	for i in len(actions):
 		var button := Global.ACTION_SETTING_BUTTON.instantiate() as ActionSettingButton
-		button.action = selected_monster.action[i]
+		button.action = actions[i]
 		# is_lockedはsetter内でactionの情報を取得するため、actionより後で設定
-		if selected_monster.level < selected_monster.action[i].unlock_level:
+		if selected_monster.level < actions[i].unlock_level:
 			button.is_locked = true
 		else:
 			button.is_locked = false
 		# chanceはis_lockedの設定時に上書きされてしまうため、is_lockedより後で設定
+		action_container.add_child(button)
 		button.chance = selected_monster.chance[i]
 		button.action_button.action_button_up.connect(action_button_up.bind(button.is_locked))
 		button.delete_button_up.connect(_on_action_button_delete_button_up)
 		button.get_child(1).set_meta("help_text", "クリックで技の詳細を確認できます。")
-		action_container.add_child(button)
+		
 	
 	connect_hover_signal.emit(action_scroll_container)
 
@@ -223,12 +224,12 @@ func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
 	action_description.show()
 	
 	var index: int = -1
-	for i in selected_monster.action.size():
-		if selected_monster.action[i].data == act:
+	for i in actions.size():
+		if actions[i].data == act:
 			index = i
 			break
 	
-	selected_action = selected_monster.action[index]
+	selected_action = actions[index]
 	## 元々ボタンがあれば取得される
 	var exists := action_select.get_node_or_null("action_button")
 	if exists: # 存在したら削除
@@ -237,13 +238,13 @@ func action_button_up(act: ActionData, is_not_editable: bool = false) -> void:
 	
 	## 新たに表示されるボタン
 	var button := Global.ACTION_BUTTON.instantiate() as ActionButton
+	action_select.add_child(button)
 	button.name = "action_button"
 	button.position = Vector2(160, 20)
 	button.action = act
 	button.mouse_default_cursor_shape = Control.CURSOR_ARROW # カーソルも戻す
 	button.set_meta("help_text", act.description)
 	parent.help_label.connect_hover_signal(button)
-	action_select.add_child(button)
 	
 	if is_not_editable: # 確率表記を隠し、sliderとspinboxを操作不能に
 		for child in action_select.get_children():

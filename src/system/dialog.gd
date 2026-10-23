@@ -36,13 +36,20 @@ func set_dialog(data: DialogData, format_args: Array = []) -> int:
 	_text_label.text = formatted_text
 	
 	# テキストに合わせてサイズを調整
-	const MIN_WIDTH: float = 860
-	const MAX_WIDTH: float = 1820
+	const MIN_WIDTH: float = 860.0
+	const MAX_WIDTH: float = 1820.0
+	const MAX_HEIGHT: float = 800.0
 	var raw_text: String = _text_label.get_parsed_text()
 	var font: Font = _text_label.get_theme_font("normal_font_size")
 	var font_size: int = _text_label.get_theme_font_size("normal_font_size")
 	var text_width: int = font.get_multiline_string_size(raw_text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
-	_panel_container.custom_minimum_size.x = max(_panel_container.custom_minimum_size.x, clampi(text_width, MIN_WIDTH, MAX_WIDTH) + 100)
+	_panel_container.custom_minimum_size.x = maxf(_panel_container.custom_minimum_size.x, clampf(text_width, MIN_WIDTH, MAX_WIDTH) + 100)
+	if _text_label.get_content_height() > MAX_HEIGHT:
+		_text_label.custom_minimum_size.y = MAX_HEIGHT
+		_text_label.scroll_active = true
+	else:
+		_text_label.custom_minimum_size.y = _text_label.get_content_height()
+		_text_label.scroll_active = false
 	
 	# タイトルがなければ不要なノードを隠す
 	if data.title.is_empty():
@@ -144,3 +151,6 @@ func _set_button(data: DialogData, format_args: Array) -> void:
 		else:
 			button = _button_container.get_child(i) as GameButton
 			button.hide()
+	
+	var first_button = _button_container.get_child(0) as GameButton
+	first_button.grab_focus()

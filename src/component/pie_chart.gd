@@ -4,10 +4,10 @@ extends Control
 signal draw_ended ## _draw関数終了後に発行されます
 
 const ELEMENTS_FONT_SIZE: int = 30 ## フォントサイズ
-const BORDER_WIDTH: float = 2 ## ボーダーの太さ
+const BORDER_WIDTH: float = 2.0 ## ボーダーの太さ
 
-var actions: Array[ActionData]
-var chances: Array[int]
+@export var actions: Array[ActionData]
+@export var chances: Array[int]
 var color_list: Array[Color] = [Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK] ## これまでの色の履歴を保持
 
 var border_color: Color ## ボーダーの色

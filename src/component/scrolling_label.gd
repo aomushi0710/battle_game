@@ -5,25 +5,30 @@ class_name ScrollingLabel
 extends Panel
 
 var text_speed: float = 0.05 ## テキストのスクロール速度 TODO 設定画面などで調節可能にする
+var tween: Tween
 
 @onready var mask := %Mask as Control
 @onready var label := %Text as RichTextLabel
 
+
+func _ready() -> void:
+	# 文字が枠の上に被って表示されないようにするため、少し小さくする
+	mask.size = size - Vector2(4.0, 0)
+
 ## help_textデータを持つ全てのノード[param node]にシグナルを接続する再起関数
 func connect_hover_signal(node: Node) -> void:
-	if node is Control and node.has_meta("help_text"):
-		node.mouse_entered.connect(_text_animation.bind("[i]%s[/i]" % node.get_meta("help_text").replace("\n", "")))
-	
-	elif node is TabContainer: # TabBarにおけるメタデータの設定方法は異なる
-			node.tab_clicked.connect(_on_tab_container_tab_clicked.bind(node))
+	var control := node as Control
+	if control != null and control.has_meta(&"help_text"):
+		if control.mouse_entered.is_connected(_text_animation):
+			control.mouse_entered.disconnect(_text_animation)
+		
+		control.mouse_entered.connect(_text_animation.bind("[i]%s[/i]" % str(control.get_meta(&"help_text")).replace("\n", "")))
 	
 	for child in node.get_children():
 		connect_hover_signal(child)
 
 ## [member label]に表示される[param text]を少しずつ表示させるアニメーションを再生します
 func _text_animation(text: String) -> void:
-	var tween: Tween
-	# アニメーション中なら中断
 	if tween and tween.is_running():
 		tween.kill()
 	
@@ -41,8 +46,3 @@ func _text_animation(text: String) -> void:
 		tween = label.create_tween().set_loops()
 		tween.tween_interval(2.0)
 		tween.tween_property(label, "position:x", final_val, duration).from(0.0)
-
-## [TabContainer]のmetadataを用いて[merhod _text_animation]を呼びます
-func _on_tab_container_tab_clicked(tab: int, tab_container: TabContainer) -> void:
-	var text: String = "[i]%s[/i]" % tab_container.get_tab_metadata(tab)
-	_text_animation(text.replace("\n", ""))

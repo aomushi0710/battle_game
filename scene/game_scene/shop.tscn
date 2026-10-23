@@ -137,5 +137,5 @@ text = "[center][b]アイテム名 Lv.0[/b][/center]
 表示されます！"
 vertical_alignment = 1
 
-[connection signal="button_up" from="Control/Back" to="Control" method="_on_戻る_button_up"]
+[connection signal="button_up" from="Control/Back" to="Control" method="_on_back_button_up"]
 [connection signal="button_up" from="Control/Buy" to="Control" method="_on_buy_button_up"]

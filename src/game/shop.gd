@@ -3,7 +3,7 @@ extends Control
 const ITEM_SCENE = preload("res://scene/component/shop_item.tscn")
 
 var coin_tween: Tween
-var selected_item: Item
+var selected_item: ShopItem
 
 @onready var item_container := %Item as HBoxContainer
 @onready var buy_button := %Buy as Button
@@ -35,10 +35,9 @@ func update(paid: int) -> void:
 	coin_label.change(paid)
 
 ## アイテムが選ばれた時、説明文を表示する関数
-func item_button_up(shop_item: Item) -> void:
-	# 現在選ばれたアイテム情報を記録s
+func item_button_up(shop_item: ShopItem) -> void:
 	selected_item = shop_item
-	var item: Item = shop_item.item # ショップアイテムシーンに内蔵されているアイテム
+	var item: Item = selected_item.item
 	
 	var level: int = item.get_level()
 	var description: String
@@ -63,8 +62,8 @@ func item_button_up(shop_item: Item) -> void:
 			"[center]レベル上限に達しています！[/center]"
 
 
-func _on_戻る_button_up() -> void:
 	get_tree().change_scene_to_file(Global.MAP_SCENE)
+func _on_back_button_up() -> void:
 
 
 func _on_buy_button_up() -> void:

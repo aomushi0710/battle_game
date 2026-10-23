@@ -2,7 +2,7 @@ extends VBoxContainer
 class_name ShopItem
 ## ショップに販売されるアイテムのシーン
 
-signal button_up(item: Item) ## ボタンが押された時に、アイテム情報を送るシグナル
+signal button_up(item_button: ShopItem) ## ボタンが押された時に、自身の情報を発行します
 
 var item: Item
 var level: int

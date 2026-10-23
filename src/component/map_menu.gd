@@ -1,3 +1,4 @@
+class_name MapMenu
 extends Control
 
 @onready var help_label := %ScrollingLabel as ScrollingLabel
