@@ -3,6 +3,7 @@ extends Resource
 ## セーブデータの情報がまとめられているクラス
 
 @export_storage var coin: int = 0 ## 所持コイン数
+@export_storage var map_position := Vector2(32.0, 288.0) ## 現在のマップ座標
 
 ## モンスターのIDをkey、モンスターのレベルをvalueとした辞書
 @export_storage var monster_levels: Dictionary[int, int] = {

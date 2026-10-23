@@ -1,26 +1,27 @@
-extends Control
+extends CanvasLayer
 
-@onready var menu := $"../Menu"
-@onready var dialog := $"../Dialog"
-@onready var player := $"../../World/Player"
+@export var _player: Player
+
+@onready var _menu := %Menu as MapMenu
+@onready var _dialog := %Dialog as MapDialog
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("menu"):
-		if dialog.visible: ## ダイアログが開かれている時はメニューを開けない 
+		if _dialog.visible: ## ダイアログが開かれている時はメニューを開けない 
 			return
 		
-		if menu.visible:
+		if _menu.visible:
 			menu_close()
 		else:
 			menu_open()
 
 ## メニューを開きます
 func menu_open() -> void:
-	menu.visible = true
-	player.can_move = false
+	_menu.visible = true
+	_player.can_move = false
 
 ## メニューを閉じます
 func menu_close() -> void:
-	menu.visible = false
-	player.can_move = true
+	_menu.visible = false
+	_player.can_move = true

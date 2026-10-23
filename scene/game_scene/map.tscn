@@ -1,12 +1,11 @@
-[gd_scene load_steps=26 format=4 uid="uid://b6v2nlkh2ak8j"]
+[gd_scene load_steps=23 format=4 uid="uid://b6v2nlkh2ak8j"]
 
 [ext_resource type="TileSet" uid="uid://rw4km3kk1k67" path="res://asset/image/tile/terrain.tres" id="1_e0an3"]
-[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="1_p5pve"]
+[ext_resource type="Script" uid="uid://dblkfftofkhyy" path="res://src/game/map.gd" id="1_eipqq"]
 [ext_resource type="Script" uid="uid://c87hdh1wibpae" path="res://src/component/map_ui.gd" id="2_iw27f"]
-[ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://asset/image/monster/スライム.PNG" id="2_p5pve"]
 [ext_resource type="PackedScene" uid="uid://bldb4kxsdbr4q" path="res://scene/component/map_menu.tscn" id="3_71pa8"]
-[ext_resource type="Script" uid="uid://nyb1qpsf3a5a" path="res://src/component/player.gd" id="3_urblq"]
 [ext_resource type="PackedScene" uid="uid://bgn0w8f01647u" path="res://scene/component/map_dialog.tscn" id="4_71pa8"]
+[ext_resource type="PackedScene" uid="uid://wpola3ebw8p4" path="res://scene/component/player.tscn" id="5_te06e"]
 [ext_resource type="TileSet" uid="uid://bm5qn6qq1ml3b" path="res://asset/image/tile/object.tres" id="6_05x41"]
 [ext_resource type="PackedScene" uid="uid://b5nv63d85qwtt" path="res://scene/component/signboard.tscn" id="7_oysan"]
 [ext_resource type="Script" uid="uid://c8f5dn7tcqt5t" path="res://src/resource/static_data/map_dialog_data.gd" id="8_sb2pt"]
@@ -184,26 +183,16 @@ button_redirect_id = Array[int]([])
 battle_redirect_id = Array[int]([])
 metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e0an3"]
-size = Vector2(63.9, 63.9)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ooc2g"]
-size = Vector2(64, 64)
-
 [node name="Map" type="Node2D"]
+script = ExtResource("1_eipqq")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="UI" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 1
-theme = ExtResource("1_p5pve")
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("_player")]
+unique_name_in_owner = true
 script = ExtResource("2_iw27f")
+_player = NodePath("../World/Player")
 
 [node name="Menu" parent="CanvasLayer" instance=ExtResource("3_71pa8")]
+unique_name_in_owner = true
 visible = false
 
 [node name="Title" parent="CanvasLayer/Menu/Panel" index="3"]
@@ -213,6 +202,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_eipqq")
 theme_override_styles/focus = SubResource("StyleBoxFlat_sb2pt")
 
 [node name="Dialog" parent="CanvasLayer" instance=ExtResource("4_71pa8")]
+unique_name_in_owner = true
 offset_top = 680.0
 offset_bottom = 680.0
 
@@ -244,36 +234,11 @@ position = Vector2(864, -188)
 id = 2
 dialog_datas = Array[ExtResource("8_sb2pt")]([SubResource("Resource_oysan"), SubResource("Resource_sb2pt"), SubResource("Resource_a6rn7"), SubResource("Resource_ooc2g"), SubResource("Resource_2wwcf")])
 
-[node name="Player" type="CharacterBody2D" parent="World" node_paths=PackedStringArray("canvas_layer", "world", "dialog", "terrain")]
+[node name="Player" parent="World" node_paths=PackedStringArray("_dialog", "_terrain") instance=ExtResource("5_te06e")]
+unique_name_in_owner = true
 position = Vector2(32, 288)
-collision_mask = 7
-script = ExtResource("3_urblq")
-speed = 384
-canvas_layer = NodePath("../../CanvasLayer")
-world = NodePath("..")
-dialog = NodePath("../../CanvasLayer/Dialog")
-terrain = NodePath("../TileMap/Terrain")
-
-[node name="Image" type="Sprite2D" parent="World/Player"]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_p5pve")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player"]
-shape = SubResource("RectangleShape2D_e0an3")
-one_way_collision_margin = 0.0
-debug_color = Color(1, 0, 0, 0.419608)
-
-[node name="Camera2D" type="Camera2D" parent="World/Player"]
-unique_name_in_owner = true
-zoom = Vector2(1.5, 1.5)
-
-[node name="InteractionArea" type="Area2D" parent="World/Player"]
-unique_name_in_owner = true
-collision_mask = 11
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player/InteractionArea"]
-shape = SubResource("RectangleShape2D_ooc2g")
-debug_color = Color(1, 1, 0, 0.419608)
+_dialog = NodePath("../../CanvasLayer/Dialog")
+_terrain = NodePath("../TileMap/Terrain")
 
 [node name="Background" type="ColorRect" parent="World"]
 z_index = -1
@@ -283,12 +248,8 @@ offset_right = 2307.0
 offset_bottom = 1206.0
 color = Color(0.5, 0.5, 0.5, 1)
 
-[connection signal="button_up" from="CanvasLayer/Menu/Close" to="CanvasLayer/UI" method="menu_close"]
-[connection signal="battle_finished" from="CanvasLayer/Dialog" to="World/Player" method="_on_dialog_battle_finished"]
-[connection signal="battle_started" from="CanvasLayer/Dialog" to="World/Player" method="_on_dialog_battle_started"]
 [connection signal="dialog_closed" from="CanvasLayer/Dialog" to="World/Player" method="_on_dialog_dialog_closed"]
 [connection signal="dialog_opened" from="CanvasLayer/Dialog" to="World/Player" method="_on_dialog_dialog_opened"]
-[connection signal="tree_exited" from="World/Player" to="World/Player" method="_on_tree_exited"]
 
 [editable path="CanvasLayer/Menu"]
 [editable path="CanvasLayer/Menu/ScrollingLabel"]

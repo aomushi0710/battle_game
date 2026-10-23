@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://wpola3ebw8p4"]
+
+[ext_resource type="Script" uid="uid://nyb1qpsf3a5a" path="res://src/component/player.gd" id="1_x8wep"]
+[ext_resource type="Texture2D" uid="uid://cioi83ubpqfrg" path="res://asset/image/monster/スライム.PNG" id="2_0084s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e0an3"]
+size = Vector2(63.9, 63.9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ooc2g"]
+size = Vector2(64, 64)
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 7
+script = ExtResource("1_x8wep")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_0084s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_e0an3")
+one_way_collision_margin = 0.0
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+zoom = Vector2(1.5, 1.5)
+
+[node name="InteractionArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_ooc2g")
+debug_color = Color(1, 1, 0, 0.419608)
+
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
