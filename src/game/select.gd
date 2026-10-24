@@ -214,7 +214,12 @@ func _on_back_button_up():
 				return
 			
 			SaveManager.save_deck(0)
-			get_tree().change_scene_to_file(Global.MAP_SCENE)
+			
+			SceneManager.change_scene(
+				Global.MAP_SCENE,
+				SceneManager.fade_out_transparent,
+				SceneManager.fade_in_zoom
+			)
 		
 		Mode.MONSTER_SELECT:
 			mode = Mode.DECK

@@ -129,70 +129,44 @@ func display_dialog(data: MapDialogData) -> int:
 
 ## バトルに移行する関数。[br]勝利すると[code]true[/code]を返します。
 func _transition_to_battle() -> bool:
-	var battle_scene: Battle
 	var result: bool
+	
 	if signboard_id == 1:
-		battle_scene = load(Global.TUTORIAL_SCENE).instantiate()
-		battle_scene.stage = Global.stage_data[1]
-		Global.enemy_deck = load(
-			"res://resource/deck/チュートリアル.tres").duplicate(true)
+		Global.battle_stage = Global.stage_data[1]
+		Global.enemy_deck = load("res://resource/deck/enemy/tutorial.tres").duplicate(true) as Deck
+		Global.current_deck = Global.player_deck.duplicate() as Deck
+		Global.player_deck = load("res://resource/deck/player/tutorial.tres").duplicate(true) as Deck
 		
-		Global.current_deck = Global.player_deck.duplicate() # 避難
-		# 味方チュートリアルデッキ構築
-		## スライム＠体当たり:50%, 自己再生:30%, DEFエンハンス:10%, ATKブレイク:10%
-		var first := Monster.new()
-		## ゴースト＠体当たり:40%, 暗闇:40%, 霊魂吸収:10%, ギガダークネス:10%
-		var second := Monster.new()
-		## バニン＠火の玉:40%, 暗闇:40%, フレイム:20%
-		var third := Monster.new()
-
-		first.level = 1
-		first.data = Global.monster_data[1]
-		first.action = [
-			first.data.action[0], first.data.action[1], 
-			first.data.action[4], first.data.action[5]
-		]
-		first.chance = [50, 30, 10, 10]
-
-		second.level = 1
-		second.data = Global.monster_data[2]
-		second.action = [
-			second.data.action[0], second.data.action[3], 
-			second.data.action[6], second.data.action[7]
-		]
-		second.chance = [40, 40, 10, 10]
-
-		third.level = 1
-		third.data = Global.monster_data[3]
-		third.action = [
-			third.data.action[1], third.data.action[2], 
-			third.data.action[3]
-		]
-		third.chance = [40, 40, 20]
-
-		Global.player_deck.monster = [first, second, third]
+		battle_started.emit()
+		result = bool(await SceneManager.call_sub_scene(
+			Global.TUTORIAL_SCENE,
+			&"battle_finished",
+			SceneManager.fade_out_zoom,
+			SceneManager.fade_in_transparent,
+			SceneManager.fade_out_transparent,
+			SceneManager.fade_in_zoom
+		))
+		battle_finished.emit()
+		
+		return result
 	else:
 		if Global.player_deck.has_empty_slot(): # デッキにモンスターがいなければ敗北として中断
 			return false
-		
-		battle_scene = load(Global.BATTLE_SCENE).instantiate()
-		battle_scene.stage = Global.stage_data[1]
 	
-	await battle_cutin()
-	get_tree().current_scene.add_child(battle_scene)
+	Global.battle_stage = Global.stage_data[1]
+	
 	battle_started.emit()
-	result = await battle_scene.get_node("battle").battle_finished
+	result = bool(await SceneManager.call_sub_scene(
+		Global.BATTLE_SCENE,
+		&"battle_finished",
+		SceneManager.fade_out_zoom,
+		SceneManager.fade_in_transparent,
+		SceneManager.fade_out_transparent,
+		SceneManager.fade_in_zoom
+	))
 	battle_finished.emit()
-	battle_scene.queue_free()
 	
 	return result
-
-
-func battle_cutin() -> void:
-	var tween: Tween = color_rect.create_tween()
-	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(color_rect, "scale", Vector2(1, 1), 0.5)
-	await tween.finished
 
 ## Enterキーが押された、またはクリックされた時の処理
 func _input(event: InputEvent) -> void:

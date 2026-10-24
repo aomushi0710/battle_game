@@ -41,8 +41,8 @@ func _update_ui(deck_slot: DeckSlot) -> void:
 	deck_slot.deck = deck
 
 
-	get_tree().change_scene_to_file(Global.SELECT_SCENE)
 func _on_back_button_up() -> void:
+	SceneManager.change_scene(Global.SELECT_SCENE)
 
 
 func _on_save_button_up(index: int) -> void:

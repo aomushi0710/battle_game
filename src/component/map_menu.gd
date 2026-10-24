@@ -8,11 +8,19 @@ func _ready() -> void:
 
 
 func _on_monster_button_up() -> void:
-	get_tree().change_scene_to_file(Global.SELECT_SCENE)
+	SceneManager.change_scene(
+		Global.SELECT_SCENE,
+		SceneManager.fade_out_zoom,
+		SceneManager.fade_in_transparent
+	)
 
 
 func _on_shop_button_up() -> void:
-	get_tree().change_scene_to_file(Global.SHOP_SCENE)
+	SceneManager.change_scene(
+		Global.SHOP_SCENE,
+		SceneManager.fade_out_zoom,
+		SceneManager.fade_in_transparent
+	)
 
 
 func _on_save_button_up() -> void:
@@ -22,4 +30,5 @@ func _on_save_button_up() -> void:
 
 
 func _on_title_button_up() -> void:
+	## TODO タイトル画面実装後に変更
 	get_tree().change_scene_to_file(Global.MAIN_SCENE)

@@ -62,8 +62,12 @@ func item_button_up(shop_item: ShopItem) -> void:
 			"[center]レベル上限に達しています！[/center]"
 
 
-	get_tree().change_scene_to_file(Global.MAP_SCENE)
 func _on_back_button_up() -> void:
+	SceneManager.change_scene(
+		Global.MAP_SCENE,
+		SceneManager.fade_out_transparent,
+		SceneManager.fade_in_zoom
+	)
 
 
 func _on_buy_button_up() -> void:
