@@ -43,6 +43,10 @@ window/stretch/mode="canvas_items"
 
 export/convert_text_resources_to_binary=false
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
 [gui]
 
 theme/custom_font="uid://b7nq4crdd7bl0"
