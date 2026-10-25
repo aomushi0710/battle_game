@@ -55,7 +55,10 @@ func _ready() -> void:
 	if SaveManager.is_new_data:
 		_continue_button.disabled = true
 	
-	await SceneManager.fade_in_transparent(1.0)
+	if Global.is_first_launch:
+		Global.is_first_launch = false
+		await SceneManager.fade_in_transparent(1.0)
+	
 	_show_title_animation()
 
 ## ゲームタイトルを表示するアニメーションを再生します
@@ -78,16 +81,19 @@ func _show_title_animation() -> void:
 
 
 func _hide_title_animation() -> void:
-	var tween: Tween = create_tween()
+	var tween: Tween = create_tween().set_parallel()
 	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(_pie_chart, "position:y", PIE_CHART_POSITION_Y, 1.0).from(0.0)
-	tween.parallel().tween_property(_pie_chart, "scale", Vector2.ZERO, 1.0).from(PIE_CHART_SCALE)
+	tween.tween_property(_pie_chart, "scale", Vector2.ZERO, 1.0).from(PIE_CHART_SCALE)
 	
 	tween.tween_property(_ui, "modulate:a", 0.0, 1.0).from(1.0)
 	await tween.finished
 
 
 func _on_continue_button_up() -> void:
+	for button in _button_container.get_children() as Array[GameButton]:
+		button.disabled = true
+	
 	await _hide_title_animation()
 	SceneManager.change_scene(Global.MAP_SCENE, SceneManager.no_fade_out, SceneManager.no_fade_in)
 
@@ -103,6 +109,9 @@ func _on_new_game_button_up() -> void:
 			
 			await DialogManager.set_dialog(preload("res://resource/dialog_data/main/delete_save_data_2.tres"))
 			DialogManager.hide_dialog()
+			
+			for button in _button_container.get_children() as Array[GameButton]:
+				button.disabled = true
 			
 			await _hide_title_animation()
 			SceneManager.change_scene(Global.MAP_SCENE, SceneManager.no_fade_out, SceneManager.no_fade_in)

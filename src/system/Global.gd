@@ -32,8 +32,7 @@ var item_data: Dictionary[int, Item] = {}
 ## [Stage]のリソースを格納した辞書
 var stage_data: Dictionary[int, Stage] = {}
 
-## TODO マップ上のプレイヤーの位置はセーブデータに保存できるようにする。
-@onready var map_position: Vector2 = Vector2(32, 288)
+var is_first_launch: bool = true ## 初回起動によるタイトル画面の呼び出しかどうか
 
 @onready var player_deck := Deck.new()
 @onready var enemy_deck := Deck.new()

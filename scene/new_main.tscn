@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://dnke3dg7je24c"]
 
-[ext_resource type="Script" uid="uid://djjemknmkab5p" path="res://src/new_main.gd" id="1_hh1gt"]
-[ext_resource type="PackedScene" uid="uid://b6v2nlkh2ak8j" path="res://scene/game_scene/map.tscn" id="1_s3gkp"]
-[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="3_0x4sr"]
-[ext_resource type="PackedScene" uid="uid://q1o1wv3x1yij" path="res://scene/component/pie_chart.tscn" id="4_ldlbl"]
-[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="5_kkmox"]
-[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://resource/action_data/体当たり.tres" id="6_0klu7"]
-[ext_resource type="PackedScene" uid="uid://0n1ixjrprqj2" path="res://scene/component/game_button.tscn" id="7_0klu7"]
+[ext_resource type="Script" uid="uid://djjemknmkab5p" path="res://src/new_main.gd" id="1_p1hux"]
+[ext_resource type="PackedScene" uid="uid://b6v2nlkh2ak8j" path="res://scene/game_scene/map.tscn" id="2_of57s"]
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="3_b5f6u"]
+[ext_resource type="PackedScene" uid="uid://q1o1wv3x1yij" path="res://scene/component/pie_chart.tscn" id="4_tqoya"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="5_k65ib"]
+[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://resource/action_data/体当たり.tres" id="6_wscrc"]
+[ext_resource type="PackedScene" uid="uid://0n1ixjrprqj2" path="res://scene/component/game_button.tscn" id="7_mswub"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkmox"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -24,10 +24,10 @@ default_font_size = 200
 default_font_size = 40
 
 [node name="Main" type="Node" node_paths=PackedStringArray("_map_node")]
-script = ExtResource("1_hh1gt")
+script = ExtResource("1_p1hux")
 _map_node = NodePath("Map")
 
-[node name="Map" parent="." instance=ExtResource("1_s3gkp")]
+[node name="Map" parent="." instance=ExtResource("2_of57s")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -40,7 +40,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(960, 540)
-theme = ExtResource("3_0x4sr")
+theme = ExtResource("3_b5f6u")
 
 [node name="Title" type="Control" parent="CanvasLayer/UI"]
 layout_mode = 1
@@ -68,7 +68,7 @@ grow_vertical = 2
 pivot_offset = Vector2(550, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_kkmox")
 
-[node name="PieChart" parent="CanvasLayer/UI/Title" instance=ExtResource("4_ldlbl")]
+[node name="PieChart" parent="CanvasLayer/UI/Title" instance=ExtResource("4_tqoya")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 5
@@ -78,7 +78,7 @@ offset_left = -500.0
 offset_right = 500.0
 grow_horizontal = 2
 scale = Vector2(1e-05, 1e-05)
-actions = Array[ExtResource("5_kkmox")]([ExtResource("6_0klu7")])
+actions = Array[ExtResource("5_k65ib")]([ExtResource("6_wscrc")])
 chances = Array[int]([100])
 
 [node name="Title" type="RichTextLabel" parent="CanvasLayer/UI/Title"]
@@ -121,17 +121,17 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 18
 
-[node name="Continue" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_0klu7")]
+[node name="Continue" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_mswub")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "つづきから"
 
-[node name="NewGame" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_0klu7")]
+[node name="NewGame" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_mswub")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "はじめから"
 
-[node name="Credit" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_0klu7")]
+[node name="Credit" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_mswub")]
 layout_mode = 2
 text = "クレジット"
 
@@ -158,17 +158,18 @@ vertical_alignment = 1
 
 [node name="Version" type="RichTextLabel" parent="CanvasLayer/UI"]
 unique_name_in_owner = true
+clip_contents = false
 layout_mode = 0
-offset_left = 1670.0
+offset_left = 1666.0
 offset_top = 1021.0
-offset_right = 1920.0
+offset_right = 1916.0
 offset_bottom = 1080.0
 theme = SubResource("Theme_0klu7")
 bbcode_enabled = true
 text = "β ver.X.X.X"
 fit_content = true
 autowrap_mode = 0
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [connection signal="button_up" from="CanvasLayer/UI/ButtonContainer/Continue" to="." method="_on_continue_button_up"]
