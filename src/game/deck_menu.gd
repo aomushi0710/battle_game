@@ -80,12 +80,12 @@ func update(form: Monster.Form) -> void:
 
 func _on_save_button_up() -> void:
 	SaveManager.is_save_mode = true
-	get_tree().change_scene_to_file(Global.DECK_SAVE_SCENE)
+	SceneManager.change_scene(Global.DECK_SAVE_SCENE)
 
 
 func _on_load_button_up() -> void:
 	SaveManager.is_save_mode = false
-	get_tree().change_scene_to_file(Global.DECK_SAVE_SCENE)
+	SceneManager.change_scene(Global.DECK_SAVE_SCENE)
 
 
 func _on_auto_fill_button_up() -> void:
