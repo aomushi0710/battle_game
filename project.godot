@@ -12,10 +12,12 @@ config_version=5
 
 config/name="バトルゲーム"
 config/version="5.0.4"
-run/main_scene="res://scene/main.tscn"
+run/main_scene="uid://dnke3dg7je24c"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 run/max_fps=60
 boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/fullsize=false
+boot_splash/image="uid://bdp2lgk4c45lw"
 config/icon="uid://cioi83ubpqfrg"
 
 [autoload]
