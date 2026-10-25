@@ -5,7 +5,7 @@ var version: String = ProjectSettings.get_setting("application/config/version")
 ## 現在のバージョンがβ版であるかどうか
 const IS_BETA: bool = true
 
-const MAIN_SCENE: String = "res://scene/new_main.tscn"
+const MAIN_SCENE: String = "res://scene/main.tscn"
 const MAP_SCENE: String = "res://scene/game_scene/map.tscn"
 const SELECT_SCENE: String = "res://scene/game_scene/monster_setting.tscn"
 const BATTLE_SCENE: String = "res://scene/game_scene/battle.tscn"
