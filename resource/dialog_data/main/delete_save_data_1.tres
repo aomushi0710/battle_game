@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_kr6vi")
 title = "セーブデータ削除"
-text = "本当にセーブデータを削除しますか？
+text = "セーブデータを削除して、はじめからやり直しますか？
 [b]削除したデータは二度と復元できません！[/b]"
 button_text = Array[String](["削除しない", "削除する"])
 dialog_color = Color(1, 0, 0, 1)

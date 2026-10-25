@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="DialogData" load_steps=3 format=3 uid="uid://bb4gw48wye5yq"]
+
+[ext_resource type="Texture2D" uid="uid://bd5tqgcwsr7r4" path="res://asset/image/allstars.png" id="1_ilar1"]
+[ext_resource type="Script" uid="uid://c3cow7mamavty" path="res://src/resource/static_data/dialog_data.gd" id="1_r2s3i"]
+
+[resource]
+script = ExtResource("1_r2s3i")
+title = "クレジット"
+text = "[font_size=40][b]開発[/b]
+ゲームデザイン / プログラミング : aomushi0710
+アート / グラフィック : aomushi0710
+
+[b]サウンド[/b]
+サウンドエフェクト作成ツール : Bfxr
+
+[b]フォント[/b]
+DotGothic16
+Copyright 2020 The DotGothic16 Project Authors
+Licensed under the SIL Open Font License, Version 1.1.
+
+Press Start 2P
+Copyright 2012 The Press Start 2P Project Authors (cody@zone38.net)
+Licensed under the SIL Open Font License, Version 1.1.
+
+[b]ゲームエンジン[/b]
+This game uses Godot Engine, available under the following license:
+
+Copyright (c) 2014-present Godot Engine contributors.
+Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the \"Software\"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+[b]スペシャルサンクス[/b]
+私の家族と友人
+ものづくり工房メンバーの方々
+大学教職員の方々
+学園祭・オープンキャンパス展示の体験者の方々
+[/font_size][font_size=25].
+.
+.
+[/font_size][b]そして、プレイしていただいた全ての方へ！[/b]
+"
+button_text = Array[String](["THANK YOU FOR PLAYING!"])
+background_texture = ExtResource("1_ilar1")
+dialog_color = Color(0, 0, 0, 1)
+dialog_border_color = Color(1, 1, 1, 1)
+button_color = Array[Color]([])
+metadata/_custom_type_script = "uid://c3cow7mamavty"

@@ -5,9 +5,10 @@
 [resource]
 script = ExtResource("1_roay2")
 title = "セーブデータ削除"
-text = "セーブデータを削除しました。"
+text = "セーブデータを削除しました。
+新規セーブデータを作成しました。"
 button_text = Array[String](["OK"])
-dialog_color = Color(1, 0, 0, 1)
-dialog_border_color = Color(0, 0, 0, 1)
+dialog_color = Color(0, 0, 0, 1)
+dialog_border_color = Color(1, 1, 1, 1)
 button_color = Array[Color]([])
 metadata/_custom_type_script = "uid://c3cow7mamavty"

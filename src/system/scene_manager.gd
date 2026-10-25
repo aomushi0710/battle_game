@@ -116,6 +116,7 @@ func no_fade_out() -> void:
 func fade_in_zoom(duration: float = DEFAULT_DURATION) -> void:
 	_fade.color.a = 1.0
 	
+	_fade.show()
 	var tween: Tween = _fade.create_tween()
 	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(_fade, "scale", Vector2.ZERO, duration).from(Vector2.ONE)
@@ -136,6 +137,7 @@ func fade_out_zoom(duration: float = DEFAULT_DURATION) -> void:
 func fade_in_transparent(duration: float = DEFAULT_DURATION) -> void:
 	_fade.scale = Vector2.ONE
 	
+	_fade.show()
 	var tween: Tween = _fade.create_tween()
 	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(_fade, "color:a", 0, duration).from(1.0)
