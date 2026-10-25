@@ -1,0 +1,176 @@
+[gd_scene load_steps=11 format=3 uid="uid://dnke3dg7je24c"]
+
+[ext_resource type="Script" uid="uid://djjemknmkab5p" path="res://src/new_main.gd" id="1_hh1gt"]
+[ext_resource type="PackedScene" uid="uid://b6v2nlkh2ak8j" path="res://scene/game_scene/map.tscn" id="1_s3gkp"]
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="3_0x4sr"]
+[ext_resource type="PackedScene" uid="uid://q1o1wv3x1yij" path="res://scene/component/pie_chart.tscn" id="4_ldlbl"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="5_kkmox"]
+[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://resource/action_data/体当たり.tres" id="6_0klu7"]
+[ext_resource type="PackedScene" uid="uid://0n1ixjrprqj2" path="res://scene/component/game_button.tscn" id="7_0klu7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkmox"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 200
+
+[sub_resource type="Theme" id="Theme_kkmox"]
+default_font_size = 200
+
+[sub_resource type="Theme" id="Theme_0klu7"]
+default_font_size = 40
+
+[node name="Main" type="Node" node_paths=PackedStringArray("_map_node")]
+script = ExtResource("1_hh1gt")
+_map_node = NodePath("Map")
+
+[node name="Map" parent="." instance=ExtResource("1_s3gkp")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(960, 540)
+theme = ExtResource("3_0x4sr")
+
+[node name="Title" type="Control" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+
+[node name="Shadow" type="Panel" parent="CanvasLayer/UI/Title"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = 225.0
+offset_right = 550.0
+offset_bottom = 226.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(550, 0.5)
+theme_override_styles/panel = SubResource("StyleBoxFlat_kkmox")
+
+[node name="PieChart" parent="CanvasLayer/UI/Title" instance=ExtResource("4_ldlbl")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -500.0
+offset_right = 500.0
+grow_horizontal = 2
+scale = Vector2(1e-05, 1e-05)
+actions = Array[ExtResource("5_kkmox")]([ExtResource("6_0klu7")])
+chances = Array[int]([100])
+
+[node name="Title" type="RichTextLabel" parent="CanvasLayer/UI/Title"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = 65.0
+offset_right = 550.0
+offset_bottom = 355.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(550, 145)
+theme = SubResource("Theme_kkmox")
+theme_override_constants/shadow_outline_size = 20
+bbcode_enabled = true
+text = "Manipulator"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -253.0
+offset_top = -363.0
+offset_right = 254.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 18
+
+[node name="Continue" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_0klu7")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "つづきから"
+
+[node name="NewGame" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_0klu7")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "はじめから"
+
+[node name="Credit" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_0klu7")]
+layout_mode = 2
+text = "クレジット"
+
+[node name="Copyright" type="RichTextLabel" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -255.0
+offset_top = -59.0
+offset_right = 255.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_0klu7")
+bbcode_enabled = true
+text = "(C) 2024-2026 aomushi0710"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Version" type="RichTextLabel" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1670.0
+offset_top = 1021.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme = SubResource("Theme_0klu7")
+bbcode_enabled = true
+text = "β ver.X.X.X"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_up" from="CanvasLayer/UI/ButtonContainer/Continue" to="." method="_on_continue_button_up"]
+[connection signal="button_up" from="CanvasLayer/UI/ButtonContainer/NewGame" to="." method="_on_new_game_button_up"]
+[connection signal="button_up" from="CanvasLayer/UI/ButtonContainer/Credit" to="." method="_on_credit_button_up"]

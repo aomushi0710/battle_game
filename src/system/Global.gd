@@ -5,7 +5,7 @@ var version: String = ProjectSettings.get_setting("application/config/version")
 ## 現在のバージョンがβ版であるかどうか
 const IS_BETA: bool = true
 
-const MAIN_SCENE: String = "res://scene/main.tscn"
+const MAIN_SCENE: String = "res://scene/new_main.tscn"
 const MAP_SCENE: String = "res://scene/game_scene/map.tscn"
 const SELECT_SCENE: String = "res://scene/game_scene/monster_setting.tscn"
 const BATTLE_SCENE: String = "res://scene/game_scene/battle.tscn"
@@ -55,9 +55,6 @@ func _ready() -> void:
 	_directory_load("res://resource/action_data/", action_data)
 	_directory_load("res://resource/item/", item_data)
 	_directory_load("res://resource/stage/", stage_data)
-	
-	SaveManager.load_game()
-	load(DECK_SAVE_SCENE)
 
 ## ディレクトリのパス[param path]を指定して読み込み、[param dict]にIDをキーとしてリソースを格納します。
 func _directory_load(path: String, dict: Dictionary) -> void:

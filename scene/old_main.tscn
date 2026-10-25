@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://36mc0q6q01ow"]
 
-[ext_resource type="Script" uid="uid://cpvp8wu65fblw" path="res://src/main.gd" id="1_0gvvv"]
-[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://asset/theme/default_font_30.tres" id="2_m5oqv"]
-[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://asset/theme/default_font_20.tres" id="4_lf3g1"]
+[ext_resource type="Script" uid="uid://cpvp8wu65fblw" path="res://src/old_main.gd" id="1_fl5rj"]
+[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://asset/theme/default_font_30.tres" id="2_al8dd"]
+[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://asset/theme/default_font_20.tres" id="3_5hqht"]
 
 [sub_resource type="Theme" id="Theme_6g3bf"]
 default_font_size = 35
@@ -12,7 +12,7 @@ default_font_size = 35
 
 [node name="Main" type="Node2D"]
 scale = Vector2(1.6, 1.6)
-script = ExtResource("1_0gvvv")
+script = ExtResource("1_fl5rj")
 
 [node name="Start" type="Button" parent="."]
 offset_left = 100.0
@@ -38,7 +38,7 @@ offset_left = 100.0
 offset_top = 139.375
 offset_right = 1064.0
 offset_bottom = 670.375
-theme = ExtResource("2_m5oqv")
+theme = ExtResource("2_al8dd")
 bbcode_enabled = true
 text = "↑ここを押してセッティング！
 
@@ -63,7 +63,7 @@ offset_left = 973.0
 offset_top = 606.0
 offset_right = 1130.0
 offset_bottom = 642.0
-theme = ExtResource("4_lf3g1")
+theme = ExtResource("3_5hqht")
 bbcode_enabled = true
 text = "[i]β.ver.X.X.X[/i]"
 horizontal_alignment = 2
@@ -73,7 +73,7 @@ offset_left = 96.0
 offset_top = 601.875
 offset_right = 443.0
 offset_bottom = 652.875
-theme = ExtResource("2_m5oqv")
+theme = ExtResource("2_al8dd")
 bbcode_enabled = true
 text = "[i](C) 2025 aomushi0710[i]"
 
