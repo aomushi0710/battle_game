@@ -89,19 +89,13 @@ func _hide_title_animation() -> void:
 	tween.tween_property(_ui, "modulate:a", 0.0, 1.0).from(1.0)
 	await tween.finished
 
-
 func _on_continue_button_up() -> void:
-	for button in _button_container.get_children() as Array[GameButton]:
-		button.disabled = true
-	
-	await _hide_title_animation()
-	SceneManager.change_scene(Global.MAP_SCENE, SceneManager.no_fade_out, SceneManager.no_fade_in)
+	_change_to_map_scene()
 
 
 func _on_new_game_button_up() -> void:
 	if SaveManager.is_new_data:
-		await _hide_title_animation()
-		SceneManager.change_scene(Global.MAP_SCENE, SceneManager.no_fade_out, SceneManager.no_fade_in)
+		_change_to_map_scene()
 	else:
 		var selected_index: int = await DialogManager.set_dialog(preload("res://resource/dialog_data/main/delete_save_data_1.tres"))
 		if selected_index == 1:
@@ -110,11 +104,7 @@ func _on_new_game_button_up() -> void:
 			await DialogManager.set_dialog(preload("res://resource/dialog_data/main/delete_save_data_2.tres"))
 			DialogManager.hide_dialog()
 			
-			for button in _button_container.get_children() as Array[GameButton]:
-				button.disabled = true
-			
-			await _hide_title_animation()
-			SceneManager.change_scene(Global.MAP_SCENE, SceneManager.no_fade_out, SceneManager.no_fade_in)
+			_change_to_map_scene()
 		else:
 			DialogManager.hide_dialog()
 
@@ -122,3 +112,9 @@ func _on_new_game_button_up() -> void:
 func _on_credit_button_up() -> void:
 	await DialogManager.set_dialog(preload("res://resource/dialog_data/main/credit.tres"))
 	DialogManager.hide_dialog()
+
+
+func _change_to_map_scene() -> void:
+	SceneManager.block_input()
+	await _hide_title_animation()
+	SceneManager.change_scene(Global.MAP_SCENE, SceneManager.no_fade_out, SceneManager.no_fade_in)
