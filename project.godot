@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="バトルゲーム"
+config/name="Manipulator"
 config/version="5.0.4"
 run/main_scene="uid://dnke3dg7je24c"
 config/features=PackedStringArray("4.4", "GL Compatibility")
