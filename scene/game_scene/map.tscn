@@ -186,10 +186,9 @@ metadata/_custom_type_script = "uid://c8f5dn7tcqt5t"
 [node name="Map" type="Node2D"]
 script = ExtResource("1_eipqq")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("_player")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_iw27f")
-_player = NodePath("../World/Player")
 
 [node name="Menu" parent="CanvasLayer" instance=ExtResource("3_71pa8")]
 unique_name_in_owner = true
@@ -248,6 +247,7 @@ offset_right = 2307.0
 offset_bottom = 1206.0
 color = Color(0.5, 0.5, 0.5, 1)
 
+[connection signal="toggled" from="CanvasLayer/Menu" to="World/Player" method="_on_menu_toggled"]
 [connection signal="dialog_closed" from="CanvasLayer/Dialog" to="World/Player" method="_on_dialog_dialog_closed"]
 [connection signal="dialog_opened" from="CanvasLayer/Dialog" to="World/Player" method="_on_dialog_dialog_opened"]
 

@@ -94,6 +94,10 @@ func _on_dialog_dialog_closed() -> void:
 	_dialog_just_closed = true
 
 
+func _on_menu_toggled(is_open: bool) -> void:
+	can_move = not is_open
+
+
 func _on_tree_exited() -> void:
 	SaveManager.save_data.map_position = position
 	SaveManager.save_game()
