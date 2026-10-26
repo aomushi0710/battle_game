@@ -132,5 +132,6 @@ metadata/help_text = "メニューを閉じます。また、[b]Xキー[/b]で�
 [connection signal="button_up" from="Panel/Shop" to="." method="_on_shop_button_up"]
 [connection signal="button_up" from="Panel/Save" to="." method="_on_save_button_up"]
 [connection signal="button_up" from="Panel/Title" to="." method="_on_title_button_up"]
+[connection signal="button_up" from="Close" to="." method="_on_close_button_up"]
 
 [editable path="ScrollingLabel"]

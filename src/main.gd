@@ -89,7 +89,6 @@ func _hide_title_animation() -> void:
 	tween.tween_property(_ui, "modulate:a", 0.0, 1.0).from(1.0)
 	await tween.finished
 
-
 func _on_continue_button_up() -> void:
 	_change_to_map_scene()
 
