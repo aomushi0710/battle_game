@@ -102,11 +102,15 @@ func call_sub_scene(
 	
 	await enter_fade_in_func.call()
 	
+	unblock_input()
+	
 	var result: Variant = null ## シグナルの返り値
 	if sub_scene.has_signal(finish_signal_name):
 		result = await Signal(sub_scene, finish_signal_name)
 	else:
 		push_error("Signal not found in sub scene: " + String(finish_signal_name))
+	
+	block_input()
 	
 	await exit_fade_out_func.call()
 	
