@@ -12,11 +12,12 @@ config_version=5
 
 config/name="バトルゲーム"
 config/version="5.0.4"
-run/main_scene="res://scene/main.tscn"
+run/main_scene="uid://dnke3dg7je24c"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 run/max_fps=60
 boot_splash/bg_color=Color(0, 0, 0, 1)
-config/icon="uid://cioi83ubpqfrg"
+boot_splash/show_image=false
+config/icon="uid://bdp2lgk4c45lw"
 
 [autoload]
 
@@ -34,11 +35,17 @@ gdscript/warnings/narrowing_conversion=0
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/window_width_override=1920
+window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
 
 [editor]
 
 export/convert_text_resources_to_binary=false
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
 [gui]
 
@@ -103,4 +110,4 @@ renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 environment/ssao/half_size=false
 environment/ssil/half_size=false
-environment/defaults/default_clear_color=Color(0.301961, 0.596078, 0.301961, 1)
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

@@ -26,13 +26,20 @@ const MIN_SUPPORTED_VERSION: String = "4.4.1" ## このバージョン未満の�
 const MIGRATION_THRESHOLD_VERSION: String = "4.4.1" ## このバージョン未満のデータはサポート対象内ですがデータを自動修正する必要があります
 
 var save_data: SaveData
+var is_new_data: bool = false ## 新規作成されたセーブデータかどうか
 var is_save_mode: bool = true ## デッキをセーブするモードかどうか
 var can_autosave: bool = true ## オートセーブを行うかどうか
+
+
+func _ready() -> void:
+	load_game()
 
 ## [SaveData]をセーブします
 func save_game() -> void:
 	if not can_autosave:
 		return
+	
+	is_new_data = false
 	
 	var path: String ## セーブデータファイルパス
 	if Global.IS_BETA:
@@ -56,6 +63,7 @@ func load_game() -> void:
 	if dict.is_empty():
 		save_data = SaveData.new()
 		save_game()
+		is_new_data = true
 		return
 	
 	var data: SaveData = _dict_to_resource(SaveData, dict) as SaveData
@@ -83,12 +91,15 @@ func delete_game() -> void:
 	else:
 		path = SAVE_DATA_PATH
 	
+	Global.player_deck.clear()
+	_delete_file(DECK_SAVE_DATA_PATH % 0)
 	_delete_file(path)
 	load_game() # セーブデータ削除後に新規セーブデータを作成するため
 
 ## 指定したindexのデッキスロットに現在の[Deck]をセーブします
 func save_deck(index: int) -> void:
-	_save_file(_resource_to_dict(Global.player_deck), DECK_SAVE_DATA_PATH % index)
+	if Global.player_deck and not Global.player_deck.has_empty_slot() and not Global.player_deck.has_duplicate_monster():
+		_save_file(_resource_to_dict(Global.player_deck), DECK_SAVE_DATA_PATH % index)
 
 ## 指定したindexのデッキスロットの[Deck]を返します
 func load_deck(index: int) -> Deck:

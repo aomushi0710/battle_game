@@ -21,17 +21,21 @@ var is_input_enabled: bool = true: ## プレイヤーの入力を受け取って
 		is_input_enabled = value
 		if not is_input_enabled:
 			velocity = Vector2.ZERO
+		
+		_collision_shape.disabled = not is_input_enabled
 
-@onready var sprite := %Sprite2D as Sprite2D
+@onready var _sprite := %Sprite2D as Sprite2D
+@onready var _collision_shape := %CollisionShape2D as CollisionShape2D
 @onready var _interaction_area := %InteractionArea as Area2D ## プレイヤーの前方にある検知エリア
 
 func _ready() -> void:
 	if Global.player_deck and Global.player_deck.monster[0] and Global.player_deck.monster[0].data:
-		sprite.texture = Global.player_deck.monster[0].data.evolution_forms[Monster.Form.第一形態].image
+		_sprite.texture = Global.player_deck.monster[0].data.evolution_forms[Monster.Form.第一形態].image
 	else:
-		sprite.texture = Global.monster_data[1].evolution_forms[Monster.Form.第一形態].image
+		_sprite.texture = Global.monster_data[1].evolution_forms[Monster.Form.第一形態].image
 	
 	position = SaveManager.save_data.map_position
+
 
 func _physics_process(_delta: float) -> void:
 	if not can_move or not is_input_enabled:

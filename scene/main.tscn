@@ -1,82 +1,177 @@
-[gd_scene load_steps=6 format=3 uid="uid://36mc0q6q01ow"]
+[gd_scene load_steps=11 format=3 uid="uid://dnke3dg7je24c"]
 
-[ext_resource type="Script" uid="uid://cpvp8wu65fblw" path="res://src/main.gd" id="1_0gvvv"]
-[ext_resource type="Theme" uid="uid://dsj0uaujnbqwe" path="res://asset/theme/default_font_30.tres" id="2_m5oqv"]
-[ext_resource type="Theme" uid="uid://3x0s0q54tow7" path="res://asset/theme/default_font_20.tres" id="4_lf3g1"]
+[ext_resource type="Script" uid="uid://djjemknmkab5p" path="res://src/main.gd" id="1_p1hux"]
+[ext_resource type="PackedScene" uid="uid://b6v2nlkh2ak8j" path="res://scene/game_scene/map.tscn" id="2_of57s"]
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="3_b5f6u"]
+[ext_resource type="PackedScene" uid="uid://q1o1wv3x1yij" path="res://scene/component/pie_chart.tscn" id="4_tqoya"]
+[ext_resource type="Script" uid="uid://nd5of0c4w8pr" path="res://src/resource/static_data/action_data.gd" id="5_k65ib"]
+[ext_resource type="Resource" uid="uid://bgnhyjwahf61a" path="res://resource/action_data/体当たり.tres" id="6_wscrc"]
+[ext_resource type="PackedScene" uid="uid://0n1ixjrprqj2" path="res://scene/component/game_button.tscn" id="7_mswub"]
 
-[sub_resource type="Theme" id="Theme_6g3bf"]
-default_font_size = 35
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkmox"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 200
 
-[sub_resource type="Theme" id="Theme_lf3g1"]
-default_font_size = 35
+[sub_resource type="Theme" id="Theme_kkmox"]
+default_font_size = 200
 
-[node name="Main" type="Node2D"]
-scale = Vector2(1.6, 1.6)
-script = ExtResource("1_0gvvv")
+[sub_resource type="Theme" id="Theme_0klu7"]
+default_font_size = 40
 
-[node name="Start" type="Button" parent="."]
-offset_left = 100.0
-offset_top = 80.0
-offset_right = 388.0
-offset_bottom = 140.0
-mouse_default_cursor_shape = 2
-theme = SubResource("Theme_6g3bf")
-text = "コンピューター戦"
+[node name="Main" type="Node" node_paths=PackedStringArray("_map_node")]
+script = ExtResource("1_p1hux")
+_map_node = NodePath("Map")
 
-[node name="Reset" type="Button" parent="."]
-modulate = Color(1, 0, 0, 1)
-offset_left = 650.0
-offset_top = 80.0
-offset_right = 986.0
-offset_bottom = 140.0
-theme = SubResource("Theme_lf3g1")
-text = "🗑️セーブデータ削除"
+[node name="Map" parent="." instance=ExtResource("2_of57s")]
 
-[node name="Description" type="RichTextLabel" parent="."]
-clip_contents = false
-offset_left = 100.0
-offset_top = 139.375
-offset_right = 1064.0
-offset_bottom = 670.375
-theme = ExtResource("2_m5oqv")
-bbcode_enabled = true
-text = "↑ここを押してセッティング！
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[b]確率操作系コマンドバトルゲーム(β版)[/b]
-
-理不尽な運ゲーを極限まで減らした究極の運ゲー！
-
-このゲームはまだ作成途中でバグなども多く存在しています。
-
-[color=red]一部のテキスト・ボタンはカーソルを合わせて少し待つとヒントが表示されます！[/color]"
-
-[node name="Debug" type="Button" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
-text = "debug"
-
-[node name="Version" type="RichTextLabel" parent="."]
+[node name="UI" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
-z_index = -1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(960, 540)
+theme = ExtResource("3_b5f6u")
+
+[node name="Title" type="Control" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+
+[node name="Shadow" type="Panel" parent="CanvasLayer/UI/Title"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = 225.0
+offset_right = 550.0
+offset_bottom = 226.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(550, 0.5)
+theme_override_styles/panel = SubResource("StyleBoxFlat_kkmox")
+
+[node name="PieChart" parent="CanvasLayer/UI/Title" instance=ExtResource("4_tqoya")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -500.0
+offset_right = 500.0
+grow_horizontal = 2
+scale = Vector2(1e-05, 1e-05)
+actions = Array[ExtResource("5_k65ib")]([ExtResource("6_wscrc")])
+chances = Array[int]([100])
+
+[node name="Title" type="RichTextLabel" parent="CanvasLayer/UI/Title"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = 65.0
+offset_right = 550.0
+offset_bottom = 355.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(550, 145)
+theme = SubResource("Theme_kkmox")
+theme_override_constants/shadow_outline_size = 20
+bbcode_enabled = true
+text = "Manipulator"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -253.0
+offset_top = -363.0
+offset_right = 254.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 18
+
+[node name="Continue" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_mswub")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "つづきから"
+
+[node name="NewGame" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_mswub")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "はじめから"
+
+[node name="Credit" parent="CanvasLayer/UI/ButtonContainer" instance=ExtResource("7_mswub")]
+layout_mode = 2
+text = "クレジット"
+
+[node name="Copyright" type="RichTextLabel" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -255.0
+offset_top = -59.0
+offset_right = 255.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_0klu7")
+bbcode_enabled = true
+text = "(C) 2024-2026 aomushi0710"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Version" type="RichTextLabel" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
 clip_contents = false
-offset_left = 973.0
-offset_top = 606.0
-offset_right = 1130.0
-offset_bottom = 642.0
-theme = ExtResource("4_lf3g1")
+layout_mode = 0
+offset_left = 1666.0
+offset_top = 1021.0
+offset_right = 1916.0
+offset_bottom = 1080.0
+theme = SubResource("Theme_0klu7")
 bbcode_enabled = true
-text = "[i]β.ver.X.X.X[/i]"
+text = "β ver.X.X.X"
+fit_content = true
+autowrap_mode = 0
 horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="Copyright" type="RichTextLabel" parent="."]
-offset_left = 96.0
-offset_top = 601.875
-offset_right = 443.0
-offset_bottom = 652.875
-theme = ExtResource("2_m5oqv")
-bbcode_enabled = true
-text = "[i](C) 2025 aomushi0710[i]"
-
-[connection signal="pressed" from="Start" to="." method="_on_button_pressed"]
-[connection signal="button_up" from="Reset" to="." method="_on_reset_button_up"]
-[connection signal="button_up" from="Debug" to="." method="_on_debug_button_up"]
+[connection signal="button_up" from="CanvasLayer/UI/ButtonContainer/Continue" to="." method="_on_continue_button_up"]
+[connection signal="button_up" from="CanvasLayer/UI/ButtonContainer/NewGame" to="." method="_on_new_game_button_up"]
+[connection signal="button_up" from="CanvasLayer/UI/ButtonContainer/Credit" to="." method="_on_credit_button_up"]

@@ -1,0 +1,49 @@
+name: Godot 4.4 Quality Assurance
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  GODOT_VERSION: "4.4"
+  GODOT_STATUS: "stable"
+
+jobs:
+  test:
+    name: Asset Import & GUT Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # Godot 4.4 のヘッドレスバイナリをキャッシュして次回以降の起動を短縮
+      - name: Cache Godot Engine
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: /usr/local/bin/godot
+          key: godot-${{ env.GODOT_VERSION }}-${{ env.GODOT_STATUS }}-linux
+
+      - name: Download Godot Engine
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-${GODOT_STATUS}/Godot_v${GODOT_VERSION}-${GODOT_STATUS}_linux.x86_64.zip
+          unzip -q Godot_v${GODOT_VERSION}-${GODOT_STATUS}_linux.x86_64.zip
+          sudo mv Godot_v${GODOT_VERSION}-${GODOT_STATUS}_linux.x86_64 /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+          rm Godot_v${GODOT_VERSION}-${GODOT_STATUS}_linux.x86_64.zip
+
+      # 1. 整合性チェック: ヘッドレスでエディタを立ち上げ、リソース依存関係やUIDを自動インポート
+      # スクリプトのパースエラーやリソースの破損があれば、この段階で警告・エラーが出る
+      - name: Verify Assets & Project Integrity
+        run: |
+          godot --headless --editor --quit
+
+      # 2. ロジックチェック: GUTによる単体テスト
+      - name: Run GUT Unit Tests
+        run: |
+          godot --headless -s addons/gut/gut_cmdln.gd -gconfig=.gutconfig.json

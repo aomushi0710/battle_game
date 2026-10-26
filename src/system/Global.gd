@@ -32,8 +32,7 @@ var item_data: Dictionary[int, Item] = {}
 ## [Stage]のリソースを格納した辞書
 var stage_data: Dictionary[int, Stage] = {}
 
-## TODO マップ上のプレイヤーの位置はセーブデータに保存できるようにする。
-@onready var map_position: Vector2 = Vector2(32, 288)
+var is_first_launch: bool = true ## 初回起動によるタイトル画面の呼び出しかどうか
 
 @onready var player_deck := Deck.new()
 @onready var enemy_deck := Deck.new()
@@ -55,9 +54,6 @@ func _ready() -> void:
 	_directory_load("res://resource/action_data/", action_data)
 	_directory_load("res://resource/item/", item_data)
 	_directory_load("res://resource/stage/", stage_data)
-	
-	SaveManager.load_game()
-	load(DECK_SAVE_SCENE)
 
 ## ディレクトリのパス[param path]を指定して読み込み、[param dict]にIDをキーとしてリソースを格納します。
 func _directory_load(path: String, dict: Dictionary) -> void:
