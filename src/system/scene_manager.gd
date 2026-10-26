@@ -4,12 +4,38 @@ const DEFAULT_DURATION: float = 0.5 ## 秒数指定がない場合のアニメ�
 
 var _progress: Array = [] ## ロード率取得用の配列 INFO Godotの仕様上、配列の最初の要素に進捗率が返されるため
 
-@onready var _fade := %Fade as ColorRect
+@onready var _fade := %Fade as ColorRect ## アニメーションに使用される黒の矩形
+@onready var _input_blocker := %InputBlocker as Control ## シーン遷移中のマウス入力を止めるための何も描画されていないUI
+
+
+func _ready() -> void:
+	set_process_input(false)
+
+## シーン遷移中のマウス以外の入力は全てここで無効化されます
+func _input(_event: InputEvent) -> void:
+	get_viewport().set_input_as_handled()
+
+## 全ての入力を無効化します
+func block_input() -> void:
+	# ボタンなどのフォーカスを解除
+	var viewport: Viewport = get_viewport()
+	if viewport.gui_get_focus_owner():
+		viewport.gui_release_focus()
+	
+	set_process_input(true)
+	_input_blocker.visible = true
+
+## 全ての入力を有効化します
+func unblock_input() -> void:
+	set_process_input(false)
+	_input_blocker.visible = false
 
 # 以下関数内の処理に生成AIのコードを使用しています
 ## 遷移先シーンのパスを引数として、マルチスレッドでロードを行いシーンを切り替えます[br]
 ## フェードアウトとフェードインのアニメーションは[Callable]で指定できます
 func change_scene(path: String, fade_out_func: Callable = fade_out_transparent, fade_in_func: Callable = fade_in_transparent) -> void:
+	block_input()
+	
 	var new_packed: PackedScene = await _load_and_fade_out(path, fade_out_func)
 	if new_packed:
 		var tree: SceneTree = get_tree()
@@ -27,6 +53,8 @@ func change_scene(path: String, fade_out_func: Callable = fade_out_transparent, 
 			old_scene.queue_free()
 	
 	await fade_in_func.call()
+	
+	unblock_input()
 
 # 以下関数内の処理に生成AIのコードを使用しています
 ## 遷移先シーンのパスとそのシーンが発行するシグナル名を引数として、現在のシーンの兄弟にサブシーンを追加して切り替えます。[br]
@@ -40,6 +68,8 @@ func call_sub_scene(
 	exit_fade_out_func: Callable = fade_out_transparent,
 	exit_fade_in_func: Callable = fade_in_transparent
 ) -> Variant:
+	block_input()
+	
 	var sub_packed_scene: PackedScene = await _load_and_fade_out(path, enter_fade_out_func)
 	if not sub_packed_scene:
 		await enter_fade_in_func.call()
@@ -98,6 +128,8 @@ func call_sub_scene(
 	get_tree().current_scene = main_scene
 	
 	await exit_fade_in_func.call()
+	
+	unblock_input()
 	
 	return result
 
