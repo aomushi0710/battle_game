@@ -281,6 +281,7 @@ func _dict_to_resource(resource_script: Script, dict: Dictionary) -> Resource:
 			
 	return res
 
+# 以下関数内の処理に生成AIのコードを使用しています
 ## 保存された値を元の型に再帰復元します
 func _deserialize_value(val: Variant, fallback_script: Script = null) -> Variant:
 	if val is Dictionary:
@@ -312,6 +313,7 @@ func _deserialize_value(val: Variant, fallback_script: Script = null) -> Variant
 		
 	return val
 
+# 以下関数内の処理に生成AIのコードを使用しています
 ## 配列内の要素を再帰的に復元します
 func _deserialize_array(src_arr: Array, elem_script: Script = null) -> Array:
 	var size: int = src_arr.size()
