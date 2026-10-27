@@ -42,22 +42,27 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	var direction: Vector2 = Vector2.ZERO ## 方向ベクトル
-	var horizontal_input: int = Input.get_axis("left", "right") ## 左右のみ
-	if horizontal_input != 0: # 左右入力があった時はそのまま
+	var horizontal_input: int = Input.get_axis("left", "right")
+	if horizontal_input != 0:
 		direction.x = horizontal_input
-	else: # 左右入力がなかった時は上下入力を許可する
+	else:
 		direction.y = Input.get_axis("up", "down")
 	velocity = direction * MOVE_SPEED
 	move_and_slide()
 	
+	var is_current_moving: bool ## 前フレームの状態を表す[member _is_moving]に対して、このフラグは現在のフレームの状態を表す
 	if direction == Vector2.ZERO:
-		_is_moving = false
+		is_current_moving = false
 	else:
-		_is_moving = true
+		is_current_moving = true
 	
-	# プレイヤーの方向に応じて、検知エリアの向きを変える
-	if direction != Vector2.ZERO:
+	if is_current_moving:
+		_is_moving = true
 		_interaction_area.position = direction * _terrain.tile_set.tile_size.x
+	# 前フレームは動いていたが現在のフレームで止まった時、座標をセーブデータに記録する(セーブは行われない)
+	elif _is_moving:
+		_is_moving = false
+		SaveManager.save_data.map_position = position
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -96,8 +101,3 @@ func _on_dialog_dialog_closed() -> void:
 
 func _on_menu_toggled(is_open: bool) -> void:
 	can_move = not is_open
-
-
-func _on_tree_exited() -> void:
-	SaveManager.save_data.map_position = position
-	SaveManager.save_game()
