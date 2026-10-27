@@ -70,6 +70,7 @@ func _on_save_button_up() -> void:
 
 
 func _on_title_button_up() -> void:
+	SaveManager.save_game()
 	SceneManager.block_input()
 	await close_menu()
 	SceneManager.change_scene(Global.MAIN_SCENE, SceneManager.no_fade_out, SceneManager.no_fade_in)
