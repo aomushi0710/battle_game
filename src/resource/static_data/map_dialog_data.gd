@@ -20,14 +20,14 @@ extends Resource
 @export var name_color: Color = Color.BLACK ## 名前が表示される領域の背景色
 
 @export_category("画像")
-@export var image: Texture2D = null ## 本文の左部分に表示される画像
+@export var speaker_texture: Texture2D = null ## 本文の左部分に表示される画像
+@export var display_texture: Texture2D = null ## ダイアログ外に表示される画像[br]アスペクト比1920:1080のスクリーンショット画像などを表示できます
 
 @export_category("ボタン")
 @export var button_text: Array[String] = [] ## ボタンとして表示されるテキスト
-## 対応するindexのボタン選択時の[member redirect_id]
-@export var button_redirect_id: Array[int] = []
+@export var button_redirect_id: Array[int] = [] ## 対応するindexのボタン選択時の[member redirect_id]
 
 @export_category("バトル")
-## バトルを発生させ、勝利時はindex 0のid、敗北時はindex 1のidが
-##[member redirect_id]として処理されます。
-@export var battle_redirect_id: Array[int] = []
+
+@export var battle_redirect_id: Array[int] = [] ## バトルを発生させ、勝利時はindex 0のid、敗北時はindex 1のidが[member redirect_id]として処理されます。
+@export var deck: Deck ## 対戦相手をこの[Deck]に固定します[br]デッキが固定されている場合、対戦前に自分のデッキと相手のデッキをプレビューします
