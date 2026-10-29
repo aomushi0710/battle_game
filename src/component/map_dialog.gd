@@ -2,20 +2,6 @@ class_name MapDialog
 extends Control
 ## マップ上で主に会話の表示に使用されるダイアログ
 
-var text_tween: Tween
-var text_speed: float = 0.04
-var now_id: int ## 現在表示中の[class MapDialogData]の[code]id[/code]
-var signboard_id: int ## 現在表示中の[member SignBoard.id]
-
-@onready var text_area := %TextArea as HBoxContainer
-@onready var label := %Text as RichTextLabel
-@onready var texture := %Texture as TextureRect
-@onready var name_plate := %NamePlate as Control
-@onready var name_panel := %Panel as TextureRect
-@onready var name_label := %Name as RichTextLabel
-@onready var name_plate_right := %Right as Polygon2D
-@onready var buttons := $Buttons
-
 signal dialog_opened ## ダイアログが開かれる時に発行されるシグナル
 signal dialog_closed ## ダイアログが閉じられる時に発行されるシグナル
 signal paging
@@ -23,9 +9,29 @@ signal button_chosen(id: int) ## ボタンが押された時にIDと同時に発
 signal battle_started ## バトル開始シグナル
 signal battle_finished ## バトル終了シグナル
 
+var text_tween: Tween
+var text_speed: float = 0.04
+var now_id: int ## 現在表示中の[class MapDialogData]の[code]id[/code]
+var signboard_id: int ## 現在表示中の[member SignBoard.id]
+
+@onready var text_area := %TextArea as HBoxContainer
+@onready var label := %Text as RichTextLabel
+@onready var speaker_texture := %SpeakerTexture as TextureRect
+@onready var name_plate := %NamePlate as Control
+@onready var name_panel := %Panel as TextureRect
+@onready var name_label := %Name as RichTextLabel
+@onready var name_plate_right := %Right as Polygon2D
+@onready var buttons := $Buttons
+
+@onready var _deck_preview := %DeckPreview as ColorRect
+@onready var _player_deck_name_label := %PlayerDeckName as RichTextLabel
+@onready var _player_deck_monster_container := %PlayerDeckMonsterContainer as HBoxContainer
+@onready var _enemy_deck_name_label := %EnemyDeckName as RichTextLabel
+@onready var _enemy_deck_monster_container := %EnemyDeckMonsterContainer as HBoxContainer
 
 func _ready() -> void:
 	hide()
+	_deck_preview.hide() # 消失アニメーションが再生されないようにする
 
 ## ダイアログボックスを開き、[signal dialog_opened]シグナルを発行します。
 func dialog_open() -> void:
@@ -86,8 +92,8 @@ func display_dialog(data: MapDialogData) -> int:
 		name_plate.hide()
 	
 	# 画像表示処理
-	texture.texture = data.image
-	if data.image:
+	speaker_texture.texture = data.speaker_texture
+	if data.speaker_texture:
 		text_area.add_theme_constant_override("separation", 55)
 	else:
 		text_area.add_theme_constant_override("separation", 0)
@@ -105,6 +111,44 @@ func display_dialog(data: MapDialogData) -> int:
 		buttons.show()
 	else:
 		buttons.hide()
+	
+	if data.deck:
+		_player_deck_name_label.text = "あなたのデッキ" 
+		if Global.player_deck and Global.player_deck.name:
+			_player_deck_name_label.text += ": " + Global.player_deck.name
+		
+		for monster in Global.player_deck.monster:
+			var icon := Global.MONSTER_ICON.instantiate() as MonsterIcon
+			_player_deck_monster_container.add_child(icon)
+			icon.data = monster.data
+		
+		_enemy_deck_name_label.text = "相手　のデッキ"
+		if Global.enemy_deck.name:
+			_enemy_deck_name_label.text += ": " + Global.enemy_deck.name
+		
+		Global.enemy_deck = data.deck.duplicate(true) as Deck
+		for monster in Global.enemy_deck.monster:
+			var icon := Global.MONSTER_ICON.instantiate() as MonsterIcon
+			_enemy_deck_monster_container.add_child(icon)
+			icon.data = monster.data
+			
+		_deck_preview.show()
+		var tween: Tween = _deck_preview.create_tween()
+		tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
+		tween.tween_property(_deck_preview, "modulate:a", 1.0, 0.5).from(0.0)
+	
+	elif _deck_preview.visible:
+		var tween: Tween = _deck_preview.create_tween()
+		tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+		tween.tween_property(_deck_preview, "modulate:a", 0.0, 0.5).from(1.0)
+		tween.tween_callback(_deck_preview.hide)
+		
+		for icon in _player_deck_monster_container.get_children() as Array[MonsterIcon]:
+			icon.queue_free()
+		
+		for icon in _enemy_deck_monster_container.get_children() as Array[MonsterIcon]:
+			icon.queue_free()
+		
 	
 	text_tween = get_tree().create_tween().bind_node(label)\
 	.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
