@@ -7,6 +7,9 @@ class_name Deck
 @export var version: String = Global.version ## デッキが最後に更新されたバージョン
 @export var is_beta: bool = Global.IS_BETA ## デッキが最後に更新されたバージョンがβ版かどうか
 
+@export var is_score_attack: bool ## スコアアタック用のデッキかどうか
+@export var base_score: int ## スコアアタック用の基礎スコア
+
 ## 全てのモンスター選択を解除し、デッキをリセットします。
 func clear() -> void:
 	monster = [Monster.new(), Monster.new(), Monster.new()]

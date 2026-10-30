@@ -4,8 +4,6 @@ extends Node2D
 ## バトル終了シグナル。[br]勝利時は[code]true[/code]を返します。
 signal battle_finished(is_victory: bool)
 
-var enemy_deck: Deck
-
 @onready var stage_node := %Background as Control
 @onready var battle_node := %Battle as Control
 

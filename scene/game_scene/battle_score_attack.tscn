@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://bukicrqrihvu"]
+
+[ext_resource type="PackedScene" uid="uid://bhqk4iva02mmc" path="res://scene/game_scene/battle.tscn" id="1_he8pn"]
+[ext_resource type="Script" uid="uid://dtr5wl1vita3q" path="res://src/game/battle_score_attack.gd" id="2_mxbxk"]
+[ext_resource type="Theme" uid="uid://d1ilrudxl0rhs" path="res://asset/theme/default_font_50.tres" id="2_x7vd3"]
+
+[node name="Battle" instance=ExtResource("1_he8pn")]
+
+[node name="Battle" parent="." index="1"]
+script = ExtResource("2_mxbxk")
+
+[node name="Score" type="RichTextLabel" parent="Battle" index="3"]
+unique_name_in_owner = true
+z_index = 3
+clip_contents = false
+layout_mode = 0
+offset_left = 798.0
+offset_top = 80.0
+offset_right = 1123.0
+offset_bottom = 153.0
+pivot_offset = Vector2(162, 36)
+theme = ExtResource("2_x7vd3")
+bbcode_enabled = true
+text = "SCORE: 000000"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLog" type="RichTextLabel" parent="Battle" index="4"]
+unique_name_in_owner = true
+visible = false
+z_index = 3
+layout_mode = 1
+anchors_preset = -1
+offset_left = 923.0
+offset_top = 130.0
+offset_right = 1123.0
+offset_bottom = 203.0
+grow_horizontal = 0
+bbcode_enabled = true
+text = ":[color=dodger_blue]    -20[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 2
+vertical_alignment = 1
