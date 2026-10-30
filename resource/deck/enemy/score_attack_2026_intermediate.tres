@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="Deck" load_steps=9 format=3 uid="uid://b7flymxu21f86"]
+
+[ext_resource type="Script" uid="uid://dfmkbeq2byy01" path="res://src/resource/data/deck.gd" id="1_bxoup"]
+[ext_resource type="Resource" uid="uid://br3qcigs0mtjj" path="res://resource/monster_data/スライム.tres" id="1_ol2lm"]
+[ext_resource type="Script" uid="uid://caxcvll0814us" path="res://src/resource/data/monster.gd" id="2_pnece"]
+[ext_resource type="Resource" uid="uid://ccrcd3p7brbbd" path="res://resource/monster_data/モノロ.tres" id="3_rfauv"]
+[ext_resource type="Resource" uid="uid://bda87f5r5a85l" path="res://resource/monster_data/スノ.tres" id="4_sccj8"]
+
+[sub_resource type="Resource" id="Resource_5w6ic"]
+script = ExtResource("2_pnece")
+level = 1
+data = ExtResource("1_ol2lm")
+form = 0
+chance = Array[int]([0, 30, 0, 0, 20, 20, 10, 20])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="Resource" id="Resource_otscs"]
+script = ExtResource("2_pnece")
+level = 1
+data = ExtResource("3_rfauv")
+form = 0
+chance = Array[int]([10, 30, 20, 0, 20, 20, 0])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="Resource" id="Resource_dugtn"]
+script = ExtResource("2_pnece")
+level = 1
+data = ExtResource("4_sccj8")
+form = 0
+chance = Array[int]([0, 50, 20, 0, 20, 10, 0])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[resource]
+script = ExtResource("1_bxoup")
+name = "スコアアタック2026 中級"
+monster = Array[Object]([SubResource("Resource_5w6ic"), SubResource("Resource_otscs"), SubResource("Resource_dugtn")])
+version = null
+is_beta = true
+is_score_attack = true
+base_score = 5000
+metadata/_custom_type_script = "uid://dfmkbeq2byy01"

@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="Deck" load_steps=9 format=3 uid="uid://b8uhwbjj54pmx"]
+
+[ext_resource type="Script" uid="uid://dfmkbeq2byy01" path="res://src/resource/data/deck.gd" id="1_jl40l"]
+[ext_resource type="Resource" uid="uid://b8hekpmdouxe3" path="res://resource/monster_data/バニン.tres" id="1_xv0io"]
+[ext_resource type="Script" uid="uid://caxcvll0814us" path="res://src/resource/data/monster.gd" id="2_5gf7t"]
+[ext_resource type="Resource" uid="uid://bgg2mbqbnmq2r" path="res://resource/monster_data/ラシュ.tres" id="3_u2fpv"]
+[ext_resource type="Resource" uid="uid://b287bdicqwp7" path="res://resource/monster_data/ルネ.tres" id="4_83fy4"]
+
+[sub_resource type="Resource" id="Resource_khwsm"]
+script = ExtResource("2_5gf7t")
+level = 1
+data = ExtResource("1_xv0io")
+form = 0
+chance = Array[int]([50, 50, 0, 0, 0, 0, 0])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="Resource" id="Resource_kqt6y"]
+script = ExtResource("2_5gf7t")
+level = 1
+data = ExtResource("3_u2fpv")
+form = 0
+chance = Array[int]([50, 50, 0, 0, 0, 0, 0, 0])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[sub_resource type="Resource" id="Resource_sufb6"]
+script = ExtResource("2_5gf7t")
+level = 1
+data = ExtResource("4_83fy4")
+form = 0
+chance = Array[int]([50, 50, 0, 0, 0, 0, 0])
+metadata/_custom_type_script = "uid://caxcvll0814us"
+
+[resource]
+script = ExtResource("1_jl40l")
+name = "スコアアタック2026 初級"
+monster = Array[Object]([SubResource("Resource_khwsm"), SubResource("Resource_kqt6y"), SubResource("Resource_sufb6")])
+version = null
+is_beta = true
+is_score_attack = true
+base_score = 1000
+metadata/_custom_type_script = "uid://dfmkbeq2byy01"
