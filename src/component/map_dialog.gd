@@ -197,11 +197,15 @@ func _transition_to_battle() -> bool:
 		if Global.player_deck.has_empty_slot(): # デッキにモンスターがいなければ敗北として中断
 			return false
 	
+	var battle_scene_path: String = Global.BATTLE_SCENE
+	if Global.enemy_deck.is_score_attack:
+		battle_scene_path = Global.SCORE_ATTACK_SCENE
+	
 	Global.battle_stage = Global.stage_data[1]
 	
 	battle_started.emit()
 	result = bool(await SceneManager.call_sub_scene(
-		Global.BATTLE_SCENE,
+		battle_scene_path,
 		&"battle_finished",
 		SceneManager.fade_out_zoom,
 		SceneManager.fade_in_transparent,

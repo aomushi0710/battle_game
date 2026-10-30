@@ -75,6 +75,31 @@ func _ready() -> void:
 
 # 味方と敵のデッキを準備
 func setup() -> void:
+	monster_setup()
+	
+	player_next_index = 2
+	_on_change_button_up()
+	
+	await battle_start_animation()
+	
+	# シーン遷移アニメーション
+	tween = self.create_tween() # monster出現アニメーション
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).set_parallel()
+	tween.tween_property($Player1, "position", PLAYER_MONSTER_POSITION, 0.5).from(PLAYER_MONSTER_START_POSITION)
+	tween.tween_property($Enemy1, "position", ENEMY_MONSTER_POSITION, 0.5).from(ENEMY_MONSTER_START_POSITION)
+	tween.tween_property(player_deck_control, "position:x", 0, 0.5)
+	tween.tween_property(enemy_deck_control, "position:x", 1170, 0.5)
+	await tween.finished
+	
+	player_monster.spd_bar.set_process(true)
+	if not tutorial_mode:
+		enemy_monster.spd_bar.set_process(true)
+	
+	if tutorial_mode == true:
+		cutin_ended.emit()
+
+
+func monster_setup() -> void:
 	for deck in [Global.player_deck, Global.enemy_deck] as Array[Deck]:
 		for i in len(deck.monster):
 			var monster := MONSTER_SCENE.instantiate() as BattleMonster
@@ -128,27 +153,6 @@ func setup() -> void:
 			# シグナル接続
 			# モンスター行動可能通知シグナル
 			monster.monster_ready.connect(monster_ready.bind(monster.is_player))
-	
-	player_next_index = 2
-	_on_change_button_up()
-	
-	await battle_start_animation()
-	
-	# シーン遷移アニメーション
-	tween = self.create_tween() # monster出現アニメーション
-	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).set_parallel()
-	tween.tween_property($Player1, "position", PLAYER_MONSTER_POSITION, 0.5).from(PLAYER_MONSTER_START_POSITION)
-	tween.tween_property($Enemy1, "position", ENEMY_MONSTER_POSITION, 0.5).from(ENEMY_MONSTER_START_POSITION)
-	tween.tween_property(player_deck_control, "position:x", 0, 0.5)
-	tween.tween_property(enemy_deck_control, "position:x", 1170, 0.5)
-	await tween.finished
-	
-	player_monster.spd_bar.set_process(true)
-	if not tutorial_mode:
-		enemy_monster.spd_bar.set_process(true)
-	
-	if tutorial_mode == true:
-		cutin_ended.emit()
 
 ## バトル開始カットインのアニメーション
 func battle_start_animation() -> void:
@@ -359,6 +363,7 @@ extra: AbilityExtra = null) -> void:
 	 # mp消費処理
 	if action.mp > 0:
 		dialog_text.append(monster.mp_setter(-action.mp, true))
+		monster.mp_used.emit(action.mp)
 	# AbilityExtraによって発動した技かどうかで表示メッセージを変える
 	if extra == null:
 		dialog_text.append("%s の %s！" % 

@@ -9,6 +9,7 @@ const MAIN_SCENE: String = "res://scene/main.tscn"
 const MAP_SCENE: String = "res://scene/game_scene/map.tscn"
 const SELECT_SCENE: String = "res://scene/game_scene/monster_setting.tscn"
 const BATTLE_SCENE: String = "res://scene/game_scene/battle.tscn"
+const SCORE_ATTACK_SCENE: String = "res://scene/game_scene/battle_score_attack.tscn"
 const DECK_SAVE_SCENE: String = "res://scene/game_scene/deck_select.tscn"
 const TUTORIAL_SCENE: String = "res://scene/game_scene/tutorial.tscn"
 const SHOP_SCENE: String = "res://scene/game_scene/shop.tscn"
@@ -21,6 +22,9 @@ const ACTION_BUTTON: PackedScene = preload("res://scene/component/action_button.
 const ACTION_SETTING_BUTTON: PackedScene = preload("res://scene/component/action_setting_button.tscn")
 const ABILITY_DESCRIPTION: PackedScene = preload("res://scene/component/ability_description.tscn")
 const DAMAGE_TEXT: PackedScene = preload("res://scene/component/damage_text.tscn")
+
+var viewport_width: float = ProjectSettings.get_setting("display/window/size/viewport_width")
+var viewport_height: float = ProjectSettings.get_setting("display/window/size/viewport_height")
 
 ## [MonsterData]のリソースを格納した辞書
 ## 各形態の情報は[member MonsterData.evolution_forms]を参照すること。

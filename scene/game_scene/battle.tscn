@@ -341,8 +341,6 @@ offset_left = 210.0
 offset_right = 410.0
 offset_bottom = 200.0
 mouse_default_cursor_shape = 2
-text = "
-"
 
 [node name="TextureRect" type="TextureRect" parent="Battle/Button/Main/ItemButton"]
 self_modulate = Color(1, 1, 1, 0.501961)
@@ -372,7 +370,6 @@ offset_left = 420.0
 offset_right = 620.0
 offset_bottom = 200.0
 mouse_default_cursor_shape = 2
-text = "Status"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Battle/Button/Main/StatusButton"]
 self_modulate = Color(1, 1, 1, 0.501961)
@@ -576,6 +573,7 @@ text = "逃げる"
 [node name="ResultBackground" type="ColorRect" parent="."]
 unique_name_in_owner = true
 visible = false
+z_index = 2
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2

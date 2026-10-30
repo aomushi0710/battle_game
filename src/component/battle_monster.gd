@@ -2,6 +2,10 @@ class_name BattleMonster
 extends TextureButton
 
 signal monster_ready ## モンスターが行動可能になった時発行されます
+@warning_ignore("unused_signal") # 親ノードがこのシグナルを発行するため
+signal mp_used(amount: int) ## モンスターがMPを使用した時発行されます
+signal evolved ## モンスターが進化した時発行されます
+signal died ## モンスターが死亡した時発行されます
 
 const EFFECT_ICON = preload("res://scene/component/effect_icon.tscn")
 
@@ -85,6 +89,8 @@ func setup() -> void:
 
 ## 死亡処理
 func dead(player_monster: BattleMonster, enemy_monster: BattleMonster) -> void:
+	died.emit()
+	
 	get_tree().paused = true
 	# フラグ立て
 	is_died = true
@@ -171,6 +177,8 @@ func evolution(id: int) -> Array[String]:
 	ui_update()
 	
 	se_battle.evolution.play()
+	
+	evolved.emit()
 	
 	return [
 	"[color=red]%s は \n%s に\n進化した！[/color]" % 
